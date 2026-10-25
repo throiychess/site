@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Fishing Pole Trap · Throiy Chess</title><meta name="claude:viewport-fit-sides" content="cover"><meta name="description" content="Black leaves a knight hanging on g4. Take it, and the h-file opens straight onto your king."><link rel="icon" href="../../img/favicon.png"><meta property="og:title" content="Fishing Pole Trap · Throiy Chess"><meta property="og:description" content="Black leaves a knight hanging on g4. Take it, and the h-file opens straight onto your king."><meta property="og:image" content="https://throiychess.com/img/fishing-pole-board.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap"><style>
+:root{--bg:#0e0d0b;--panel:#17150f;--line:#2c271d;--ink:#efe8d8;--mute:#a59a83;--gold:#e3c073;--gold-deep:#b8964d;--red:#e2442f;
+--sq-l:#c4ac80;--sq-d:#7e6542;--display:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;--body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;margin:0}
+a{color:var(--gold)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;letter-spacing:.02em}
+.brand img{height:38px;width:auto}
+.brand b{color:var(--gold);font-weight:600;letter-spacing:.32em;font-size:12px;display:block;line-height:1}
+nav.links{display:flex;gap:18px;flex-wrap:wrap}
+nav.links a{color:var(--mute);text-decoration:none;font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+nav.links a:hover{color:var(--gold)}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-weight:900;font-size:clamp(40px,7vw,76px);line-height:1;letter-spacing:-.025em;text-transform:uppercase}
+h1 em{font-style:normal;color:var(--gold)}
+h2{font-weight:800;font-size:clamp(26px,3.4vw,36px);line-height:1.1;letter-spacing:-.01em}
+h3{font-weight:800;font-size:21px;line-height:1.2}
+.lead{color:var(--mute);font-size:19px;max-width:34ch}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-block:64px 56px}
+.hero>*{min-width:0}
+.hero .copy{display:grid;gap:22px;justify-items:start}
+.ticks{position:relative;padding:12px}
+.ticks::before,.ticks::after,.ticks>.t1,.ticks>.t2{content:"";position:absolute;width:34px;height:34px;border-color:var(--gold);border-style:solid;pointer-events:none}
+.ticks::before{left:0;top:0;border-width:4px 0 0 4px}.ticks::after{right:0;top:0;border-width:4px 4px 0 0}
+.ticks>.t1{left:0;bottom:0;border-width:0 0 4px 4px}.ticks>.t2{right:0;bottom:0;border-width:0 4px 4px 0}
+.ticks img{display:block;width:100%;height:auto}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;font-weight:700;font-size:15px;text-decoration:none;border:1px solid var(--gold);color:var(--gold);letter-spacing:.03em}
+.btn.solid{background:var(--gold);color:#14110b}
+.btn:hover{filter:brightness(1.1)}
+section{padding-block:56px;border-top:1px solid var(--line)}
+.sechead{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.sechead p{color:var(--mute);margin:6px 0 0;max-width:52ch}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--panel);border-left:4px solid var(--gold);padding:22px 22px 20px;display:grid;gap:10px;align-content:start;text-decoration:none;color:var(--ink);min-width:0}
+.card .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tag{background:var(--gold);color:#14110b;font-weight:900;font-size:12px;padding:3px 8px;letter-spacing:.04em}
+.label{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.card p{margin:0;color:var(--mute);font-size:15.5px}
+.card .go{font-weight:700;font-size:14px;color:var(--gold);margin-top:4px}
+a.card:hover{background:#1d1a13}
+.card.soon{border-left-color:var(--line)}
+.breaking{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;background:var(--panel);padding:28px}
+.breaking>*{min-width:0}
+.live{font-weight:900;font-size:13px;letter-spacing:.2em;color:var(--bg);background:var(--red);padding:6px 10px;text-transform:uppercase;white-space:nowrap}
+.breaking p{margin:6px 0 0;color:var(--mute)}
+.about{display:grid;grid-template-columns:200px 1fr;gap:32px;align-items:center}
+.about>*{min-width:0}
+.about img{width:200px;max-width:100%;height:auto}
+.about p{max-width:60ch;color:var(--mute);margin:10px 0 0}
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--mute);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+/* trap page */
+.crumb{font-size:14px;color:var(--mute);padding-top:28px}
+.crumb a{color:var(--mute)}
+.traphead{display:grid;gap:14px;padding-block:18px 30px}
+.traphead p{color:var(--mute);margin:0;max-width:60ch;font-size:19px}
+.player{display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:36px;align-items:start}
+.player>*{min-width:0}
+.board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;width:100%;max-width:100%;position:relative;user-select:none}
+.sq{position:relative;aspect-ratio:1}
+.sq.l{background:var(--sq-l)}.sq.d{background:var(--sq-d)}
+.sq.hl::before{content:"";position:absolute;inset:0;background:rgba(240,200,90,.42)}
+.sq.mk::after{content:"";position:absolute;inset:6%;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 3px #14120f,inset 0 0 0 2px #14120f}
+.sq.mk.red::after{border-color:var(--red);box-shadow:0 0 0 3px #fff}
+.sq img{position:absolute;inset:2%;width:96%;height:96%;z-index:1}
+.sq .co{position:absolute;font-size:11px;font-weight:700;z-index:2;line-height:1}
+.sq .rk{left:3px;top:3px}.sq .fl{right:3px;bottom:2px}
+.sq.l .co{color:var(--sq-d)}.sq.d .co{color:var(--sq-l)}
+.ctrl{display:flex;gap:8px;margin-top:14px}
+.ctrl button{flex:1;background:var(--panel);color:var(--ink);border:1px solid var(--line);padding:10px 0;font-size:16px;font-weight:700;cursor:pointer;font-family:var(--body)}
+.ctrl button:hover{border-color:var(--gold);color:var(--gold)}
+.note{background:var(--panel);border-top:4px solid var(--gold);padding:22px;display:grid;gap:10px}
+.note .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.note p{margin:0;font-size:19px;line-height:1.45;font-weight:600}
+.moves{display:flex;flex-wrap:wrap;gap:4px 2px;margin-top:20px;font-variant-numeric:tabular-nums;font-size:15px}
+.moves button{background:none;border:0;color:var(--mute);font:inherit;padding:3px 6px;cursor:pointer}
+.moves button.on{background:var(--gold);color:#14110b;font-weight:800}
+.moves span{color:#6f6656;padding:3px 0 3px 6px}
+.fix{display:grid;gap:14px;padding:0;margin:0;list-style:none;counter-reset:f}
+.fix li{display:grid;grid-template-columns:28px 1fr;gap:12px;max-width:70ch}
+.fix li::before{counter-increment:f;content:counter(f);font-weight:900;color:var(--gold);font-size:20px;line-height:1.4}
+.hint{color:var(--mute);font-size:14px;margin-top:10px}
+@media (max-width:860px){.hero,.player{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.hero{padding-block:36px}.breaking{grid-template-columns:1fr;gap:14px}.about{grid-template-columns:1fr}.about img{width:140px}}
+@media (prefers-reduced-motion:no-preference){.btn,.card{transition:background .15s,filter .15s}}
+</style></head><body><header class="top"><div class="wrap"><a class="brand" href="../../index.html"><img src="../../img/logo-small.png" alt=""><span>THROIY<b>CHESS</b></span></a><nav class="links"><a href="../../index.html#traps">Traps</a><a href="../../index.html#top-games">Top games</a><a href="https://www.youtube.com/@ThroiyChess" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a><a href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a></nav></div></header><main class="wrap"><div class="crumb"><a href="../../index.html#traps">Trap library</a> / Fishing Pole Trap</div>
+<div class="traphead"><span class="eyebrow">Ruy Lopez · Black sets it</span><h1>Fishing Pole Trap</h1><p>Black leaves a knight hanging on g4. Take it, and the h-file opens straight onto your king.</p></div>
+<div class="player"><div><div class="board" id="board" aria-label="Chess board"></div>
+<div class="ctrl"><button type="button" id="first" aria-label="Start position">⏮</button><button type="button" id="prev" aria-label="Previous move">◀</button>
+<button type="button" id="next" aria-label="Next move">▶</button><button type="button" id="last" aria-label="Final position">⏭</button></div>
+<p class="hint">Tip: use the arrow keys.</p></div>
+<div><div class="note" aria-live="polite"><div class="meta"><span class="label" id="nl"></span><span class="tag" id="nt"></span></div><p id="nx"></p></div>
+<div class="moves" id="moves"><span>1.</span><button type="button" data-p="1">e4</button><button type="button" data-p="2">e5</button><span>2.</span><button type="button" data-p="3">Nf3</button><button type="button" data-p="4">Nc6</button><span>3.</span><button type="button" data-p="5">Bb5</button><button type="button" data-p="6">Nf6</button><span>4.</span><button type="button" data-p="7">O-O</button><button type="button" data-p="8">Ng4</button><span>5.</span><button type="button" data-p="9">h3</button><button type="button" data-p="10">h5</button><span>6.</span><button type="button" data-p="11">hxg4</button><button type="button" data-p="12">hxg4</button><span>7.</span><button type="button" data-p="13">Nh2</button><button type="button" data-p="14">Qh4</button><span>8.</span><button type="button" data-p="15">f3</button><button type="button" data-p="16">g3</button><span>9.</span><button type="button" data-p="17">Rf2</button><button type="button" data-p="18">Nd4</button><span>10.</span><button type="button" data-p="19">Kf1</button><button type="button" data-p="20">gxh2</button><span>11.</span><button type="button" data-p="21">Ke1</button><button type="button" data-p="22">h1=Q+</button><span>12.</span><button type="button" data-p="23">Bf1</button><button type="button" data-p="24">Qxf1+</button><span>13.</span><button type="button" data-p="25">Kxf1</button><button type="button" data-p="26">Qh1#</button></div>
+<div class="btns" style="margin-top:24px"><a class="btn solid" href="https://www.youtube.com/@ThroiyChess/shorts" target="_blank" rel="noopener">Watch the Short</a></div></div></div>
+<section style="margin-top:56px"><span class="eyebrow">The fix</span><h2 style="margin:8px 0 22px">How not to fall for it</h2><ol class="fix"><li><span>Don&#x27;t push the h-pawn when the knight lands on g4. h3 is the first mistake.</span></li><li><span>Your king hides behind f2, g2 and h2. Keep them home and keep developing.</span></li><li><span>If the knight is left hanging after …h5, don&#x27;t take it. The open h-file is worth more than a knight.</span></li><li><span>As Black it is a cheeky blitz trick. It only works if they bite, so don&#x27;t count on it.</span></li></ol></section>
+</main><footer><div class="wrap"><span>© ThroiyChess · Quick chess lessons, every day</span><span><a href="https://www.youtube.com/@ThroiyChess" target="_blank" rel="noopener">YouTube</a> · <a href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a> · <a href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a></span></div></footer><script>const D={"plies": [{"fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR", "san": "", "fr": null, "to": null}, {"fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR", "san": "e4", "fr": "e2", "to": "e4"}, {"fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR", "san": "e5", "fr": "e7", "to": "e5"}, {"fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R", "san": "Nf3", "fr": "g1", "to": "f3"}, {"fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R", "san": "Nc6", "fr": "b8", "to": "c6"}, {"fen": "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R", "san": "Bb5", "fr": "f1", "to": "b5"}, {"fen": "r1bqkb1r/pppp1ppp/2n2n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R", "san": "Nf6", "fr": "g8", "to": "f6"}, {"fen": "r1bqkb1r/pppp1ppp/2n2n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQ1RK1", "san": "O-O", "fr": "e1", "to": "g1"}, {"fen": "r1bqkb1r/pppp1ppp/2n5/1B2p3/4P1n1/5N2/PPPP1PPP/RNBQ1RK1", "san": "Ng4", "fr": "f6", "to": "g4"}, {"fen": "r1bqkb1r/pppp1ppp/2n5/1B2p3/4P1n1/5N1P/PPPP1PP1/RNBQ1RK1", "san": "h3", "fr": "h2", "to": "h3"}, {"fen": "r1bqkb1r/pppp1pp1/2n5/1B2p2p/4P1n1/5N1P/PPPP1PP1/RNBQ1RK1", "san": "h5", "fr": "h7", "to": "h5"}, {"fen": "r1bqkb1r/pppp1pp1/2n5/1B2p2p/4P1P1/5N2/PPPP1PP1/RNBQ1RK1", "san": "hxg4", "fr": "h3", "to": "g4"}, {"fen": "r1bqkb1r/pppp1pp1/2n5/1B2p3/4P1p1/5N2/PPPP1PP1/RNBQ1RK1", "san": "hxg4", "fr": "h5", "to": "g4"}, {"fen": "r1bqkb1r/pppp1pp1/2n5/1B2p3/4P1p1/8/PPPP1PPN/RNBQ1RK1", "san": "Nh2", "fr": "f3", "to": "h2"}, {"fen": "r1b1kb1r/pppp1pp1/2n5/1B2p3/4P1pq/8/PPPP1PPN/RNBQ1RK1", "san": "Qh4", "fr": "d8", "to": "h4"}, {"fen": "r1b1kb1r/pppp1pp1/2n5/1B2p3/4P1pq/5P2/PPPP2PN/RNBQ1RK1", "san": "f3", "fr": "f2", "to": "f3"}, {"fen": "r1b1kb1r/pppp1pp1/2n5/1B2p3/4P2q/5Pp1/PPPP2PN/RNBQ1RK1", "san": "g3", "fr": "g4", "to": "g3"}, {"fen": "r1b1kb1r/pppp1pp1/2n5/1B2p3/4P2q/5Pp1/PPPP1RPN/RNBQ2K1", "san": "Rf2", "fr": "f1", "to": "f2"}, {"fen": "r1b1kb1r/pppp1pp1/8/1B2p3/3nP2q/5Pp1/PPPP1RPN/RNBQ2K1", "san": "Nd4", "fr": "c6", "to": "d4"}, {"fen": "r1b1kb1r/pppp1pp1/8/1B2p3/3nP2q/5Pp1/PPPP1RPN/RNBQ1K2", "san": "Kf1", "fr": "g1", "to": "f1"}, {"fen": "r1b1kb1r/pppp1pp1/8/1B2p3/3nP2q/5P2/PPPP1RPp/RNBQ1K2", "san": "gxh2", "fr": "g3", "to": "h2"}, {"fen": "r1b1kb1r/pppp1pp1/8/1B2p3/3nP2q/5P2/PPPP1RPp/RNBQK3", "san": "Ke1", "fr": "f1", "to": "e1"}, {"fen": "r1b1kb1r/pppp1pp1/8/1B2p3/3nP2q/5P2/PPPP1RP1/RNBQK2q", "san": "h1=Q+", "fr": "h2", "to": "h1"}, {"fen": "r1b1kb1r/pppp1pp1/8/4p3/3nP2q/5P2/PPPP1RP1/RNBQKB1q", "san": "Bf1", "fr": "b5", "to": "f1"}, {"fen": "r1b1kb1r/pppp1pp1/8/4p3/3nP2q/5P2/PPPP1RP1/RNBQKq2", "san": "Qxf1+", "fr": "h1", "to": "f1"}, {"fen": "r1b1kb1r/pppp1pp1/8/4p3/3nP2q/5P2/PPPP1RP1/RNBQ1K2", "san": "Kxf1", "fr": "e1", "to": "f1"}, {"fen": "r1b1kb1r/pppp1pp1/8/4p3/3nP3/5P2/PPPP1RP1/RNBQ1K1q", "san": "Qh1#", "fr": "h4", "to": "h1"}], "notes": {"0": {"label": "START", "tag": "", "text": "The Fishing Pole starts from a normal Ruy Lopez. Step through the moves.", "marks": []}, "6": {"label": "OPENING", "tag": "3\u2026Nf6", "text": "A normal Ruy Lopez. Nothing special yet.", "marks": []}, "7": {"label": "OPENING", "tag": "4.O-O", "text": "White castles. The king goes to g1.", "marks": []}, "8": {"label": "OPENING", "tag": "4\u2026Ng4", "text": "Black's knight jumps to g4. It looks silly, and that is the point.", "marks": []}, "9": {"label": "FIRST MISTAKE", "tag": "5.h3?", "text": "White kicks the knight. Pushing this pawn weakens the king's cover.", "marks": ["h3"]}, "10": {"label": "THE BAIT", "tag": "5\u2026h5!", "text": "Black ignores the threat and leaves the knight. That's the bait.", "marks": ["!g4"]}, "11": {"label": "THE BLUNDER", "tag": "6.hxg4??", "text": "A free knight? Taking it is the real blunder.", "marks": ["!g4"]}, "12": {"label": "THE OPEN FILE", "tag": "6\u2026hxg4", "text": "The h-file is open. The rook on h8 now aims at the king.", "marks": ["h8", "!g1"]}, "13": {"label": "THE OPEN FILE", "tag": "7.Nh2", "text": "The knight runs away from g4's pawn.", "marks": []}, "14": {"label": "MATE THREAT", "tag": "7\u2026Qh4!", "text": "Queen and rook are lined up on the h-file. Qh1 mate is coming.", "marks": ["h4", "h8"]}, "15": {"label": "MATE THREAT", "tag": "8.f3", "text": "White makes room so the king can escape via f2.", "marks": []}, "16": {"label": "MATE THREAT", "tag": "8\u2026g3!", "text": "g3 locks the king in. Now only Rf2 or Re1 stop mate in one, and they only delay it.", "marks": ["g3", "!g1"]}, "17": {"label": "NO WAY OUT", "tag": "9.Rf2", "text": "The rook covers f2. Black keeps piling on.", "marks": []}, "26": {"label": "CHECKMATE", "tag": "13\u2026Qh1#", "text": "The king tried to run, but the attack is too strong. Checkmate on h1.", "marks": ["!f1", "h1"]}}};
+const P="../../img/pieces/",B=document.getElementById("board");let cur=0;
+const sqs=[];for(let r=7;r>=0;r--)for(let f=0;f<8;f++){const d=document.createElement("div");const n="abcdefgh"[f]+(r+1);d.className="sq "+((r+f)%2?"l":"d");d.dataset.n=n;
+if(f===0){const c=document.createElement("span");c.className="co rk";c.textContent=r+1;d.appendChild(c)}
+if(r===0){const c=document.createElement("span");c.className="co fl";c.textContent="abcdefgh"[f];d.appendChild(c)}B.appendChild(d);sqs.push(d)}
+function parse(fen){const m={};fen.split("/").forEach((row,i)=>{let f=0;for(const ch of row){if(/\d/.test(ch))f+=+ch;else{m["abcdefgh"[f]+(8-i)]=ch;f++}}});return m}
+function note(i){let k=i;while(k>=0&&!D.notes[k])k--;return D.notes[k]}
+function show(i){cur=Math.max(0,Math.min(D.plies.length-1,i));const p=D.plies[cur],m=parse(p.fen),n=note(cur);const mk=(D.notes[cur]&&D.notes[cur].marks)||[];
+sqs.forEach(d=>{const s=d.dataset.n;d.classList.toggle("hl",s===p.fr||s===p.to);d.classList.toggle("mk",mk.includes(s)||mk.includes("!"+s));d.classList.toggle("red",mk.includes("!"+s));
+const old=d.querySelector("img");if(old)old.remove();const c=m[s];if(c){const im=document.createElement("img");im.alt=c;im.src=P+(c===c.toUpperCase()?"w":"b")+c.toLowerCase()+".png";d.appendChild(im)}});
+document.getElementById("nl").textContent=n.label;const t=document.getElementById("nt");t.textContent=n.tag;t.hidden=!n.tag;document.getElementById("nx").textContent=n.text;
+document.querySelectorAll("#moves button").forEach(b=>b.classList.toggle("on",+b.dataset.p===cur))}
+document.getElementById("first").onclick=()=>show(0);document.getElementById("prev").onclick=()=>show(cur-1);
+document.getElementById("next").onclick=()=>show(cur+1);document.getElementById("last").onclick=()=>show(D.plies.length-1);
+document.getElementById("moves").onclick=e=>{const b=e.target.closest("button");if(b)show(+b.dataset.p)};
+document.addEventListener("keydown",e=>{if(e.key==="ArrowRight")show(cur+1);if(e.key==="ArrowLeft")show(cur-1)});
+show(0);</script></body></html>
