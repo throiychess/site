@@ -8,7 +8,7 @@ import chess
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DOMAIN = "throiychess.com"
 LINKS = [("YouTube", "https://www.youtube.com/@ThroiyChess"), ("TikTok", "https://www.tiktok.com/@throiychess"),
-         ("Instagram", "https://www.instagram.com/throiychess")]
+         ("Instagram", "https://www.instagram.com/throiychess"), ("Facebook", "https://www.facebook.com/profile.php?id=61595770557361")]
 
 TRAPS = [
     dict(slug="fishing-pole-trap", name="Fishing Pole Trap", opening="Ruy Lopez", side="Black sets it",
