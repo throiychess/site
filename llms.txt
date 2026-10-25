@@ -1,0 +1,21 @@
+# Throiy Chess
+
+> Opening traps, mating patterns and top games, explained fast. Short chess lessons (YouTube Shorts, TikTok, Instagram, Facebook) about opening traps, how to avoid them, named mating patterns, and key moments from recent top-level games.
+
+## Trap lessons
+- [Fishing Pole Trap](https://throiychess.com/traps/fishing-pole-trap/): Black leaves a knight hanging on g4. Take it, and the h-file opens straight onto your king. Opening: Ruy Lopez. Moves: e4 e5 Nf3 Nc6 Bb5 Nf6 O-O Ng4 h3 h5 hxg4 hxg4 Nh2 Qh4 f3 g3 Rf2 Nd4 Kf1 gxh2 Ke1 h1=Q+ Bf1 Qxf1+ Kxf1 Qh1#
+
+## Videos
+- [All Shorts](https://throiychess.com/shorts/)
+- [Don't fall for this Petrov trap](https://www.youtube.com/shorts/KA_x11CO7Gg): Copying White's moves in the Petrov costs Black the queen. Play 3…d6 first.
+- [He moved his king on move 5… big mistake](https://www.youtube.com/shorts/9EOJdMBaPO4): Why moving your king early in the opening gets punished.
+
+## Channels
+- [YouTube](https://www.youtube.com/@ThroiyChess)
+- [TikTok](https://www.tiktok.com/@throiychess)
+- [Instagram](https://www.instagram.com/throiychess)
+- [Facebook](https://www.facebook.com/profile.php?id=61595770557361)
+
+## Optional
+- [Contact](https://throiychess.com/contact/)
+- [Privacy](https://throiychess.com/privacy/)
