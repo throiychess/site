@@ -22,15 +22,23 @@ PER_PAGE = 12
 
 # ---------------- data ----------------
 # Every YouTube Short. id = the part after youtube.com/shorts/ ; date = upload date (YYYY-MM-DD) ; trap = slug of a trap page (optional)
-SHORTS = [
+SHORTS = [  # newest first
+    dict(id="G2pqyA0mXF0", title="Don't take the bait! The Fishing Pole Trap", date="2026-10-25", topic="Ruy Lopez",
+         desc="Black leaves a knight on g4 as bait. Take it and the h-file opens straight at your king, ending in mate on h1."),
+    dict(id="WFRx-dXjOcc", title="Fried Liver Attack: mate in 9 (and how to stop it)", date="2026-10-24", topic="Italian Game",
+         desc="After 5…Nxd5? 6.Nxf7! the black king is dragged out. The fix: don't recapture on d5, play 5…Na5! instead."),
     dict(id="KA_x11CO7Gg", title="Don't fall for this Petrov trap", date=None, topic="Petrov Defense",
-         desc="Copying White's moves in the Petrov costs Black the queen. Play 3…d6 first."),
+         desc="After 3…Nxe4? 4.Qe2! the knight is pinned and Nc6+ wins the queen. The fix: play 3…d6 first."),
+    dict(id="LCSXV_yJs_U", title="Stop the Scholar's Mate (and punish it)", date=None, topic="Scholar's Mate",
+         desc="Block with g6, defend f7 with Nf6, then hit the queen with Nd4. Early queen? Develop and make her run."),
     dict(id="9EOJdMBaPO4", title="He moved his king on move 5… big mistake", date=None, topic="Opening mistakes",
-         desc="Why moving your king early in the opening gets punished."),
+         desc="No castling, a knight fork on f7 and a rook gone. In the opening, castle; don't move your king by hand."),
+    dict(id="xF6KVwnOGCY", title="I fell for the oldest trick in chess", date=None, topic="Scholar's Mate",
+         desc="Queen and bishop against f7. Once they aim at f7, keep defending it."),
 ]
 
 TRAPS = [
-    dict(slug="fishing-pole-trap", name="Fishing Pole Trap", opening="Ruy Lopez", side="Black sets it", short=None,
+    dict(slug="fishing-pole-trap", name="Fishing Pole Trap", opening="Ruy Lopez", side="Black sets it", short="G2pqyA0mXF0",
          hook="Black leaves a knight hanging on g4. Take it, and the h-file opens straight onto your king.",
          intro="The Fishing Pole Trap is a sneaky idea for Black in the Ruy Lopez (1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.O-O Ng4). "
                "After 5.h3 h5! the knight on g4 is offered as bait. If White takes it with 6.hxg4??, the h-file opens "
@@ -57,7 +65,7 @@ TRAPS = [
 ]
 # library cards for lessons that have a Short but no playable page yet: (name, opening, text, short id or None)
 OTHER = [("Petrov Trap", "Petrov Defense", "Copying White's moves costs Black the queen. Play 3…d6 first.", "KA_x11CO7Gg"),
-         ("Fried Liver Attack", "Italian Game", "White sacrifices a knight on f7 and drags the king into the open.", None)]
+         ("Fried Liver Attack", "Italian Game", "White sacrifices a knight on f7 and drags the king into the open.", "WFRx-dXjOcc")]
 
 # ---------------- style ----------------
 CSS = """

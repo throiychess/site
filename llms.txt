@@ -7,8 +7,12 @@
 
 ## Videos
 - [All Shorts](https://throiychess.com/shorts/)
-- [Don't fall for this Petrov trap](https://www.youtube.com/shorts/KA_x11CO7Gg): Copying White's moves in the Petrov costs Black the queen. Play 3…d6 first.
-- [He moved his king on move 5… big mistake](https://www.youtube.com/shorts/9EOJdMBaPO4): Why moving your king early in the opening gets punished.
+- [Don't take the bait! The Fishing Pole Trap](https://www.youtube.com/shorts/G2pqyA0mXF0): Black leaves a knight on g4 as bait. Take it and the h-file opens straight at your king, ending in mate on h1.
+- [Fried Liver Attack: mate in 9 (and how to stop it)](https://www.youtube.com/shorts/WFRx-dXjOcc): After 5…Nxd5? 6.Nxf7! the black king is dragged out. The fix: don't recapture on d5, play 5…Na5! instead.
+- [Don't fall for this Petrov trap](https://www.youtube.com/shorts/KA_x11CO7Gg): After 3…Nxe4? 4.Qe2! the knight is pinned and Nc6+ wins the queen. The fix: play 3…d6 first.
+- [Stop the Scholar's Mate (and punish it)](https://www.youtube.com/shorts/LCSXV_yJs_U): Block with g6, defend f7 with Nf6, then hit the queen with Nd4. Early queen? Develop and make her run.
+- [He moved his king on move 5… big mistake](https://www.youtube.com/shorts/9EOJdMBaPO4): No castling, a knight fork on f7 and a rook gone. In the opening, castle; don't move your king by hand.
+- [I fell for the oldest trick in chess](https://www.youtube.com/shorts/xF6KVwnOGCY): Queen and bishop against f7. Once they aim at f7, keep defending it.
 
 ## Channels
 - [YouTube](https://www.youtube.com/@ThroiyChess)
