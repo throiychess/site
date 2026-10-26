@@ -50,6 +50,10 @@ if os.path.exists(_feed):
         if f and not s.get("date"): s["date"] = f["date"]
     SHORTS = sorted(_new + SHORTS, key=lambda s: s.get("date") or "", reverse=True)
 
+LONG_IDS = set()   # ids of long (landscape) videos, in case the feed check misses one
+VIDEOS = [s for s in SHORTS if s.get("kind") == "video" or s["id"] in LONG_IDS]
+SHORTS = [s for s in SHORTS if s not in VIDEOS]
+
 TRAPS = [
     dict(slug="fishing-pole-trap", name="Fishing Pole Trap", opening="Ruy Lopez", side="Black sets it", short="G2pqyA0mXF0",
          hook="Black leaves a knight hanging on g4. Take it, and the h-file opens straight onto your king.",
@@ -145,6 +149,12 @@ a.card:hover{background:var(--panel2)}
 .short h3{font-size:16px;line-height:1.3}
 .short p{margin:0;color:var(--mute);font-size:14px}
 .vid{position:relative;aspect-ratio:9/16;width:100%;max-width:100%;background:var(--panel);overflow:hidden}
+.vid.wide{aspect-ratio:16/9}
+.videos{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+nav.links a.support{color:var(--gold)}
+.supportbar{border:1px solid var(--line);padding:22px 24px;display:flex;gap:14px 24px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:8px 0 48px}
+.supportbar p{margin:0;color:var(--mute)}.supportbar strong{color:var(--ink)}
+.kofi{width:100%;max-width:460px;height:712px;border:0;background:#f9f9f9;display:block}
 .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .vid button{position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;color:var(--ink);font-family:var(--font);
  background:linear-gradient(180deg,rgba(14,13,11,.15),rgba(14,13,11,.85)),repeating-conic-gradient(var(--sq-d) 0 25%,var(--sq-l) 0 50%) 0 0/25% 14.0625%;
@@ -213,6 +223,7 @@ form.contact{display:grid;gap:18px;max-width:620px}
 .status{font-weight:600;margin:0}
 .status.err{color:var(--red)}
 .small{font-size:14px;color:var(--mute)}
+@media (max-width:700px){.videos{grid-template-columns:1fr}}
 @media (max-width:900px){.shorts{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr 1fr}}
 @media (max-width:860px){.hero,.player,.twocol{grid-template-columns:1fr}.hero{padding-block:32px}.breaking{grid-template-columns:1fr;gap:14px}.about{grid-template-columns:1fr}.about img{width:150px}}
 @media (max-width:560px){.grid{grid-template-columns:1fr}.brand img{height:46px}.brand{font-size:19px}nav.links{gap:4px 14px}html{scroll-padding-top:130px}}
@@ -224,7 +235,7 @@ def csp():
     conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else [])
     scr = ["'self'", "'unsafe-inline'"] + (["https://gc.zgo.at"] if ANALYTICS else [])
     return ("default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; "
-            f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com; "
+            f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com https://ko-fi.com; "
             "form-action 'self' https://api.web3forms.com; base-uri 'self'; object-src 'none'")
 
 def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="website"):
@@ -242,16 +253,20 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             f'<link rel="preload" href="/fonts/Inter-Black.woff" as="font" type="font/woff" crossorigin>'
             f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}</body></html>')
 
-NAV = [("Shorts", "/shorts/"), ("Traps", "/#traps"), ("Top games", "/#top-games"), ("About", "/#about"), ("Contact", "/contact/")]
+NAV = [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Traps", "/#traps"), ("Top games", "/#top-games"), ("About", "/#about"), ("Contact", "/contact/"), ("Support", "/support/")]
 def header(active=""):
     return ('<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt="">'
             '<span>THROIY<b>CHESS</b></span></a><nav class="links" aria-label="Main">'
-            + "".join(f'<a href="{u}"{" aria-current=page" if n == active else ""}>{n}</a>' for n, u in NAV) + '</nav></div></header>')
+            + "".join(f'<a href="{u}"{" class=support" if n == "Support" else ""}{" aria-current=page" if n == active else ""}>{n}</a>' for n, u in NAV) + '</nav></div></header>')
 
-def footer():
+def support_bar():
+    return ('<div class="wrap"><div class="supportbar"><p><strong>Enjoying the lessons?</strong> They stay free. A small tip keeps new traps coming every day.</p>'
+            '<a class="btn solid" href="/support/">Support Throiy Chess</a></div></div>') if DONATE_URL else ""
+
+def footer(band=True):
     ext = " ".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LINKS)
-    return (f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Quick chess lessons, every day</span>'
-            f'<nav aria-label="Footer">{ext}<a href="/contact/">Contact</a><a href="/privacy/">Privacy</a></nav></div></footer>')
+    return ((support_bar() if band else "") + f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Quick chess lessons, every day</span>'
+            f'<nav aria-label="Footer">{ext}<a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a></nav></div></footer>')
 
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
 SCRIPT = """<script>
@@ -268,7 +283,7 @@ def video_ld(s):
     if not s.get("date"): return None
     return {"@context": "https://schema.org", "@type": "VideoObject", "name": s["title"], "description": s.get("desc", s["title"]),
             "uploadDate": s["date"], "thumbnailUrl": f"https://i.ytimg.com/vi/{s['id']}/hqdefault.jpg",
-            "embedUrl": f"https://www.youtube-nocookie.com/embed/{s['id']}", "contentUrl": f"https://www.youtube.com/shorts/{s['id']}"}
+            "embedUrl": f"https://www.youtube-nocookie.com/embed/{s['id']}", "contentUrl": (f"https://www.youtube.com/watch?v={s['id']}" if s.get("kind") == "video" else f"https://www.youtube.com/shorts/{s['id']}")}
 
 ORG = {"@context": "https://schema.org", "@type": "Organization", "name": NAME, "url": SITE, "logo": SITE + "/img/logo.png",
        "sameAs": [u for _, u in LINKS], "description": TAGLINE}
@@ -299,7 +314,7 @@ def home():
 <section id="about"><div class="wrap about"><img src="/img/avatar-thumbs_up.png" width="220" height="220" alt="Throiy, illustrated, giving a thumbs up">
 <div><span class="eyebrow">About</span><h2>Hi, I'm Throiy.</h2><p>I'm a chess player sharing what I wish I'd known sooner. Short, clear lessons you can use in your next game. A new one every day on YouTube, TikTok, Instagram and Facebook.</p>
 <div class="btns" style="margin-top:18px">''' + "".join(f'<a class="btn" href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LINKS) + \
-        (f'<a class="btn solid" href="{DONATE_URL}" target="_blank" rel="noopener">Support the channel</a>' if DONATE_URL else "") + '''</div></div></div></section>
+        ('<a class="btn solid" href="/support/">Support the channel</a>' if DONATE_URL else "") + '''</div></div></div></section>
 </main>''' + footer()
     site_ld = {"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": SITE, "description": TAGLINE}
     return page("/", "Throiy Chess · Chess traps and lessons, explained fast", TAGLINE + " A new chess lesson every day.", body,
@@ -396,7 +411,11 @@ var b=document.getElementById("send");b.disabled=true;st.textContent="Sending…
 try{{var r=await fetch(f.action,{{method:"POST",headers:{{"Accept":"application/json"}},body:new FormData(f)}});var j=await r.json();
 if(j.success){{f.reset();st.textContent="Thanks! Your message has been sent. We usually reply within a few days."}}else throw 0}}
 catch(x){{st.className="status err";st.textContent="Sending failed. Please try again later, or message us on Instagram (@throiychess)."}}b.disabled=false}})}})();</script>'''
-    mail = f'<p class="small">Or e-mail us: <strong>{e(CONTACT_EMAIL)}</strong></p>' if CONTACT_EMAIL else ""
+    if CONTACT_EMAIL:
+        u, d = CONTACT_EMAIL.split("@")
+        mail = (f'<p class="small">Or e-mail us: <a id="ml" href="/contact/">{e(u)} [at] {e(d.replace(".", " [dot] "))}</a></p>'
+                f'<script>(function(){{var a=document.getElementById("ml"),m=["{e(u)}","{e(d)}"].join("@");a.textContent=m;a.href="mailto:"+m}})();</script>')
+    else: mail = ""
     body = header("Contact") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Contact</span><h1 class="page">Say hi.</h1>
 <p>A question, a trap you want explained, or a collaboration? Send a message.</p></div>
 <div class="twocol" style="padding-bottom:64px"><div>{form}{mail}</div><aside><img src="/img/avatar-thumbs_up.png" width="300" height="300" alt="Throiy, illustrated, giving a thumbs up" style="width:100%;max-width:260px;height:auto"></aside></div></main>''' + footer()
@@ -404,16 +423,48 @@ catch(x){{st.className="status err";st.textContent="Sending failed. Please try a
 
 def privacy():
     body = header() + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Privacy</span><h1 class="page">Privacy statement</h1>
-<p>Short version: this site does not use cookies, does not track you across sites and does not sell anything about you.</p></div>
+<p>Short version: no cookies, no tracking, and we never sell your data.</p></div>
 <div class="prose" style="padding-bottom:64px">
-<h2>Who we are</h2><p>Throiy Chess is a chess education channel. This website ({DOMAIN}) is run by Throiy Chess from the Netherlands.</p>
-<h2>What this site stores</h2><p>Nothing in your browser. There are no cookies and no login. The site is hosted on GitHub Pages; like every web server, GitHub processes your IP address to deliver the pages and to protect the service.</p>
-<h2>Videos</h2><p>Shorts are shown from YouTube in privacy-enhanced mode. Nothing is loaded from YouTube until you press play. When you do, YouTube (Google) receives your IP address and may set its own cookies, under Google's privacy policy.</p>
-<h2>Contact form</h2><p>If you send a message, we receive your name, e-mail address and message through our form service (Web3Forms) by e-mail. We use them only to reply, and delete them when they are no longer needed, at the latest after one year.</p>
-<h2>Statistics</h2><p>{("We count visits with GoatCounter, without cookies and without storing personal data, to see which lessons are useful." if ANALYTICS else "We do not run visitor statistics at the moment. If we add them, we will use a cookie-free tool and update this statement.")}</p>
-<h2>Your rights</h2><p>You can ask us what we hold about you, and ask us to correct or delete it, via the <a href="/contact/">contact page</a>. You can also file a complaint with the Dutch Data Protection Authority (Autoriteit Persoonsgegevens).</p>
+<h2>Who we are</h2><p>Throiy Chess is a chess education channel from the Netherlands. This statement covers {DOMAIN}.</p>
+<h2>Visiting the site</h2><p>This site sets no cookies and has no login. Our hosting provider processes your IP address to deliver the pages and keep them secure.{" Visits are counted with a cookie-free tool that stores no personal data." if ANALYTICS else ""}</p>
+<h2>Videos</h2><p>Videos come from YouTube and only load when you press play. From then on, YouTube (Google) receives your IP address and may set cookies under its own privacy policy.</p>
+<h2>Contact</h2><p>When you send a message, we receive your name, e-mail address and message. We use them only to reply, and delete them within a year.</p>
+<h2>Support</h2><p>Tips are handled by Ko-fi on its own payment page, under its own privacy policy. We see your name and message if you leave them, never your payment details.</p>
+<h2>Your rights</h2><p>Ask us via the <a href="/contact/">contact page</a> what we hold about you, or to correct or delete it. You can also complain to the Dutch Data Protection Authority (Autoriteit Persoonsgegevens).</p>
 <p class="small">Last updated: {datetime.date.today().strftime("%d %B %Y")}</p></div></main>''' + footer()
     return "/privacy/", page("/privacy/", "Privacy · Throiy Chess", "How Throiy Chess handles your data: no cookies, no tracking.", body)
+
+def video_card(s):
+    return (f'<article class="short"><div class="vid wide"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}">'
+            f'<span class="play"></span><small>Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
+            f'<h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p></article>')
+
+def videos_page():
+    if VIDEOS: inner = f'<div class="videos">{"".join(video_card(v) for v in VIDEOS)}</div>'
+    else: inner = ('<div class="supportbar"><p><strong>First long video: 10 Opening Traps Every Beginner Must Know.</strong> '
+                   'Premieres on YouTube on 28 October and appears here automatically.</p>'
+                   f'<a class="btn solid" href="{LINKS[0][1]}" target="_blank" rel="noopener">Subscribe on YouTube</a></div>')
+    body = header("Videos") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Videos</span>
+<h1 class="page">The full lessons.</h1><p>Longer videos that go deeper: several traps in one go, with the setup, the bait, the punishment and the fix. For quick lessons, see the <a href="/shorts/">Shorts</a>.</p></div>
+{inner}<div style="height:48px"></div></main>''' + footer()
+    return "/videos/", page("/videos/", "Videos · Throiy Chess", "Full-length Throiy Chess videos: opening traps and how to avoid them, explained step by step.",
+                            body, [v for v in map(video_ld, VIDEOS) if v])
+
+def support_page():
+    body = header("Support") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Support</span>
+<h1 class="page">Keep the lessons free.</h1><p>Every Short and every trap page on this site is free, without ads on the site and without a paywall. If they helped you win a game (or stop losing one), you can say thanks with a small tip.</p></div>
+<div class="twocol" style="padding-bottom:64px"><div class="prose">
+<h2>Why support?</h2>
+<p>Each lesson takes hours: finding the trap, checking every move with a chess engine, writing and recording the voice-over, and building the animation on our own board. Tips pay for the tools and hosting, and buy time to make more.</p>
+<h2>How it works</h2>
+<p>Choose an amount in the panel and pay with card or PayPal. The payment runs through Ko-fi, so we never see your payment details. A one-off tip is enough; no account needed.</p>
+<p>Prefer the full page? <a href="{DONATE_URL}" target="_blank" rel="noopener">Open Ko-fi in a new tab</a>.</p>
+<h2>Free ways to help</h2>
+<p>Subscribe on <a href="{LINKS[0][1]}" target="_blank" rel="noopener">YouTube</a>, share a Short with a chess friend, or comment with the trap you want explained next. It all helps the channel grow.</p>
+<h2>Coming later</h2>
+<p>Memberships with extra lessons and courses. <a href="/contact/">Tell us</a> what you would want in them.</p>
+</div><aside><iframe class="kofi" src="{DONATE_URL}/?hidefeed=true&amp;widget=true&amp;embed=true&amp;preview=true" title="Support Throiy Chess on Ko-fi" loading="lazy"></iframe></aside></div></main>''' + footer(band=False)
+    return "/support/", page("/support/", "Support · Throiy Chess", "Support Throiy Chess with a small tip and keep the chess lessons free.", body)
 
 def notfound():
     body = header() + '''<main class="wrap"><div class="pagehead"><span class="eyebrow">404</span><h1 class="page">That square is empty.</h1>
@@ -426,13 +477,14 @@ def llms_txt():
              "## Trap lessons"]
     lines += [f"- [{t['name']}]({SITE}/traps/{t['slug']}/): {t['hook']} Opening: {t['opening']}. Moves: {t['moves']}" for t in TRAPS]
     lines += ["", "## Videos", f"- [All Shorts]({SITE}/shorts/)"] + [f"- [{s['title']}](https://www.youtube.com/shorts/{s['id']}): {s.get('desc', '')}" for s in SHORTS]
-    lines += ["", "## Channels"] + [f"- [{n}]({u})" for n, u in LINKS] + ["", "## Optional", f"- [Contact]({SITE}/contact/)", f"- [Privacy]({SITE}/privacy/)"]
+    lines += [f"- [{v['title']}](https://www.youtube.com/watch?v={v['id']}): {v.get('desc', '')}" for v in VIDEOS]
+    lines += ["", "## Channels"] + [f"- [{n}]({u})" for n, u in LINKS] + ["", "## Optional", f"- [Support]({SITE}/support/)", f"- [Contact]({SITE}/contact/)", f"- [Privacy]({SITE}/privacy/)"]
     return "\n".join(lines) + "\n"
 
 def build():
     d = os.environ.get("OUT_DIR") or os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True) if not os.environ.get("OUT_DIR") else None
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
-    pages = [("/", home())] + shorts_pages() + [trap_page(t) for t in TRAPS] + [contact(), privacy()]
+    pages = [("/", home())] + shorts_pages() + [videos_page()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
