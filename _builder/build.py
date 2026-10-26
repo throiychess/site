@@ -14,10 +14,10 @@ NAME = "Throiy Chess"
 TAGLINE = "Opening traps, mating patterns and top games, explained fast."
 LINKS = [("YouTube", "https://www.youtube.com/@ThroiyChess"), ("TikTok", "https://www.tiktok.com/@throiychess"),
          ("Instagram", "https://www.instagram.com/throiychess"), ("Facebook", "https://www.facebook.com/throiychess")]
-WEB3FORMS_KEY = None        # access key from web3forms.com, sent to the contact e-mail address
+WEB3FORMS_KEY = "a10fa119-63ca-43b3-8ef5-2b7aa106d669"        # access key from web3forms.com, sent to the contact e-mail address
 CONTACT_EMAIL = "info@throiychess.com"      # e.g. "info@throiychess.com" once the mailbox exists
-ANALYTICS = None            # GoatCounter code, e.g. "throiychess" -> https://throiychess.goatcounter.com
-DONATE_URL = None           # e.g. a Ko-fi page
+ANALYTICS = "throiychess"            # GoatCounter code, e.g. "throiychess" -> https://throiychess.goatcounter.com
+DONATE_URL = "https://ko-fi.com/throiychess"           # e.g. a Ko-fi page
 PER_PAGE = 12
 
 # ---------------- data ----------------
