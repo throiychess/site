@@ -23,5 +23,6 @@
 - [Facebook](https://www.facebook.com/throiychess)
 
 ## Optional
+- [Support](https://throiychess.com/support/)
 - [Contact](https://throiychess.com/contact/)
 - [Privacy](https://throiychess.com/privacy/)
