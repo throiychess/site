@@ -5,7 +5,7 @@
 Add content in the data section: SHORTS (every YouTube Short), TRAPS (playable trap pages).
 Settings: WEB3FORMS_KEY (contact form), ANALYTICS (GoatCounter code), DONATE_URL."""
 import os, sys, json, shutil, html, math, datetime
-sys.path.insert(0, "/home/claude/ext/python-chess")
+sys.path.insert(0, "/home/claude/ext/python-chess")  # local; in GitHub Actions chess comes from pip
 import chess
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -40,6 +40,15 @@ SHORTS = [  # newest first
     dict(id="xF6KVwnOGCY", title="I fell for the oldest trick in chess", date=None, topic="Scholar's Mate",
          desc="Queen and bishop against f7. Once they aim at f7, keep defending it."),
 ]
+
+_feed = os.path.join(ROOT, "youtube.json")
+if os.path.exists(_feed):
+    _known = {s["id"] for s in SHORTS}
+    _new = [v for v in json.load(open(_feed, encoding="utf-8")) if v["id"] not in _known]
+    for s in SHORTS:  # fill missing upload dates from the feed
+        f = next((v for v in json.load(open(_feed, encoding="utf-8")) if v["id"] == s["id"]), None)
+        if f and not s.get("date"): s["date"] = f["date"]
+    SHORTS = sorted(_new + SHORTS, key=lambda s: s.get("date") or "", reverse=True)
 
 TRAPS = [
     dict(slug="fishing-pole-trap", name="Fishing Pole Trap", opening="Ruy Lopez", side="Black sets it", short="G2pqyA0mXF0",
@@ -421,7 +430,8 @@ def llms_txt():
     return "\n".join(lines) + "\n"
 
 def build():
-    d = os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True); shutil.copytree(os.path.join(ROOT, "src"), d)
+    d = os.environ.get("OUT_DIR") or os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True) if not os.environ.get("OUT_DIR") else None
+    shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
     pages = [("/", home())] + shorts_pages() + [trap_page(t) for t in TRAPS] + [contact(), privacy()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
