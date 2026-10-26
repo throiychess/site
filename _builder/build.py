@@ -13,9 +13,9 @@ DOMAIN = "throiychess.com"; SITE = f"https://{DOMAIN}"
 NAME = "Throiy Chess"
 TAGLINE = "Opening traps, mating patterns and top games, explained fast."
 LINKS = [("YouTube", "https://www.youtube.com/@ThroiyChess"), ("TikTok", "https://www.tiktok.com/@throiychess"),
-         ("Instagram", "https://www.instagram.com/throiychess"), ("Facebook", "https://www.facebook.com/profile.php?id=61595770557361")]
+         ("Instagram", "https://www.instagram.com/throiychess"), ("Facebook", "https://www.facebook.com/throiychess")]
 WEB3FORMS_KEY = None        # access key from web3forms.com, sent to the contact e-mail address
-CONTACT_EMAIL = None        # e.g. "info@throiychess.com" once the mailbox exists
+CONTACT_EMAIL = "info@throiychess.com"      # e.g. "info@throiychess.com" once the mailbox exists
 ANALYTICS = None            # GoatCounter code, e.g. "throiychess" -> https://throiychess.goatcounter.com
 DONATE_URL = None           # e.g. a Ko-fi page
 PER_PAGE = 12
