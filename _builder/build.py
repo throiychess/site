@@ -31,13 +31,13 @@ SHORTS = [  # newest first
          desc="Black leaves a knight on g4 as bait. Take it and the h-file opens straight at your king, ending in mate on h1."),
     dict(id="WFRx-dXjOcc", title="Fried Liver Attack: mate in 9 (and how to stop it)", date="2026-10-24", topic="Italian Game",
          desc="After 5…Nxd5? 6.Nxf7! the black king is dragged out. The fix: don't recapture on d5, play 5…Na5! instead."),
-    dict(id="KA_x11CO7Gg", title="Don't fall for this Petrov trap", date=None, topic="Petrov Defense",
+    dict(id="KA_x11CO7Gg", title="Don't fall for this Petrov trap", date="2026-10-22", topic="Petrov Defense",
          desc="After 3…Nxe4? 4.Qe2! the knight is pinned and Nc6+ wins the queen. The fix: play 3…d6 first."),
-    dict(id="LCSXV_yJs_U", title="Stop the Scholar's Mate (and punish it)", date=None, topic="Scholar's Mate",
+    dict(id="LCSXV_yJs_U", title="Stop the Scholar's Mate (and punish it)", date="2026-10-21", topic="Scholar's Mate",
          desc="Block with g6, defend f7 with Nf6, then hit the queen with Nd4. Early queen? Develop and make her run."),
-    dict(id="9EOJdMBaPO4", title="He moved his king on move 5… big mistake", date=None, topic="Opening mistakes",
+    dict(id="9EOJdMBaPO4", title="He moved his king on move 5… big mistake", date="2026-10-19", topic="Opening mistakes",
          desc="No castling, a knight fork on f7 and a rook gone. In the opening, castle; don't move your king by hand."),
-    dict(id="xF6KVwnOGCY", title="I fell for the oldest trick in chess", date=None, topic="Scholar's Mate",
+    dict(id="xF6KVwnOGCY", title="I fell for the oldest trick in chess", date="2026-10-18", topic="Scholar's Mate",
          desc="Queen and bishop against f7. Once they aim at f7, keep defending it."),
 ]
 
