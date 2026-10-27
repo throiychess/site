@@ -24,18 +24,21 @@ PER_PAGE = 12
 # ---------------- data ----------------
 # Every YouTube Short. id = the part after youtube.com/shorts/ ; date = upload date (YYYY-MM-DD) ; trap = slug of a trap page (optional)
 SHORTS = [  # newest first
-    dict(id="fJiePOSCU9I", title="Free rook? Don't take it! Giri vs Abdusattorov", date="2026-10-26", topic="Top game · European Club Cup",
-         desc="Giri left his rook hanging on purpose. Abdusattorov took it, and 19.Nf5! 20.Qg5! decided the game. Before you grab material, check what your opponent gets."),
+    dict(id="paGdwe1cYmk", title="Free queen? Mate in 2! Légal's Mate", date="2026-10-27", topic="Légal's Mate",
+         desc="White gives away the queen and mates in two moves. The fix: don't grab the queen, take the knight instead."),
+    dict(id="fJiePOSCU9I", title="Free rook? Don't take it! Giri vs Abdusattorov", date="2026-10-26", topic="Top game",
+         desc="Giri left his rook hanging on purpose. Abdusattorov took it, and White's attack crashed through. Before you grab something, check what your opponent gets.",
+         credit="Thumbnail photos: Frans Peeters, CC BY-SA 2.0"),
     dict(id="TsHaDaBUS-c", title="Take my queen! The Stafford Gambit trap", date="2026-10-26", topic="Stafford Gambit",
-         desc="After 6.Bg5?? Nxe4! 7.Bxd8?? Bxf2+ 8.Ke2 Bg4# it's mate. The fix: don't play Bg5, just develop and castle."),
+         desc="Black gives away the queen on purpose. Take it and it's mate in two. The fix: don't pin the knight, just develop and castle."),
     dict(id="G2pqyA0mXF0", title="Don't take the bait! The Fishing Pole Trap", date="2026-10-25", topic="Ruy Lopez",
          desc="Black leaves a knight on g4 as bait. Take it and the h-file opens straight at your king, ending in mate on h1."),
     dict(id="WFRx-dXjOcc", title="Fried Liver Attack: mate in 9 (and how to stop it)", date="2026-10-24", topic="Italian Game",
-         desc="After 5…Nxd5? 6.Nxf7! the black king is dragged out. The fix: don't recapture on d5, play 5…Na5! instead."),
+         desc="White sacrifices a knight to drag Black's king into the open. The fix: don't take back in the center, attack the bishop instead."),
     dict(id="KA_x11CO7Gg", title="Don't fall for this Petrov trap", date="2026-10-22", topic="Petrov Defense",
-         desc="After 3…Nxe4? 4.Qe2! the knight is pinned and Nc6+ wins the queen. The fix: play 3…d6 first."),
+         desc="Copying White's moves costs Black the queen. The fix: kick the knight away first, then take back the pawn."),
     dict(id="LCSXV_yJs_U", title="Stop the Scholar's Mate (and punish it)", date="2026-10-21", topic="Scholar's Mate",
-         desc="Block with g6, defend f7 with Nf6, then hit the queen with Nd4. Early queen? Develop and make her run."),
+         desc="Queen and bishop attack one weak square next to your king. Block the queen first, then make her run."),
     dict(id="9EOJdMBaPO4", title="He moved his king on move 5… big mistake", date="2026-10-19", topic="Opening mistakes",
          desc="No castling, a knight fork on f7 and a rook gone. In the opening, castle; don't move your king by hand."),
     dict(id="xF6KVwnOGCY", title="I fell for the oldest trick in chess", date="2026-10-18", topic="Scholar's Mate",
@@ -46,6 +49,10 @@ _feed = os.path.join(ROOT, "youtube.json")
 if os.path.exists(_feed):
     _known = {s["id"] for s in SHORTS}
     _new = [v for v in json.load(open(_feed, encoding="utf-8")) if v["id"] not in _known]
+    for v in _new:  # tidy auto-imported Shorts: a label, and no title repeated at the start of the text
+        v["topic"] = v.get("topic") or ("Video" if v.get("kind") == "video" else "New Short")
+        d = v.get("desc", "")
+        if d.startswith(v["title"]): v["desc"] = d[len(v["title"]):].lstrip(" :.-–—!?")
     for s in SHORTS:  # fill missing upload dates from the feed
         f = next((v for v in json.load(open(_feed, encoding="utf-8")) if v["id"] == s["id"]), None)
         if f and not s.get("date"): s["date"] = f["date"]
@@ -55,35 +62,9 @@ LONG_IDS = set()   # ids of long (landscape) videos, in case the feed check miss
 VIDEOS = [s for s in SHORTS if s.get("kind") == "video" or s["id"] in LONG_IDS]
 SHORTS = [s for s in SHORTS if s not in VIDEOS]
 
-TRAPS = [
-    dict(slug="fishing-pole-trap", name="Fishing Pole Trap", opening="Ruy Lopez", side="Black sets it", short="G2pqyA0mXF0",
-         hook="Black leaves a knight hanging on g4. Take it, and the h-file opens straight onto your king.",
-         intro="The Fishing Pole Trap is a sneaky idea for Black in the Ruy Lopez (1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.O-O Ng4). "
-               "After 5.h3 h5! the knight on g4 is offered as bait. If White takes it with 6.hxg4??, the h-file opens "
-               "and Black's queen and rook deliver mate on h1.",
-         moves="e4 e5 Nf3 Nc6 Bb5 Nf6 O-O Ng4 h3 h5 hxg4 hxg4 Nh2 Qh4 f3 g3 Rf2 Nd4 Kf1 gxh2 Ke1 h1=Q+ Bf1 Qxf1+ Kxf1 Qh1#",
-         notes={0: ("START", "", "The Fishing Pole starts from a normal Ruy Lopez. Step through the moves."),
-                6: ("OPENING", "3…Nf6", "A normal Ruy Lopez. Nothing special yet."),
-                7: ("OPENING", "4.O-O", "White castles. The king goes to g1."),
-                8: ("OPENING", "4…Ng4", "Black's knight jumps to g4. It looks silly, and that is the point."),
-                9: ("FIRST MISTAKE", "5.h3?", "White kicks the knight. Pushing this pawn weakens the king's cover.", ["h3"]),
-                10: ("THE BAIT", "5…h5!", "Black ignores the threat and leaves the knight. That's the bait.", ["!g4"]),
-                11: ("THE BLUNDER", "6.hxg4??", "A free knight? Taking it is the real blunder.", ["!g4"]),
-                12: ("THE OPEN FILE", "6…hxg4", "The h-file is open. The rook on h8 now aims at the king.", ["h8", "!g1"]),
-                13: ("THE OPEN FILE", "7.Nh2", "The knight runs away from g4's pawn."),
-                14: ("MATE THREAT", "7…Qh4!", "Queen and rook are lined up on the h-file. Qh1 mate is coming.", ["h4", "h8"]),
-                15: ("MATE THREAT", "8.f3", "White makes room so the king can escape via f2."),
-                16: ("MATE THREAT", "8…g3!", "g3 locks the king in. Now only Rf2 or Re1 stop mate in one, and they only delay it.", ["g3", "!g1"]),
-                17: ("NO WAY OUT", "9.Rf2", "The rook covers f2. Black keeps piling on."),
-                26: ("CHECKMATE", "13…Qh1#", "The king tried to run, but the attack is too strong. Checkmate on h1.", ["!f1", "h1"])},
-         fix=["Don't push the h-pawn when the knight lands on g4. h3 is the first mistake.",
-              "Your king hides behind f2, g2 and h2. Keep them home and keep developing.",
-              "If the knight is left hanging after …h5, don't take it. The open h-file is worth more than a knight.",
-              "As Black it is a cheeky blitz trick. It only works if they bite, so don't count on it."]),
-]
+from traps import TRAPS  # the trap library lives in _builder/traps.py (one entry per trap page)
 # library cards for lessons that have a Short but no playable page yet: (name, opening, text, short id or None)
-OTHER = [("Petrov Trap", "Petrov Defense", "Copying White's moves costs Black the queen. Play 3…d6 first.", "KA_x11CO7Gg"),
-         ("Fried Liver Attack", "Italian Game", "White sacrifices a knight on f7 and drags the king into the open.", "WFRx-dXjOcc")]
+OTHER = []  # extra cards for traps that have no page yet: (name, opening, hook, short id)
 
 # ---------------- style ----------------
 CSS = """
@@ -149,6 +130,9 @@ a.card:hover{background:var(--panel2)}
 .short{display:grid;gap:10px;align-content:start;min-width:0}
 .short h3{font-size:16px;line-height:1.3}
 .short p{margin:0;color:var(--mute);font-size:14px}
+.short .label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.short .credit{font-size:12px;opacity:.8}
+.simple{background:var(--panel);border-left:4px solid var(--gold);padding:18px 22px;margin:0 0 32px;max-width:72ch;display:grid;gap:6px}
+.simple p{margin:0;font-size:18px;line-height:1.5}
 .vid{position:relative;aspect-ratio:9/16;width:100%;max-width:100%;background:var(--panel);overflow:hidden}
 .vid.wide{aspect-ratio:16/9}
 .videos{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
@@ -297,10 +281,31 @@ fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(
 m.textContent="Almost done: check your inbox and confirm your e-mail.";}else{m.textContent="That didn't work. Check the address and try again.";}})
 .catch(function(){m.textContent="Opening the sign-up in a new tab…";fm.submit();})});
 </script>"""
+THUMBS = os.path.join(ROOT, "src", "img", "yt")
+def fetch_thumbs(items):
+    """Self-hosted thumbnails (no request to YouTube until play). Own designs are committed in src/img/yt/<id>.jpg;
+    missing ones are downloaded once from YouTube at build time (GitHub Actions) and committed with the site."""
+    import urllib.request
+    os.makedirs(THUMBS, exist_ok=True)
+    for s in items:
+        p = os.path.join(THUMBS, s["id"] + ".jpg")
+        if os.path.exists(p): continue
+        for name in (["hqdefault.jpg"] if s.get("kind") == "video" else ["oar2.jpg", "oardefault.jpg", "hqdefault.jpg"]):
+            try:
+                data = urllib.request.urlopen(f"https://i.ytimg.com/vi/{s['id']}/{name}", timeout=15).read()
+                if len(data) > 2000: open(p, "wb").write(data); break
+            except Exception: pass
+
+def thumb_style(s):
+    if not os.path.exists(os.path.join(THUMBS, s["id"] + ".jpg")): return ""
+    return (f' style="background-image:linear-gradient(180deg,rgba(14,13,11,0) 55%,rgba(14,13,11,.85)),url(/img/yt/{e(s["id"])}.jpg);'
+            'background-size:cover;background-position:center"')
+
 def short_card(s):
-    return (f'<article class="short"><div class="vid"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}">'
+    cr = f'<p class="small credit">{e(s["credit"])}</p>' if s.get("credit") else ""
+    return (f'<article class="short"><div class="vid"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
             f'<span class="play"></span><small>Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
-            f'<span class="label">{e(s.get("topic", ""))}</span><h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p></article>')
+            f'<span class="label">{e(s.get("topic", ""))}</span><h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p>{cr}</article>')
 
 def video_ld(s):
     if not s.get("date"): return None
@@ -365,7 +370,7 @@ def trap_page(t):
     for san in t["moves"].split():
         mv = b.parse_san(san); b.push(mv)
         plies.append(dict(fen=b.board_fen(), san=san, fr=chess.square_name(mv.from_square), to=chess.square_name(mv.to_square)))
-    assert b.is_checkmate()
+    assert b.is_checkmate() or not t.get("mate", True), t["slug"]
     notes = {k: dict(label=v[0], tag=v[1], text=v[2], marks=(v[3] if len(v) > 3 else [])) for k, v in t["notes"].items()}
     mv_html = ""
     for i, p in enumerate(plies[1:], 1):
@@ -380,6 +385,7 @@ def trap_page(t):
     path = f'/traps/{t["slug"]}/'
     body = header("Traps") + f'''<main class="wrap"><div class="crumb"><a href="/#traps">Trap library</a> / {e(t["name"])}</div>
 <div class="pagehead" style="padding-top:18px"><span class="eyebrow">{e(t["opening"])} · {e(t["side"])}</span><h1 class="page">{e(t["name"])}</h1><p>{e(t["hook"])}</p></div>
+{f'<div class="simple"><span class="eyebrow">In plain words</span><p>{e(t["simple"])}</p></div>' if t.get("simple") else ""}
 <div class="player"><div><div class="board" id="board" role="img" aria-label="Chess board showing the {e(t["name"])}"></div>
 <div class="ctrl"><button type="button" id="first" aria-label="Start position">⏮</button><button type="button" id="prev" aria-label="Previous move">◀</button>
 <button type="button" id="next" aria-label="Next move">▶</button><button type="button" id="last" aria-label="Final position">⏭</button></div>
@@ -459,7 +465,7 @@ def privacy():
     return "/privacy/", page("/privacy/", "Privacy · Throiy Chess", "How Throiy Chess handles your data: no cookies, no tracking.", body)
 
 def video_card(s):
-    return (f'<article class="short"><div class="vid wide"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}">'
+    return (f'<article class="short"><div class="vid wide"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
             f'<span class="play"></span><small>Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
             f'<h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p></article>')
 
@@ -507,6 +513,7 @@ def llms_txt():
 
 def build():
     d = os.environ.get("OUT_DIR") or os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True) if not os.environ.get("OUT_DIR") else None
+    fetch_thumbs(SHORTS + VIDEOS)
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
     pages = [("/", home())] + shorts_pages() + [videos_page()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy()]
     for path, htm in pages:
