@@ -18,6 +18,7 @@ WEB3FORMS_KEY = "a10fa119-63ca-43b3-8ef5-2b7aa106d669"        # access key from 
 CONTACT_EMAIL = "info@throiychess.com"      # e.g. "info@throiychess.com" once the mailbox exists
 ANALYTICS = "throiychess"            # GoatCounter code, e.g. "throiychess" -> https://throiychess.goatcounter.com
 DONATE_URL = "https://ko-fi.com/throiychess"           # e.g. a Ko-fi page
+NEWSLETTER_URL = "https://assets.mailerlite.com/jsonp/2747354/forms/202502436720478151/subscribe"  # MailerLite form (POST fields[email]); "" = off
 PER_PAGE = 12
 
 # ---------------- data ----------------
@@ -155,6 +156,11 @@ nav.links a.support{color:var(--gold)}
 .supportbar{border:1px solid var(--line);padding:22px 24px;display:flex;gap:14px 24px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:8px 0 48px}
 .supportbar p{margin:0;color:var(--mute)}.supportbar strong{color:var(--ink)}
 .kofi{width:100%;max-width:460px;height:712px;border:0;background:#f9f9f9;display:block}
+.newsletter{display:grid;grid-template-columns:1fr 1fr;gap:18px 32px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:40px 0 0}
+.newsletter p{margin:6px 0 0;color:var(--mute)}
+form.nl{display:flex;flex-wrap:wrap;gap:10px}form.nl input[type=email]{flex:1 1 220px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit}
+form.nl .nl-msg{flex-basis:100%;margin:0}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:860px){.newsletter{grid-template-columns:1fr}}
 .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .vid button{position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;color:var(--ink);font-family:var(--font);
  background:linear-gradient(180deg,rgba(14,13,11,.15),rgba(14,13,11,.85)),repeating-conic-gradient(var(--sq-d) 0 25%,var(--sq-l) 0 50%) 0 0/25% 14.0625%;
@@ -232,11 +238,11 @@ form.contact{display:grid;gap:18px;max-width:620px}
 e = html.escape
 
 def csp():
-    conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else [])
+    conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else []) + (["https://assets.mailerlite.com"] if NEWSLETTER_URL else [])
     scr = ["'self'", "'unsafe-inline'"] + (["https://gc.zgo.at"] if ANALYTICS else [])
     return ("default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; "
             f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com https://ko-fi.com; "
-            "form-action 'self' https://api.web3forms.com; base-uri 'self'; object-src 'none'")
+            "form-action 'self' https://api.web3forms.com" + (" https://assets.mailerlite.com" if NEWSLETTER_URL else "") + "; base-uri 'self'; object-src 'none'")
 
 def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="website"):
     url = SITE + path
@@ -263,9 +269,21 @@ def support_bar():
     return ('<div class="wrap"><div class="supportbar"><p><strong>Enjoying the lessons?</strong> They stay free. A small tip keeps new traps coming every day.</p>'
             '<a class="btn solid" href="/support/">Support Throiy Chess</a></div></div>') if DONATE_URL else ""
 
+def newsletter():
+    if not NEWSLETTER_URL: return ""
+    return ('<div class="wrap"><div class="newsletter"><div><strong>One trap a week in your inbox.</strong>'
+            '<p>The best trap of the week, explained in plain words. Free, no spam, unsubscribe in one click.</p></div>'
+            f'<form class="nl" action="{e(NEWSLETTER_URL)}" method="post" target="_blank">'
+            '<label class="sr" for="nl-email">E-mail address</label>'
+            '<input id="nl-email" type="email" name="fields[email]" placeholder="Your e-mail" autocomplete="email" required>'
+            '<input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true">'
+            '<div class="hp" aria-hidden="true"><input type="text" name="nl_website" tabindex="-1" autocomplete="off"></div>'
+            '<button class="btn solid" type="submit">Subscribe</button>'
+            '<p class="nl-msg small" role="status" aria-live="polite"></p></form></div></div>')
+
 def footer(band=True):
     ext = " ".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LINKS)
-    return ((support_bar() if band else "") + f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Quick chess lessons, every day</span>'
+    return (newsletter() + (support_bar() if band else "") + f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Quick chess lessons, every day</span>'
             f'<nav aria-label="Footer">{ext}<a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a></nav></div></footer>')
 
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
@@ -273,6 +291,11 @@ SCRIPT = """<script>
 document.addEventListener("click",function(ev){var b=ev.target.closest("button[data-yt]");if(!b)return;var f=document.createElement("iframe");
 f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1&rel=0&playsinline=1";f.title=b.dataset.title||"YouTube Short";
 f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";b.replaceWith(f)});
+document.addEventListener("submit",function(ev){var fm=ev.target;if(!fm.matches("form.nl"))return;ev.preventDefault();var m=fm.querySelector(".nl-msg");
+if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl_website");m.textContent="Sending…";
+fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
+m.textContent="Almost done: check your inbox and confirm your e-mail.";}else{m.textContent="That didn't work. Check the address and try again.";}})
+.catch(function(){m.textContent="Opening the sign-up in a new tab…";fm.submit();})});
 </script>"""
 def short_card(s):
     return (f'<article class="short"><div class="vid"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}">'
@@ -429,6 +452,7 @@ def privacy():
 <h2>Visiting the site</h2><p>This site sets no cookies and has no login. Our hosting provider processes your IP address to deliver the pages and keep them secure.{" Visits are counted with a cookie-free tool that stores no personal data." if ANALYTICS else ""}</p>
 <h2>Videos</h2><p>Videos come from YouTube and only load when you press play. From then on, YouTube (Google) receives your IP address and may set cookies under its own privacy policy.</p>
 <h2>Contact</h2><p>When you send a message, we receive your name, e-mail address and message. We use them only to reply, and delete them within a year.</p>
+{"<h2>Newsletter</h2><p>If you subscribe, your e-mail address is stored by our mailing service MailerLite (EU). We use it only to send the newsletter. Every e-mail has an unsubscribe link, and we delete your address when you unsubscribe.</p>" if NEWSLETTER_URL else ""}
 <h2>Support</h2><p>Tips are handled by Ko-fi on its own payment page, under its own privacy policy. We see your name and message if you leave them, never your payment details.</p>
 <h2>Your rights</h2><p>Ask us via the <a href="/contact/">contact page</a> what we hold about you, or to correct or delete it. You can also complain to the Dutch Data Protection Authority (Autoriteit Persoonsgegevens).</p>
 <p class="small">Last updated: {datetime.date.today().strftime("%d %B %Y")}</p></div></main>''' + footer()
