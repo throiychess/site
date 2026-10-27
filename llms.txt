@@ -7,7 +7,7 @@
 
 ## Videos
 - [All Shorts](https://throiychess.com/shorts/)
-- [Free queen? Mate in 2! Légal's Mate](https://www.youtube.com/shorts/paGdwe1cYmk): Free queen? Mate in 2! Légal's Mate is almost 300 years old and still works: 1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 g6? 5.Nxe5! Bxd1?? 6.Bxf7+ Ke7 7.Nd5#.
+- [Free queen? Mate in 2! Légal's Mate](https://www.youtube.com/shorts/paGdwe1cYmk): White gives away the queen and mates in two moves. The fix: don't grab the queen, take the knight instead.
 - [Free rook? Don't take it! Giri vs Abdusattorov](https://www.youtube.com/shorts/fJiePOSCU9I): Giri left his rook hanging on purpose. Abdusattorov took it, and 19.Nf5! 20.Qg5! decided the game. Before you grab material, check what your opponent gets.
 - [Take my queen! The Stafford Gambit trap](https://www.youtube.com/shorts/TsHaDaBUS-c): After 6.Bg5?? Nxe4! 7.Bxd8?? Bxf2+ 8.Ke2 Bg4# it's mate. The fix: don't play Bg5, just develop and castle.
 - [Don't take the bait! The Fishing Pole Trap](https://www.youtube.com/shorts/G2pqyA0mXF0): Black leaves a knight on g4 as bait. Take it and the h-file opens straight at your king, ending in mate on h1.
