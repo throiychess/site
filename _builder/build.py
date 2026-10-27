@@ -130,6 +130,9 @@ a.card:hover{background:var(--panel2)}
 .short{display:grid;gap:10px;align-content:start;min-width:0}
 .short h3{font-size:16px;line-height:1.3}
 .short p{margin:0;color:var(--mute);font-size:14px}
+.share{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:13px;margin-top:2px}
+.share a,.share button{color:var(--mute);background:none;border:0;padding:0;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.share a:hover,.share button:hover{color:var(--gold)}.simple+.share,.pagehead+.share{margin:-12px 0 26px;font-size:14px}.share .sh-native{color:var(--gold);font-weight:700;text-decoration:none}
 .short .label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.short .credit{font-size:12px;opacity:.8}
 .simple{background:var(--panel);border-left:4px solid var(--gold);padding:18px 22px;margin:0 0 32px;max-width:72ch;display:grid;gap:6px}
 .simple p{margin:0;font-size:18px;line-height:1.5}
@@ -243,7 +246,7 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             f'<link rel="preload" href="/fonts/Inter-Black.woff" as="font" type="font/woff" crossorigin>'
             f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}</body></html>')
 
-NAV = [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Traps", "/#traps"), ("Top games", "/#top-games"), ("About", "/#about"), ("Contact", "/contact/"), ("Support", "/support/")]
+NAV = [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Traps", "/traps/"), ("Top games", "/#top-games"), ("About", "/#about"), ("Contact", "/contact/"), ("Support", "/support/")]
 def header(active=""):
     return ('<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt="">'
             '<span>THROIY<b>CHESS</b></span></a><nav class="links" aria-label="Main">'
@@ -275,6 +278,9 @@ SCRIPT = """<script>
 document.addEventListener("click",function(ev){var b=ev.target.closest("button[data-yt]");if(!b)return;var f=document.createElement("iframe");
 f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1&rel=0&playsinline=1";f.title=b.dataset.title||"YouTube Short";
 f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";b.replaceWith(f)});
+document.addEventListener("click",function(ev){var b=ev.target.closest(".share button");if(!b)return;var w=b.closest(".share"),u=w.dataset.url,t=w.dataset.text;
+if(b.classList.contains("sh-native")&&navigator.share){navigator.share({title:t,url:u}).catch(function(){});return}
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){var c=w.querySelector(".sh-copy");c.textContent="Link copied!";setTimeout(function(){c.textContent="Copy link"},2000)}).catch(function(){prompt("Copy this link:",u)})});
 document.addEventListener("submit",function(ev){var fm=ev.target;if(!fm.matches("form.nl"))return;ev.preventDefault();var m=fm.querySelector(".nl-msg");
 if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl_website");m.textContent="Sending…";
 fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
@@ -301,11 +307,26 @@ def thumb_style(s):
     return (f' style="background-image:linear-gradient(180deg,rgba(14,13,11,0) 55%,rgba(14,13,11,.85)),url(/img/yt/{e(s["id"])}.jpg);'
             'background-size:cover;background-position:center"')
 
+from urllib.parse import quote
+def share_bar(url, text):
+    """Share links without third-party scripts: native share sheet on phones, plus plain links."""
+    u, t = quote(url, safe=""), quote(text, safe="")
+    return (f'<div class="share" data-url="{e(url)}" data-text="{e(text)}"><button type="button" class="sh-native">Share</button>'
+            f'<a href="https://wa.me/?text={t}%20{u}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">WhatsApp</a>'
+            f'<a href="https://www.facebook.com/sharer/sharer.php?u={u}" target="_blank" rel="noopener" aria-label="Share on Facebook">Facebook</a>'
+            f'<a href="https://twitter.com/intent/tweet?url={u}&amp;text={t}" target="_blank" rel="noopener" aria-label="Share on X">X</a>'
+            f'<a href="https://www.reddit.com/submit?url={u}&amp;title={t}" target="_blank" rel="noopener" aria-label="Share on Reddit">Reddit</a>'
+            '<button type="button" class="sh-copy">Copy link</button></div>')
+
+def short_url(s):
+    t = next((t for t in TRAPS if t.get("short") == s["id"]), None)
+    return f"{SITE}/traps/{t['slug']}/" if t else f"{SITE}/shorts/#s-{s['id']}"
+
 def short_card(s):
     cr = f'<p class="small credit">{e(s["credit"])}</p>' if s.get("credit") else ""
-    return (f'<article class="short"><div class="vid"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
+    return (f'<article class="short" id="s-{e(s["id"])}"><div class="vid"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
             f'<span class="play"></span><small>Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
-            f'<span class="label">{e(s.get("topic", ""))}</span><h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p>{cr}</article>')
+            f'<span class="label">{e(s.get("topic", ""))}</span><h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p>{cr}{share_bar(short_url(s), s["title"])}</article>')
 
 def video_ld(s):
     if not s.get("date"): return None
@@ -317,10 +338,19 @@ ORG = {"@context": "https://schema.org", "@type": "Organization", "name": NAME, 
        "sameAs": [u for _, u in LINKS], "description": TAGLINE}
 
 # ---------------- pages ----------------
+HOME_TRAPS = 6
+def trap_card(t):
+    return (f'<a class="card" href="/traps/{t["slug"]}/"><div class="meta"><span class="label">{e(t["opening"])}</span></div>'
+            f'<h3>{e(t["name"])}</h3><p>{e(t["hook"])}</p><span class="go">Play through the trap →</span></a>')
+
+def traps_index():
+    body = header("Traps") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Trap library</span>
+<h1 class="page">Learn the trap. Then the fix.</h1><p>{len(TRAPS)} opening traps, each explained in plain words first, then move by move on the board.</p></div>
+<div class="grid">{"".join(trap_card(t) for t in TRAPS)}</div><div style="height:56px"></div></main>''' + footer()
+    return "/traps/", page("/traps/", "Trap library · Throiy Chess", f"{len(TRAPS)} chess opening traps explained in plain words, with the fix for each.", body)
+
 def home():
-    cards = "".join(
-        f'<a class="card" href="/traps/{t["slug"]}/"><div class="meta"><span class="label">{e(t["opening"])}</span></div>'
-        f'<h3>{e(t["name"])}</h3><p>{e(t["hook"])}</p><span class="go">Play through the trap →</span></a>' for t in TRAPS)
+    cards = "".join(trap_card(t) for t in TRAPS[:HOME_TRAPS])
     for n, o, h, sid in OTHER:
         href = f"https://www.youtube.com/shorts/{sid}" if sid else LINKS[0][1] + "/shorts"
         cards += (f'<a class="card soon" href="{href}" target="_blank" rel="noopener"><div class="meta"><span class="label">{e(o)}</span></div>'
@@ -335,7 +365,8 @@ def home():
 <section id="shorts"><div class="wrap"><div class="sechead"><div><span class="eyebrow">Latest Shorts</span><h2>One lesson a day, under a minute.</h2></div>
 <a class="btn" href="/shorts/">All Shorts →</a></div><div class="shorts">{latest}</div></div></section>
 <section id="traps"><div class="wrap"><div class="sechead"><div><span class="eyebrow">Trap library</span><h2>Learn the trap. Then learn the fix.</h2>
-<p>Every trap ends with the mate. Every lesson ends with how to avoid it. Step through the moves on the board.</p></div></div>
+<p>Every trap ends with the mate. Every lesson ends with how to avoid it. Step through the moves on the board.</p></div>
+<a class="btn" href="/traps/">All {len(TRAPS)} traps →</a></div>
 <div class="grid">{cards}</div></div></section>
 <section id="top-games"><div class="wrap"><div class="breaking"><span class="live">Top games</span><div><h3>Clutch Chess: Champions Showdown · 27–29 October</h3>
 <p>Nakamura, Caruana, Praggnanandhaa and Sindarov play rapid chess. We break down the sharpest moment of each day in a Short.</p></div></div></div></section>
@@ -383,9 +414,10 @@ def trap_page(t):
             f'<div class="card"><span class="label">Watch</span><h3>The {e(t["name"])} as a Short</h3><p>All lessons are on YouTube, TikTok and Instagram.</p>'
             f'<a class="go" href="{LINKS[0][1]}/shorts" target="_blank" rel="noopener">Watch on YouTube →</a></div>')
     path = f'/traps/{t["slug"]}/'
-    body = header("Traps") + f'''<main class="wrap"><div class="crumb"><a href="/#traps">Trap library</a> / {e(t["name"])}</div>
+    body = header("Traps") + f'''<main class="wrap"><div class="crumb"><a href="/traps/">Trap library</a> / {e(t["name"])}</div>
 <div class="pagehead" style="padding-top:18px"><span class="eyebrow">{e(t["opening"])} · {e(t["side"])}</span><h1 class="page">{e(t["name"])}</h1><p>{e(t["hook"])}</p></div>
 {f'<div class="simple"><span class="eyebrow">In plain words</span><p>{e(t["simple"])}</p></div>' if t.get("simple") else ""}
+{share_bar(SITE + f'/traps/{t["slug"]}/', t["name"] + ": " + t["hook"])}
 <div class="player"><div><div class="board" id="board" role="img" aria-label="Chess board showing the {e(t["name"])}"></div>
 <div class="ctrl"><button type="button" id="first" aria-label="Start position">⏮</button><button type="button" id="prev" aria-label="Previous move">◀</button>
 <button type="button" id="next" aria-label="Next move">▶</button><button type="button" id="last" aria-label="Final position">⏭</button></div>
@@ -416,7 +448,7 @@ show(0);</script>'''
            "publisher": {"@type": "Organization", "name": NAME, "logo": {"@type": "ImageObject", "url": SITE + "/img/logo.png"}},
            "mainEntityOfPage": SITE + path, "image": SITE + "/img/og.jpg"}
     crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Trap library", "item": SITE + "/#traps"},
+        {"@type": "ListItem", "position": 1, "name": "Trap library", "item": SITE + "/traps/"},
         {"@type": "ListItem", "position": 2, "name": t["name"], "item": SITE + path}]}
     return path, page(path, f'{t["name"]}: moves, mate and how to avoid it · Throiy Chess', t["hook"] + " Step through every move on the board.", body,
                       [art, crumbs] + ([video_ld(sh)] if sh and video_ld(sh) else []), ogtype="article")
@@ -465,9 +497,9 @@ def privacy():
     return "/privacy/", page("/privacy/", "Privacy · Throiy Chess", "How Throiy Chess handles your data: no cookies, no tracking.", body)
 
 def video_card(s):
-    return (f'<article class="short"><div class="vid wide"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
+    return (f'<article class="short" id="v-{e(s["id"])}"><div class="vid wide"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
             f'<span class="play"></span><small>Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
-            f'<h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p></article>')
+            f'<h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p>{share_bar(SITE + "/videos/#v-" + s["id"], s["title"])}</article>')
 
 def videos_page():
     if VIDEOS: inner = f'<div class="videos">{"".join(video_card(v) for v in VIDEOS)}</div>'
@@ -515,7 +547,7 @@ def build():
     d = os.environ.get("OUT_DIR") or os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True) if not os.environ.get("OUT_DIR") else None
     fetch_thumbs(SHORTS + VIDEOS)
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
-    pages = [("/", home())] + shorts_pages() + [videos_page()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy()]
+    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
