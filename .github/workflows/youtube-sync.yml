@@ -3,6 +3,9 @@ on:
   schedule:
     - cron: "17 */4 * * *"   # every 4 hours
   workflow_dispatch: {}
+  push:                     # rebuild the site automatically after every change to the builder
+    branches: [main]
+    paths: ["_builder/**"]
 permissions:
   contents: write
 jobs:
