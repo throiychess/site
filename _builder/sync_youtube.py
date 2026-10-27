@@ -8,7 +8,14 @@ def kind(vid):
     except Exception: return None
 CH = "UCOlTPoaNud_2lNwjNmH9diw"
 ns = {"a": "http://www.w3.org/2005/Atom", "yt": "http://www.youtube.com/xml/schemas/2015", "m": "http://search.yahoo.com/mrss/"}
-xml = urllib.request.urlopen(f"https://www.youtube.com/feeds/videos.xml?channel_id={CH}", timeout=30).read()
+xml = None
+for attempt in range(3):  # YouTube's feed sometimes fails for a moment; retry, and never fail the job over it
+    try:
+        xml = urllib.request.urlopen(f"https://www.youtube.com/feeds/videos.xml?channel_id={CH}", timeout=30).read(); break
+    except Exception as err:
+        print("feed attempt", attempt + 1, "failed:", err); __import__("time").sleep(20)
+if xml is None:
+    print("feed unavailable, keeping the current list"); raise SystemExit(0)
 out = []
 for e in ET.fromstring(xml).findall("a:entry", ns):
     title = re.sub(r"\s*[♟️#].*$", "", e.find("a:title", ns).text).strip()
