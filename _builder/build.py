@@ -24,8 +24,6 @@ PER_PAGE = 12
 # ---------------- data ----------------
 # Every YouTube Short. id = the part after youtube.com/shorts/ ; date = upload date (YYYY-MM-DD) ; trap = slug of a trap page (optional)
 SHORTS = [  # newest first
-    dict(id="paGdwe1cYmk", title="Free queen? Mate in 2! Légal's Mate", date="2026-10-27", topic="Légal's Mate",
-         desc="White gives away the queen and mates in two moves. The fix: don't grab the queen, take the knight instead."),
     dict(id="fJiePOSCU9I", title="Free rook? Don't take it! Giri vs Abdusattorov", date="2026-10-26", topic="Top game · European Club Cup",
          desc="Giri left his rook hanging on purpose. Abdusattorov took it, and 19.Nf5! 20.Qg5! decided the game. Before you grab material, check what your opponent gets."),
     dict(id="TsHaDaBUS-c", title="Take my queen! The Stafford Gambit trap", date="2026-10-26", topic="Stafford Gambit",
@@ -48,10 +46,6 @@ _feed = os.path.join(ROOT, "youtube.json")
 if os.path.exists(_feed):
     _known = {s["id"] for s in SHORTS}
     _new = [v for v in json.load(open(_feed, encoding="utf-8")) if v["id"] not in _known]
-    for v in _new:  # tidy auto-imported Shorts: a label, and no title repeated at the start of the text
-        v["topic"] = v.get("topic") or ("Video" if v.get("kind") == "video" else "New Short")
-        d = v.get("desc", "")
-        if d.startswith(v["title"]): v["desc"] = d[len(v["title"]):].lstrip(" :.-–—!?")
     for s in SHORTS:  # fill missing upload dates from the feed
         f = next((v for v in json.load(open(_feed, encoding="utf-8")) if v["id"] == s["id"]), None)
         if f and not s.get("date"): s["date"] = f["date"]
