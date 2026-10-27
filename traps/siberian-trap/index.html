@@ -1,0 +1,188 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; connect-src 'self' https://api.web3forms.com https://throiychess.goatcounter.com https://assets.mailerlite.com; frame-src https://www.youtube-nocookie.com https://ko-fi.com; form-action 'self' https://api.web3forms.com https://assets.mailerlite.com; base-uri 'self'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Siberian Trap: moves, mate and how to avoid it · Throiy Chess</title><meta name="description" content="Queen and knight aim at h2. Kick the knight and it&#x27;s mate in two. Step through every move on the board."><link rel="canonical" href="https://throiychess.com/traps/siberian-trap/"><link rel="icon" href="/img/favicon.png"><link rel="apple-touch-icon" href="/img/logo-small.png"><meta name="theme-color" content="#0e0d0b"><meta property="og:site_name" content="Throiy Chess"><meta property="og:type" content="article"><meta property="og:title" content="Siberian Trap: moves, mate and how to avoid it · Throiy Chess"><meta property="og:description" content="Queen and knight aim at h2. Kick the knight and it&#x27;s mate in two. Step through every move on the board."><meta property="og:url" content="https://throiychess.com/traps/siberian-trap/"><meta property="og:image" content="https://throiychess.com/img/og.jpg"><meta name="twitter:card" content="summary_large_image"><link rel="preload" href="/fonts/Inter-Black.woff" as="font" type="font/woff" crossorigin><style>
+@font-face{font-family:Inter;font-weight:400;font-display:swap;src:url(/fonts/Inter-Regular.woff) format("woff")}
+@font-face{font-family:Inter;font-weight:600;font-display:swap;src:url(/fonts/Inter-SemiBold.woff) format("woff")}
+@font-face{font-family:Inter;font-weight:700;font-display:swap;src:url(/fonts/Inter-Bold.woff) format("woff")}
+@font-face{font-family:Inter;font-weight:800;font-display:swap;src:url(/fonts/Inter-ExtraBold.woff) format("woff")}
+@font-face{font-family:Inter;font-weight:900;font-display:swap;src:url(/fonts/Inter-Black.woff) format("woff")}
+:root{--bg:#0e0d0b;--panel:#17150f;--panel2:#1d1a13;--line:#2c271d;--ink:#efe8d8;--mute:#a59a83;--gold:#e3c073;--red:#e2442f;--on-gold:#14110b;
+--sq-l:#c4ac80;--sq-d:#7e6542;--font:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:96px}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.6;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--gold)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(14,13,11,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-weight:900;font-size:22px;letter-spacing:.02em;line-height:1}
+.brand img{height:56px;width:auto}
+.brand b{color:var(--gold);font-weight:600;letter-spacing:.42em;font-size:13px;display:block;margin-top:5px}
+nav.links{display:flex;gap:6px 18px;flex-wrap:wrap}
+nav.links a{color:var(--mute);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding-block:6px}
+nav.links a:hover,nav.links a[aria-current]{color:var(--gold)}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+h1,h2,h3{text-wrap:balance;margin:0}
+h1{font-weight:900;font-size:clamp(40px,7vw,76px);line-height:1;letter-spacing:-.025em;text-transform:uppercase}
+h1 em{font-style:normal;color:var(--gold)}
+h1.page{font-size:clamp(36px,6vw,60px)}
+h2{font-weight:800;font-size:clamp(26px,3.4vw,36px);line-height:1.1;letter-spacing:-.01em}
+h3{font-weight:800;font-size:20px;line-height:1.25}
+.lead{color:var(--mute);font-size:19px;max-width:40ch;margin:0}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-block:56px}
+.hero>*{min-width:0}
+.hero .copy{display:grid;gap:22px;justify-items:start}
+.ticks{position:relative;padding:12px}
+.ticks::before,.ticks::after,.ticks>.t1,.ticks>.t2{content:"";position:absolute;width:34px;height:34px;border-color:var(--gold);border-style:solid;pointer-events:none}
+.ticks::before{left:0;top:0;border-width:4px 0 0 4px}.ticks::after{right:0;top:0;border-width:4px 4px 0 0}
+.ticks>.t1{left:0;bottom:0;border-width:0 0 4px 4px}.ticks>.t2{right:0;bottom:0;border-width:0 4px 4px 0}
+.ticks img{display:block;width:100%;height:auto}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;font-weight:700;font-size:15px;text-decoration:none;border:1px solid var(--gold);color:var(--gold);letter-spacing:.03em;background:none;cursor:pointer;font-family:var(--font)}
+.btn.solid{background:var(--gold);color:var(--on-gold)}
+.btn:hover{filter:brightness(1.12)}
+section{padding-block:56px;border-top:1px solid var(--line)}
+.pagehead{display:grid;gap:14px;padding-block:44px 34px}
+.pagehead p{color:var(--mute);margin:0;max-width:60ch;font-size:19px}
+.sechead{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.sechead>div{display:grid;gap:8px}
+.sechead p{color:var(--mute);margin:0;max-width:56ch}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--panel);border-left:4px solid var(--gold);padding:22px 22px 20px;display:grid;gap:10px;align-content:start;text-decoration:none;color:var(--ink);min-width:0}
+.card .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tag{background:var(--gold);color:var(--on-gold);font-weight:900;font-size:12px;padding:3px 8px;letter-spacing:.04em}
+.label{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.card p{margin:0;color:var(--mute);font-size:15.5px}
+.card .go{font-weight:700;font-size:14px;color:var(--gold);margin-top:4px}
+a.card:hover{background:var(--panel2)}
+.card.soon{border-left-color:var(--line)}
+/* shorts */
+.shorts{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.short{display:grid;gap:10px;align-content:start;min-width:0}
+.short h3{font-size:16px;line-height:1.3}
+.short p{margin:0;color:var(--mute);font-size:14px}
+.short .label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.short .credit{font-size:12px;opacity:.8}
+.simple{background:var(--panel);border-left:4px solid var(--gold);padding:18px 22px;margin:0 0 32px;max-width:72ch;display:grid;gap:6px}
+.simple p{margin:0;font-size:18px;line-height:1.5}
+.vid{position:relative;aspect-ratio:9/16;width:100%;max-width:100%;background:var(--panel);overflow:hidden}
+.vid.wide{aspect-ratio:16/9}
+.videos{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+nav.links a.support{color:var(--gold)}
+.supportbar{border:1px solid var(--line);padding:22px 24px;display:flex;gap:14px 24px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:8px 0 48px}
+.supportbar p{margin:0;color:var(--mute)}.supportbar strong{color:var(--ink)}
+.kofi{width:100%;max-width:460px;height:712px;border:0;background:#f9f9f9;display:block}
+.newsletter{display:grid;grid-template-columns:1fr 1fr;gap:18px 32px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:40px 0 0}
+.newsletter p{margin:6px 0 0;color:var(--mute)}
+form.nl{display:flex;flex-wrap:wrap;gap:10px}form.nl input[type=email]{flex:1 1 220px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit}
+form.nl .nl-msg{flex-basis:100%;margin:0}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:860px){.newsletter{grid-template-columns:1fr}}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid button{position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;color:var(--ink);font-family:var(--font);
+ background:linear-gradient(180deg,rgba(14,13,11,.15),rgba(14,13,11,.85)),repeating-conic-gradient(var(--sq-d) 0 25%,var(--sq-l) 0 50%) 0 0/25% 14.0625%;
+ display:grid;place-items:center;padding:14px}
+.vid button span.play{width:64px;height:64px;border-radius:50%;background:var(--gold);display:grid;place-items:center;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.vid button span.play::before{content:"";margin-left:5px;border-left:20px solid var(--on-gold);border-top:12px solid transparent;border-bottom:12px solid transparent}
+.vid button small{position:absolute;left:12px;right:12px;bottom:12px;font-size:11.5px;color:var(--mute);line-height:1.35;text-align:left}
+.vid button:hover span.play{filter:brightness(1.1)}
+.pager{display:flex;gap:8px;justify-content:center;margin-top:36px;flex-wrap:wrap}
+.pager a,.pager span{padding:8px 14px;border:1px solid var(--line);text-decoration:none;color:var(--mute);font-weight:700;font-variant-numeric:tabular-nums}
+.pager span{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.breaking{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;background:var(--panel);padding:28px}
+.breaking>*{min-width:0}
+.live{font-weight:900;font-size:13px;letter-spacing:.2em;color:var(--bg);background:var(--red);padding:6px 10px;text-transform:uppercase;white-space:nowrap}
+.breaking p{margin:6px 0 0;color:var(--mute)}
+.about{display:grid;grid-template-columns:220px 1fr;gap:36px;align-items:center}
+.about>*{min-width:0}
+.about img{width:220px;max-width:100%;height:auto}
+.about p{max-width:60ch;color:var(--mute);margin:10px 0 0}
+footer{border-top:1px solid var(--line);padding-block:30px;color:var(--mute);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}
+footer nav{display:flex;gap:6px 16px;flex-wrap:wrap}
+footer a{color:var(--mute)}
+/* trap page */
+.crumb{font-size:14px;color:var(--mute);padding-top:28px}
+.crumb a{color:var(--mute)}
+.player{display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:36px;align-items:start}
+.player>*{min-width:0}
+.board{display:grid;grid-template-columns:repeat(8,1fr);aspect-ratio:1;width:100%;max-width:100%;user-select:none}
+.sq{position:relative;aspect-ratio:1}
+.sq.l{background:var(--sq-l)}.sq.d{background:var(--sq-d)}
+.sq.hl::before{content:"";position:absolute;inset:0;background:rgba(240,200,90,.42)}
+.sq.mk::after{content:"";position:absolute;inset:6%;border-radius:50%;border:4px solid #fff;box-shadow:0 0 0 3px #14120f,inset 0 0 0 2px #14120f;z-index:2}
+.sq.mk.red::after{border-color:var(--red);box-shadow:0 0 0 3px #fff}
+.sq img{position:absolute;inset:2%;width:96%;height:96%;z-index:1}
+.sq .co{position:absolute;font-size:11px;font-weight:700;z-index:3;line-height:1}
+.sq .rk{left:3px;top:3px}.sq .fl{right:3px;bottom:2px}
+.sq.l .co{color:var(--sq-d)}.sq.d .co{color:var(--sq-l)}
+.ctrl{display:flex;gap:8px;margin-top:14px}
+.ctrl button{flex:1;background:var(--panel);color:var(--ink);border:1px solid var(--line);padding:10px 0;font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.ctrl button:hover{border-color:var(--gold);color:var(--gold)}
+.note{background:var(--panel);border-top:4px solid var(--gold);padding:22px;display:grid;gap:10px}
+.note .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.note p{margin:0;font-size:19px;line-height:1.45;font-weight:600}
+.moves{display:flex;flex-wrap:wrap;gap:4px 2px;margin-top:20px;font-variant-numeric:tabular-nums;font-size:15px}
+.moves button{background:none;border:0;color:var(--mute);font:inherit;padding:3px 6px;cursor:pointer}
+.moves button.on{background:var(--gold);color:var(--on-gold);font-weight:800}
+.moves span{color:#6f6656;padding:3px 0 3px 6px}
+.prose{max-width:68ch;color:var(--ink)}
+.prose p{margin:0 0 14px}
+.prose h2{font-size:24px;margin:30px 0 10px}
+.fix{display:grid;gap:14px;padding:0;margin:0;list-style:none;counter-reset:f}
+.fix li{display:grid;grid-template-columns:28px 1fr;gap:12px;max-width:70ch}
+.fix li::before{counter-increment:f;content:counter(f);font-weight:900;color:var(--gold);font-size:20px;line-height:1.4}
+.hint{color:var(--mute);font-size:14px;margin-top:10px}
+.twocol{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:44px;align-items:start}
+.twocol>*{min-width:0}
+/* form */
+form.contact{display:grid;gap:18px;max-width:620px}
+.field{display:grid;gap:6px}
+.field label{font-weight:700;font-size:14px;letter-spacing:.04em}
+.field input,.field textarea{background:var(--panel);border:1px solid var(--line);color:var(--ink);font:inherit;padding:12px 14px;width:100%}
+.field textarea{min-height:160px;resize:vertical}
+.field input:focus,.field textarea:focus{border-color:var(--gold)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.status{font-weight:600;margin:0}
+.status.err{color:var(--red)}
+.small{font-size:14px;color:var(--mute)}
+@media (max-width:700px){.videos{grid-template-columns:1fr}}
+@media (max-width:900px){.shorts{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr 1fr}}
+@media (max-width:860px){.hero,.player,.twocol{grid-template-columns:1fr}.hero{padding-block:32px}.breaking{grid-template-columns:1fr;gap:14px}.about{grid-template-columns:1fr}.about img{width:150px}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}.brand img{height:46px}.brand{font-size:19px}nav.links{gap:4px 14px}html{scroll-padding-top:130px}}
+@media (prefers-reduced-motion:no-preference){.btn,.card{transition:background .15s,filter .15s}}
+</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Siberian Trap: how it works and how to avoid it", "description": "Queen and knight aim at h2. Kick the knight and it's mate in two.", "about": ["Smith-Morra Gambit", "chess opening trap"], "author": {"@type": "Organization", "name": "Throiy Chess", "url": "https://throiychess.com"}, "publisher": {"@type": "Organization", "name": "Throiy Chess", "logo": {"@type": "ImageObject", "url": "https://throiychess.com/img/logo.png"}}, "mainEntityOfPage": "https://throiychess.com/traps/siberian-trap/", "image": "https://throiychess.com/img/og.jpg"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Trap library", "item": "https://throiychess.com/#traps"}, {"@type": "ListItem", "position": 2, "name": "Siberian Trap", "item": "https://throiychess.com/traps/siberian-trap/"}]}</script><script data-goatcounter="https://throiychess.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script></head><body><header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt=""><span>THROIY<b>CHESS</b></span></a><nav class="links" aria-label="Main"><a href="/shorts/">Shorts</a><a href="/videos/">Videos</a><a href="/#traps" aria-current=page>Traps</a><a href="/#top-games">Top games</a><a href="/#about">About</a><a href="/contact/">Contact</a><a href="/support/" class=support>Support</a></nav></div></header><main class="wrap"><div class="crumb"><a href="/#traps">Trap library</a> / Siberian Trap</div>
+<div class="pagehead" style="padding-top:18px"><span class="eyebrow">Smith-Morra Gambit · Black sets it</span><h1 class="page">Siberian Trap</h1><p>Queen and knight aim at h2. Kick the knight and it&#x27;s mate in two.</p></div>
+<div class="simple"><span class="eyebrow">In plain words</span><p>Black&#x27;s queen and knight both aim at the square next to White&#x27;s king. If White kicks the knight and then takes the bait, the only defender of that square disappears and the queen gives checkmate. Don&#x27;t kick the knight: chase the queen away instead.</p></div>
+<div class="player"><div><div class="board" id="board" role="img" aria-label="Chess board showing the Siberian Trap"></div>
+<div class="ctrl"><button type="button" id="first" aria-label="Start position">⏮</button><button type="button" id="prev" aria-label="Previous move">◀</button>
+<button type="button" id="next" aria-label="Next move">▶</button><button type="button" id="last" aria-label="Final position">⏭</button></div>
+<p class="hint">Tip: use the arrow keys.</p></div>
+<div><div class="note" aria-live="polite"><div class="meta"><span class="label" id="nl"></span><span class="tag" id="nt"></span></div><p id="nx"></p></div>
+<div class="moves" id="moves"><span>1.</span><button type="button" data-p="1">e4</button><button type="button" data-p="2">c5</button><span>2.</span><button type="button" data-p="3">d4</button><button type="button" data-p="4">cxd4</button><span>3.</span><button type="button" data-p="5">c3</button><button type="button" data-p="6">dxc3</button><span>4.</span><button type="button" data-p="7">Nxc3</button><button type="button" data-p="8">Nc6</button><span>5.</span><button type="button" data-p="9">Nf3</button><button type="button" data-p="10">e6</button><span>6.</span><button type="button" data-p="11">Bc4</button><button type="button" data-p="12">Qc7</button><span>7.</span><button type="button" data-p="13">O-O</button><button type="button" data-p="14">Nf6</button><span>8.</span><button type="button" data-p="15">Qe2</button><button type="button" data-p="16">Ng4</button><span>9.</span><button type="button" data-p="17">h3</button><button type="button" data-p="18">Nd4</button><span>10.</span><button type="button" data-p="19">Nxd4</button><button type="button" data-p="20">Qh2#</button></div></div></div>
+<section style="margin-top:56px"><div class="twocol"><div class="prose"><span class="eyebrow">The trap</span><h2>How the Siberian Trap works</h2><p>In the Smith-Morra Gambit (1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3) Black sets up with …Qc7 and …Ng4, both aiming at h2. After 9.h3?? Nd4! the queen is attacked, and 10.Nxd4 Qh2# is mate. 9.Nb5 chases the queen away.</p>
+<h2>How not to fall for it</h2><ol class="fix"><li><span>Don&#x27;t play h3. Play Nb5 and chase the queen away from h2.</span></li><li><span>When two pieces aim at the square next to your king, keep its defender in place.</span></li></ol></div><aside><div class="card"><span class="label">Watch</span><h3>The Siberian Trap as a Short</h3><p>All lessons are on YouTube, TikTok and Instagram.</p><a class="go" href="https://www.youtube.com/@ThroiyChess/shorts" target="_blank" rel="noopener">Watch on YouTube →</a></div></aside></div></section>
+</main><div class="wrap"><div class="newsletter"><div><strong>One trap a week in your inbox.</strong><p>The best trap of the week, explained in plain words. Free, no spam, unsubscribe in one click.</p></div><form class="nl" action="https://assets.mailerlite.com/jsonp/2747354/forms/202502436720478151/subscribe" method="post" target="_blank"><label class="sr" for="nl-email">E-mail address</label><input id="nl-email" type="email" name="fields[email]" placeholder="Your e-mail" autocomplete="email" required><input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true"><div class="hp" aria-hidden="true"><input type="text" name="nl_website" tabindex="-1" autocomplete="off"></div><button class="btn solid" type="submit">Subscribe</button><p class="nl-msg small" role="status" aria-live="polite"></p></form></div></div><div class="wrap"><div class="supportbar"><p><strong>Enjoying the lessons?</strong> They stay free. A small tip keeps new traps coming every day.</p><a class="btn solid" href="/support/">Support Throiy Chess</a></div></div><footer><div class="wrap"><span>© 2026 Throiy Chess · Quick chess lessons, every day</span><nav aria-label="Footer"><a href="https://www.youtube.com/@ThroiyChess" target="_blank" rel="noopener">YouTube</a> <a href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a> <a href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a> <a href="https://www.facebook.com/throiychess" target="_blank" rel="noopener">Facebook</a><a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a></nav></div></footer><script>const D={"plies": [{"fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR", "san": "", "fr": null, "to": null}, {"fen": "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR", "san": "e4", "fr": "e2", "to": "e4"}, {"fen": "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR", "san": "c5", "fr": "c7", "to": "c5"}, {"fen": "rnbqkbnr/pp1ppppp/8/2p5/3PP3/8/PPP2PPP/RNBQKBNR", "san": "d4", "fr": "d2", "to": "d4"}, {"fen": "rnbqkbnr/pp1ppppp/8/8/3pP3/8/PPP2PPP/RNBQKBNR", "san": "cxd4", "fr": "c5", "to": "d4"}, {"fen": "rnbqkbnr/pp1ppppp/8/8/3pP3/2P5/PP3PPP/RNBQKBNR", "san": "c3", "fr": "c2", "to": "c3"}, {"fen": "rnbqkbnr/pp1ppppp/8/8/4P3/2p5/PP3PPP/RNBQKBNR", "san": "dxc3", "fr": "d4", "to": "c3"}, {"fen": "rnbqkbnr/pp1ppppp/8/8/4P3/2N5/PP3PPP/R1BQKBNR", "san": "Nxc3", "fr": "b1", "to": "c3"}, {"fen": "r1bqkbnr/pp1ppppp/2n5/8/4P3/2N5/PP3PPP/R1BQKBNR", "san": "Nc6", "fr": "b8", "to": "c6"}, {"fen": "r1bqkbnr/pp1ppppp/2n5/8/4P3/2N2N2/PP3PPP/R1BQKB1R", "san": "Nf3", "fr": "g1", "to": "f3"}, {"fen": "r1bqkbnr/pp1p1ppp/2n1p3/8/4P3/2N2N2/PP3PPP/R1BQKB1R", "san": "e6", "fr": "e7", "to": "e6"}, {"fen": "r1bqkbnr/pp1p1ppp/2n1p3/8/2B1P3/2N2N2/PP3PPP/R1BQK2R", "san": "Bc4", "fr": "f1", "to": "c4"}, {"fen": "r1b1kbnr/ppqp1ppp/2n1p3/8/2B1P3/2N2N2/PP3PPP/R1BQK2R", "san": "Qc7", "fr": "d8", "to": "c7"}, {"fen": "r1b1kbnr/ppqp1ppp/2n1p3/8/2B1P3/2N2N2/PP3PPP/R1BQ1RK1", "san": "O-O", "fr": "e1", "to": "g1"}, {"fen": "r1b1kb1r/ppqp1ppp/2n1pn2/8/2B1P3/2N2N2/PP3PPP/R1BQ1RK1", "san": "Nf6", "fr": "g8", "to": "f6"}, {"fen": "r1b1kb1r/ppqp1ppp/2n1pn2/8/2B1P3/2N2N2/PP2QPPP/R1B2RK1", "san": "Qe2", "fr": "d1", "to": "e2"}, {"fen": "r1b1kb1r/ppqp1ppp/2n1p3/8/2B1P1n1/2N2N2/PP2QPPP/R1B2RK1", "san": "Ng4", "fr": "f6", "to": "g4"}, {"fen": "r1b1kb1r/ppqp1ppp/2n1p3/8/2B1P1n1/2N2N1P/PP2QPP1/R1B2RK1", "san": "h3", "fr": "h2", "to": "h3"}, {"fen": "r1b1kb1r/ppqp1ppp/4p3/8/2BnP1n1/2N2N1P/PP2QPP1/R1B2RK1", "san": "Nd4", "fr": "c6", "to": "d4"}, {"fen": "r1b1kb1r/ppqp1ppp/4p3/8/2BNP1n1/2N4P/PP2QPP1/R1B2RK1", "san": "Nxd4", "fr": "f3", "to": "d4"}, {"fen": "r1b1kb1r/pp1p1ppp/4p3/8/2BNP1n1/2N4P/PP2QPPq/R1B2RK1", "san": "Qh2#", "fr": "c7", "to": "h2"}], "notes": {"0": {"label": "START", "tag": "", "text": "A trap against the Smith-Morra Gambit. Step through the moves.", "marks": []}, "5": {"label": "THE GAMBIT", "tag": "3.c3", "text": "White offers pawns for fast development.", "marks": []}, "12": {"label": "THE AIM", "tag": "6\u2026Qc7", "text": "Black's queen sits on c7 and aims at h2.", "marks": ["c7", "!h2"]}, "16": {"label": "THE KNIGHT", "tag": "8\u2026Ng4", "text": "The knight jumps to g4. Queen and knight both aim at h2.", "marks": ["g4", "c7", "!h2"]}, "17": {"label": "THE BLUNDER", "tag": "9.h3??", "text": "White kicks the knight. It looks natural.", "marks": ["h3"]}, "18": {"label": "THE BAIT", "tag": "9\u2026Nd4!", "text": "The other knight attacks White's queen.", "marks": ["d4", "!e2"]}, "19": {"label": "NO DEFENDER", "tag": "10.Nxd4", "text": "The knight on f3 takes, but it was the only defender of h2.", "marks": ["!h2"]}, "20": {"label": "CHECKMATE", "tag": "10\u2026Qh2#", "text": "Queen h2. Checkmate.", "marks": ["h2", "!g1"]}}};
+const P="/img/pieces/",B=document.getElementById("board");let cur=0;
+const sqs=[];for(let r=7;r>=0;r--)for(let f=0;f<8;f++){const d=document.createElement("div");const n="abcdefgh"[f]+(r+1);d.className="sq "+((r+f)%2?"l":"d");d.dataset.n=n;
+if(f===0){const c=document.createElement("span");c.className="co rk";c.textContent=r+1;d.appendChild(c)}
+if(r===0){const c=document.createElement("span");c.className="co fl";c.textContent="abcdefgh"[f];d.appendChild(c)}B.appendChild(d);sqs.push(d)}
+function parse(fen){const m={};fen.split("/").forEach((row,i)=>{let f=0;for(const ch of row){if(/\d/.test(ch))f+=+ch;else{m["abcdefgh"[f]+(8-i)]=ch;f++}}});return m}
+function note(i){let k=i;while(k>=0&&!D.notes[k])k--;return D.notes[k]}
+function show(i){cur=Math.max(0,Math.min(D.plies.length-1,i));const p=D.plies[cur],m=parse(p.fen),n=note(cur);const mk=(D.notes[cur]&&D.notes[cur].marks)||[];
+sqs.forEach(d=>{const s=d.dataset.n;d.classList.toggle("hl",s===p.fr||s===p.to);d.classList.toggle("mk",mk.includes(s)||mk.includes("!"+s));d.classList.toggle("red",mk.includes("!"+s));
+const old=d.querySelector("img");if(old)old.remove();const c=m[s];if(c){const im=document.createElement("img");im.alt="";im.src=P+(c===c.toUpperCase()?"w":"b")+c.toLowerCase()+".png";d.appendChild(im)}});
+document.getElementById("nl").textContent=n.label;const t=document.getElementById("nt");t.textContent=n.tag;t.hidden=!n.tag;document.getElementById("nx").textContent=n.text;
+document.querySelectorAll("#moves button").forEach(b=>b.classList.toggle("on",+b.dataset.p===cur))}
+document.getElementById("first").onclick=()=>show(0);document.getElementById("prev").onclick=()=>show(cur-1);
+document.getElementById("next").onclick=()=>show(cur+1);document.getElementById("last").onclick=()=>show(D.plies.length-1);
+document.getElementById("moves").onclick=e=>{const b=e.target.closest("button");if(b)show(+b.dataset.p)};
+document.addEventListener("keydown",e=>{if(e.target.closest("input,textarea"))return;if(e.key==="ArrowRight")show(cur+1);if(e.key==="ArrowLeft")show(cur-1)});
+show(0);</script><script>
+document.addEventListener("click",function(ev){var b=ev.target.closest("button[data-yt]");if(!b)return;var f=document.createElement("iframe");
+f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1&rel=0&playsinline=1";f.title=b.dataset.title||"YouTube Short";
+f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";b.replaceWith(f)});
+document.addEventListener("submit",function(ev){var fm=ev.target;if(!fm.matches("form.nl"))return;ev.preventDefault();var m=fm.querySelector(".nl-msg");
+if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl_website");m.textContent="Sending…";
+fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
+m.textContent="Almost done: check your inbox and confirm your e-mail.";}else{m.textContent="That didn't work. Check the address and try again.";}})
+.catch(function(){m.textContent="Opening the sign-up in a new tab…";fm.submit();})});
+</script></body></html>
