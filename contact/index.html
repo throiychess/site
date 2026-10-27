@@ -182,6 +182,6 @@ if(b.classList.contains("sh-native")&&navigator.share){navigator.share({title:t,
 document.addEventListener("submit",function(ev){var fm=ev.target;if(!fm.matches("form.nl"))return;ev.preventDefault();var m=fm.querySelector(".nl-msg");
 if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl_website");m.textContent="Sending…";
 fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
-m.textContent="Almost done: check your inbox and confirm your e-mail.";}else{m.textContent="That didn't work. Check the address and try again.";}})
+m.textContent="You're in! The next trap lands in your inbox.";}else{m.textContent="That didn't work. Check the address and try again.";}})
 .catch(function(){m.textContent="Opening the sign-up in a new tab…";fm.submit();})});
 </script></body></html>
