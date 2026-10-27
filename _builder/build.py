@@ -49,8 +49,11 @@ _feed = os.path.join(ROOT, "youtube.json")
 if os.path.exists(_feed):
     _known = {s["id"] for s in SHORTS}
     _new = [v for v in json.load(open(_feed, encoding="utf-8")) if v["id"] not in _known]
-    for v in _new:  # tidy auto-imported Shorts: a label, and no title repeated at the start of the text
-        v["topic"] = v.get("topic") or ("Video" if v.get("kind") == "video" else "New Short")
+    from traps import TRAPS as _TR
+    def _norm(x): return x.lower().replace("’", "").replace("'", "")
+    for v in _new:  # tidy auto-imported Shorts: the right label, and no title repeated at the start of the text
+        _t = next((t for t in _TR if _norm(t["name"]) in _norm(v["title"])), None)
+        v["topic"] = v.get("topic") or (_t["name"] if _t else "Top game" if " vs " in _norm(v["title"]) else "Video" if v.get("kind") == "video" else "New Short")
         d = v.get("desc", "")
         if d.startswith(v["title"]): v["desc"] = d[len(v["title"]):].lstrip(" :.-–—!?")
     for s in SHORTS:  # fill missing upload dates from the feed
@@ -124,6 +127,8 @@ section{padding-block:56px;border-top:1px solid var(--line)}
 .card p{margin:0;color:var(--mute);font-size:15.5px}
 .card .go{font-weight:700;font-size:14px;color:var(--gold);margin-top:4px}
 a.card:hover{background:var(--panel2)}
+.card .cardimg{display:block;width:calc(100% + 44px);max-width:none;height:auto;aspect-ratio:1;object-fit:cover;margin:-22px -22px 8px;border-bottom:1px solid var(--line)}
+a.card:hover .cardimg{filter:brightness(1.06)}
 .card.soon{border-left-color:var(--line)}
 /* shorts */
 .shorts{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
@@ -320,8 +325,13 @@ def share_bar(url, text):
             '<button type="button" class="sh-app" data-app="Instagram">Instagram</button><button type="button" class="sh-app" data-app="TikTok">TikTok</button>'
             '<button type="button" class="sh-copy">Copy link</button><span class="sh-msg small" role="status" aria-live="polite"></span></div>')
 
+def _nm(x): return x.lower().replace("’", "").replace("'", "")
+def trap_short(t):
+    """The Short that belongs to a trap: the explicit id, otherwise the newest Short whose title names the trap."""
+    return next((s for s in SHORTS if s["id"] == t.get("short")), None) or next((s for s in SHORTS if _nm(t["name"]) in _nm(s["title"])), None)
+
 def short_url(s):
-    t = next((t for t in TRAPS if t.get("short") == s["id"]), None)
+    t = next((t for t in TRAPS if (trap_short(t) or {}).get("id") == s["id"]), None)
     return f"{SITE}/traps/{t['slug']}/" if t else f"{SITE}/shorts/#s-{s['id']}"
 
 def short_card(s):
@@ -341,8 +351,13 @@ ORG = {"@context": "https://schema.org", "@type": "Organization", "name": NAME, 
 
 # ---------------- pages ----------------
 HOME_TRAPS = 6
+def trap_img(t):
+    return f"/img/traps/{t['slug']}.jpg" if os.path.exists(os.path.join(ROOT, "src", "img", "traps", t["slug"] + ".jpg")) else None
+
 def trap_card(t):
-    return (f'<a class="card" href="/traps/{t["slug"]}/"><div class="meta"><span class="label">{e(t["opening"])}</span></div>'
+    im = trap_img(t)
+    pic = f'<img class="cardimg" src="{im}" width="720" height="720" loading="lazy" alt="Key position of the {e(t["name"])}">' if im else ""
+    return (f'<a class="card" href="/traps/{t["slug"]}/">{pic}<div class="meta"><span class="label">{e(t["opening"])}</span></div>'
             f'<h3>{e(t["name"])}</h3><p>{e(t["hook"])}</p><span class="go">Play through the trap →</span></a>')
 
 def traps_index():
@@ -411,7 +426,7 @@ def trap_page(t):
         mv_html += f'<button type="button" data-p="{i}">{e(p["san"])}</button>'
     data = json.dumps(dict(plies=plies, notes=notes))
     fix = "".join(f"<li><span>{e(x)}</span></li>" for x in t["fix"])
-    sh = next((s for s in SHORTS if s["id"] == t.get("short")), None)
+    sh = trap_short(t)
     side = (short_card(sh) if sh else
             f'<div class="card"><span class="label">Watch</span><h3>The {e(t["name"])} as a Short</h3><p>All lessons are on YouTube, TikTok and Instagram.</p>'
             f'<a class="go" href="{LINKS[0][1]}/shorts" target="_blank" rel="noopener">Watch on YouTube →</a></div>')
@@ -448,12 +463,12 @@ show(0);</script>'''
     art = {"@context": "https://schema.org", "@type": "Article", "headline": f'{t["name"]}: how it works and how to avoid it',
            "description": t["hook"], "about": [t["opening"], "chess opening trap"], "author": {"@type": "Organization", "name": NAME, "url": SITE},
            "publisher": {"@type": "Organization", "name": NAME, "logo": {"@type": "ImageObject", "url": SITE + "/img/logo.png"}},
-           "mainEntityOfPage": SITE + path, "image": SITE + "/img/og.jpg"}
+           "mainEntityOfPage": SITE + path, "image": SITE + (trap_img(t) or "/img/og.jpg")}
     crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Trap library", "item": SITE + "/traps/"},
         {"@type": "ListItem", "position": 2, "name": t["name"], "item": SITE + path}]}
     return path, page(path, f'{t["name"]}: moves, mate and how to avoid it · Throiy Chess', t["hook"] + " Step through every move on the board.", body,
-                      [art, crumbs] + ([video_ld(sh)] if sh and video_ld(sh) else []), ogtype="article")
+                      [art, crumbs] + ([video_ld(sh)] if sh and video_ld(sh) else []), og_image=trap_img(t) or "/img/og.jpg", ogtype="article")
 
 def contact():
     active = bool(WEB3FORMS_KEY)
