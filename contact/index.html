@@ -175,8 +175,10 @@ document.addEventListener("click",function(ev){var b=ev.target.closest("button[d
 f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1&rel=0&playsinline=1";f.title=b.dataset.title||"YouTube Short";
 f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";b.replaceWith(f)});
 document.addEventListener("click",function(ev){var b=ev.target.closest(".share button");if(!b)return;var w=b.closest(".share"),u=w.dataset.url,t=w.dataset.text;
+var app=b.dataset.app,m=w.querySelector(".sh-msg");
+if((b.classList.contains("sh-native")||app)&&navigator.share&&matchMedia("(pointer:coarse)").matches){navigator.share({title:t,url:u}).catch(function(){});return}
 if(b.classList.contains("sh-native")&&navigator.share){navigator.share({title:t,url:u}).catch(function(){});return}
-(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){var c=w.querySelector(".sh-copy");c.textContent="Link copied!";setTimeout(function(){c.textContent="Copy link"},2000)}).catch(function(){prompt("Copy this link:",u)})});
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){m.textContent=app?"Link copied. Paste it in your "+app+" story, bio or DM.":"Link copied!";setTimeout(function(){m.textContent=""},4000)}).catch(function(){prompt("Copy this link:",u)})});
 document.addEventListener("submit",function(ev){var fm=ev.target;if(!fm.matches("form.nl"))return;ev.preventDefault();var m=fm.querySelector(".nl-msg");
 if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl_website");m.textContent="Sending…";
 fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
