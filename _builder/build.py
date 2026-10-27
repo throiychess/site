@@ -279,8 +279,10 @@ document.addEventListener("click",function(ev){var b=ev.target.closest("button[d
 f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1&rel=0&playsinline=1";f.title=b.dataset.title||"YouTube Short";
 f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";b.replaceWith(f)});
 document.addEventListener("click",function(ev){var b=ev.target.closest(".share button");if(!b)return;var w=b.closest(".share"),u=w.dataset.url,t=w.dataset.text;
+var app=b.dataset.app,m=w.querySelector(".sh-msg");
+if((b.classList.contains("sh-native")||app)&&navigator.share&&matchMedia("(pointer:coarse)").matches){navigator.share({title:t,url:u}).catch(function(){});return}
 if(b.classList.contains("sh-native")&&navigator.share){navigator.share({title:t,url:u}).catch(function(){});return}
-(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){var c=w.querySelector(".sh-copy");c.textContent="Link copied!";setTimeout(function(){c.textContent="Copy link"},2000)}).catch(function(){prompt("Copy this link:",u)})});
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){m.textContent=app?"Link copied. Paste it in your "+app+" story, bio or DM.":"Link copied!";setTimeout(function(){m.textContent=""},4000)}).catch(function(){prompt("Copy this link:",u)})});
 document.addEventListener("submit",function(ev){var fm=ev.target;if(!fm.matches("form.nl"))return;ev.preventDefault();var m=fm.querySelector(".nl-msg");
 if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl_website");m.textContent="Sending…";
 fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
@@ -315,8 +317,8 @@ def share_bar(url, text):
             f'<a href="https://wa.me/?text={t}%20{u}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">WhatsApp</a>'
             f'<a href="https://www.facebook.com/sharer/sharer.php?u={u}" target="_blank" rel="noopener" aria-label="Share on Facebook">Facebook</a>'
             f'<a href="https://twitter.com/intent/tweet?url={u}&amp;text={t}" target="_blank" rel="noopener" aria-label="Share on X">X</a>'
-            f'<a href="https://www.reddit.com/submit?url={u}&amp;title={t}" target="_blank" rel="noopener" aria-label="Share on Reddit">Reddit</a>'
-            '<button type="button" class="sh-copy">Copy link</button></div>')
+            '<button type="button" class="sh-app" data-app="Instagram">Instagram</button><button type="button" class="sh-app" data-app="TikTok">TikTok</button>'
+            '<button type="button" class="sh-copy">Copy link</button><span class="sh-msg small" role="status" aria-live="polite"></span></div>')
 
 def short_url(s):
     t = next((t for t in TRAPS if t.get("short") == s["id"]), None)
