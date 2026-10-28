@@ -3,6 +3,9 @@ on:
   schedule:
     - cron: "23 3 * * *"   # every night 03:23 UTC
   workflow_dispatch: {}
+  push:                     # also run right after a change to the stats script
+    branches: [main]
+    paths: ["_stats/**", ".github/workflows/goatcounter-stats.yml"]
 permissions:
   contents: write
 concurrency: { group: goatcounter-stats, cancel-in-progress: false }
