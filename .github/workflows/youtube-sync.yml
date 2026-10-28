@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with: { python-version: "3.12" }
-      - run: pip install chess==1.11.1
+      - run: pip install chess==1.11.1 pillow==11.0.0
       - run: python _builder/sync_youtube.py
       - run: OUT_DIR=. python _builder/build.py
       - run: |

@@ -296,18 +296,40 @@ m.textContent="You're in! The next trap lands in your inbox.";}else{m.textConten
 </script>"""
 THUMBS = os.path.join(ROOT, "src", "img", "yt")
 def fetch_thumbs(items):
-    """Self-hosted thumbnails (no request to YouTube until play). Own designs are committed in src/img/yt/<id>.jpg;
-    missing ones are downloaded once from YouTube at build time (GitHub Actions) and committed with the site."""
-    import urllib.request
+    """Self-hosted thumbnails (no request to YouTube until play).
+    Own designs: commit src/img/yt/<id>.jpg (no .auto marker) -> never touched.
+    Missing ones are downloaded from YouTube at build time and marked <id>.auto; auto ones from the last 21 days
+    are refreshed every run, so a thumbnail changed on YouTube shows up on the site too.
+    Shorts: YouTube's custom thumbnail is maxresdefault (landscape, letterboxed) -> the 9:16 middle is cut out."""
+    import urllib.request, io, datetime
     os.makedirs(THUMBS, exist_ok=True)
+    today = datetime.date.today()
+    def get(name, vid):
+        try:
+            d = urllib.request.urlopen(f"https://i.ytimg.com/vi/{vid}/{name}", timeout=15).read()
+            return d if len(d) > 2000 else None
+        except Exception: return None
     for s in items:
-        p = os.path.join(THUMBS, s["id"] + ".jpg")
-        if os.path.exists(p): continue
-        for name in (["hqdefault.jpg"] if s.get("kind") == "video" else ["oar2.jpg", "oardefault.jpg", "hqdefault.jpg"]):
-            try:
-                data = urllib.request.urlopen(f"https://i.ytimg.com/vi/{s['id']}/{name}", timeout=15).read()
-                if len(data) > 2000: open(p, "wb").write(data); break
-            except Exception: pass
+        p = os.path.join(THUMBS, s["id"] + ".jpg"); auto = p[:-4] + ".auto"
+        if os.path.exists(p) and not os.path.exists(auto): continue          # own design
+        if os.path.exists(p):
+            try: age = (today - datetime.date.fromisoformat(s.get("date") or "2000-01-01")).days
+            except ValueError: age = 999
+            if age > 21: continue
+        data = None
+        if s.get("kind") == "video":
+            data = get("maxresdefault.jpg", s["id"]) or get("hqdefault.jpg", s["id"])
+        else:
+            mx = get("maxresdefault.jpg", s["id"])
+            if mx:
+                try:
+                    from PIL import Image
+                    im = Image.open(io.BytesIO(mx)).convert("RGB"); w, h = im.size; cw = int(h * 9 / 16)
+                    im = im.crop(((w - cw) // 2, 0, (w - cw) // 2 + cw, h)); b = io.BytesIO(); im.save(b, "JPEG", quality=88); data = b.getvalue()
+                except Exception: data = None
+            data = data or get("oar2.jpg", s["id"]) or get("hqdefault.jpg", s["id"])
+        if data:
+            open(p, "wb").write(data); open(auto, "w").write("auto-fetched from YouTube; delete this file to keep the image as an own design\n")
 
 def thumb_style(s):
     if not os.path.exists(os.path.join(THUMBS, s["id"] + ".jpg")): return ""
@@ -373,6 +395,9 @@ def home():
         cards += (f'<a class="card soon" href="{href}" target="_blank" rel="noopener"><div class="meta"><span class="label">{e(o)}</span></div>'
                   f'<h3>{e(n)}</h3><p>{e(h)}</p><span class="go">Watch the Short →</span></a>')
     latest = "".join(short_card(s) for s in SHORTS[:4])
+    _top = [s for s in SHORTS if s.get("topic") == "Top game"]
+    top_cards = (f'<div class="sechead" style="margin-top:28px"><div><span class="eyebrow">Top games</span><h2>The best moments from elite chess.</h2></div></div>'
+                 f'<div class="shorts">{"".join(short_card(s) for s in _top[:8])}</div>') if _top else ""
     body = header() + f'''<main>
 <div class="wrap hero"><div class="copy"><span class="eyebrow">Throiy Chess · Lessons &amp; Games</span>
 <h1>Stop falling for <em>chess traps.</em></h1>
@@ -386,7 +411,7 @@ def home():
 <a class="btn" href="/traps/">All {len(TRAPS)} traps →</a></div>
 <div class="grid">{cards}</div></div></section>
 <section id="top-games"><div class="wrap"><div class="breaking"><span class="live">Top games</span><div><h3>Clutch Chess: Champions Showdown · 27–29 October</h3>
-<p>Nakamura, Caruana, Praggnanandhaa and Sindarov play rapid chess. We break down the sharpest moment of each day in a Short.</p></div></div></div></section>
+<p>Nakamura, Caruana, Praggnanandhaa and Sindarov play rapid chess. We break down the sharpest moment of each day in a Short.</p></div></div>{top_cards}</div></section>
 <section id="about"><div class="wrap about"><img src="/img/avatar-thumbs_up.png" width="220" height="220" alt="Throiy, illustrated, giving a thumbs up">
 <div><span class="eyebrow">About</span><h2>Hi, I'm Throiy.</h2><p>I'm a chess player sharing what I wish I'd known sooner. Short, clear lessons you can use in your next game. A new one every day on YouTube, TikTok, Instagram and Facebook.</p>
 <div class="btns" style="margin-top:18px">''' + "".join(f'<a class="btn" href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LINKS) + \
