@@ -1,5 +1,5 @@
 {
-"generated": "2026-10-28T12:24:42Z",
+"generated": "2026-10-28T12:27:16Z",
 "start": "2026-07-31",
 "end": "2026-10-28",
 "rows": [
@@ -253,6 +253,20 @@
 "key": "Android",
 "label": "Android",
 "value": 1,
+"group": ""
+},
+{
+"kind": "meta",
+"key": "generated",
+"label": "2026-10-28T12:27:16Z",
+"value": 0,
+"group": ""
+},
+{
+"kind": "meta",
+"key": "start",
+"label": "2026-07-31",
+"value": 0,
 "group": ""
 }
 ]
