@@ -19,7 +19,9 @@ jobs:
       - name: Fetch stats
         env:
           GOATCOUNTER_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
-        run: python _stats/goatcounter.py /tmp/goatcounter.json
+        run: |
+          python _stats/goatcounter.py /tmp/goatcounter.json
+          python _stats/to_rows.py /tmp/goatcounter.json /tmp/rows.json
       - name: Save to branch "stats"
         run: |
           git config user.name "ThroiyChess bot"
@@ -31,6 +33,7 @@ jobs:
             git worktree add --detach /tmp/stats && cd /tmp/stats && git checkout --orphan stats && git rm -rfq .
           fi
           cp /tmp/goatcounter.json goatcounter.json
-          git add goatcounter.json
+          cp /tmp/rows.json rows.json
+          git add goatcounter.json rows.json
           git diff --cached --quiet || git commit -qm "Stats $(date -u +%F)"
           git push origin stats

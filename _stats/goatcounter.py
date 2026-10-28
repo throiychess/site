@@ -24,7 +24,6 @@ def get(path, **params):
     return {"error": "rate limited"}
 
 out = {"generated": dt.datetime.utcnow().replace(microsecond=0).isoformat() + "Z", "start": start, "end": end}
-out["total"] = get("/stats/total")
 out["hits"] = get("/stats/hits", limit=100, daily="true")
 for page in ["toprefs", "browsers", "systems", "sizes", "locations", "campaigns"]:
     out[page] = get(f"/stats/{page}", limit=50)
