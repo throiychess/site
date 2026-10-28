@@ -365,7 +365,7 @@ def short_card(s):
 def video_ld(s):
     if not s.get("date"): return None
     return {"@context": "https://schema.org", "@type": "VideoObject", "name": s["title"], "description": s.get("desc", s["title"]),
-            "uploadDate": s["date"], "thumbnailUrl": f"https://i.ytimg.com/vi/{s['id']}/hqdefault.jpg",
+            "uploadDate": (s["date"] if "T" in s["date"] else s["date"] + "T12:00:00+01:00"), "thumbnailUrl": f"https://i.ytimg.com/vi/{s['id']}/hqdefault.jpg",
             "embedUrl": f"https://www.youtube-nocookie.com/embed/{s['id']}", "contentUrl": (f"https://www.youtube.com/watch?v={s['id']}" if s.get("kind") == "video" else f"https://www.youtube.com/shorts/{s['id']}")}
 
 ORG = {"@context": "https://schema.org", "@type": "Organization", "name": NAME, "url": SITE, "logo": SITE + "/img/logo.png",
