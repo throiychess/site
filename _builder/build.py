@@ -293,8 +293,8 @@ if(b.classList.contains("sh-native")&&navigator.share){navigator.share({title:t,
 document.addEventListener("submit",function(ev){var fm=ev.target;if(!fm.matches("form.nl"))return;ev.preventDefault();var m=fm.querySelector(".nl-msg");
 if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl_website");m.textContent="Sending…";
 fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
-gcEv("newsletter-signup");m.textContent="You're in! The next trap lands in your inbox.";}else{m.textContent="That didn't work. Check the address and try again.";}})
-.catch(function(){gcEv("newsletter-signup-newtab");m.textContent="Opening the sign-up in a new tab…";fm.submit();})});
+gcEv("newsletter-signup");if(fm.dataset.dl){gcEv("cheatsheet-signup");m.innerHTML='You&#39;re in! <a class="btn solid" href="'+fm.dataset.dl+'" download>Download the cheat sheet (PDF)</a>';}else{m.textContent="You're in! The next trap lands in your inbox.";}}else{m.textContent="That didn't work. Check the address and try again.";}})
+.catch(function(){gcEv("newsletter-signup-newtab");if(fm.dataset.dl){m.innerHTML='Almost there: confirm in the new tab, then <a href="'+fm.dataset.dl+'" download>download the cheat sheet</a>.';}else{m.textContent="Opening the sign-up in a new tab…";}fm.submit();})});
 </script>"""
 THUMBS = os.path.join(ROOT, "src", "img", "yt")
 def fetch_thumbs(items):
@@ -572,6 +572,23 @@ def support_page():
 </div><aside><iframe class="kofi" src="{DONATE_URL}/?hidefeed=true&amp;widget=true&amp;embed=true&amp;preview=true" title="Support Throiy Chess on Ko-fi" loading="lazy"></iframe></aside></div></main>''' + footer(band=False)
     return "/support/", page("/support/", "Support · Throiy Chess", "Support Throiy Chess with a small tip and keep the chess lessons free.", body)
 
+def free_page():
+    body = header() + f'''<main class="wrap"><div class="twocol" style="padding:40px 0 64px;align-items:center"><div class="prose">
+<span class="eyebrow">Free download</span>
+<h1 class="page">10 Opening Traps: the cheat sheet</h1>
+<p>The ten traps every beginner meets, on one PDF. For each trap: what happens in plain words, the exact move where it goes wrong, and how not to fall for it.</p>
+<ul><li>Scholar's Mate, Légal's Mate, Fried Liver, Fishing Pole</li><li>Blackburne Shilling, Stafford, Englund, Elephant, Lasker, Siberian</li><li>Every line checked with a chess engine</li></ul>
+<p>Enter your e-mail and the download appears right away. You also get one trap a week in your inbox. Unsubscribe in one click.</p>
+<form class="nl" data-dl="/free/10-opening-traps-cheat-sheet.pdf" action="{e(NEWSLETTER_URL)}" method="post" target="_blank">
+<label class="sr" for="free-email">E-mail address</label>
+<input id="free-email" type="email" name="fields[email]" placeholder="Your e-mail" autocomplete="email" required>
+<input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true">
+<div class="hp" aria-hidden="true"><input type="text" name="nl_website" tabindex="-1" autocomplete="off"></div>
+<button class="btn solid" type="submit">Send me the cheat sheet</button>
+<p class="nl-msg small" role="status" aria-live="polite"></p></form>
+</div><aside><img src="/free/cheat-sheet-cover.png" width="600" height="848" alt="Cover of the 10 Opening Traps cheat sheet" style="width:100%;height:auto;border-radius:14px;border:2px solid #d9a93d"></aside></div></main>''' + footer(band=False)
+    return "/free/", page("/free/", "Free: 10 Opening Traps Cheat Sheet · Throiy Chess", "Free PDF: the ten opening traps every beginner meets, in plain words, with the fix for each one.", body)
+
 def notfound():
     body = header() + '''<main class="wrap"><div class="pagehead"><span class="eyebrow">404</span><h1 class="page">That square is empty.</h1>
 <p>The page you were looking for doesn't exist (anymore).</p><div class="btns"><a class="btn solid" href="/">Back to the homepage</a><a class="btn" href="/shorts/">All Shorts</a></div></div></main>''' + footer()
@@ -591,7 +608,7 @@ def build():
     d = os.environ.get("OUT_DIR") or os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True) if not os.environ.get("OUT_DIR") else None
     fetch_thumbs(SHORTS + VIDEOS)
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
-    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy()]
+    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy(), free_page()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
