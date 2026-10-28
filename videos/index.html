@@ -170,6 +170,6 @@ if(b.classList.contains("sh-native")&&navigator.share){navigator.share({title:t,
 document.addEventListener("submit",function(ev){var fm=ev.target;if(!fm.matches("form.nl"))return;ev.preventDefault();var m=fm.querySelector(".nl-msg");
 if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl_website");m.textContent="Sending…";
 fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
-gcEv("newsletter-signup");m.textContent="You're in! The next trap lands in your inbox.";}else{m.textContent="That didn't work. Check the address and try again.";}})
-.catch(function(){gcEv("newsletter-signup-newtab");m.textContent="Opening the sign-up in a new tab…";fm.submit();})});
+gcEv("newsletter-signup");if(fm.dataset.dl){gcEv("cheatsheet-signup");m.innerHTML='You&#39;re in! <a class="btn solid" href="'+fm.dataset.dl+'" download>Download the cheat sheet (PDF)</a>';}else{m.textContent="You're in! The next trap lands in your inbox.";}}else{m.textContent="That didn't work. Check the address and try again.";}})
+.catch(function(){gcEv("newsletter-signup-newtab");if(fm.dataset.dl){m.innerHTML='Almost there: confirm in the new tab, then <a href="'+fm.dataset.dl+'" download>download the cheat sheet</a>.';}else{m.textContent="Opening the sign-up in a new tab…";}fm.submit();})});
 </script></body></html>
