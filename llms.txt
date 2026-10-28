@@ -27,6 +27,7 @@
 - [Stop the Scholar's Mate (and punish it)](https://www.youtube.com/shorts/LCSXV_yJs_U): Queen and bishop attack one weak square next to your king. Block the queen first, then make her run.
 - [He moved his king on move 5… big mistake](https://www.youtube.com/shorts/9EOJdMBaPO4): No castling, a knight fork on f7 and a rook gone. In the opening, castle; don't move your king by hand.
 - [I fell for the oldest trick in chess](https://www.youtube.com/shorts/xF6KVwnOGCY): Queen and bishop against f7. Once they aim at f7, keep defending it.
+- [10 Opening Traps Every Beginner Must Know](https://www.youtube.com/watch?v=SU-9w7C9I3g): 10 opening traps every beginner must know, from Scholar's Mate to the Siberian Trap. For each trap you see the setup, the bait, how it punishes you, and the fix so you never fall for it. Every line checked with Stockfish
 
 ## Channels
 - [YouTube](https://www.youtube.com/@ThroiyChess)
