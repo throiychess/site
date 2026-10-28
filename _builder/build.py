@@ -280,6 +280,8 @@ def footer(band=True):
 
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
 SCRIPT = """<script>
+function gcEv(n){try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:n,title:n,event:true})}catch(e){}}
+document.addEventListener("click",function(ev){var a=ev.target.closest("a[href]");if(a){if(a.host&&a.host!==location.host)gcEv("out-"+a.host.replace(/^www\\./,""));else if(a.pathname==="/support/")gcEv("click-support");}var y=ev.target.closest("button[data-yt]");if(y)gcEv("play-"+y.dataset.yt);var sh=ev.target.closest(".share button");if(sh)gcEv("share-"+(sh.dataset.app||(sh.classList.contains("sh-native")?"native":"copy")))});
 document.addEventListener("click",function(ev){var b=ev.target.closest("button[data-yt]");if(!b)return;var f=document.createElement("iframe");
 f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1&rel=0&playsinline=1";f.title=b.dataset.title||"YouTube Short";
 f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";b.replaceWith(f)});
@@ -291,8 +293,8 @@ if(b.classList.contains("sh-native")&&navigator.share){navigator.share({title:t,
 document.addEventListener("submit",function(ev){var fm=ev.target;if(!fm.matches("form.nl"))return;ev.preventDefault();var m=fm.querySelector(".nl-msg");
 if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl_website");m.textContent="Sending…";
 fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
-m.textContent="You're in! The next trap lands in your inbox.";}else{m.textContent="That didn't work. Check the address and try again.";}})
-.catch(function(){m.textContent="Opening the sign-up in a new tab…";fm.submit();})});
+gcEv("newsletter-signup");m.textContent="You're in! The next trap lands in your inbox.";}else{m.textContent="That didn't work. Check the address and try again.";}})
+.catch(function(){gcEv("newsletter-signup-newtab");m.textContent="Opening the sign-up in a new tab…";fm.submit();})});
 </script>"""
 THUMBS = os.path.join(ROOT, "src", "img", "yt")
 def fetch_thumbs(items):
