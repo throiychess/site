@@ -35,5 +35,7 @@ for kind, page in (("browser", "browsers"), ("system", "systems")):
         add(kind, r.get("id") or r.get("name"), r.get("name") or r.get("id"), r.get("count"))
 for r in (d.get("campaigns") or {}).get("stats") or []:
     add("campaign", r.get("id") or r.get("name"), r.get("name") or r.get("id"), r.get("count"))
+add("meta", "generated", d.get("generated") or "", 0)
+add("meta", "start", d.get("start") or "", 0)
 json.dump({"generated": d.get("generated"), "start": d.get("start"), "end": d.get("end"), "rows": rows}, open(sys.argv[2], "w"), ensure_ascii=False, indent=0)
 print(len(rows), "rows")
