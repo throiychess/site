@@ -230,7 +230,7 @@ form.contact{display:grid;gap:18px;max-width:620px}
 e = html.escape
 
 def csp():
-    conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else []) + (["https://assets.mailerlite.com"] if NEWSLETTER_URL else [])
+    conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else []) + (["https://assets.mailerlite.com"] if NEWSLETTER_URL else []) + ["https://api.chess.com", "https://lichess.org"]
     scr = ["'self'", "'unsafe-inline'"] + (["https://gc.zgo.at"] if ANALYTICS else [])
     return ("default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; "
             f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com https://ko-fi.com; "
@@ -589,6 +589,30 @@ def free_page():
 </div><aside><img src="/free/cheat-sheet-cover.png" width="600" height="848" alt="Cover of the 10 Opening Traps cheat sheet" style="width:100%;height:auto;border-radius:14px;border:2px solid #d9a93d"></aside></div></main>''' + footer(band=False)
     return "/free/", page("/free/", "Free: 10 Opening Traps Cheat Sheet · Throiy Chess", "Free PDF: the ten opening traps every beginner meets, in plain words, with the fix for each one.", body)
 
+AZ_CSS = """.az-form{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.az-form select,.az-form input{padding:13px 14px;border-radius:10px;border:1px solid #3a352c;background:#16140f;color:inherit;font:inherit}
+.az-form input{flex:1;min-width:200px}.az-list{display:grid;gap:8px;margin:14px 0 18px}.az-g{display:grid;grid-template-columns:auto 64px 1fr auto;gap:12px;align-items:center;padding:11px 14px;border:1px solid #2c2820;border-radius:12px;cursor:pointer}
+.az-g:has(input:checked){border-color:#d9a93d;background:#1b1813}.res{font-weight:800;font-size:13px}.res.won{color:#7fc27a}.res.lost{color:#e07a6a}.res.draw{color:#bdb6a8}
+.az-top{border:1px solid #d9a93d;border-radius:14px;padding:18px 20px;margin:18px 0}.az-bars{display:grid;gap:8px;margin:12px 0 18px}.az-bar{display:grid;grid-template-columns:minmax(150px,260px) 1fr 30px;gap:10px;align-items:center;font-size:14px}
+.az-bar i{display:block;height:12px;border-radius:6px;background:#d9a93d}.az-trap{padding:12px 16px;border-radius:12px;background:#1b1813;margin:10px 0}
+.az-m{display:grid;grid-template-columns:200px 1fr;gap:18px;padding:16px 0;border-top:1px solid #2c2820}.az-m h3{margin:4px 0 6px}
+svg.mini{width:200px;height:200px;border-radius:8px}svg.mini .lt{fill:#e9dcc0}svg.mini .dk{fill:#b38b5d}svg.mini .hl{fill:#d9a93d;opacity:.55}
+svg.mini text{font-size:.82px;text-anchor:middle;font-family:"DejaVu Sans","Segoe UI Symbol",serif}svg.mini .pw{fill:#fff;stroke:#1d1b17;stroke-width:.03}svg.mini .pb{fill:#1d1b17}
+.az-cta{border-radius:14px;background:#1b1813;padding:20px;margin:26px 0 40px}@media (max-width:560px){.az-m{grid-template-columns:1fr}.az-g{grid-template-columns:auto 52px 1fr}.az-g .small{grid-column:2/-1}}"""
+
+def analyze_page():
+    tdata = []
+    for t in TRAPS:
+        bl = [int(k) for k, v in t.get("notes", {}).items() if "BLUNDER" in v[0] or "MISTAKE" in v[0] or "GREED" in v[0]]
+        tdata.append({"slug": t["slug"], "name": t["name"], "moves": t["moves"], "side": t["side"], "blunder": max(bl) if bl else None})
+    body = header() + f'''<style>{AZ_CSS}</style><main class="wrap" style="max-width:900px"><div class="pagehead"><span class="eyebrow">Beta · free</span>
+<h1 class="page">Analyze your games</h1><p>Enter a Chess.com or Lichess username, pick up to 5 games, and see <b>which chess principles</b> cost you the most points, in plain words. Any player works: yours, a friend's, or a grandmaster's.</p></div>
+<form class="az-form" id="az-form"><label class="sr" for="az-site">Site</label><select id="az-site"><option value="chesscom">Chess.com</option><option value="lichess">Lichess</option></select>
+<label class="sr" for="az-user">Username</label><input id="az-user" placeholder="Username" autocomplete="off" required><button class="btn solid" type="submit">Find games</button></form>
+<div id="az-games"></div><div id="az-report"></div>
+<p class="small" style="margin:30px 0 50px">The analysis runs in your own browser with Stockfish 17.1 (GPLv3, <a href="https://github.com/official-stockfish/Stockfish" target="_blank" rel="noopener">source</a>). We don't store your games. Games are loaded from the public Chess.com and Lichess APIs. Throiy Chess is not affiliated with Chess.com or Lichess. A beta: the engine runs at a light depth, so treat single numbers as a guide.</p>
+</main><script type="application/json" id="trap-data">{json.dumps(tdata)}</script><script type="module" src="/js/analyze.js"></script>''' + footer(band=False)
+    return "/analyze/", page("/analyze/", "Analyze your games · Throiy Chess", "Free: find out which chess principles cost you the most points. Works with Chess.com and Lichess usernames.", body)
+
 def notfound():
     body = header() + '''<main class="wrap"><div class="pagehead"><span class="eyebrow">404</span><h1 class="page">That square is empty.</h1>
 <p>The page you were looking for doesn't exist (anymore).</p><div class="btns"><a class="btn solid" href="/">Back to the homepage</a><a class="btn" href="/shorts/">All Shorts</a></div></div></main>''' + footer()
@@ -608,7 +632,7 @@ def build():
     d = os.environ.get("OUT_DIR") or os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True) if not os.environ.get("OUT_DIR") else None
     fetch_thumbs(SHORTS + VIDEOS)
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
-    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy(), free_page()]
+    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy(), free_page(), analyze_page()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
