@@ -1,0 +1,33 @@
+name: GoatCounter stats
+on:
+  schedule:
+    - cron: "23 3 * * *"   # every night 03:23 UTC
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency: { group: goatcounter-stats, cancel-in-progress: false }
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: { python-version: "3.12" }
+      - name: Fetch stats
+        env:
+          GOATCOUNTER_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
+        run: python _stats/goatcounter.py /tmp/goatcounter.json
+      - name: Save to branch "stats"
+        run: |
+          git config user.name "ThroiyChess bot"
+          git config user.email "throiychess@users.noreply.github.com"
+          git fetch origin stats || true
+          if git rev-parse --verify origin/stats >/dev/null 2>&1; then
+            git worktree add /tmp/stats origin/stats && cd /tmp/stats && git checkout -B stats
+          else
+            git worktree add --detach /tmp/stats && cd /tmp/stats && git checkout --orphan stats && git rm -rfq .
+          fi
+          cp /tmp/goatcounter.json goatcounter.json
+          git add goatcounter.json
+          git diff --cached --quiet || git commit -qm "Stats $(date -u +%F)"
+          git push origin stats
