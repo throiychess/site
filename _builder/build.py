@@ -17,6 +17,7 @@ LINKS = [("YouTube", "https://www.youtube.com/@ThroiyChess"), ("TikTok", "https:
 WEB3FORMS_KEY = "a10fa119-63ca-43b3-8ef5-2b7aa106d669"        # access key from web3forms.com, sent to the contact e-mail address
 CONTACT_EMAIL = "info@throiychess.com"      # e.g. "info@throiychess.com" once the mailbox exists
 ANALYTICS = "throiychess"            # GoatCounter code, e.g. "throiychess" -> https://throiychess.goatcounter.com
+METRICOOL_HASH = "c6c03fb1179a18aed535c6088bf06fe6"  # Metricool web tracker (brand 7571701); "" = off
 DONATE_URL = "https://ko-fi.com/throiychess"           # e.g. a Ko-fi page
 NEWSLETTER_URL = "https://assets.mailerlite.com/jsonp/2747354/forms/202502436720478151/subscribe"  # MailerLite form (POST fields[email]); "" = off
 PER_PAGE = 12
@@ -230,9 +231,10 @@ form.contact{display:grid;gap:18px;max-width:620px}
 e = html.escape
 
 def csp():
-    conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else []) + (["https://assets.mailerlite.com"] if NEWSLETTER_URL else []) + ["https://api.chess.com", "https://lichess.org"]
-    scr = ["'self'", "'unsafe-inline'"] + (["https://gc.zgo.at"] if ANALYTICS else [])
-    return ("default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; "
+    conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else []) + (["https://assets.mailerlite.com"] if NEWSLETTER_URL else []) + ["https://api.chess.com", "https://lichess.org"] + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
+    scr = ["'self'", "'unsafe-inline'"] + (["https://gc.zgo.at"] if ANALYTICS else []) + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
+    img = "img-src 'self' data:" + (" https://tracker.metricool.com" if METRICOOL_HASH else "")
+    return (f"default-src 'self'; {img}; style-src 'self' 'unsafe-inline'; font-src 'self'; "
             f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com https://ko-fi.com; "
             "form-action 'self' https://api.web3forms.com" + (" https://assets.mailerlite.com" if NEWSLETTER_URL else "") + "; base-uri 'self'; object-src 'none'")
 
@@ -240,6 +242,10 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
     url = SITE + path
     ld = "".join(f'<script type="application/ld+json">{json.dumps(j, ensure_ascii=False)}</script>' for j in (jsonld or []))
     gc = (f'<script data-goatcounter="https://{ANALYTICS}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>' if ANALYTICS else "")
+    if METRICOOL_HASH:  # official Metricool loader snippet
+        gc += ('<script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");'
+               'c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}'
+               'loadScript(function(){beTracker.t({hash:"' + METRICOOL_HASH + '"})});</script>')
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
             f'<meta http-equiv="Content-Security-Policy" content="{csp()}"><meta name="referrer" content="strict-origin-when-cross-origin">'
@@ -531,7 +537,7 @@ def privacy():
 <p>Short version: no cookies, no tracking, and we never sell your data.</p></div>
 <div class="prose" style="padding-bottom:64px">
 <h2>Who we are</h2><p>Throiy Chess is a chess education channel from the Netherlands. This statement covers {DOMAIN}.</p>
-<h2>Visiting the site</h2><p>This site sets no cookies and has no login. Our hosting provider processes your IP address to deliver the pages and keep them secure.{" Visits are counted with a cookie-free tool that stores no personal data." if ANALYTICS else ""}</p>
+<h2>Visiting the site</h2><p>This site sets no cookies and has no login. Our hosting provider processes your IP address to deliver the pages and keep them secure.{" Visits are counted with cookie-free tools (GoatCounter" + (" and Metricool" if METRICOOL_HASH else "") + ") that store no personal data." if ANALYTICS else ""}</p>
 <h2>Videos</h2><p>Videos come from YouTube and only load when you press play. From then on, YouTube (Google) receives your IP address and may set cookies under its own privacy policy.</p>
 <h2>Contact</h2><p>When you send a message, we receive your name, e-mail address and message. We use them only to reply, and delete them within a year.</p>
 {"<h2>Newsletter</h2><p>If you subscribe, your e-mail address is stored by our mailing service MailerLite (EU). We use it only to send the newsletter. Every e-mail has an unsubscribe link, and we delete your address when you unsubscribe.</p>" if NEWSLETTER_URL else ""}
