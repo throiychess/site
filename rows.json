@@ -1,7 +1,7 @@
 {
-"generated": "2026-10-28T12:27:16Z",
-"start": "2026-07-31",
-"end": "2026-10-28",
+"generated": "2026-10-29T04:10:00Z",
+"start": "2026-08-01",
+"end": "2026-10-29",
 "rows": [
 {
 "kind": "daily",
@@ -21,56 +21,63 @@
 "kind": "daily",
 "key": "2026-10-28",
 "label": "2026-10-28",
-"value": 2,
+"value": 24,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-29",
+"label": "2026-10-29",
+"value": 0,
 "group": ""
 },
 {
 "kind": "page",
 "key": "/",
 "label": "Throiy Chess",
-"value": 16,
-"group": "Overige pagina"
-},
-{
-"kind": "page",
-"key": "/contact",
-"label": "Contact",
-"value": 6,
+"value": 26,
 "group": "Overige pagina"
 },
 {
 "kind": "page",
 "key": "/traps/scholars-mate",
 "label": "Scholar's Mate: moves, mate and how to avoid it",
-"value": 5,
+"value": 8,
 "group": "Trap-pagina"
 },
 {
 "kind": "page",
 "key": "/support",
 "label": "Support",
-"value": 5,
+"value": 7,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/contact",
+"label": "Contact",
+"value": 7,
 "group": "Overige pagina"
 },
 {
 "kind": "page",
 "key": "/shorts",
 "label": "All Shorts",
-"value": 4,
+"value": 6,
 "group": "Overige pagina"
 },
 {
 "kind": "page",
 "key": "/videos",
 "label": "Videos",
-"value": 3,
+"value": 5,
 "group": "Overige pagina"
 },
 {
 "kind": "page",
 "key": "/traps/fried-liver-attack",
 "label": "Fried Liver Attack: moves, mate and how to avoid it",
-"value": 2,
+"value": 3,
 "group": "Trap-pagina"
 },
 {
@@ -78,6 +85,13 @@
 "key": "/traps/fishing-pole-trap",
 "label": "Fishing Pole Trap: moves, mate and how to avoid it",
 "value": 2,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/blackburne-shilling-gambit",
+"label": "Blackburne Shilling Gambit: moves, mate and how to avoid it",
+"value": 1,
 "group": "Trap-pagina"
 },
 {
@@ -119,7 +133,7 @@
 "kind": "source",
 "key": "(direct)",
 "label": "Direct of onbekend",
-"value": 22,
+"value": 31,
 "group": "Direct"
 },
 {
@@ -140,14 +154,14 @@
 "kind": "country",
 "key": "NL",
 "label": "Netherlands",
-"value": 42,
+"value": 45,
 "group": ""
 },
 {
 "kind": "country",
 "key": "US",
 "label": "United States",
-"value": 9,
+"value": 14,
 "group": ""
 },
 {
@@ -173,79 +187,79 @@
 },
 {
 "kind": "country",
+"key": "FR",
+"label": "France",
+"value": 2,
+"group": ""
+},
+{
+"kind": "country",
 "key": "IN",
 "label": "India",
 "value": 2,
 "group": ""
 },
 {
-"kind": "country",
-"key": "FR",
-"label": "France",
-"value": 1,
-"group": ""
-},
-{
 "kind": "device",
 "key": "phone",
 "label": "Telefoon",
-"value": 9,
+"value": 12,
 "group": ""
 },
 {
 "kind": "device",
 "key": "tablet",
 "label": "Tablet",
-"value": 6,
+"value": 7,
 "group": ""
 },
 {
 "kind": "device",
 "key": "desktop",
 "label": "Computer",
-"value": 49,
+"value": 54,
 "group": ""
 },
 {
 "kind": "browser",
 "key": "Chrome",
 "label": "Chrome",
-"value": 37,
+"value": 42,
 "group": ""
 },
 {
 "kind": "browser",
 "key": "Firefox",
 "label": "Firefox",
-"value": 19,
+"value": 20,
 "group": ""
 },
 {
 "kind": "browser",
 "key": "Safari",
 "label": "Safari",
-"value": 8,
+"value": 11,
 "group": ""
 },
 {
 "kind": "system",
 "key": "Windows",
 "label": "Windows",
-"value": 49,
+"value": 53,
 "group": ""
 },
 {
 "kind": "system",
 "key": "iOS",
 "label": "iOS",
-"value": 8,
+"value": 11,
 "group": ""
 },
 {
 "kind": "system",
 "key": "Linux",
 "label": "Linux",
-"value": 6,
+"value": 8,
 "group": ""
 },
 {
@@ -258,14 +272,14 @@
 {
 "kind": "meta",
 "key": "generated",
-"label": "2026-10-28T12:27:16Z",
+"label": "2026-10-29T04:10:00Z",
 "value": 0,
 "group": ""
 },
 {
 "kind": "meta",
 "key": "start",
-"label": "2026-07-31",
+"label": "2026-08-01",
 "value": 0,
 "group": ""
 }
