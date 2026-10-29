@@ -98,7 +98,7 @@ TRAPS = [
          intro="After 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! the e5 pawn is loose. 4.Nxe5? Qg5! hits the knight and g2, and after the greedy 5.Nxf7?? "
                "Qxg2 6.Rf1 Qxe4+ 7.Be2 Nf3# is mate. Simply 4.O-O or 4.Nxd4 is good for White.",
          moves="e4 e5 Nf3 Nc6 Bc4 Nd4 Nxe5 Qg5 Nxf7 Qxg2 Rf1 Qxe4+ Be2 Nf3#",
-         notes={0: ("START", "", "A cheeky trap, named after a shilling bet. Step through the moves."),
+         notes={0: ("START", "", "A cheeky trap with a famous name. Step through the moves."),
                 6: ("THE BAIT", "3…Nd4?!", "The knight jumps to d4 and leaves the e5 pawn hanging.", ["d4", "!e5"]),
                 7: ("THE GREED", "4.Nxe5?", "White grabs the pawn.", ["e5"]),
                 8: ("COUNTERATTACK", "4…Qg5!", "The queen attacks the knight on e5 and the pawn on g2.", ["g5", "!e5", "!g2"]),
