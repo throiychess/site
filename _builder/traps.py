@@ -108,7 +108,7 @@ TRAPS = [
                 13: ("BLOCK", "7.Be2", "The bishop blocks, and the king is boxed in."),
                 14: ("CHECKMATE", "7…Nf3#", "Knight f3. Checkmate.", ["f3", "!e1"])},
          fix=["Don't take on e5. Castle, or take the knight on d4.",
-              "If you did take and the queen comes to g5, don't grab more: defend g2.",
+              "If you did take and the queen comes to g5, don't grab more: castle (your king then covers g2) and give the knight back.",
               "A free pawn that opens lines to your king is not free."]),
     dict(slug="stafford-gambit", name="Stafford Gambit", opening="Petrov Defense", side="Black sets it", short="TsHaDaBUS-c",
          hook="Black gives away the queen on purpose. Take it, and it's mate in two.",
