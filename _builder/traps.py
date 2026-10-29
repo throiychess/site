@@ -121,7 +121,7 @@ TRAPS = [
                 10: ("THE AIM", "5…Bc5", "The bishop aims straight at f2, next to White's king.", ["c5", "!f2"]),
                 11: ("THE MISTAKE", "6.Bg5??", "White pins the knight and attacks the queen.", ["g5", "!d8"]),
                 12: ("THE BAIT", "6…Nxe4!", "Black ignores the threat to the queen.", ["e4", "!d8"]),
-                13: ("THE BLUNDER", "7.Bxd8", "White takes the queen."),
+                13: ("THE BLUNDER", "7.Bxd8??", "White takes the queen."),
                 14: ("CHECK", "7…Bxf2+", "Bishop takes f2, check. The king must go to e2.", ["f2", "!e1"]),
                 16: ("CHECKMATE", "8…Bg4#", "Bishop g4. Checkmate.", ["g4", "!e2"])},
          fix=["Don't play Bg5. Develop with Be2 and castle.",
