@@ -279,15 +279,16 @@ def newsletter():
             '<button class="btn solid" type="submit">Subscribe</button>'
             '<p class="nl-msg small" role="status" aria-live="polite"></p></form></div></div>')
 
-def footer(band=True):
+def footer(band=True, nl=True):
     ext = " ".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LINKS)
-    return (newsletter() + (support_bar() if band else "") + f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Quick chess lessons, every day</span>'
+    return ((newsletter() if nl else "") + (support_bar() if band else "") + f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Quick chess lessons, every day</span>'
             f'<nav aria-label="Footer">{ext}<a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a></nav></div></footer>')
 
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
 SCRIPT = """<script>
 function gcEv(n){try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:n,title:n,event:true})}catch(e){}}
 document.addEventListener("click",function(ev){var d=ev.target.closest("[data-ev]");if(d)gcEv(d.dataset.ev);var a=ev.target.closest("a[href]");if(a){if(a.host&&a.host!==location.host)gcEv("out-"+a.host.replace(/^www\\./,""));else if(a.pathname==="/support/")gcEv("click-support");}var y=ev.target.closest("button[data-yt]");if(y)gcEv("play-"+y.dataset.yt);var sh=ev.target.closest(".share button");if(sh)gcEv("share-"+(sh.dataset.app||(sh.classList.contains("sh-native")?"native":"copy")))});
+window.addEventListener("blur",function(){var f=document.activeElement;if(f&&f.tagName==="IFRAME"&&f.src.indexOf("ko-fi.com")>-1&&!window.kfC){window.kfC=1;gcEv("kofi-panel-click")}});
 document.addEventListener("click",function(ev){var b=ev.target.closest("button[data-yt]");if(!b)return;var f=document.createElement("iframe");
 f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1&rel=0&playsinline=1";f.title=b.dataset.title||"YouTube Short";
 f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";b.replaceWith(f)});
@@ -299,8 +300,8 @@ if(b.classList.contains("sh-native")&&navigator.share){navigator.share({title:t,
 document.addEventListener("submit",function(ev){var fm=ev.target;if(!fm.matches("form.nl"))return;ev.preventDefault();var m=fm.querySelector(".nl-msg");
 if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl_website");m.textContent="Sending…";
 fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
-gcEv("newsletter-signup");if(fm.dataset.dl){gcEv("cheatsheet-signup");m.innerHTML='You&#39;re in! <a class="btn solid" href="'+fm.dataset.dl+'" download>Download the cheat sheet (PDF)</a>';}else{m.textContent="You're in! The next trap lands in your inbox.";}}else{m.textContent="That didn't work. Check the address and try again.";}})
-.catch(function(){gcEv("newsletter-signup-newtab");if(fm.dataset.dl){m.innerHTML='Almost there: confirm in the new tab, then <a href="'+fm.dataset.dl+'" download>download the cheat sheet</a>.';}else{m.textContent="Opening the sign-up in a new tab…";}fm.submit();})});
+gcEv("newsletter-signup");if(fm.dataset.dl){gcEv("cheatsheet-signup");m.innerHTML='You&#39;re in! <a class="btn solid" data-ev="cheatsheet-open" href="'+fm.dataset.dl+'" target="_blank" rel="noopener">Open the cheat sheet (PDF)</a>';}else{m.textContent="You're in! The next trap lands in your inbox.";}}else{m.textContent="That didn't work. Check the address and try again.";}})
+.catch(function(){gcEv("newsletter-signup-newtab");if(fm.dataset.dl){m.innerHTML='Almost there: confirm in the new tab, then <a data-ev="cheatsheet-open" href="'+fm.dataset.dl+'" target="_blank" rel="noopener">open the cheat sheet</a>.';}else{m.textContent="Opening the sign-up in a new tab…";}fm.submit();})});
 </script>"""
 THUMBS = os.path.join(ROOT, "src", "img", "yt")
 def fetch_thumbs(items):
@@ -592,7 +593,8 @@ def free_page():
 <div class="hp" aria-hidden="true"><input type="text" name="nl_website" tabindex="-1" autocomplete="off"></div>
 <button class="btn solid" type="submit">Send me the cheat sheet</button>
 <p class="nl-msg small" role="status" aria-live="polite"></p></form>
-</div><aside><img src="/free/cheat-sheet-cover.png" width="600" height="848" alt="Cover of the 10 Opening Traps cheat sheet" style="width:100%;height:auto;border-radius:14px;border:2px solid #d9a93d"></aside></div></main>''' + footer(band=False)
+<p class="small">We use MailerLite (EU) to send the e-mails and use your address for nothing else. Unsubscribe in one click and we delete it. <a href="/privacy/">Privacy</a></p>
+</div><aside><img src="/free/cheat-sheet-cover.png" width="600" height="848" alt="Cover of the 10 Opening Traps cheat sheet" style="width:100%;height:auto;border-radius:14px;border:2px solid #d9a93d"></aside></div></main>''' + footer(band=False, nl=False)
     return "/free/", page("/free/", "Free: 10 Opening Traps Cheat Sheet · Throiy Chess", "Free PDF: the ten opening traps every beginner meets, in plain words, with the fix for each one.", body)
 
 AZ_CSS = """.az-form{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.az-form select,.az-form input{padding:13px 14px;border-radius:10px;border:1px solid #3a352c;background:#16140f;color:inherit;font:inherit}
