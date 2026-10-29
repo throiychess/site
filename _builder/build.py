@@ -225,7 +225,7 @@ form.contact{display:grid;gap:18px;max-width:620px}
 @media (max-width:700px){.videos{grid-template-columns:1fr}}
 @media (max-width:900px){.shorts{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr 1fr}}
 @media (max-width:860px){.hero,.player,.twocol{grid-template-columns:1fr}.hero{padding-block:32px}.breaking{grid-template-columns:1fr;gap:14px}.about{grid-template-columns:1fr}.about img{width:150px}}
-@media (max-width:560px){.grid{grid-template-columns:1fr}.brand img{height:46px}.brand{font-size:19px}nav.links{gap:4px 14px}html{scroll-padding-top:130px}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}.brand img{height:46px}.brand{font-size:19px}nav.links{gap:0 18px;flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch;mask-image:linear-gradient(90deg,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent)}nav.links::-webkit-scrollbar{display:none}nav.links a{white-space:nowrap;padding-block:8px}html{scroll-padding-top:120px}}
 @media (prefers-reduced-motion:no-preference){.btn,.card{transition:background .15s,filter .15s}}
 """
 e = html.escape
@@ -257,7 +257,7 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             f'<link rel="preload" href="/fonts/Inter-Black.woff" as="font" type="font/woff" crossorigin>'
             f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}</body></html>')
 
-NAV = [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Traps", "/traps/"), ("Top games", "/#top-games"), ("About", "/#about"), ("Contact", "/contact/"), ("Support", "/support/")]
+NAV = [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Traps", "/traps/"), ("Analyze", "/analyze/"), ("Top games", "/#top-games"), ("About", "/#about"), ("Contact", "/contact/"), ("Support", "/support/")]
 def header(active=""):
     return ('<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt="">'
             '<span>THROIY<b>CHESS</b></span></a><nav class="links" aria-label="Main">'
@@ -287,7 +287,7 @@ def footer(band=True):
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
 SCRIPT = """<script>
 function gcEv(n){try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:n,title:n,event:true})}catch(e){}}
-document.addEventListener("click",function(ev){var a=ev.target.closest("a[href]");if(a){if(a.host&&a.host!==location.host)gcEv("out-"+a.host.replace(/^www\\./,""));else if(a.pathname==="/support/")gcEv("click-support");}var y=ev.target.closest("button[data-yt]");if(y)gcEv("play-"+y.dataset.yt);var sh=ev.target.closest(".share button");if(sh)gcEv("share-"+(sh.dataset.app||(sh.classList.contains("sh-native")?"native":"copy")))});
+document.addEventListener("click",function(ev){var d=ev.target.closest("[data-ev]");if(d)gcEv(d.dataset.ev);var a=ev.target.closest("a[href]");if(a){if(a.host&&a.host!==location.host)gcEv("out-"+a.host.replace(/^www\\./,""));else if(a.pathname==="/support/")gcEv("click-support");}var y=ev.target.closest("button[data-yt]");if(y)gcEv("play-"+y.dataset.yt);var sh=ev.target.closest(".share button");if(sh)gcEv("share-"+(sh.dataset.app||(sh.classList.contains("sh-native")?"native":"copy")))});
 document.addEventListener("click",function(ev){var b=ev.target.closest("button[data-yt]");if(!b)return;var f=document.createElement("iframe");
 f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1&rel=0&playsinline=1";f.title=b.dataset.title||"YouTube Short";
 f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";b.replaceWith(f)});
@@ -603,14 +603,14 @@ AZ_CSS = """.az-form{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.az-form
 .az-m{display:grid;grid-template-columns:200px 1fr;gap:18px;padding:16px 0;border-top:1px solid #2c2820}.az-m h3{margin:4px 0 6px}
 svg.mini{width:200px;height:200px;border-radius:8px}svg.mini .lt{fill:#e9dcc0}svg.mini .dk{fill:#b38b5d}svg.mini .hl{fill:#d9a93d;opacity:.55}
 svg.mini text{font-size:.82px;text-anchor:middle;font-family:"DejaVu Sans","Segoe UI Symbol",serif}svg.mini .pw{fill:#fff;stroke:#1d1b17;stroke-width:.03}svg.mini .pb{fill:#1d1b17}
-.az-cta{border-radius:14px;background:#1b1813;padding:20px;margin:26px 0 40px}@media (max-width:560px){.az-m{grid-template-columns:1fr}.az-g{grid-template-columns:auto 52px 1fr}.az-g .small{grid-column:2/-1}}"""
+.az-cta{border-radius:14px;background:#1b1813;padding:20px;margin:26px 0 40px}.az-follow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}.az-follow .btn{flex:1 1 0;min-width:0;justify-content:center;text-align:center;padding-inline:8px}.az-cta hr{border:0;border-top:1px solid #2c2820;margin:20px 0}@media (max-width:560px){.az-m{grid-template-columns:1fr}.az-g{grid-template-columns:auto 52px 1fr}.az-g .small{grid-column:2/-1}}"""
 
 def analyze_page():
     tdata = []
     for t in TRAPS:
         bl = [int(k) for k, v in t.get("notes", {}).items() if "BLUNDER" in v[0] or "MISTAKE" in v[0] or "GREED" in v[0]]
         tdata.append({"slug": t["slug"], "name": t["name"], "moves": t["moves"], "side": t["side"], "blunder": max(bl) if bl else None})
-    body = header() + f'''<style>{AZ_CSS}</style><main class="wrap" style="max-width:900px"><div class="pagehead"><span class="eyebrow">Beta · free</span>
+    body = header("Analyze") + f'''<style>{AZ_CSS}</style><main class="wrap" style="max-width:900px"><div class="pagehead"><span class="eyebrow">Beta · free</span>
 <h1 class="page">Analyze your games</h1><p>Enter a Chess.com or Lichess username, pick up to 5 games, and see <b>which chess principles</b> cost you the most points, in plain words. Any player works: yours, a friend's, or a grandmaster's.</p></div>
 <form class="az-form" id="az-form"><label class="sr" for="az-site">Site</label><select id="az-site"><option value="chesscom">Chess.com</option><option value="lichess">Lichess</option></select>
 <label class="sr" for="az-user">Username</label><input id="az-user" placeholder="Username" autocomplete="off" required><button class="btn solid" type="submit">Find games</button></form>
