@@ -878,11 +878,20 @@ def _pitems():
     return [(g["group"], x) for g in PRINCIPLES for x in g["items"] if not x.get("draft")]
 
 def principles_index():
-    h = "".join(f'<h2 style="margin:34px 0 10px">{e(g["group"])}</h2><div class="mgrid" style="margin:0">' + "".join(f'<a class="mcard" href="/principles/{x["slug"]}/" style="text-decoration:none;color:inherit"><h3 style="margin:0 0 6px">{e(x["title"])}</h3><p>{e(x["text"])}</p></a>' for x in g["items"] if not x.get("draft")) + "</div>" for g in PRINCIPLES)
-    st = '<h2 style="margin:34px 0 10px">Start here</h2><div class="mgrid" style="margin:0">' + "".join(f'<a class="mcard" href="/principles/{x["slug"]}/" style="text-decoration:none;color:inherit"><h3 style="margin:0 0 6px">{e(x["title"])}</h3><p>{e(x["text"])}</p></a>' for g in PRINCIPLES for x in g["items"] if x.get("start") and not x.get("draft")) + '</div>'
-    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow">Principles</span><h1>Chess principles, explained.</h1><p>Guidelines distilled by Throiy Chess. They are made for beginner to expert players. Every position is different, so when two principles clash, calculate the actual moves.</p></div>{st}{h}<p class="small" style="margin:30px 0">Want to see which principles cost you games? <a href="/analyze/">Analyze your own games for free</a>.</p></main>''' + footer()
+    tags = sorted({t for g in PRINCIPLES for x in g["items"] if not x.get("draft") for t in x.get("tags", [])})
+    def card(x):
+        q = e((x["title"] + " " + x["text"] + " " + " ".join(x.get("tags", []))).lower())
+        return (f'<a class="mcard pc" data-q="{q}" data-tags="{e("|".join(x.get("tags", [])))}" data-lv="{x.get("level","")}" data-ph="{x.get("phase","")}" href="/principles/{x["slug"]}/" style="text-decoration:none;color:inherit">'
+                f'<h3 style="margin:0 0 6px">{e(x["title"])}</h3><p class="small" style="margin:0 0 6px;opacity:.8">{e(x.get("level","").capitalize())} &middot; {e(x.get("phase","").capitalize())}</p><p>{e(x["text"])}</p></a>')
+    h = "".join(f'<h2 class="pg" style="margin:34px 0 10px">{e(g["group"])}</h2><div class="mgrid pgrid" style="margin:0">' + "".join(card(x) for x in g["items"] if not x.get("draft")) + "</div>" for g in PRINCIPLES)
+    st = '<h2 style="margin:34px 0 10px">Start here</h2><div class="mgrid" style="margin:0">' + "".join(card(x) for g in PRINCIPLES for x in g["items"] if x.get("start") and not x.get("draft")) + '</div>'
+    sel = lambda n, opts: f'<select id="{n}" style="padding:10px;border-radius:10px;background:transparent;color:inherit;border:1px solid #3a3a3a;font:inherit">' + "".join(f'<option value="{v}">{t}</option>' for v, t in opts) + '</select>'
+    ctl = ('<div style="display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 8px"><input id="pq" type="search" placeholder="Search principles (for example: rook, king, passed pawn)" style="flex:1 1 260px;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid #3a3a3a;background:transparent;color:inherit;font:inherit">'
+           + sel("plv", [("", "Any level"), ("beginner", "Beginner"), ("intermediate", "Intermediate"), ("expert", "Expert")])
+           + sel("pph", [("", "Any phase"), ("opening", "Opening"), ("middlegame", "Middlegame"), ("endgame", "Endgame")])
+           + sel("ptag", [("", "Any topic")] + [(t, t) for t in tags]) + '</div><p class="small" id="pcount"></p>')
+    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow">Principles</span><h1>Chess principles, explained.</h1><p>Guidelines distilled by Throiy Chess. They are made for beginner to expert players. Every position is different, so when two principles clash, calculate the actual moves.</p></div>{ctl}<div id="pstart">{st}</div><div id="pall">{h}</div><p class="small" style="margin:24px 0">Principles are guidelines, not laws. Distilled by Throiy Chess.</p></main><script src="/js/principles.js" defer></script>''' + footer()
     return "/principles/", page("/principles/", "Chess principles, explained · Throiy Chess", "Chess principles distilled by Throiy Chess, for beginner to expert players.", body, noindex=True)
-
 
 def board_svg(fen, flip=False):
     G = {"K":"\u265a","Q":"\u265b","R":"\u265c","B":"\u265d","N":"\u265e","P":"\u265f","k":"\u265a","q":"\u265b","r":"\u265c","b":"\u265d","n":"\u265e","p":"\u265f"}
@@ -907,7 +916,7 @@ def board_svg(fen, flip=False):
 def principle_page(group, x):
     rel = [y for g in PRINCIPLES if g["group"] == group for y in g["items"] if y["slug"] != x["slug"] and not y.get("draft")][:4]
     rl = "".join(f'<li><a href="/principles/{y["slug"]}/">{e(y["title"])}</a></li>' for y in rel)
-    ex_html = "".join(f'<div style="margin:12px 0">{board_svg(q["fen"])}<p class="small" style="margin-top:8px">{e(q["caption"])}</p></div>' for q in x.get("examples", [])) or "<p>Worked examples with positions are being added. Until then, see this principle in your own games.</p>"
+    ex_html = "".join(f'<div style="margin:12px 0">{board_svg(q["fen"])}<p class="small" style="margin-top:8px">{e(q["caption"])}</p>' + (f'<p class="small" style="opacity:.7">Source: {e(q["source"])}</p>' if q.get("source") else '') + '</div>' for q in x.get("examples", [])) or (f'<p>{e(x["scenario"])}</p>' if x.get("scenario") else "<p>Worked examples with positions are being added. Until then, see this principle in your own games.</p>")
     body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow"><a href="/principles/" style="color:inherit">Principles</a> &middot; {e(group)} &middot; {e(x.get("level","").capitalize())} &middot; {e(x.get("phase","").capitalize())}</span><h1>{e(x["title"])}</h1><p>{e(x["text"])}</p></div>
 <div class="mcard" style="margin:20px 0">{''}<h3>Examples</h3>{ex_html}<p style="margin-top:12px"><a class="btn solid" href="/analyze/">Analyze my games free</a></p></div>
 {('<h3>More in ' + e(group) + '</h3><ul>' + rl + '</ul>') if rl else ''}<p class="small" style="margin:24px 0">Principles are guidelines, not laws. Distilled by Throiy Chess.</p></main>''' + footer()

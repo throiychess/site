@@ -92,7 +92,7 @@
     var ex = PZ.filter(function (p) { return p.k === k; }).slice(0, 3); if (!ex.length || !window.__azBoard) return "<br><span class=\"small\">No examples from your games yet. They appear here when this pattern shows up in your reports.</span>";
     return "<details style=\"margin-top:8px\"><summary><b>" + ex.length + " example" + (ex.length > 1 ? "s" : "") + " from your own games</b></summary>" + ex.map(function (p) { return "<div style=\"margin:10px 0;max-width:300px\">" + window.__azBoard(p.f, null, null, p.c === "b", p.bf, p.bt) + "<span class=\"small\">Move " + p.n + ". You played " + esc(p.s) + ", the better move was <b>" + esc(p.b) + "</b> (arrow).</span></div>"; }).join("") + "</details>";
   }
-  var PF = { lv: "all", ph: "all", pg: 0 }, PER = 10;
+  var PF = { q: "", lv: "all", ph: "all", tag: "all", pg: 0 }, PER = 10;
   var LVL = { beginner: "Beginner", intermediate: "Intermediate", expert: "Expert", all: "All levels" };
   var PHS = { opening: "Opening", middlegame: "Middlegame", endgame: "Endgame", all: "All phases" };
   var SEL = {
@@ -108,10 +108,7 @@
   };
   function allItems() { var o = []; LIB.forEach(function (g) { g.items.forEach(function (x) { if (!x.draft) { x._g = g.group; o.push(x); } }); }); return o; }
   function pcard(x) {
-    return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(x.title) + "</b> <span class=\"small\">" + esc(LVL[x.level] || "") + " &middot; " + esc(PHS[x.phase] || "") + "</span><br>" + esc(x.text) + "<br><a class=\"small\" href=\"/principles/" + esc(x.slug) + "/\">Explanation and examples</a></span></div>";
-  }
-  function chips(kind, map) {
-    return Object.keys(map).map(function (k) { return "<button type=\"button\" class=\"btn" + (PF[kind] === k ? " solid" : "") + "\" data-pf=\"" + kind + ":" + k + "\" style=\"padding:6px 12px;margin:0 6px 6px 0\">" + (k === "all" ? "Any" : map[k]) + "</button>"; }).join("");
+    return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(x.title) + "</b> <span class=\"small\">" + esc(LVL[x.level] || "") + " &middot; " + esc(PHS[x.phase] || "") + "</span><br><span class=\"small\" style=\"opacity:.75\">" + (x.tags || []).map(function (t) { return "#" + esc(t); }).join(" &nbsp; ") + "</span><br>" + esc(x.text) + "<br><a class=\"small\" href=\"/principles/" + esc(x.slug) + "/\">Explanation and examples</a></span></div>";
   }
   function selected(items) {
     var c = {}, any = false; rows.slice(0, 3).forEach(function (r) { var k = r.report && r.report.cats; if (k) { any = true; Object.keys(k).forEach(function (x) { c[x] = (c[x] || 0) + k[x]; }); } });
@@ -121,19 +118,45 @@
     if (!top.length) return "";
     return "<h3>Selected for you</h3><p class=\"small\">Based on your last reports. Each pattern comes with the principles that fix it and examples from your own games.</p>" + top.map(function (k) { return "<h4 style=\"margin:16px 0 6px\">" + esc(NAME(k)) + "</h4>" + SEL[k].map(function (s) { return by[s] ? pcard(by[s]) : ""; }).join("") + examples(k); }).join("");
   }
+  function filtered() {
+    var q = PF.q.trim().toLowerCase();
+    return allItems().filter(function (x) {
+      if (PF.lv !== "all" && x.level !== PF.lv && x.level !== "all") return false;
+      if (PF.ph !== "all" && x.phase !== PF.ph && x.phase !== "all") return false;
+      if (PF.tag !== "all" && (x.tags || []).indexOf(PF.tag) < 0) return false;
+      if (q) { var h = (x.title + " " + x.text + " " + (x.tags || []).join(" ")).toLowerCase(); return q.split(/\s+/).every(function (w) { return h.indexOf(w) >= 0; }); }
+      return true;
+    });
+  }
+  function opts(map, cur) { return Object.keys(map).map(function (k) { return "<option value=\"" + k + "\"" + (cur === k ? " selected" : "") + ">" + (k === "all" ? "Any " + (map === LVL ? "level" : "phase") : map[k]) + "</option>"; }).join(""); }
+  function drawList() {
+    var out = $("#lib-list"); if (!out) return;
+    var list = filtered(), pages = Math.max(1, Math.ceil(list.length / PER)); PF.pg = Math.min(PF.pg, pages - 1);
+    var nums = ""; if (pages > 1) { for (var i = 0; i < pages; i++) nums += "<button type=\"button\" class=\"btn" + (i === PF.pg ? " solid" : "") + "\" data-pn=\"" + i + "\" style=\"padding:6px 11px;margin:0 4px 6px 0\">" + (i + 1) + "</button>"; }
+    var pager = pages > 1 ? "<div style=\"margin:12px 0\"><button type=\"button\" class=\"btn\" data-pg=\"-1\"" + (PF.pg ? "" : " disabled") + " style=\"padding:6px 12px;margin:0 8px 6px 0\">&larr;</button>" + nums + "<button type=\"button\" class=\"btn\" data-pg=\"1\"" + (PF.pg < pages - 1 ? "" : " disabled") + " style=\"padding:6px 12px;margin:0 0 6px 4px\">&rarr;</button></div>" : "";
+    var any = PF.q || PF.lv !== "all" || PF.ph !== "all" || PF.tag !== "all";
+    out.innerHTML = "<p class=\"small\" style=\"margin:10px 0\"><b>" + list.length + "</b> principle" + (list.length === 1 ? "" : "s") + (list.length ? " &middot; showing " + (PF.pg * PER + 1) + "-" + Math.min(list.length, PF.pg * PER + PER) : "") + (any ? " &middot; <a href=\"#library\" id=\"lib-clear\">Clear filters</a>" : "") + "</p>" + pager +
+      (list.length ? list.slice(PF.pg * PER, PF.pg * PER + PER).map(pcard).join("") : "<p class=\"small\">Nothing matches. Try fewer words or clear the filters.</p>") + pager;
+    out.querySelectorAll("[data-pn]").forEach(function (b) { b.onclick = function () { PF.pg = +b.getAttribute("data-pn"); drawList(); var t = $("#lib-top"); if (t && t.scrollIntoView) t.scrollIntoView(); }; });
+    out.querySelectorAll("[data-pg]").forEach(function (b) { b.onclick = function () { PF.pg += +b.getAttribute("data-pg"); drawList(); var t = $("#lib-top"); if (t && t.scrollIntoView) t.scrollIntoView(); }; });
+    var c = $("#lib-clear"); if (c) c.onclick = function (ev) { ev.preventDefault(); PF = { q: "", lv: "all", ph: "all", tag: "all", pg: 0 }; drawPrinc(); };
+    box_tagsync();
+  }
+  function box_tagsync() { document.querySelectorAll("#m-princ [data-tag]").forEach(function (b) { b.className = "btn" + (PF.tag === b.getAttribute("data-tag") ? " solid" : ""); }); }
   function drawPrinc() {
     var box = $("#m-princ"); if (!box) return;
-    var items = allItems();
-    var list = items.filter(function (x) { return (PF.lv === "all" || x.level === PF.lv || x.level === "all") && (PF.ph === "all" || x.phase === PF.ph || x.phase === "all"); });
-    var pages = Math.max(1, Math.ceil(list.length / PER)); PF.pg = Math.min(PF.pg, pages - 1);
-    var nav = pages > 1 ? "<p class=\"small\" style=\"margin:12px 0\">" + "<button type=\"button\" class=\"btn\" data-pg=\"-1\"" + (PF.pg ? "" : " disabled") + ">&larr; Previous</button> Page " + (PF.pg + 1) + " of " + pages + " &middot; " + list.length + " principles <button type=\"button\" class=\"btn\" data-pg=\"1\"" + (PF.pg < pages - 1 ? "" : " disabled") + ">Next &rarr;</button></p>" : "";
-    box.innerHTML = "<p class=\"small\"><b>These principles are applied to your own games.</b> You do not have to read them all. Based on your reports we select the ones that matter for you, and you can browse the rest by level and phase.</p>" +
+    var items = allItems(), tc = {}; items.forEach(function (x) { (x.tags || []).forEach(function (t) { tc[t] = (tc[t] || 0) + 1; }); });
+    var tags = Object.keys(tc).sort(function (a, b) { return tc[b] - tc[a]; });
+    box.innerHTML = "<p class=\"small\"><b>These principles are applied to your own games.</b> You do not have to read them all. Based on your reports we select the ones that matter for you, and you can browse the rest by search, tag, level and phase.</p>" +
       selected(items) +
-      "<h3 style=\"margin-top:28px\">Browse the library</h3><p class=\"small\"><b>Guidelines, not laws.</b> They are made for beginner to expert players, every position is different and principles can point in different directions. When they clash, calculate the actual moves. Distilled by Throiy Chess from coaching insights, Stockfish checks, classic chess books and our own experience.</p>" +
-      "<p class=\"small\" style=\"margin:12px 0 4px\">Level</p>" + chips("lv", LVL) + "<p class=\"small\" style=\"margin:8px 0 4px\">Phase</p>" + chips("ph", PHS) + nav +
-      (list.length ? list.slice(PF.pg * PER, PF.pg * PER + PER).map(pcard).join("") : "<p class=\"small\">Nothing matches this filter.</p>") + nav;
-    box.querySelectorAll("[data-pf]").forEach(function (b) { b.onclick = function () { var p = b.getAttribute("data-pf").split(":"); PF[p[0]] = p[1]; PF.pg = 0; drawPrinc(); }; });
-    box.querySelectorAll("[data-pg]").forEach(function (b) { b.onclick = function () { PF.pg += +b.getAttribute("data-pg"); drawPrinc(); }; });
+      "<h3 id=\"lib-top\" style=\"margin-top:28px\">Browse the library</h3><p class=\"small\"><b>Guidelines, not laws.</b> They are made for beginner to expert players, every position is different and principles can point in different directions. When they clash, calculate the actual moves. Distilled by Throiy Chess from coaching insights, Stockfish checks, classic chess books and our own experience.</p>" +
+      "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin:12px 0\"><input id=\"lib-q\" type=\"search\" placeholder=\"Search principles (for example: rook, king, passed pawn)\" value=\"" + esc(PF.q) + "\" style=\"flex:1 1 240px;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid var(--line, #3a3a3a);background:transparent;color:inherit;font:inherit\"><select id=\"lib-lv\" style=\"padding:10px;border-radius:10px;background:transparent;color:inherit;border:1px solid var(--line, #3a3a3a);font:inherit\">" + opts(LVL, PF.lv) + "</select><select id=\"lib-ph\" style=\"padding:10px;border-radius:10px;background:transparent;color:inherit;border:1px solid var(--line, #3a3a3a);font:inherit\">" + opts(PHS, PF.ph) + "</select></div>" +
+      "<div style=\"margin:6px 0\"><button type=\"button\" class=\"btn\" data-tag=\"all\" style=\"padding:5px 11px;margin:0 6px 6px 0\">All topics</button>" + tags.map(function (t) { return "<button type=\"button\" class=\"btn\" data-tag=\"" + esc(t) + "\" style=\"padding:5px 11px;margin:0 6px 6px 0\">" + esc(t) + " (" + tc[t] + ")</button>"; }).join("") + "</div><div id=\"lib-list\"></div>";
+    var q = $("#lib-q"); q.oninput = function () { PF.q = q.value; PF.pg = 0; drawList(); };
+    $("#lib-lv").onchange = function (ev) { PF.lv = ev.target.value; PF.pg = 0; drawList(); };
+    $("#lib-ph").onchange = function (ev) { PF.ph = ev.target.value; PF.pg = 0; drawList(); };
+    box.querySelectorAll("[data-tag]").forEach(function (b) { b.onclick = function () { PF.tag = b.getAttribute("data-tag"); PF.pg = 0; drawList(); }; });
+    drawList();
   }
 
   // ---------- share card ----------
