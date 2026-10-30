@@ -117,6 +117,12 @@
     "title": "Finish development before you attack",
     "text": "Do not attack too early (with premature bishop or pawn moves) when your position is not fully developed. Incomplete development leaves holes your opponent can punish tactically.",
     "note": "Checked: standard. The exception is a concrete attack you have calculated. Also covers: do not go looking for complications or early flank pawn pushes before your own pieces are safe."
+   },
+   {
+    "slug": "trade-only-when-it-gains-something",
+    "title": "Trade only when it gains something",
+    "text": "Do not make pointless trades in the centre or the opening. If a trade gives you nothing tangible but helps the opponent develop their pieces (such as a queen or knight) with tempo, avoid it. Every trade needs a tactical or positional purpose.",
+    "note": "Checked. Softened: a trade is fine when it removes a strong enemy piece or fixes a structure in your favour."
    }
   ]
  },
@@ -497,7 +503,7 @@
     "slug": "play-actively-and-take-the-initiative",
     "title": "Play actively and take the initiative",
     "text": "Take the initiative, put your pieces on their best squares, dominate the centre and claim space, without becoming reckless.",
-    "note": "A style, not a rule. Keep calculating: the other principles still apply. Wanting activity is not an excuse to be reckless."
+    "note": "A style, not a rule. Keep calculating: the other principles still apply. Wanting activity is not an excuse to be reckless. Also covers: take the initiative first. As White you have the first move, so use it to create early threats that force a reaction. Softened: Black can take the initiative too, usually a move later. Tie your development to a real or latent threat on the enemy half instead of developing aimlessly."
    },
    {
     "slug": "play-forcing-active-moves-in-the-opening",
@@ -646,7 +652,7 @@
     "slug": "be-patient-in-an-attack",
     "title": "Be patient in an attack",
     "text": "Sometimes you should prepare a position calmly (for example with g6 or a quiet regrouping) to build maximum pressure, rather than playing hasty forcing tactics the opponent can parry.",
-    "note": "Checked: good advice. Softened: if a forcing line is calculated and works, play it."
+    "note": "Checked: good advice. Softened: if a forcing line is calculated and works, play it. Also covers: coordinate as a connected team before the final attack. A loose attack with too few active pieces fails against good defence. First harmony and centre control, then forcing combinations and sacrifices."
    },
    {
     "slug": "watch-for-long-range-snipers",
@@ -677,6 +683,12 @@
     "title": "Use opposite-coloured bishops as an attacking weapon",
     "text": "In a middlegame with opposite-coloured bishops, your bishop works like an extra attacker that your opponent cannot challenge. Use it to find and hit weaknesses around the enemy king.",
     "note": "Checked: true in the middlegame. In the endgame the same bishops tend to draw (see the warning above)."
+   },
+   {
+    "slug": "bring-your-rooks-into-the-game",
+    "title": "Bring your rooks into the game",
+    "text": "In the heat of an attack players often forget their rooks on a1 or h1. Make sure every piece joins the attack, and before a serious attack check that your rooks and heavy pieces have left their starting squares.",
+    "note": "Checked: a very common mistake at club level."
    }
   ]
  },
