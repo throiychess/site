@@ -262,7 +262,7 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             f'<meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{SITE}{og_image}">'
             f'<meta name="twitter:card" content="summary_large_image">'
             f'<link rel="preload" href="/fonts/Inter-Black.woff" as="font" type="font/woff" crossorigin>'
-            f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}</body></html>')
+            f'{'<meta name="robots" content="noindex,nofollow">' if path == '/members/' else ''}<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}</body></html>')
 
 NAV = [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Traps", "/traps/"), ("Analyze", "/analyze/"), ("Members", "/members/"), ("Top games", "/#top-games"), ("About", "/#about"), ("Contact", "/contact/"), ("Support", "/support/")]
 def promo_bar(active):
@@ -692,8 +692,8 @@ def build():
     open(os.path.join(d, "404.html"), "w").write(notfound())
     today = datetime.date.today().isoformat()
     open(os.path.join(d, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{today}</lastmod></url>\n" for p, _ in pages) + "</urlset>\n")
-    open(os.path.join(d, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /m/\n\nSitemap: {SITE}/sitemap.xml\n")
+        + "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{today}</lastmod></url>\n" for p, _ in pages if p != "/members/") + "</urlset>\n")
+    open(os.path.join(d, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /m/\nDisallow: /members/\n\nSitemap: {SITE}/sitemap.xml\n")
     open(os.path.join(d, "llms.txt"), "w").write(llms_txt())
     open(os.path.join(d, "CNAME"), "w").write(DOMAIN + "\n"); open(os.path.join(d, ".nojekyll"), "w").write("")
     print("built", len(pages), "pages")
