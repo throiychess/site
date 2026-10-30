@@ -38,5 +38,7 @@ document.addEventListener("click", async (e) => {
   if (c && s) { const so = { ...(profile.socials || {}), [c.dataset.claim]: new Date().toISOString() }; const { error } = await sb.from("profiles").update({ socials: so }).eq("id", s.user.id); if (!error) { profile.socials = so; drawSocials(); ev("members-follow-" + c.dataset.claim); } }
   if (d && s) { await sb.from("analyses").delete().eq("id", d.dataset.del); drawAnalyses(); }
   if (o) { await sb.auth.signOut(); render(null); }
+  if (e.target.closest("#m-del") && s) { if (!confirm("Delete your account and all saved reports? This cannot be undone.")) return; $("#m-delmsg").textContent = "Deleting…";
+    const { error } = await sb.functions.invoke("delete-account"); if (error) { $("#m-delmsg").textContent = "Could not delete. Please contact us."; return; } await sb.auth.signOut(); ev("members-account-deleted"); render(null); $("#m-msg").textContent = "Your account has been deleted."; }
 });
 sb.auth.onAuthStateChange((evt, session) => { if (evt === "SIGNED_IN" || evt === "INITIAL_SESSION" || evt === "SIGNED_OUT") setTimeout(() => render(session), 0); });

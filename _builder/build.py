@@ -296,7 +296,7 @@ def newsletter():
 def footer(band=True, nl=True):
     ext = " ".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LINKS)
     return ((newsletter() if nl else "") + (support_bar() if band else "") + f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Quick chess lessons, every day</span>'
-            f'<nav aria-label="Footer">{ext}<a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a></nav></div></footer>')
+            f'<nav aria-label="Footer">{ext}<a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav></div></footer>')
 
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
 SCRIPT = """<script>
@@ -556,7 +556,7 @@ def privacy():
 <h2>Videos</h2><p>Videos come from YouTube and only load when you press play. From then on, YouTube (Google) receives your IP address and may set cookies under its own privacy policy.</p>
 <h2>Contact</h2><p>When you send a message, we receive your name, e-mail address and message. We use them only to reply, and delete them within a year.</p>
 {"<h2>Newsletter</h2><p>If you subscribe, your e-mail address is stored by our mailing service MailerLite (EU). We use it only to send the newsletter. Every e-mail has an unsubscribe link, and we delete your address when you unsubscribe.</p>" if NEWSLETTER_URL else ""}
-<h2>Members (optional account)</h2><p>If you create an account, we store your e-mail address, the profile details you enter, the social channels you say you follow, and the analysis reports you choose to save. They are stored with our database provider Supabase in the EU (Frankfurt) and are visible only to you and us. We use them to show your progress and for nothing else. You can delete saved reports yourself on your members page; to delete your whole account, ask us via the <a href="/contact/">contact page</a>.</p>
+<h2>Members (optional account)</h2><p>If you create an account, we store your e-mail address, the profile details you enter, the social channels you say you follow, and the analysis reports you choose to save. They are stored with our database provider Supabase in the EU (Frankfurt) and are visible only to you and us. We use them to show your progress and for nothing else. You can delete saved reports yourself on your members page; you can delete your whole account yourself with one button on your members page.</p>
 <h2>Support</h2><p>Tips are handled by Ko-fi on its own payment page, under its own privacy policy. We see your name and message if you leave them, never your payment details.</p>
 <h2>Your rights</h2><p>Ask us via the <a href="/contact/">contact page</a> what we hold about you, or to correct or delete it. You can also complain to the Dutch Data Protection Authority (Autoriteit Persoonsgegevens).</p>
 <p class="small">Last updated: {datetime.date.today().strftime("%d %B %Y")}</p></div></main>''' + footer()
@@ -647,7 +647,7 @@ def members_page():
 <h2>Your saved reports</h2><div id="m-list"><p class="small">Loading…</p></div>
 <h2>Follow Throiy Chess</h2><div id="m-soc"></div><p class="small" id="m-socmsg"></p>
 <h2>Your profile</h2><form class="mform" id="m-prof"><label class="sr" for="m-name">Name</label><input id="m-name" placeholder="Name (optional)" maxlength="60"><label class="sr" for="m-cc">Chess.com username</label><input id="m-cc" placeholder="Chess.com username" maxlength="40"><label class="sr" for="m-li">Lichess username</label><input id="m-li" placeholder="Lichess username" maxlength="40"><button class="btn solid" type="submit">Save</button><span class="small" id="m-pmsg"></span></form>
-<p class="small" style="margin:30px 0 50px">Your data is stored in the EU and visible only to you and us. <a href="/privacy/">Privacy</a>. To delete your account, <a href="/contact/">contact us</a>.</p></div></main>{SB_SCRIPTS}<script src="/js/members.js"></script>''' + footer(band=False, nl=False)
+<p class="small" style="margin:30px 0 10px">Your data is stored in the EU and visible only to you and us. <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a></p><p style="margin:0 0 50px"><button class="btn" type="button" id="m-del">Delete my account and all my data</button> <span class="small" id="m-delmsg"></span></p></div></main>{SB_SCRIPTS}<script src="/js/members.js"></script>''' + footer(band=False, nl=False)
     return "/members/", page("/members/", "Members · Throiy Chess", "Log in to save your analysis reports and track your progress.", body)
 
 def improve_page():
@@ -666,6 +666,18 @@ def improve_page():
 <button class="btn solid" type="submit">Join the waitlist</button>
 <p class="nl-msg small" role="status" aria-live="polite"></p></form></div></div></div></main>''' + footer(band=False, nl=False)
     return "/improve/", page("/improve/", "Improvement program waitlist · Throiy Chess", "Join the waitlist for deeper chess analysis, your own puzzles and progress tracking.", body)
+
+def terms():
+    body = header() + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Terms</span><h1 class="page">Terms of use</h1><p>Short and plain. By using {DOMAIN} you agree to these terms.</p></div>
+<div class="prose" style="padding-bottom:64px">
+<h2>What this is</h2><p>Throiy Chess offers free chess lessons and tools. The site and the analyzer are in beta and provided as they are, without guarantees.</p>
+<h2>The analyzer and reports</h2><p>Reports come from a chess engine at a light depth and are a guide, not advice you must follow. Rating bands and accuracy are our own estimates from our own sample of games. They are not an official rating and not comparable with the numbers on Chess.com or Lichess. Throiy Chess is not affiliated with Chess.com or Lichess. Use the analyzer only on games you may analyze; we do not store the games you load.</p>
+<h2>Your account</h2><p>An account is optional and free. You are responsible for the e-mail address you sign in with. We set limits on how many reports you can save to keep the service fast for everyone. You can delete your account and all saved data yourself on your members page at any time. We may remove accounts that abuse the service.</p>
+<h2>Our content</h2><p>The videos, texts, images and tools on this site are the work of Throiy Chess. You may share links and short quotes with a credit. Please do not copy complete pages or videos. Player photos are used under their open licences, with credit.</p>
+<h2>Liability</h2><p>To the extent the law allows, Throiy Chess is not liable for damage that results from using the site or the analyzer. Dutch law applies.</p>
+<h2>Questions</h2><p>Use the <a href="/contact/">contact page</a>.</p>
+<p class="small">Last updated: {datetime.date.today().strftime("%d %B %Y")}</p></div></main>''' + footer()
+    return "/terms/", page("/terms/", "Terms of use · Throiy Chess", "Terms of use for the Throiy Chess site, analyzer and member accounts.", body)
 
 def notfound():
     body = header() + '''<main class="wrap"><div class="pagehead"><span class="eyebrow">404</span><h1 class="page">That square is empty.</h1>
@@ -686,7 +698,7 @@ def build():
     d = os.environ.get("OUT_DIR") or os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True) if not os.environ.get("OUT_DIR") else None
     fetch_thumbs(SHORTS + VIDEOS)
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
-    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy(), free_page(), analyze_page(), members_page(), improve_page()]
+    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy(), free_page(), analyze_page(), members_page(), improve_page(), terms()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
