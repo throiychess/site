@@ -55,6 +55,25 @@
     "title": "Do not bring the queen out too early",
     "text": "Do not rush the queen to the centre where enemy minor pieces can attack it. You lose tempo moving it again and again.",
     "note": "Checked: correct for the opening. A queen move can be fine when nothing can hit it."
+   },
+   {
+    "slug": "watch-for-flank-pawns-challenging-your-centre",
+    "title": "Watch for flank pawns challenging your centre",
+    "text": "Be alert when your opponent tries to trade off your centre pawn with a flank pawn (such as ...c5) and claim the centre. Keep the option of recapturing with a centre pawn of your own.",
+    "note": "Checked: a typical theme (Sicilian, Benoni structures)."
+   },
+   {
+    "slug": "the-accordion-pawn-structure",
+    "title": "The accordion pawn structure",
+    "text": "In a solid pawn triangle you can sometimes sacrifice or trade a flank pawn and then answer with b4, so that all your pawns link up and cannot be broken.",
+    "note": "Draft: I could not confirm the name \"accordion\" or this exact idea. It needs a concrete position from Peter before we publish it.",
+    "draft": true
+   },
+   {
+    "slug": "attack-weak-misplaced-pieces-at-once",
+    "title": "Attack weak, misplaced pieces at once",
+    "text": "Spot an opponent's misplaced piece, such as a knight on c6 played too early, and put maximum pressure on it with active pieces, for example a bishop on b5 and a queen on a4.",
+    "note": "Checked: sound. Check that the attack does not leave your own pieces loose."
    }
   ]
  },
@@ -199,6 +218,12 @@
     "title": "Optimize with a pawn move (gain space)",
     "text": "A pawn move can also be an improving move, if it seriously restricts the opponent's pieces or takes extra space, for example ...c6 against the opponent's pieces.",
     "note": "Checked: a good idea. Check the weaknesses the pawn move leaves behind."
+   },
+   {
+    "slug": "activate-a-passive-piece-in-time",
+    "title": "Activate a passive piece in time",
+    "text": "If one of your pieces, such as a rook, has stood passively on the back rank through the whole middlegame, look for a moment to activate it for a break or to pressure the enemy weaknesses.",
+    "note": "Checked: this is the \"improve your worst piece\" idea for the rook."
    }
   ]
  },
@@ -304,7 +329,7 @@
     "slug": "do-not-react-to-non-forcing-moves",
     "title": "Do not react to non-forcing moves",
     "text": "If your opponent makes a move without a direct threat, do not react straight away. Carry on with your own active plan.",
-    "note": "Softened: first check what the move threatens (not just mate or queen loss, also any piece or pawn). If there is none, ignore it. This does not contradict 'answer the threat first'."
+    "note": "Softened: first check what the move threatens (not just mate or queen loss, also any piece or pawn). If there is none, ignore it. This does not contradict 'answer the threat first'. Another lesson adds a test: ask \"do I lose a piece or the game right now?\" Softened: first make sure the move does not create a slower, positional threat."
    },
    {
     "slug": "defend-aggressively",
@@ -341,6 +366,12 @@
     "title": "Force reactions with early threats",
     "text": "Play so your opponent has to answer your threats all the time. Then he has no time for his own plans.",
     "note": "Checked: keeping the initiative works, as long as your threats are real."
+   },
+   {
+    "slug": "avoid-hope-chess",
+    "title": "Avoid hope chess",
+    "text": "Do not play a move hoping your opponent blunders (such as leaving a bishop hanging). Play on objective pressure and concrete calculation.",
+    "note": "Checked: \"hope chess\" is a known term. A trap is fine when your move is also sound if he does not fall for it (see \"Set a trap with a defensive move\")."
    }
   ]
  },
@@ -410,7 +441,7 @@
     "slug": "activate-your-king-in-the-endgame",
     "title": "Activate your king in the endgame",
     "text": "In the endgame the king is a strong piece, not a target. Bring it to the centre to support your pawns and block the opponent.",
-    "note": "Checked: true once queens are off and there is no mating danger. Another lesson adds: a central king supports your passed pawns and cuts off the enemy king."
+    "note": "Checked: true once queens are off and there is no mating danger. Another lesson adds: a central king supports your passed pawns and cuts off the enemy king. Another lesson says the same: once the queens are gone, march the king to the centre."
    },
    {
     "slug": "push-your-passed-pawn-ppp",
@@ -458,7 +489,7 @@
     "slug": "castling-is-not-automatic-without-queens",
     "title": "Castling is not automatic without queens",
     "text": "When queens are off, your king is in less danger. Do not castle out of habit: use the king in the centre to fight and support pawns.",
-    "note": "Checked: castling is just no longer a priority."
+    "note": "Checked: castling is just no longer a priority. Also: a short-castled king in the corner can get boxed in and loses tempi getting to the centre. Softened from \"almost never\": it is just rarely worth the time."
    },
    {
     "slug": "doubled-isolated-pawns-are-a-target",
@@ -470,7 +501,7 @@
     "slug": "shelter-your-king-from-checks",
     "title": "Shelter your king from checks",
     "text": "In rook endings, put your king behind your own pawns so the enemy rook cannot keep giving checks.",
-    "note": "Checked: a known technique. Balance it with an active king when there are no annoying checks."
+    "note": "Checked: a known technique. Balance it with an active king when there are no annoying checks. In won rook endings you can hide king and rook behind or between your own pawns, so that the enemy rook cannot give permanent checks."
    },
    {
     "slug": "watch-out-for-stalemate",
@@ -490,6 +521,12 @@
     "text": "In the endgame one bishop can sometimes control two enemy passed pawns at once by standing on the right diagonal, as long as you calculate precisely.",
     "note": "Draft: I could not confirm the name. The idea only works in specific positions. It needs a concrete example before it gets its own page.",
     "draft": true
+   },
+   {
+    "slug": "march-a-pawn-majority",
+    "title": "March a pawn majority",
+    "text": "With a pawn majority on the queenside (4 against 2, for example), use it to advance your pawns step by step into a passed pawn and force your opponent into passive defence.",
+    "note": "Checked: a standard endgame plan. Keep the pawns supported and watch the enemy king."
    }
   ]
  }
