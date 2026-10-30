@@ -36,7 +36,7 @@
     "slug": "castle-early",
     "title": "Castle early",
     "text": "Do not play recklessly: get your king safe early in the opening by castling, before the middlegame breaks loose.",
-    "note": "Checked: standard and sound."
+    "note": "Checked: standard and sound. Another lesson: castle short before you start complicated actions or breaks in the centre."
    },
    {
     "slug": "flexible-move-order-centre-and-development-first",
@@ -165,7 +165,7 @@
     "slug": "punish-passive-play-with-a-direct-break",
     "title": "Punish passive play with a direct break",
     "text": "If your opponent plays passively, punish it at once by opening the centre with e4, or by letting a knight jump in for a fork.",
-    "note": "Checked: sound. Make sure the break is prepared."
+    "note": "Checked: sound. Make sure the break is prepared. Another lesson says the same: if the opponent answers passively (slow bishop or pawn moves), open the centre at once, for example with d4."
    },
    {
     "slug": "create-deadly-forks-in-the-middlegame",
@@ -178,6 +178,18 @@
     "title": "Keep looking at 'poisoned' pawns",
     "text": "If your opponent leaves a pawn undefended or open to capture, check whether it is poisoned by a pin or a mate threat before you take it. Punish them with the material loss if it is.",
     "note": "Checked: always check before taking a free pawn (the same idea as the Fishing Pole Trap)."
+   },
+   {
+    "slug": "choose-a-reliable-repeatable-system-the-italian-game",
+    "title": "Choose a reliable, repeatable system: the Italian Game",
+    "text": "Play an opening such as the Italian Game (1.e4 e5 2.Nf3 Nc6 3.Bc4), which suits every level from beginner to grandmaster. You play on flexible plans and development patterns instead of memorizing endless variations.",
+    "note": "Checked: the Italian is played at every level. Some lines are sharp and full of theory (Evans Gambit, Two Knights). The slow plan-based lines (Giuoco Pianissimo) are the ones that fit this principle."
+   },
+   {
+    "slug": "a-knight-plan-in-the-italian-game",
+    "title": "A knight plan in the Italian Game",
+    "text": "Use a fixed knight manoeuvre (for example Nbd2, then Nf1 and Ng3 or Nf5) and bring your last remaining bishop (from c1) out only when the position really opens.",
+    "note": "Checked: a typical plan in the slow Italian (c3, d3, Nbd2-f1-g3)."
    }
   ]
  },
@@ -504,6 +516,24 @@
     "title": "Be patient in an attack",
     "text": "Sometimes you should prepare a position calmly (for example with g6 or a quiet regrouping) to build maximum pressure, rather than playing hasty forcing tactics the opponent can parry.",
     "note": "Checked: good advice. Softened: if a forcing line is calculated and works, play it."
+   },
+   {
+    "slug": "watch-for-long-range-snipers",
+    "title": "Watch for long-range snipers",
+    "text": "Always watch for distant pieces (a bishop or rook on a long diagonal or file) that strike from afar, to avoid tactical blunders and back-rank problems.",
+    "note": "Checked: long-range pieces are easy to overlook. Look along every long diagonal and open file."
+   },
+   {
+    "slug": "use-a-counter-threat-as-an-emergency-answer",
+    "title": "Use a counter-threat as an emergency answer",
+    "text": "If a crucial piece is attacked and a simple defence or retreat is not possible, create a direct counter-threat to limit or compensate the material loss.",
+    "note": "Checked: works when your counter-threat is bigger than the original threat. Otherwise you just lose both."
+   },
+   {
+    "slug": "clear-the-way-for-a-kingside-attack-f4-or-d4",
+    "title": "Clear the way for a kingside attack (f4 or d4)",
+    "text": "In closed positions prepare a break with pawn moves such as d4 or f4, so the lines open and your passive pieces (such as the bishop on c1) suddenly become active.",
+    "note": "Checked: a typical plan in closed centres. Prepare it first, and check the pawn weaknesses it creates."
    }
   ]
  },
@@ -514,7 +544,7 @@
     "slug": "trade-pieces-when-ahead",
     "title": "Trade pieces when ahead",
     "text": "With a material lead, trading pieces is the fastest way to win. Fewer pieces make it easier to cash in. Trade pieces, not pawns.",
-    "note": "Checked: correct. Be careful with fortress positions. Other lessons say the same: fewer pieces make your extra material weigh more. Another lesson adds: do it once your opponent's attack is neutralized. Softened: it is not completely risk-free. One pawn up is enough to simplify, but see the opposite-coloured bishops warning. When you are behind, avoid needless trades."
+    "note": "Checked: correct. Be careful with fortress positions. Other lessons say the same: fewer pieces make your extra material weigh more. Another lesson adds: do it once your opponent's attack is neutralized. Softened: it is not completely risk-free. One pawn up is enough to simplify, but see the opposite-coloured bishops warning. When you are behind, avoid needless trades. Another lesson: if you won a piece or the exchange, trade methodically (the minor pieces first) to simplify and steer the endgame to a win."
    },
    {
     "slug": "create-a-passed-pawn",
