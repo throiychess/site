@@ -23,7 +23,7 @@ function drawHello() {
   $("#m-hello").textContent = profile.display_name ? "Welcome back, " + profile.display_name : "Welcome back";
   $("#m-ava").textContent = AV[profile.avatar] || AV.pawn; try { localStorage.setItem("tc_av", AV[profile.avatar] || AV.pawn); } catch (e) {}
 }
-const VIEWS = ["overview", "analyze", "reports", "training", "puzzles", "earn", "plan", "profile"];
+const VIEWS = ["overview", "analyze", "reports", "training", "library", "puzzles", "earn", "plan", "profile"];
 function show() { const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "overview";
   document.querySelectorAll(".mview").forEach((s) => { s.hidden = s.dataset.view !== v; });
   document.querySelectorAll(".mnav a").forEach((a) => { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); }); }
