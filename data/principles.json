@@ -439,6 +439,18 @@
     "title": "Use space to switch your heavy pieces quickly",
     "text": "With more space you can move your rooks and queen easily from one wing to the other, while the opponent is stuck for room. Use that space as a transport route to concentrate on their weak spots.",
     "note": "Checked."
+   },
+   {
+    "slug": "drive-knights-back-with-pawns",
+    "title": "Drive knights back with pawns",
+    "text": "Knights are short-range pieces that must stay close to the action. If pawn pressure forces them to the back ranks, they become almost useless, so use your pawns to push enemy knights back and smother their mobility.",
+    "note": "Softened: every pawn push leaves holes behind it (see pawns leave holes), so check which squares you give away."
+   },
+   {
+    "slug": "put-rooks-on-open-files",
+    "title": "Put rooks on open files",
+    "text": "A rook is a linear piece that gains enormous power on an open or half-open file. Look for ways to manoeuvre your rooks to open files and dominate the edges and depth of the board.",
+    "note": "Checked. If no file is open yet, prepare one with a pawn trade or break."
    }
   ]
  },
@@ -528,6 +540,12 @@
     "title": "Ask after every move: what does he want?",
     "text": "After each opponent move ask what the threat or plan is. Parry it in time, for example a pawn advancing in the centre or a threat on the wing, and close their break squares.",
     "note": "Checked. This keeps you out of hope chess: look first at the intention of the opponent."
+   },
+   {
+    "slug": "tactics-flow-from-a-superior-position",
+    "title": "Tactics flow from a superior position",
+    "text": "Do not hunt desperately for wild combinations or loose tricks. First build a strong, dominant position with space, harmony and active pieces; then the winning tactical blows tend to appear by themselves.",
+    "note": "Softened: a strong guideline, not a law. Tactics still decide when the position is balanced, so keep calculating every move."
    }
   ]
  },
@@ -568,7 +586,7 @@
     "slug": "keep-fighting-for-the-centre",
     "title": "Keep fighting for the centre",
     "text": "Let every move contribute to control of the four central squares, by aiming pieces at them or advancing centre pawns.",
-    "note": "Checked: standard."
+    "note": "Checked: standard. Also covers: centralization is the key to dominance. Central pieces cover the most squares and push the opponent onto the defensive, so keep pressure on the central squares."
    },
    {
     "slug": "do-not-react-to-non-forcing-moves",
@@ -580,7 +598,7 @@
     "slug": "defend-aggressively",
     "title": "Defend aggressively",
     "text": "When you have to defend, for example against an attack on your queen, try to answer with an attack of your own on an enemy pawn or piece.",
-    "note": "Checked: a good counterpunch, as long as your counter is real. Also covers: do not panic when the opponent threatens on the wing or in the centre. Look for an active counter-move, an in-between move or a direct threat on their half. Softened: a counterattack only works if it is faster or stronger than the threat. Sometimes the right answer is simply a calm defensive move."
+    "note": "Checked: a good counterpunch, as long as your counter is real. Also covers: do not panic when the opponent threatens on the wing or in the centre. Look for an active counter-move, an in-between move or a direct threat on their half. Softened: a counterattack only works if it is faster or stronger than the threat. Sometimes the right answer is simply a calm defensive move. Also covers: passive defence is dangerous. It lets the opponent keep attacking undisturbed, so ask: which attacking or countering move can I place on their half?"
    },
    {
     "slug": "calculate-sacrifices-three-moves-deep",
