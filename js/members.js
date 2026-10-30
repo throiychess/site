@@ -2,7 +2,7 @@
 const SB_URL = "https://ytxrrmvszifvtdyilezn.supabase.co", SB_KEY = "sb_publishable_nARSIxN5aKJghUK745Frdw_QbXhdf29";
 const $ = (s) => document.querySelector(s); const esc = (t) => String(t == null ? "" : t).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const ev = (n) => { try { if (window.goatcounter && goatcounter.count) goatcounter.count({ path: n, title: n, event: true }); } catch (e) {} };
-const sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, detectSessionInUrl: true, flowType: "pkce" } });
+const sb = window.__sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, detectSessionInUrl: true, flowType: "pkce" } });
 const SOCIALS = [["youtube", "YouTube", "https://www.youtube.com/@ThroiyChess?sub_confirmation=1"], ["instagram", "Instagram", "https://www.instagram.com/throiychess"], ["tiktok", "TikTok", "https://www.tiktok.com/@throiychess"], ["facebook", "Facebook", "https://www.facebook.com/throiychess"]];
 const AV = { king: "♚︎", queen: "♛︎", rook: "♜︎", bishop: "♝︎", knight: "♞︎", pawn: "♟︎", star: "★", bolt: "✦" };
 const LEVELS = [["Pawn", 0], ["Knight", 100], ["Bishop", 250], ["Rook", 500], ["Queen", 1000], ["King", 2000]];
@@ -15,13 +15,15 @@ async function render(session) {
   const { data: p } = await sb.from("profiles").select("*").eq("id", session.user.id).maybeSingle(); profile = p || { socials: {} };
   $("#m-name").value = profile.display_name || ""; $("#m-cc").value = profile.chesscom_username || ""; $("#m-li").value = profile.lichess_username || "";
   const { data: c } = await sb.rpc("daily_checkin"); const r = Array.isArray(c) ? c[0] : c; if (r) { Object.assign(profile, { points: r.points, streak: r.streak, best_streak: r.best_streak, last_checkin: r.last_checkin }); profile._gained = r.gained || 0; }
+  const u = $("#az-user"); if (u && !u.value) { if (profile.chesscom_username) { u.value = profile.chesscom_username; $("#az-site").value = "chesscom"; } else if (profile.lichess_username) { u.value = profile.lichess_username; $("#az-site").value = "lichess"; } }
   drawHello(); drawSocials(); await drawAnalyses(); drawEarn();
 }
+window.addEventListener("az-saved", () => { drawAnalyses().then(drawEarn); });
 function drawHello() {
   $("#m-hello").textContent = profile.display_name ? "Welcome back, " + profile.display_name : "Welcome back";
   $("#m-ava").textContent = AV[profile.avatar] || AV.pawn; try { localStorage.setItem("tc_av", AV[profile.avatar] || AV.pawn); } catch (e) {}
 }
-const VIEWS = ["overview", "reports", "training", "puzzles", "earn", "plan", "profile"];
+const VIEWS = ["overview", "analyze", "reports", "training", "puzzles", "earn", "plan", "profile"];
 function show() { const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "overview";
   document.querySelectorAll(".mview").forEach((s) => { s.hidden = s.dataset.view !== v; });
   document.querySelectorAll(".mnav a").forEach((a) => { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); }); }
@@ -66,13 +68,13 @@ function drawOverview(data) {
   const n = data.length, last = data[0], first = data[n - 1];
   const stat = (b, s) => `<div class="mstat"><b>${b}</b><span>${s}</span></div>`;
   $("#m-stats").innerHTML = (n ? stat(n, "saved report" + (n > 1 ? "s" : "")) + stat(Number(last.accuracy).toFixed(0) + "%", "accuracy, latest") + stat(Number(last.avg_loss).toFixed(2), "pawns lost per move" + (n > 1 ? " (" + (last.avg_loss - first.avg_loss <= 0 ? "" : "+") + (last.avg_loss - first.avg_loss).toFixed(2) + " since first)" : "")) + (last.band ? stat(esc(last.band), "your play looks like") : "") : stat("0", "saved reports yet")) + stat("&#128293; " + (profile.streak || 0), "day streak") + stat(totalPoints(), "points");
-  $("#m-next").innerHTML = n ? `<p><b>Next step:</b> run a fresh report with your newest games and see if your pawns lost per move went down.</p><a class="btn solid" href="/analyze/">Analyze new games</a>` : `<p><b>Next step:</b> analyze your last 5 games. It takes a minute and your report is saved here.</p><a class="btn solid" href="/analyze/">Analyze my games</a>`;
+  $("#m-next").innerHTML = n ? `<p><b>Next step:</b> run a fresh report with your newest games and see if your pawns lost per move went down.</p><a class="btn solid" href="#analyze">Analyze new games</a>` : `<p><b>Next step:</b> analyze your last 5 games. It takes a minute and your report is saved here.</p><a class="btn solid" href="#analyze">Analyze my games</a>`;
 }
 async function drawAnalyses() {
   const { data, error } = await sb.from("analyses").select("id,created_at,site,username,games,accuracy,avg_loss,band,top_leak").order("created_at", { ascending: false }).limit(30);
   if (!error) { A = data; drawOverview(data); }
   const box = $("#m-list"), ch = $("#m-charts"); if (error) { box.innerHTML = `<p class="small">Could not load your analyses.</p>`; return; }
-  if (!data.length) { ch.innerHTML = ""; box.innerHTML = `<p>No saved reports yet. <a href="/analyze/">Analyze your games</a> while you are logged in and your report is saved here.</p>`; return; }
+  if (!data.length) { ch.innerHTML = ""; box.innerHTML = `<p>No saved reports yet. <a href="#analyze">Analyze your games</a> while you are logged in and your report is saved here.</p>`; return; }
   ch.innerHTML = `<div class="mcharts">${chart(data, "avg_loss", "Pawns lost per move", true, 2, "")}${chart(data, "accuracy", "Accuracy", false, 0, "%")}</div>` + (data.length < 2 ? `<p class="small">One report so far. Run another one after a few more games and your progress shows as a line.</p>` : "");
   box.innerHTML = `<div class="az-gm">` + data.map((a) => `<div class="m-row"><span class="small">${new Date(a.created_at).toLocaleDateString()}</span><span><b>${esc(a.username)}</b> <span class="small">${a.site === "chesscom" ? "Chess.com" : "Lichess"} &middot; ${a.games} game${a.games > 1 ? "s" : ""}</span></span><span class="small">${Number(a.accuracy).toFixed(0)}% accuracy &middot; ${Number(a.avg_loss).toFixed(2)} pawns/move${a.band ? " &middot; looks like " + esc(a.band) : ""}</span><button class="btn" type="button" data-del="${a.id}">Delete</button></div>`).join("") + `</div>`;
 }
