@@ -657,7 +657,7 @@ MEM_CSS = """
 .mcard .mbadge{position:absolute;top:18px;right:18px}
 .mlogin{max-width:560px;margin:10px 0 60px}
 .mapp{display:grid;grid-template-columns:232px minmax(0,1fr);gap:34px;padding:30px 0 60px;align-items:start}
-.mapp[hidden]{display:none}.mapp>div{min-width:0}.mview h2{border:0;padding:0;margin-top:0}
+.mapp[hidden]{display:none}.mapp>div{min-width:0}section.mview{border:0;padding-block:0}
 .mnav{position:sticky;top:96px;display:flex;flex-direction:column;gap:4px}
 .mnav a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;text-decoration:none;color:var(--mute);font-weight:600;font-size:16px}
 .mnav a svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
