@@ -756,7 +756,13 @@
     "start": true,
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "examples": [
+     {
+      "fen": "rn1qkbnr/ppp2p1p/3p2p1/4N3/2B1P1b1/2N5/PPPP1PPP/R1BQK2R b KQkq - 0 5",
+      "caption": "Black to move after 5.Nxe5 (Légal's trap). 5...Bxd1?? looks like winning a queen, but 6.Bxf7+ Ke7 7.Nd5# is mate. Checking the opponent's checks and captures first, as the principle says, finds the calm 5...dxe5. Stockfish agrees."
+     }
+    ]
    },
    {
     "slug": "solve-immediate-problems-first",
@@ -1110,7 +1116,13 @@
     "check": "Checked: a very common mistake at club level. Also covers: before a decisive attack every piece, including bishops and rooks on the back rank, must take part. Check for passive pieces in your own camp and bring them to open files or central squares.",
     "phase": "middlegame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "examples": [
+     {
+      "fen": "r3kb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR3R b kq - 2 12",
+      "caption": "After 12.O-O-O, both white rooks take part in the attack at once (Rd1 pins the d7 knight, Rh1 supports). Black's rooks are still sleeping. Stockfish: White is far ahead. Source: Opera Game (Morphy vs Duke of Brunswick and Count Isouard, Paris 1858)."
+     }
+    ]
    },
    {
     "slug": "do-not-respect-an-unsupported-attack",
@@ -1173,7 +1185,13 @@
     "check": "Softened: only when you are better developed. If your own pieces are not out yet, opening the centre can backfire.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "examples": [
+     {
+      "fen": "rn2kb1r/p3qppp/2p2n2/1p2p1B1/2B1P3/1QN5/PPP2PPP/R3K2R w KQkq - 0 10",
+      "caption": "White to move after 9...b5. White has developed fast, Black's king is still in the middle and Black's queenside pieces are not out. 10.Nxb5! opens the position at once (Stockfish: White is about +3.4). Source: Opera Game (Morphy vs Duke of Brunswick and Count Isouard, Paris 1858)."
+     }
+    ]
    },
    {
     "slug": "eliminate-the-key-defenders-of-the-king",
@@ -1182,7 +1200,13 @@
     "check": "Checked. See also: remove the defending bishop.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "examples": [
+     {
+      "fen": "3rkb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR3R w kq - 0 13",
+      "caption": "White to move after 12...Rd8. The knight on d7 is the key defender: it blocks the d-file and guards the king. 13.Rxd7! Rxd7 14.Rd1 and the pin wins (Stockfish: about +5). Source: Opera Game (Morphy vs Duke of Brunswick and Count Isouard, Paris 1858)."
+     }
+    ]
    },
    {
     "slug": "use-a-pawn-as-an-umbrella-when-under-pressure",
