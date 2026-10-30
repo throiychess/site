@@ -108,7 +108,7 @@
   };
   function allItems() { var o = []; LIB.forEach(function (g) { g.items.forEach(function (x) { if (!x.draft) { x._g = g.group; o.push(x); } }); }); return o; }
   function pcard(x) {
-    return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(x.title) + "</b> <span class=\"small\">" + esc(LVL[x.level] || "") + " &middot; " + esc(PHS[x.phase] || "") + (x._g ? " &middot; " + esc(x._g) : "") + "</span><br>" + esc(x.text) + "<br><a class=\"small\" href=\"/principles/" + esc(x.slug) + "/\">Explanation and examples</a></span></div>";
+    return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(x.title) + "</b> <span class=\"small\">" + esc(LVL[x.level] || "") + " &middot; " + esc(PHS[x.phase] || "") + "</span><br>" + esc(x.text) + "<br><a class=\"small\" href=\"/principles/" + esc(x.slug) + "/\">Explanation and examples</a></span></div>";
   }
   function chips(kind, map) {
     return Object.keys(map).map(function (k) { return "<button type=\"button\" class=\"btn" + (PF[kind] === k ? " solid" : "") + "\" data-pf=\"" + kind + ":" + k + "\" style=\"padding:6px 12px;margin:0 6px 6px 0\">" + (k === "all" ? "Any" : map[k]) + "</button>"; }).join("");
