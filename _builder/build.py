@@ -262,7 +262,8 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             f'<meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{SITE}{og_image}">'
             f'<meta name="twitter:card" content="summary_large_image">'
             f'<link rel="preload" href="/fonts/Inter-Black.woff" as="font" type="font/woff" crossorigin>'
-            f'{'<meta name="robots" content="noindex,nofollow">' if path == '/members/' else ''}<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}</body></html>')
+            + ('<meta name="robots" content="noindex,nofollow">' if path == '/members/' else '')
+            + f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}</body></html>')
 
 NAV = [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Traps", "/traps/"), ("Analyze", "/analyze/"), ("Members", "/members/"), ("Top games", "/#top-games"), ("About", "/#about"), ("Contact", "/contact/"), ("Support", "/support/")]
 def promo_bar(active):
