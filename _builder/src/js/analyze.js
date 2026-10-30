@@ -25,6 +25,8 @@ const P = {
   other:  { t: "Strategic error", tip: "Compare your move with the better one: which pieces does it improve? Ask what your worst piece is and improve it." },
 };
 
+const RULE = { hang: "Loose pieces drop off.", threat: "Answer the threat before you start your plan.", tactic: "Look at checks, captures and threats, for both sides, every move.", mate: "Look at your king first.", queen: "Develop knights and bishops before the queen.", king: "Castle early, keep the king at home.", twice: "Every opening move should bring a new piece into play.", endgame: "In the endgame the king is a fighting piece.", other: "Improve your worst piece." };
+const ruleLink = (c) => RULE[c] ? `<a href="/members/#training">Principle: ${RULE[c]}</a> <span class="small">(with examples from your own games)</span>` : "";
 const DRILL = {
   mate:   ["Before every move, say the three words out loud: checks, captures, threats. Start with the checks your opponent has.", "Play 5 games with this rule only. Do not worry about the opening."],
   threat: ["After each opponent move, ask: what does it want to do next? Answer that before your own plan.", "In your next 5 games, write down (or say) the opponent's threat before every move."],
@@ -270,7 +272,7 @@ function report(results) {
     return `<a href="${esc(safeUrl(r.g.url))}" target="_blank" rel="noopener"><span class="res ${outc(r).toLowerCase()}">${outc(r)}</span><span>${r.side === "w" ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${r.acc.toFixed(0)}% accuracy${top ? ` · biggest drop: move ${top.moveNo}${top.color === "w" ? "." : "…"}${esc(top.san)}` : " · no big drops"}</span></a>`; }).join("") + `</div>`;
   if (order.length) {
     const top = order[0];
-    h += `<div class="az-top"><span class="eyebrow">Train this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p></div>`;
+    h += `<div class="az-top"><span class="eyebrow">Train this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p><p class="small">${ruleLink(top)}</p></div>`;
     h += `<div class="az-bars">` + order.map((c) => `<div class="az-bar"><span>${P[c].t}</span><i style="width:${(100 * cnt[c]) / max}%"></i><b>${cnt[c]}</b></div>`).join("") + `</div>`;
   } else h += `<div class="az-top"><h3>Clean games!</h3><p>No big drops in these games. Try a few losses to find what to train.</p></div>`;
   if (order.length) { h += `<h3>Your 5-game training plan</h3><div class="az-plan">` + order.slice(0, 2).map((c, i) => `<div><span class="eyebrow">Focus ${i + 1}: ${P[c].t}</span><p><b>Habit:</b> ${DRILL[c][0]}</p><p><b>Practice:</b> ${DRILL[c][1]}</p></div>`).join("") + `<p class="small">Play your next 5 games with only these two focuses, then analyze them again here and compare. The free cheat sheet has a 3-second check and a quiz that train exactly this.</p></div>`; }
@@ -284,7 +286,7 @@ function report(results) {
       <h3>Move ${m.moveNo}${m.color === "w" ? "." : "…"}${esc(m.san)} <span class="small">vs ${esc(opp)}</span></h3>
       <p>${m.detail ? esc(m.detail) + " " : ""}${m.best ? `Better was <b>${esc(m.best)}</b>.` : ""}</p>
       <p class="small">Evaluation for you: ${(m.before / 100).toFixed(1)} → ${(m.after / 100).toFixed(1)}${m.clock !== null ? ` · ${Math.round(m.clock)} s on your clock` : ""} · <a href="${esc(safeUrl(m.r.g.url))}" target="_blank" rel="noopener">open game</a></p>
-      <p class="small"><b>Principle:</b> ${P[m.cat].tip}</p></div></div>`;
+      <p class="small"><b>Principle:</b> ${P[m.cat].tip}<br>${ruleLink(m.cat)}</p></div></div>`;
   }
   { const t1 = order.length ? `Your most common leak: <b>${P[order[0]].t.toLowerCase()}</b> (${cnt[order[0]]} time${cnt[order[0]] > 1 ? "s" : ""} in ${results.length} game${results.length > 1 ? "s" : ""}). ${P[order[0]].tip}` : "No big leaks found. Keep doing what you do and analyze a few losses.";
     const tips = { opening: "Your opening costs you the most. Play the same opening for a month, know its first 8 moves, and develop knights and bishops before the queen.", middlegame: "Your middlegame costs you the most. When the position gets busy, slow down: list your opponent's forcing moves (checks, captures, threats) before you choose.", endgame: "Your endgame costs you the most. Practice king and pawn endings 10 minutes a day: activate the king, push passed pawns." };
