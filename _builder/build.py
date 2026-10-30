@@ -237,7 +237,7 @@ form.contact{display:grid;gap:18px;max-width:620px}
 """
 e = html.escape
 
-GOOGLE_LOGIN = False  # set True after enabling the Google provider in Supabase
+GOOGLE_LOGIN = True  # set True after enabling the Google provider in Supabase
 TURNSTILE_SITEKEY = "0x4AAAAAAFso4wm5naB8oZGB"  # public Cloudflare Turnstile site key (secret lives in Supabase Auth > Attack Protection)
 
 def csp(path=""):
