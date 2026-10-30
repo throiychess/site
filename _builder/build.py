@@ -154,6 +154,13 @@ nav.links a.support{color:var(--gold)}
 form.nl{display:flex;flex-wrap:wrap;gap:10px}form.nl input[type=email]{flex:1 1 220px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit}
 form.nl .nl-msg{flex-basis:100%;margin:0}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (max-width:860px){.newsletter{grid-template-columns:1fr}}
+.newsletter{background:var(--gold);color:var(--on-gold);border:0}.newsletter strong{font-size:20px}.newsletter p{color:rgba(20,17,11,.78)}
+.newsletter form.nl input[type=email]{border:2px solid var(--on-gold);color:var(--on-gold);background:rgba(255,255,255,.35)}.newsletter form.nl input::placeholder{color:rgba(20,17,11,.6)}
+.newsletter .btn.solid,.az-cta .btn.solid{background:var(--on-gold);color:var(--gold);border-color:var(--on-gold)}.newsletter a{color:var(--on-gold)}
+.promo{background:var(--gold);color:var(--on-gold);font-weight:700;font-size:15px}.promo .wrap{display:flex;align-items:center;justify-content:center;gap:8px 16px;flex-wrap:wrap;padding-block:9px;position:relative}
+.promo a{color:var(--on-gold);text-decoration:underline;text-underline-offset:3px;font-weight:900}.promo-x{position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--on-gold);font-size:22px;line-height:1;cursor:pointer;padding:6px 10px}
+@media (max-width:560px){.promo{font-size:14px}.promo .wrap{padding-right:34px;justify-content:flex-start}}
+
 .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .vid button{position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;color:var(--ink);font-family:var(--font);
  background:linear-gradient(180deg,rgba(14,13,11,.15),rgba(14,13,11,.85)),repeating-conic-gradient(var(--sq-d) 0 25%,var(--sq-l) 0 50%) 0 0/25% 14.0625%;
@@ -258,8 +265,14 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}</body></html>')
 
 NAV = [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Traps", "/traps/"), ("Analyze", "/analyze/"), ("Top games", "/#top-games"), ("About", "/#about"), ("Contact", "/contact/"), ("Support", "/support/")]
+def promo_bar(active):
+    if active == "Free": return ""
+    return ('<div class="promo"><div class="wrap"><span>Free: 10 Opening Traps cheat sheet + quiz, made for your phone.</span>'
+            '<a data-ev="promo-bar-click" href="/free/?utm_source=site&amp;utm_campaign=promo-bar">Get it free &rarr;</a>'
+            '<button class="promo-x" type="button" aria-label="Close" onclick="try{sessionStorage.setItem(\'promo\',1)}catch(e){}this.closest(\'.promo\').remove()">&times;</button></div></div>'
+            '<script>try{if(sessionStorage.getItem("promo"))document.querySelector(".promo").remove()}catch(e){}</script>')
 def header(active=""):
-    return ('<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt="">'
+    return promo_bar(active) + ('<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt="">'
             '<span>THROIY<b>CHESS</b></span></a><nav class="links" aria-label="Main">'
             + "".join(f'<a href="{u}"{" class=support" if n == "Support" else ""}{" aria-current=page" if n == active else ""}>{n}</a>' for n, u in NAV) + '</nav></div></header>')
 
@@ -580,7 +593,7 @@ def support_page():
     return "/support/", page("/support/", "Support · Throiy Chess", "Support Throiy Chess with a small tip and keep the chess lessons free.", body)
 
 def free_page():
-    body = header() + f'''<main class="wrap"><div class="twocol" style="padding:40px 0 64px;align-items:center"><div class="prose">
+    body = header("Free") + f'''<main class="wrap"><div class="twocol" style="padding:40px 0 64px;align-items:center"><div class="prose">
 <span class="eyebrow">Free download</span>
 <h1 class="page">10 Opening Traps: the cheat sheet</h1>
 <p>The ten traps every beginner meets, on one PDF. For each trap: what happens in plain words, the exact move where it goes wrong, and how not to fall for it.</p>
@@ -605,7 +618,7 @@ AZ_CSS = """.az-form{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.az-form
 .az-m{display:grid;grid-template-columns:200px 1fr;gap:18px;padding:16px 0;border-top:1px solid #2c2820}.az-m h3{margin:4px 0 6px}
 svg.mini{width:200px;height:200px;border-radius:8px}svg.mini .lt{fill:#e9dcc0}svg.mini .dk{fill:#b38b5d}svg.mini .hl{fill:#d9a93d;opacity:.55}
 svg.mini text{font-size:.82px;text-anchor:middle;font-family:"DejaVu Sans","Segoe UI Symbol",serif}svg.mini .pw{fill:#fff;stroke:#1d1b17;stroke-width:.03}svg.mini .pb{fill:#1d1b17}
-.az-cta{border-radius:14px;background:#1b1813;padding:20px;margin:26px 0 40px}.az-follow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}.az-follow .btn{flex:1 1 0;min-width:0;justify-content:center;text-align:center;padding-inline:8px}.az-score{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}.az-score div{border:1px solid #2c2820;border-radius:12px;padding:12px 8px;text-align:center}.az-score b{display:block;font-size:26px;color:#d9a93d}.az-score span{font-size:12px;color:#bdb6a8}.az-ph{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.az-ph div{border:1px solid #2c2820;border-radius:12px;padding:12px;text-align:center}.az-ph .worst{border-color:#d9a93d;background:#1b1813}.az-ph b{display:block;font-size:24px}.az-ph span{font-weight:700}.az-ph small{color:#bdb6a8;font-size:12px}.az-gm{display:grid;gap:8px;margin:10px 0 18px}.az-gm a{display:grid;grid-template-columns:60px 1fr;gap:4px 12px;padding:11px 14px;border:1px solid #2c2820;border-radius:12px;text-decoration:none;color:inherit}.az-gm a .small{grid-column:2}.az-plan{display:grid;gap:12px;margin:10px 0 18px}.az-plan>div:not(:last-child){border:1px solid #2c2820;border-radius:12px;padding:14px 16px}svg.mini .hl2{fill:#4fae6b;opacity:.55}svg.mini .arw{stroke:#4fae6b;stroke-width:.14;stroke-linecap:round;opacity:.9}@media (max-width:560px){.az-score{grid-template-columns:repeat(2,1fr)}}.az-cta hr{border:0;border-top:1px solid #2c2820;margin:20px 0}@media (max-width:560px){.az-m{grid-template-columns:1fr}.az-g{grid-template-columns:auto 52px 1fr}.az-g .small{grid-column:2/-1}}"""
+.az-cta{border-radius:14px;background:#1b1813;padding:20px;margin:26px 0 40px}.az-follow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}.az-follow .btn{flex:1 1 0;min-width:0;justify-content:center;text-align:center;padding-inline:8px}.az-score{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}.az-score div{border:1px solid #2c2820;border-radius:12px;padding:12px 8px;text-align:center}.az-score b{display:block;font-size:26px;color:#d9a93d}.az-score span{font-size:12px;color:#bdb6a8}.az-ph{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.az-ph div{border:1px solid #2c2820;border-radius:12px;padding:12px;text-align:center}.az-ph .worst{border-color:#d9a93d;background:#1b1813}.az-ph b{display:block;font-size:24px}.az-ph span{font-weight:700}.az-ph small{color:#bdb6a8;font-size:12px}.az-gm{display:grid;gap:8px;margin:10px 0 18px}.az-gm a{display:grid;grid-template-columns:60px 1fr;gap:4px 12px;padding:11px 14px;border:1px solid #2c2820;border-radius:12px;text-decoration:none;color:inherit}.az-gm a .small{grid-column:2}.az-plan{display:grid;gap:12px;margin:10px 0 18px}.az-plan>div:not(:last-child){border:1px solid #2c2820;border-radius:12px;padding:14px 16px}svg.mini .hl2{fill:#4fae6b;opacity:.55}svg.mini .arw{stroke:#4fae6b;stroke-width:.14;stroke-linecap:round;opacity:.9}@media (max-width:560px){.az-score{grid-template-columns:repeat(2,1fr)}}.az-cta{background:var(--gold);color:var(--on-gold)}.az-cta p{color:rgba(20,17,11,.82)}.az-cta .az-follow .btn{border:2px solid var(--on-gold);color:var(--on-gold);font-weight:800}.az-cta hr{border:0;border-top:1px solid #2c2820;margin:20px 0}@media (max-width:560px){.az-m{grid-template-columns:1fr}.az-g{grid-template-columns:auto 52px 1fr}.az-g .small{grid-column:2/-1}}"""
 
 def analyze_page():
     tdata = []
