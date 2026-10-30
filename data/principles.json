@@ -224,6 +224,12 @@
     "title": "Activate a passive piece in time",
     "text": "If one of your pieces, such as a rook, has stood passively on the back rank through the whole middlegame, look for a moment to activate it for a break or to pressure the enemy weaknesses.",
     "note": "Checked: this is the \"improve your worst piece\" idea for the rook."
+   },
+   {
+    "slug": "create-a-weak-pawn-in-the-enemy-camp",
+    "title": "Create a weak pawn in the enemy camp",
+    "text": "Trade pieces or open lines in a way that leaves your opponent with a weak, backward or isolated pawn, then keep permanent pressure on it.",
+    "note": "Checked: the way to get the target in the first place. See \"Attack the backward pawn\"."
    }
   ]
  },
@@ -413,6 +419,12 @@
     "title": "Exchange sacrifice on the wing",
     "text": "A rook sacrifice against a defending wing pawn can break open the enemy king position and give your other pieces ways in.",
     "note": "Softened: only when you can calculate it. The original called it forcing, which is not true in general. This also goes against 'simple, controlled play', so use it only with a clear calculation."
+   },
+   {
+    "slug": "tighten-the-net-with-flank-pawns-f3-g4-h4",
+    "title": "Tighten the net with flank pawns (f3, g4, h4)",
+    "text": "Use pawns such as f3, g4 or h4 to tighten the net around enemy pieces, such as a trapped knight or bishop, and to control squares.",
+    "note": "Checked: a real tactic (trapping a piece on the edge). Check your own king safety first: these pawn moves also open lines near your own king."
    }
   ]
  },
@@ -429,7 +441,7 @@
     "slug": "create-a-passed-pawn",
     "title": "Create a passed pawn",
     "text": "Use a majority on one wing to make a pawn that can run to the other side. A passed pawn ties down the opponent and often decides the endgame.",
-    "note": ""
+    "note": " Once you have broken up your opponent's structure, creating a passed pawn and pushing it (best close to promotion) is the fastest way to put them on the defensive."
    },
    {
     "slug": "rook-versus-minor-piece-win-it-with-technique",
@@ -441,7 +453,7 @@
     "slug": "activate-your-king-in-the-endgame",
     "title": "Activate your king in the endgame",
     "text": "In the endgame the king is a strong piece, not a target. Bring it to the centre to support your pawns and block the opponent.",
-    "note": "Checked: true once queens are off and there is no mating danger. Another lesson adds: a central king supports your passed pawns and cuts off the enemy king. Another lesson says the same: once the queens are gone, march the king to the centre."
+    "note": "Checked: true once queens are off and there is no mating danger. Another lesson adds: a central king supports your passed pawns and cuts off the enemy king. Another lesson says the same: once the queens are gone, march the king to the centre. Active defensive squares count too (such as e2) as soon as the middlegame is over."
    },
    {
     "slug": "push-your-passed-pawn-ppp",
@@ -489,7 +501,7 @@
     "slug": "castling-is-not-automatic-without-queens",
     "title": "Castling is not automatic without queens",
     "text": "When queens are off, your king is in less danger. Do not castle out of habit: use the king in the centre to fight and support pawns.",
-    "note": "Checked: castling is just no longer a priority. Also: a short-castled king in the corner can get boxed in and loses tempi getting to the centre. Softened from \"almost never\": it is just rarely worth the time."
+    "note": "Checked: castling is just no longer a priority. Also: a short-castled king in the corner can get boxed in and loses tempi getting to the centre. Softened from \"almost never\": it is just rarely worth the time. Another lesson repeats this: do not castle out of habit when queens left the board early. A king in the corner takes no part in the game."
    },
    {
     "slug": "doubled-isolated-pawns-are-a-target",
@@ -527,6 +539,31 @@
     "title": "March a pawn majority",
     "text": "With a pawn majority on the queenside (4 against 2, for example), use it to advance your pawns step by step into a passed pawn and force your opponent into passive defence.",
     "note": "Checked: a standard endgame plan. Keep the pawns supported and watch the enemy king."
+   },
+   {
+    "slug": "trade-off-a-passive-defender",
+    "title": "Trade off a passive defender",
+    "text": "If the enemy rook stands passively on the back rank to defend, force exchanges that centralize your own pieces and steer towards the endgame.",
+    "note": "Checked: sound, as long as the endgame you reach is actually better for you."
+   }
+  ]
+ },
+ {
+  "group": "Practical psychology",
+  "items": [
+   {
+    "slug": "set-a-psychological-opening-bait",
+    "title": "Set a psychological opening bait",
+    "text": "In specific openings you can leave a seemingly unprotected piece or pawn as bait (for example your queen on c2 or b3 against an early ...Qb6) and tempt your opponent into a fatal mistake by looking patient.",
+    "note": "Checked: baits are a known club tactic. The exact position in the source is unclear, so no example yet. Works mainly against weaker players or in blitz; against strong players rely on sound moves.",
+    "draft": true
+   },
+   {
+    "slug": "wait-a-moment-before-a-forced-move",
+    "title": "Wait a moment before a forced move",
+    "text": "Waiting a few seconds before a forced move can look like you are playing casually, which tempts your opponent to capture carelessly.",
+    "note": "Not a chess principle but gamesmanship. Use it sparingly, never waste your clock, and do not rely on it. It is also a draft until we agree it belongs in a chess library.",
+    "draft": true
    }
   ]
  }
