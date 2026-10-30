@@ -645,7 +645,7 @@
     "slug": "answer-a-wing-attack-in-the-centre",
     "title": "Answer a wing attack in the centre",
     "text": "If a faster pawn storm hits one wing, look for counterplay by opening the centre. This often changes the course of the game and defuses the wing attack.",
-    "note": "Checked: a classical principle."
+    "note": "Checked: a classical principle. Also covers: counter a premature flank attack by striking at once in the centre (for example with d4). Central pieces have the most power and force the opponent to defend. Softened: only when your pieces are developed enough to support the break."
    },
    {
     "slug": "open-lines-by-trading-pawns",
@@ -724,6 +724,18 @@
     "title": "Bring your rooks into the game",
     "text": "In the heat of an attack players often forget their rooks on a1 or h1. Make sure every piece joins the attack, and before a serious attack check that your rooks and heavy pieces have left their starting squares.",
     "note": "Checked: a very common mistake at club level."
+   },
+   {
+    "slug": "do-not-respect-an-unsupported-attack",
+    "title": "Do not respect an unsupported attack",
+    "text": "If the opponent sets up a threat or pin early with a single piece (such as an isolated bishop) while the rest of the army stays passive, do not panic or turn passive. An attack is only dangerous when they outnumber you there. Count the real attackers and defenders on that part of the board first, then respond calmly.",
+    "note": "Checked. Softened: a single piece can still win material with a tactic, so check the concrete threat first."
+   },
+   {
+    "slug": "trade-off-the-key-attackers",
+    "title": "Trade off the key attackers",
+    "text": "When the opponent builds pressure with only a few active pieces, the quickest road to safety is to trade exactly those pieces. Once the attackers are gone, the attack collapses and you can take over the initiative.",
+    "note": "Checked. Make sure the trade does not open a file or diagonal for their remaining pieces."
    }
   ]
  },
