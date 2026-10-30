@@ -186,7 +186,7 @@ async function run() {
   prog.textContent = "Done."; $("#az-go").disabled = false; report(results);
 }
 
-document.addEventListener("click", (ev) => { const bt = ev.target.closest(".az-replay"); if (!bt || bt.disabled) return; const m = SHOWN[+bt.dataset.i]; if (!m) return;
+document.addEventListener("click", (e0) => { const bt = e0.target.closest(".az-replay"); if (!bt || bt.disabled) return; const m = SHOWN[+bt.dataset.i]; if (!m) return;
   const box = bt.closest(".az-m"), svg = () => box.querySelector("svg.mini"), orig = svg().outerHTML; bt.disabled = true; ev("analyze-replay");
   const c = new Chess(m.fen), seq = [m.from + m.to + (m.promo || "")].concat(m.pv); const lab = (i) => i === 0 ? "Your move" : "Opponent's best reply" + (i > 1 ? " and the line continues" : ""); let i = 0;
   const msg = box.querySelector(".az-rp") || bt.insertAdjacentElement("afterend", Object.assign(document.createElement("span"), { className: "az-rp small" })) || box.querySelector(".az-rp");
