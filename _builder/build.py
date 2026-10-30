@@ -816,8 +816,8 @@ def improve_page():
 <input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true">
 <div class="hp" aria-hidden="true"><input type="text" name="nl_website" tabindex="-1" autocomplete="off"></div>
 <button class="btn solid" type="submit">Join the waitlist</button>
-<p class="nl-msg small" role="status" aria-live="polite"></p></form></div></div>
-<h2 style="margin-top:50px">Free and Premium</h2><div class="mgrid">{_FEATS}</div>{_CMPT}</div></main>''' + footer(band=False, nl=False)
+<p class="nl-msg small" role="status" aria-live="polite"></p></form></div></div></div>
+<h2 style="margin-top:20px">Free and Premium</h2><div class="mgrid">{_FEATS}</div>{_CMPT}<div style="height:50px"></div></main>''' + footer(band=False, nl=False)
     return "/improve/", page("/improve/", "Improvement program waitlist · Throiy Chess", "Join the waitlist for deeper chess analysis, your own puzzles and progress tracking.", body)
 
 def terms():
