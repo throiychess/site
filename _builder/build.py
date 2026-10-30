@@ -452,7 +452,7 @@ def video_ld(s):
             "uploadDate": (s["date"] if "T" in s["date"] else s["date"] + "T12:00:00+01:00"), "thumbnailUrl": f"https://i.ytimg.com/vi/{s['id']}/hqdefault.jpg",
             "embedUrl": f"https://www.youtube-nocookie.com/embed/{s['id']}", "contentUrl": (f"https://www.youtube.com/watch?v={s['id']}" if s.get("kind") == "video" else f"https://www.youtube.com/shorts/{s['id']}")}
 
-ORG = {"@context": "https://schema.org", "@type": "Organization", "name": NAME, "url": SITE, "logo": SITE + "/img/logo.png",
+ORG = {"@context": "https://schema.org", "@type": "Organization", "name": NAME, "alternateName": ["ThroiyChess", "Throiy"], "slogan": "Chess traps and lessons, explained fast", "url": SITE, "logo": SITE + "/img/logo.png",
        "sameAs": [u for _, u in LINKS], "description": TAGLINE}
 
 # ---------------- pages ----------------
@@ -695,7 +695,7 @@ def analyze_page():
 <div id="az-games"></div><div id="az-report"></div>
 <p class="small" style="margin:30px 0 50px">The analysis runs in your own browser with Stockfish 17.1 (GPLv3, <a href="https://github.com/official-stockfish/Stockfish" target="_blank" rel="noopener">source</a>). We don't store your games. Games are loaded from the public Chess.com and Lichess APIs. Throiy Chess is not affiliated with Chess.com or Lichess. A beta: the engine runs at a light depth, so treat single numbers as a guide.</p>
 </main><script type="application/json" id="trap-data">{json.dumps(tdata)}</script>{SB_SCRIPTS}<script type="module" src="/js/analyze.js"></script>''' + footer(band=False)
-    return "/analyze/", page("/analyze/", "Analyze your games · Throiy Chess", "Free: find out which chess principles cost you the most points. Works with Chess.com and Lichess usernames.", body)
+    return "/analyze/", page("/analyze/", "Free chess game analyzer: find your biggest mistakes · Throiy Chess", "Free chess game analyzer for Chess.com and Lichess. Find the mistakes that cost you the most points, see your rating band and get a simple training plan. No sign-up.", body)
 
 WAITLIST_URL = "https://assets.mailerlite.com/jsonp/2747354/forms/202754728493319697/subscribe"  # MailerLite form -> group "Improvement waitlist" (double opt-in)
 SB_SCRIPTS = '<script src="/js/vendor/supabase-2.117.3.js"></script>'
@@ -835,7 +835,7 @@ def improve_page():
 <button class="btn solid" type="submit">Join the waitlist</button>
 <p class="nl-msg small" role="status" aria-live="polite"></p></form></div></div></div>
 <h2 style="margin-top:20px">Free and Premium</h2><div class="mgrid">{_FEATS}</div>{_CMPT}<div style="height:50px"></div></main>''' + footer(band=False, nl=False)
-    return "/improve/", page("/improve/", "Improvement program waitlist · Throiy Chess", "Join the waitlist for deeper chess analysis, your own puzzles and progress tracking.", body)
+    return "/improve/", page("/improve/", "Improve your chess: deeper analysis, puzzles and courses · Throiy Chess", "Join the waitlist for the Throiy Chess improvement program: deeper game analysis, puzzles made from your own mistakes and courses by rating band.", body)
 
 def terms():
     body = header() + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Terms</span><h1 class="page">Terms of use</h1><p>Short and plain. By using {DOMAIN} you agree to these terms.</p></div>
