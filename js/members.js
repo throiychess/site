@@ -86,6 +86,16 @@ $("#m-form").addEventListener("submit", async (e) => {
   msg.textContent = error ? (error.status === 429 ? "Too many tries. Please wait a few minutes." : "That did not work. Check the address and try again.") : "Check your inbox: we sent you a login link. Open it on this device.";
 });
 const gbtn = $("#m-google"); if (gbtn) gbtn.addEventListener("click", () => { ev("members-login-google"); sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + "/members/" } }); });
+let gTries = 0;
+async function gInit() {
+  const box = $("#m-gid"); if (!box || !window.G_ID) return;
+  if (!(window.google && google.accounts && google.accounts.id)) { if (++gTries < 25) return setTimeout(gInit, 300); if (gbtn) gbtn.hidden = false; return; }
+  const raw = Array.from(crypto.getRandomValues(new Uint8Array(16)), (x) => x.toString(16).padStart(2, "0")).join("");
+  const hashed = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(raw))), (x) => x.toString(16).padStart(2, "0")).join("");
+  google.accounts.id.initialize({ client_id: window.G_ID, nonce: hashed, ux_mode: "popup", callback: async (r) => { ev("members-login-google"); const { error } = await sb.auth.signInWithIdToken({ provider: "google", token: r.credential, nonce: raw }); if (error) { $("#m-msg").textContent = "Google login did not work. Try the e-mail link instead."; } } });
+  google.accounts.id.renderButton(box, { type: "standard", theme: "filled_black", size: "large", text: "continue_with", shape: "pill", width: 300 });
+}
+gInit();
 $("#m-prof").addEventListener("submit", async (e) => { e.preventDefault(); const s = (await sb.auth.getSession()).data.session; if (!s) return;
   const { error } = await sb.from("profiles").update({ display_name: $("#m-name").value.trim() || null, chesscom_username: $("#m-cc").value.trim() || null, lichess_username: $("#m-li").value.trim() || null }).eq("id", s.user.id);
   if (!error) { profile.display_name = $("#m-name").value.trim() || null; drawHello(); }

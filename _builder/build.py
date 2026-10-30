@@ -245,9 +245,11 @@ def csp(path=""):
     scr = ["'self'", "'unsafe-inline'"] + (["https://gc.zgo.at"] if ANALYTICS else []) + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
     img = "img-src 'self' data:" + (" https://tracker.metricool.com" if METRICOOL_HASH else "")
     hc = path.startswith("/members") and TURNSTILE_SITEKEY
+    gg = path.startswith("/members") and GOOGLE_LOGIN
+    if gg: scr += ["https://accounts.google.com"]; conn += ["https://accounts.google.com"]
     if hc: scr += ["https://challenges.cloudflare.com"]
-    return (f"default-src 'self'; {img}; style-src 'self' 'unsafe-inline'; font-src 'self'; "
-            f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com https://ko-fi.com{' https://challenges.cloudflare.com' if hc else ''}; "
+    return (f"default-src 'self'; {img}; style-src 'self' 'unsafe-inline'{' https://accounts.google.com/gsi/style' if gg else ''}; font-src 'self'; "
+            f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com https://ko-fi.com{' https://challenges.cloudflare.com' if hc else ''}{' https://accounts.google.com' if gg else ''}; "
             "form-action 'self' https://api.web3forms.com" + (" https://assets.mailerlite.com" if NEWSLETTER_URL else "") + "; base-uri 'self'; object-src 'none'")
 
 def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="website"):
@@ -789,7 +791,7 @@ def members_page():
 <div id="m-login"><div class="mhero"><span class="eyebrow">Members</span><h1>Fix what costs you games.</h1><p>Your own page with your reports, your progress and, soon, training built from your mistakes. Free to join, no password.</p></div>
 <div class="mgrid">{_FEATS}</div>
 <div class="newsletter mlogin" style="grid-template-columns:1fr"><div><strong>Log in or create your free account</strong><p>Enter your e-mail address. We send a link; opening it confirms the address and logs you in.</p></div>
-{('<button class="mgbtn" type="button" id="m-google">Continue with Google</button>' if GOOGLE_LOGIN else '')}<form class="mform" id="m-form"><label class="sr" for="m-mail">E-mail address</label><input id="m-mail" type="email" placeholder="Your e-mail" autocomplete="email" required maxlength="200"><button class="btn solid" type="submit">Send me a login link</button><div id="m-hc" style="flex-basis:100%"></div><p class="small" id="m-msg" role="status" aria-live="polite" style="flex-basis:100%;margin:0"></p></form></div></div>
+{('<div id="m-gid" style="margin:0 0 12px;min-height:44px"></div><button class="mgbtn" type="button" id="m-google" hidden>Continue with Google</button>' if GOOGLE_LOGIN else '')}<form class="mform" id="m-form"><label class="sr" for="m-mail">E-mail address</label><input id="m-mail" type="email" placeholder="Your e-mail" autocomplete="email" required maxlength="200"><button class="btn solid" type="submit">Send me a login link</button><div id="m-hc" style="flex-basis:100%"></div><p class="small" id="m-msg" role="status" aria-live="polite" style="flex-basis:100%;margin:0"></p></form></div></div>
 <div id="m-app" class="mapp" hidden>
 <div><nav class="mnav" aria-label="Members">{_NAVH}<div class="mwho"><span class="mava" id="m-ava">&#9823;&#xFE0E;</span><span class="small">Logged in as</span><b id="m-email"></b><button class="btn" type="button" id="m-out" style="margin-top:10px">Log out</button></div></nav></div>
 <div>
@@ -816,7 +818,7 @@ def members_page():
 <section class="mview" data-view="profile" hidden><h2>Profile</h2><p class="lead">Add your usernames so the analyzer is one click away.</p>
 <form class="mform" id="m-prof"><label class="sr" for="m-name">Name</label><input id="m-name" placeholder="Name (optional)" maxlength="60"><label class="sr" for="m-cc">Chess.com username</label><input id="m-cc" placeholder="Chess.com username" maxlength="40"><label class="sr" for="m-li">Lichess username</label><input id="m-li" placeholder="Lichess username" maxlength="40"><button class="btn solid" type="submit">Save</button><span class="small" id="m-pmsg"></span></form>
 <div class="mfoot">Your data is stored in the EU and visible only to you and us. <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a><p style="margin:14px 0 0"><button class="btn" type="button" id="m-del">Delete my account and all my data</button> <span class="small" id="m-delmsg"></span></p></div></section>
-</div></div></main>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}<script src="/js/members.js"></script>''' + footer(band=False, nl=False)
+</div></div></main>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}{('<script src="https://accounts.google.com/gsi/client" async defer></script><script>window.G_ID="794037102761-cb6a8qinqp5n98ptggid81ep1ji2b0q9.apps.googleusercontent.com"</script>') if GOOGLE_LOGIN else ''}<script src="/js/members.js"></script>''' + footer(band=False, nl=False)
     return "/members/", page("/members/", "Members · Throiy Chess", "Log in to save your analysis reports and track your progress.", body)
 
 def improve_page():
