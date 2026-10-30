@@ -3,7 +3,8 @@
 import { Chess } from "/js/chess.js";
 
 const $ = (s, r = document) => r.querySelector(s);
-const MAX_FREE = 5, DEPTH = 14;
+const MAX_FREE = 5, MAX_PREMIUM = 25; let DEPTH = 14;
+const isPrem = () => window.__plan === 'premium', maxGames = () => (isPrem() ? MAX_PREMIUM : MAX_FREE);
 const VAL = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
 const NAMES = { p: "pawn", n: "knight", b: "bishop", r: "rook", q: "queen", k: "king" };
 const TRAPS = JSON.parse($("#trap-data").textContent);
@@ -179,18 +180,19 @@ $("#az-form").addEventListener("submit", async (e) => {
   state = { games: [], user, site }; const out = $("#az-games"); out.innerHTML = '<p class="small">Fetching games…</p>'; $("#az-report").innerHTML = "";
   try { const games = site === "lichess" ? await fetchLichess(user) : await fetchChesscom(user); state.games = games; state.ratings = {}; fetchRatings(site, user).then((r) => { state.ratings = r; }); ev("analyze-fetch-" + site);
     if (!games.length) { out.innerHTML = '<p class="small">No standard games found in the last months.</p>'; return; }
-    out.innerHTML = `<p>Pick up to <strong>${MAX_FREE} games</strong> to analyze. Tip: your losses teach the most.</p><div class="az-list">` +
+    out.innerHTML = `<p>Pick up to <strong>${maxGames()} games</strong> to analyze. Tip: your losses teach the most.</p>${isPrem() ? '<p class="small"><label>Depth: <select id="az-depth"><option value="14">Standard (depth 14, fast)</option><option value="18">Deep (depth 18, about 4x slower, finds more)</option></select></label></p>' : '<p class="small">&#128274; Want up to 25 games and deeper engine analysis? <a href="/members/#plan">See Premium</a>.</p>'}<div class="az-list">` +
       games.map((g, i) => { const w = g.white.toLowerCase() === user.toLowerCase(); const opp = w ? g.black : g.white;
         return `<label class="az-g"><input type="checkbox" value="${i}"><span class="res ${fmtRes(g, user).toLowerCase()}">${fmtRes(g, user)}</span>
           <span>${w ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${esc(g.tc || "")} · ${g.date.toLocaleDateString()}</span></label>`; }).join("") +
       `</div><button class="btn solid" id="az-go" type="button">Analyze selected games</button><p class="small" id="az-prog" role="status" aria-live="polite"></p>`;
-    out.addEventListener("change", (ev2) => { const sel = out.querySelectorAll("input:checked"); if (sel.length > MAX_FREE) { ev2.target.checked = false; } });
+    out.addEventListener("change", (ev2) => { const sel = out.querySelectorAll("input:checked"); if (sel.length > maxGames()) { ev2.target.checked = false; } });
     $("#az-go").addEventListener("click", run);
   } catch (err) { out.innerHTML = `<p class="small">${esc(err.message || "Could not fetch games.")}</p>`; }
 });
 
 async function run() {
   const idx = [...document.querySelectorAll("#az-games input:checked")].map((x) => +x.value); if (!idx.length) return;
+  { const dsel = $("#az-depth"); DEPTH = isPrem() && dsel ? +dsel.value || 14 : 14; }
   $("#az-go").disabled = true; const prog = $("#az-prog"); prog.textContent = "Loading the engine (7 MB, once)…"; ev("analyze-run");
   const results = [];
   for (let k = 0; k < idx.length; k++) {
@@ -213,7 +215,7 @@ async function saveReport() {
   const box = $("#az-save"); if (!box) return; const L = window.__azLast; const sbc = window.supabase ? (window.__sb = window.__sb || window.supabase.createClient("https://ytxrrmvszifvtdyilezn.supabase.co", "sb_publishable_nARSIxN5aKJghUK745Frdw_QbXhdf29", { auth: { persistSession: true, detectSessionInUrl: false } })) : null; if (!sbc) return;
   const { data } = await sbc.auth.getSession();
   if (!data.session) { box.innerHTML = `<p class="small">&#128190; <a href="/members/?utm_source=analyze">Log in</a> (free, no password) to save this report and track your progress over time.</p>`; return; }
-  const rep = { moments: SHOWN.map((m) => ({ n: m.moveNo, c: m.color, san: m.san, best: m.best, cat: m.cat, loss: Math.round(m.loss), fen: m.fen })) };
+  const rep = { depth: DEPTH, cats: L.cnt, moments: SHOWN.map((m) => ({ n: m.moveNo, c: m.color, san: m.san, best: m.best, cat: m.cat, loss: Math.round(m.loss), fen: m.fen })) };
   const { error } = await sbc.from("analyses").insert({ site: state.site, username: state.user.slice(0, 40), games: L.results.length, accuracy: +L.acc.toFixed(1), avg_loss: +(L.lossNow / 100).toFixed(3), blunders: L.nB, mistakes: L.nM, inaccuracies: L.nI,
     band: bandName(L.bNow), top_leak: L.order[0] ? P[L.order[0]].t : null, report: rep });
   box.innerHTML = error ? `<p class="small">${/limit/i.test(error.message || "") ? "You reached the limit of saved reports. Delete older ones on your members page." : "Could not save this report."}</p>` : `<p class="small">&#10003; Saved to your <a href="/members/#reports">reports</a>.</p>`; if (!error) { ev("analyze-report-saved"); window.dispatchEvent(new Event("az-saved")); }
@@ -276,8 +278,9 @@ function report(results) {
   h += `<div class="az-pro"><span class="eyebrow">Go deeper</span><h3>Want a more in-depth analysis?</h3><p>This report uses a light engine and 5 games. Join the improvement program: a stronger engine looking deeper, all your games, puzzles built from the patterns you miss (pattern recognition is what makes you faster), and your progress over time.</p><a class="btn solid" data-ev="analyze-cta-improve" href="/improve/?utm_source=analyze&amp;utm_campaign=improve">Join the waitlist</a></div>`;
   h += `<div class="az-cta"><h3>Keep improving</h3><p>This report is advice based on your own games. Next step: learn the 10 opening traps every beginner meets. Get the free cheat sheet, plus one trap a week in your inbox.</p><a class="btn solid" data-ev="analyze-cta-free" href="/free/?utm_source=analyze&amp;utm_campaign=analyze">Get the free cheat sheet</a><hr><h3>Learn one trap a day</h3><p>Under-a-minute lessons on traps, patterns and the mistakes we all make. Follow Throiy Chess:</p><div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
   { const sv = `<div class="az-save" id="az-save"></div>`; h = h.replace('<h2>Key moments</h2>', sv + '<h2>Key moments</h2>'); }
+  h += '<div id="az-fb"></div>'; if (DEPTH > 14) h += '<p class="small">Analyzed at depth ' + DEPTH + '. The rating-band guide is calibrated at depth 14, so treat that comparison as approximate.</p>';
   window.__azLast = { acc, lossNow, nB, nM, nI, bNow, order, cnt, results, SHOWN };
-  $("#az-report").innerHTML = h; saveReport(); $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
+  $("#az-report").innerHTML = h; saveReport(); try { if (window.tcFeedback) window.tcFeedback.inline($("#az-fb"), "analysis-report", "Was this report useful?", { games: results.length, depth: DEPTH, prem: isPrem() }); } catch (e) {} $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
 }
 
 if (/[?&]bench=1/.test(location.search)) window.__az = { analyseGame };

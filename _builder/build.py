@@ -272,7 +272,7 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             f'<meta name="twitter:card" content="summary_large_image">'
             f'<link rel="preload" href="/fonts/Inter-Black.woff" as="font" type="font/woff" crossorigin>'
             + ('<meta name="robots" content="noindex,nofollow">' if path == '/members/' else '')
-            + f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}</body></html>')
+            + f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}<script src="/js/fb.js" defer></script></body></html>')
 
 def promo_bar(active):
     if active == "Free": return ""

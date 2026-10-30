@@ -222,4 +222,4 @@ if(fm.nl_website&&fm.nl_website.value)return;var d=new FormData(fm);d.delete("nl
 fetch(fm.action,{method:"POST",body:d}).then(function(r){return r.json()}).then(function(j){if(j&&j.success){fm.querySelector("input[type=email]").value="";
 gcEv(fm.dataset.ev||"newsletter-signup");if(fm.dataset.msg){m.textContent=fm.dataset.msg;}else if(fm.dataset.dl){gcEv("cheatsheet-signup");m.innerHTML='You&#39;re in! <a class="btn solid" data-ev="cheatsheet-open" href="'+fm.dataset.dl+'" target="_blank" rel="noopener">Open the cheat sheet (PDF)</a>';}else{m.textContent="You're in! The next trap lands in your inbox.";}}else{m.textContent="That didn't work. Check the address and try again.";}})
 .catch(function(){gcEv("newsletter-signup-newtab");if(fm.dataset.dl){m.innerHTML='Almost there: confirm in the new tab, then <a data-ev="cheatsheet-open" href="'+fm.dataset.dl+'" target="_blank" rel="noopener">open the cheat sheet</a>.';}else{m.textContent="Opening the sign-up in a new tab…";}fm.submit();})});
-</script></body></html>
+</script><script src="/js/fb.js" defer></script></body></html>
