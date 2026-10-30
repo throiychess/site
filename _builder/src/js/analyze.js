@@ -200,6 +200,15 @@ document.addEventListener("click", (e0) => { const bt = e0.target.closest(".az-r
     if (!mv) { svg().outerHTML = orig; bt.disabled = false; return; }
     svg().outerHTML = boardSVG(c.fen(), mv.from, mv.to, m.r.side === "b"); box.querySelector(".az-rp").textContent = ` ${lab(i)}: ${mv.san}`; i++; setTimeout(step, 1300); };
   step(); });
+async function saveReport() {
+  const box = $("#az-save"); if (!box) return; const L = window.__azLast; const sbc = window.supabase ? (window.__sb = window.__sb || window.supabase.createClient("https://ytxrrmvszifvtdyilezn.supabase.co", "sb_publishable_nARSIxN5aKJghUK745Frdw_QbXhdf29", { auth: { persistSession: true, detectSessionInUrl: false } })) : null; if (!sbc) return;
+  const { data } = await sbc.auth.getSession();
+  if (!data.session) { box.innerHTML = `<p class="small">&#128190; <a href="/members/?utm_source=analyze">Log in</a> (free, no password) to save this report and track your progress over time.</p>`; return; }
+  const rep = { moments: SHOWN.map((m) => ({ n: m.moveNo, c: m.color, san: m.san, best: m.best, cat: m.cat, loss: Math.round(m.loss), fen: m.fen })) };
+  const { error } = await sbc.from("analyses").insert({ site: state.site, username: state.user.slice(0, 40), games: L.results.length, accuracy: +L.acc.toFixed(1), avg_loss: +(L.lossNow / 100).toFixed(3), blunders: L.nB, mistakes: L.nM, inaccuracies: L.nI,
+    band: bandName(L.bNow), top_leak: L.order[0] ? P[L.order[0]].t : null, report: rep });
+  box.innerHTML = error ? `<p class="small">Could not save this report.</p>` : `<p class="small">&#10003; Saved to your <a href="/members/">members page</a>.</p>`; if (!error) ev("analyze-report-saved");
+}
 function report(results) {
   const all = results.flatMap((r, ri) => r.moments.map((m) => ({ ...m, r, ri }))); const cnt = {}; for (const m of all) cnt[m.cat] = (cnt[m.cat] || 0) + 1;
   const order = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]); const max = Math.max(1, ...Object.values(cnt));
@@ -247,7 +256,9 @@ function report(results) {
     h += `<h3>3 top tips for you</h3><ol class="az-tips"><li>${t1}</li><li>${worst ? tips[worst] : "Analyze more games to see which phase costs you most."}</li><li>${tip3}</li></ol>`; }
   h += `<div class="az-pro"><span class="eyebrow">Go deeper</span><h3>Want a more in-depth analysis?</h3><p>This report uses a light engine and 5 games. Join the improvement program: a stronger engine looking deeper, all your games, your own mistakes as puzzles, and your progress over time.</p><a class="btn solid" data-ev="analyze-cta-improve" href="/improve/?utm_source=analyze&amp;utm_campaign=improve">Join the waitlist</a></div>`;
   h += `<div class="az-cta"><h3>Keep improving</h3><p>This report is advice based on your own games. Next step: learn the 10 opening traps every beginner meets. Get the free cheat sheet, plus one trap a week in your inbox.</p><a class="btn solid" data-ev="analyze-cta-free" href="/free/?utm_source=analyze&amp;utm_campaign=analyze">Get the free cheat sheet</a><hr><h3>Learn one trap a day</h3><p>Under-a-minute lessons on traps, patterns and the mistakes we all make. Follow Throiy Chess:</p><div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
-  $("#az-report").innerHTML = h; $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
+  { const sv = `<div class="az-save" id="az-save"></div>`; h = h.replace('<h2>Key moments</h2>', sv + '<h2>Key moments</h2>'); }
+  window.__azLast = { acc, lossNow, nB, nM, nI, bNow, order, cnt, results, SHOWN };
+  $("#az-report").innerHTML = h; saveReport(); $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
 }
 
 if (/[?&]bench=1/.test(location.search)) window.__az = { analyseGame };
