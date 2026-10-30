@@ -405,8 +405,8 @@ def home():
                   f'<h3>{e(n)}</h3><p>{e(h)}</p><span class="go">Watch the Short →</span></a>')
     latest = "".join(short_card(s) for s in SHORTS[:4])
     _top = [s for s in SHORTS if s.get("topic") == "Top game"]
-    top_cards = (f'<div class="sechead" style="margin-top:28px"><div><span class="eyebrow">Top games</span><h2>The best moments from elite chess.</h2></div></div>'
-                 f'<div class="shorts">{"".join(short_card(s) for s in _top[:8])}</div>') if _top else ""
+    top_cards = (f'<div class="sechead" style="margin-top:28px"><div><span class="eyebrow">Top games</span><h2>The best moments from elite chess.</h2></div><a class="btn" href="/shorts/">All Shorts →</a></div>'
+                 f'<div class="shorts">{"".join(short_card(s) for s in _top[:4])}</div>') if _top else ""
     body = header() + f'''<main>
 <div class="wrap hero"><div class="copy"><span class="eyebrow">Throiy Chess · Lessons &amp; Games</span>
 <h1>Stop falling for <em>chess traps.</em></h1>
