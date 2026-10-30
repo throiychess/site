@@ -644,16 +644,104 @@ def analyze_page():
 
 WAITLIST_URL = "https://assets.mailerlite.com/jsonp/2747354/forms/202754728493319697/subscribe"  # MailerLite form -> group "Improvement waitlist" (double opt-in)
 SB_SCRIPTS = '<script src="/js/vendor/supabase-2.117.3.js"></script>'
+MEM_CSS = """
+.mw{max-width:1120px}
+.mhero{padding:46px 0 10px}.mhero h1{font-size:clamp(36px,6vw,64px);line-height:1.02;margin:10px 0 14px}.mhero p{color:var(--mute);max-width:640px;font-size:19px;margin:0}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:30px 0}
+.mcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;position:relative}
+.mcard h3{margin:12px 0 6px;font-size:19px}.mcard p{margin:0;color:var(--mute);font-size:15.5px;line-height:1.5}
+.mico{width:40px;height:40px;border-radius:11px;background:#221d10;border:1px solid #3a3118;display:grid;place-items:center;color:var(--gold)}
+.mico svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mbadge{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mute)}
+.mbadge.free{color:#9fd5a5;border-color:#2c4a30}.mbadge.pro{color:var(--on-gold);background:var(--gold);border-color:var(--gold)}
+.mcard .mbadge{position:absolute;top:18px;right:18px}
+.mlogin{max-width:560px;margin:10px 0 60px}
+.mapp{display:grid;grid-template-columns:232px minmax(0,1fr);gap:34px;padding:30px 0 60px;align-items:start}
+.mnav{position:sticky;top:96px;display:flex;flex-direction:column;gap:4px}
+.mnav a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;text-decoration:none;color:var(--mute);font-weight:600;font-size:16px}
+.mnav a svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.mnav a:hover{color:var(--ink);background:var(--panel)}
+.mnav a[aria-current=page]{color:var(--gold);background:var(--panel2);box-shadow:inset 3px 0 0 var(--gold)}
+.mnav .mbadge{margin-left:auto;font-size:10px;padding:2px 7px}
+.mwho{margin:14px 0 0;padding:14px;border-top:1px solid var(--line);font-size:14px;color:var(--mute)}.mwho b{color:var(--ink);display:block;overflow:hidden;text-overflow:ellipsis}
+.mview h2{margin:0 0 6px;font-size:clamp(26px,4vw,36px)}.mview>.lead{color:var(--mute);margin:0 0 24px;max-width:620px}
+.mstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 22px}
+.mstat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}.mstat b{display:block;font-size:28px;line-height:1.1}.mstat span{font-size:13.5px;color:var(--mute)}
+.mpromo{background:linear-gradient(135deg,#e9c97f,#d8b25c);color:var(--on-gold);border-radius:18px;padding:24px;margin:0 0 22px}
+.mpromo h3{margin:0 0 6px;font-size:22px;color:var(--on-gold)}.mpromo p{margin:0 0 14px;color:#3b3118}.mpromo .btn{background:var(--on-gold);color:var(--gold);border-color:var(--on-gold)}
+.mnext{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin:0 0 22px}
+.mnext p{margin:0;color:var(--mute)}.mnext b{color:var(--ink)}
+.mcourse{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.mlock{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:13.5px;color:var(--mute)}
+.mlock svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
+.msteps{counter-reset:s;display:grid;gap:12px;margin:0 0 24px;padding:0;list-style:none}
+.msteps li{counter-increment:s;display:flex;gap:14px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+.msteps li::before{content:counter(s);flex:none;width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--on-gold);font-weight:800;display:grid;place-items:center}
+.mcmp{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:0 0 20px;background:var(--panel)}
+.mcmp th,.mcmp td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--line);font-size:15.5px}.mcmp tr:last-child td{border-bottom:0}
+.mcmp th{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);background:var(--panel2)}.mcmp th:last-child,.mcmp td:last-child{color:var(--gold)}
+.mcmp td:nth-child(n+2),.mcmp th:nth-child(n+2){text-align:center;width:22%}
+.mfoot{font-size:13.5px;color:var(--mute);margin-top:34px;border-top:1px solid var(--line);padding-top:16px}
+@media(max-width:860px){.mapp{grid-template-columns:1fr;gap:14px;padding-top:14px}.mnav{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:6px;scrollbar-width:none;margin:0 -16px;padding-inline:16px}
+.mnav::-webkit-scrollbar{display:none}.mnav a{white-space:nowrap;padding:9px 13px;background:var(--panel)}.mnav .mbadge,.mwho{display:none}.mcmp th,.mcmp td{padding:11px 9px;font-size:14px}}
+"""
+_ICO = {
+ "home": '<path d="M3 11l9-8 9 8M5 10v10h14V10"/>', "chart": '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+ "book": '<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2zM4 21V5M8 7h7"/>', "puzzle": '<path d="M9 3h5v3a2 2 0 104 0V3h3v6h-3a2 2 0 100 4h3v8H9v-3a2 2 0 10-4 0v3H3v-8h3a2 2 0 100-4H3V3z" transform="scale(.9) translate(1.3 1.3)"/>',
+ "star": '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>', "user": '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
+ "bolt": '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', "target": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12l7-7"/>', "lock": '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 118 0v3"/>',
+}
+def _ic(k): return f'<svg viewBox="0 0 24 24" aria-hidden="true">{_ICO[k]}</svg>'
+def _feat(k, t, d, tag): return f'<div class="mcard"><span class="mbadge {tag[0]}">{tag[1]}</span><div class="mico">{_ic(k)}</div><h3>{t}</h3><p>{d}</p></div>'
+_FREE, _PRO = ("free", "Free"), ("pro", "Premium")
+_FEATS = "".join([
+ _feat("chart", "Saved reports and progress", "Every analysis you run while logged in is kept. Watch your pawns lost per move go down over time.", _FREE),
+ _feat("target", "Know your level", "See which rating band your play matches and which habit holds you back most.", _FREE),
+ _feat("bolt", "Deeper analysis, any number of games", "A stronger engine looking deeper, across all your games instead of five.", _PRO),
+ _feat("puzzle", "Puzzles made from your mistakes", "Pattern recognition wins games. We build puzzles from the patterns you miss in your own games.", _PRO),
+ _feat("book", "Courses by rating band", "Clear lessons and exercises, ordered so you always know the next step. Like a coach in your pocket.", _PRO),
+ _feat("star", "First in line", "Waitlist members hear first and get their first in-depth analysis free.", _FREE),
+])
+_NAV = [("overview", "home", "Overview", ""), ("reports", "chart", "My reports", ""), ("training", "book", "Training", '<span class="mbadge">Soon</span>'),
+        ("puzzles", "puzzle", "Puzzles", '<span class="mbadge">Soon</span>'), ("plan", "star", "Premium", ""), ("profile", "user", "Profile", "")]
+_NAVH = "".join(f'<a href="#{k}" data-v="{k}">{_ic(i)}<span>{t}</span>{bd}</a>' for k, i, t, bd in _NAV)
+_COURSES = [("Stop hanging pieces", "The 3-second check before every move. Ends most blunders at every level.", "Foundations"),
+            ("Opening traps that win material", "Ten traps with the mistakes that trigger them. The free kit is the first taste.", "Foundations"),
+            ("Tactics patterns", "Forks, pins, skewers and discovered attacks, trained until you see them at once.", "Core"),
+            ("Think every move", "A simple routine for every move: check, capture, threat, then improve your worst piece.", "Core"),
+            ("Endgames you will meet", "The positions that decide real games, in the order you need them.", "Advanced"),
+            ("Convert a won position", "Turn an advantage into a win without giving it back.", "Advanced")]
+_COURSEH = "".join(f'<div class="mcard"><span class="mbadge pro">Premium</span><div class="mico">{_ic("book")}</div><h3>{t}</h3><p>{d}</p><div class="mlock">{_ic("lock")} {lv} &middot; opens with the program</div></div>' for t, d, lv in _COURSES)
+_CMP = "".join(f"<tr><td>{a}</td><td>{x}</td><td>{y}</td></tr>" for a, x, y in [
+  ("Free analyzer (5 games)", "&#10003;", "&#10003;"), ("Saved reports + progress chart", "&#10003;", "&#10003;"), ("10 Opening Traps kit", "&#10003;", "&#10003;"),
+  ("Any number of games", "&ndash;", "&#10003;"), ("Deeper engine analysis", "&ndash;", "&#10003;"), ("Puzzles from your own mistakes", "&ndash;", "&#10003;"), ("Courses by rating band", "&ndash;", "&#10003;")])
+
 def members_page():
-    body = header("Members") + f'''<style>{AZ_CSS}</style><main class="wrap" style="max-width:900px"><div class="pagehead"><span class="eyebrow">Members · free</span>
-<h1 class="page">Your Throiy Chess page</h1><p>Save your analysis reports and watch your pawns lost per move go down. No password: we e-mail you a login link.</p></div>
-<div id="m-login"><div class="newsletter" style="margin:0;grid-template-columns:1fr"><div><strong>Log in or create your free account</strong><p>Enter your e-mail address. We send a link; opening it confirms the address and logs you in.</p></div>
+    body = header("Members") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw">
+<div id="m-login"><div class="mhero"><span class="eyebrow">Members</span><h1>Fix what costs you games.</h1><p>Your own page with your reports, your progress and, soon, training built from your mistakes. Free to join, no password.</p></div>
+<div class="mgrid">{_FEATS}</div>
+<div class="newsletter mlogin" style="grid-template-columns:1fr"><div><strong>Log in or create your free account</strong><p>Enter your e-mail address. We send a link; opening it confirms the address and logs you in.</p></div>
 <form class="mform" id="m-form"><label class="sr" for="m-mail">E-mail address</label><input id="m-mail" type="email" placeholder="Your e-mail" autocomplete="email" required maxlength="200"><button class="btn solid" type="submit">Send me a login link</button><div id="m-hc" style="flex-basis:100%"></div><p class="small" id="m-msg" role="status" aria-live="polite" style="flex-basis:100%;margin:0"></p></form></div></div>
-<div id="m-app" hidden><p>Logged in as <b id="m-email"></b>. <button class="btn" type="button" id="m-out">Log out</button></p>
-<h2>Your saved reports</h2><div id="m-list"><p class="small">Loading…</p></div>
-<h2>Follow Throiy Chess</h2><div id="m-soc"></div><p class="small" id="m-socmsg"></p>
-<h2>Your profile</h2><form class="mform" id="m-prof"><label class="sr" for="m-name">Name</label><input id="m-name" placeholder="Name (optional)" maxlength="60"><label class="sr" for="m-cc">Chess.com username</label><input id="m-cc" placeholder="Chess.com username" maxlength="40"><label class="sr" for="m-li">Lichess username</label><input id="m-li" placeholder="Lichess username" maxlength="40"><button class="btn solid" type="submit">Save</button><span class="small" id="m-pmsg"></span></form>
-<p class="small" style="margin:30px 0 10px">Your data is stored in the EU and visible only to you and us. <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a></p><p style="margin:0 0 50px"><button class="btn" type="button" id="m-del">Delete my account and all my data</button> <span class="small" id="m-delmsg"></span></p></div></main>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}<script src="/js/members.js"></script>''' + footer(band=False, nl=False)
+<div id="m-app" class="mapp" hidden>
+<div><nav class="mnav" aria-label="Members">{_NAVH}<div class="mwho">Logged in as<b id="m-email"></b><button class="btn" type="button" id="m-out" style="margin-top:10px">Log out</button></div></nav></div>
+<div>
+<section class="mview" data-view="overview"><h2 id="m-hello">Welcome</h2><p class="lead">Your Throiy Chess home. Everything you saved and what to do next.</p>
+<div class="mstats" id="m-stats"></div><div class="mnext" id="m-next"></div>
+<div class="mpromo"><h3>The improvement program is coming</h3><p>Deeper analysis, puzzles made from your own mistakes and courses by rating band. Join the waitlist and get your first in-depth analysis free.</p><a class="btn" href="/improve/">Join the waitlist</a></div>
+<h3>Follow Throiy Chess</h3><div id="m-soc"></div><p class="small" id="m-socmsg"></p></section>
+<section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="/analyze/">Analyze new games</a></p></section>
+<section class="mview" data-view="training" hidden><h2>Training</h2><p class="lead">Courses by rating band, with exercises after every lesson. They open with the improvement program. Until then, start with the free kit.</p>
+<div class="mnext"><p><b>Free now:</b> the 10 Opening Traps, with a quiz made for your phone.</p><a class="btn solid" href="/traps/">Open the traps</a></div><div class="mcourse">{_COURSEH}</div></section>
+<section class="mview" data-view="puzzles" hidden><h2>Puzzles</h2><p class="lead">Pattern recognition is what makes you win. Your puzzles come from your own games, so you train exactly what you miss.</p>
+<ol class="msteps"><li><span><b>You analyze your games.</b><br><span class="small">The same free analyzer you use now.</span></span></li><li><span><b>We find the patterns you miss.</b><br><span class="small">Forks, pins, loose pieces: whatever cost you the most.</span></span></li><li><span><b>You train on puzzles built from them.</b><br><span class="small">Short sessions, a score and a streak.</span></span></li></ol>
+<div class="mpromo"><h3>Opens with the improvement program</h3><p>Join the waitlist and be first in.</p><a class="btn" href="/improve/">Join the waitlist</a></div></section>
+<section class="mview" data-view="plan" hidden><h2>Premium</h2><p class="lead">Free gets you the analyzer and your progress. Premium goes deeper and builds training around you.</p>
+<table class="mcmp"><thead><tr><th>What you get</th><th>Free</th><th>Premium</th></tr></thead><tbody>{_CMP}</tbody></table>
+<div class="mpromo"><h3>Premium opens soon</h3><p>Price and start date follow at launch. Waitlist members hear first and get their first in-depth analysis free.</p><a class="btn" href="/improve/">Join the waitlist</a></div></section>
+<section class="mview" data-view="profile" hidden><h2>Profile</h2><p class="lead">Add your usernames so the analyzer is one click away.</p>
+<form class="mform" id="m-prof"><label class="sr" for="m-name">Name</label><input id="m-name" placeholder="Name (optional)" maxlength="60"><label class="sr" for="m-cc">Chess.com username</label><input id="m-cc" placeholder="Chess.com username" maxlength="40"><label class="sr" for="m-li">Lichess username</label><input id="m-li" placeholder="Lichess username" maxlength="40"><button class="btn solid" type="submit">Save</button><span class="small" id="m-pmsg"></span></form>
+<div class="mfoot">Your data is stored in the EU and visible only to you and us. <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a><p style="margin:14px 0 0"><button class="btn" type="button" id="m-del">Delete my account and all my data</button> <span class="small" id="m-delmsg"></span></p></div></section>
+</div></div></main>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}<script src="/js/members.js"></script>''' + footer(band=False, nl=False)
     return "/members/", page("/members/", "Members · Throiy Chess", "Log in to save your analysis reports and track your progress.", body)
 
 def improve_page():

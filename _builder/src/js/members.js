@@ -8,10 +8,22 @@ let profile = null;
 
 async function render(session) {
   $("#m-login").hidden = !!session; $("#m-app").hidden = !session; if (!session) return;
-  $("#m-email").textContent = session.user.email;
+  $("#m-email").textContent = session.user.email; show();
   const { data: p } = await sb.from("profiles").select("*").eq("id", session.user.id).maybeSingle(); profile = p || { socials: {} };
   $("#m-name").value = profile.display_name || ""; $("#m-cc").value = profile.chesscom_username || ""; $("#m-li").value = profile.lichess_username || "";
+  $("#m-hello").textContent = profile.display_name ? "Welcome back, " + profile.display_name : "Welcome back";
   drawSocials(); await drawAnalyses();
+}
+const VIEWS = ["overview", "reports", "training", "puzzles", "plan", "profile"];
+function show() { const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "overview";
+  document.querySelectorAll(".mview").forEach((s) => { s.hidden = s.dataset.view !== v; });
+  document.querySelectorAll(".mnav a").forEach((a) => { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); }); }
+window.addEventListener("hashchange", show);
+function drawOverview(data) {
+  const n = data.length, last = data[0], first = data[n - 1];
+  const stat = (b, s) => `<div class="mstat"><b>${b}</b><span>${s}</span></div>`;
+  $("#m-stats").innerHTML = n ? stat(n, "saved report" + (n > 1 ? "s" : "")) + stat(Number(last.accuracy).toFixed(0) + "%", "accuracy, latest") + stat(Number(last.avg_loss).toFixed(2), "pawns lost per move" + (n > 1 ? " (" + (last.avg_loss - first.avg_loss <= 0 ? "" : "+") + (last.avg_loss - first.avg_loss).toFixed(2) + " since first)" : "")) + (last.band ? stat(esc(last.band), "your play looks like") : "") : stat("0", "saved reports yet");
+  $("#m-next").innerHTML = n ? `<p><b>Next step:</b> run a fresh report with your newest games and see if your pawns lost per move went down.</p><a class="btn solid" href="/analyze/">Analyze new games</a>` : `<p><b>Next step:</b> analyze your last 5 games. It takes a minute and your report is saved here.</p><a class="btn solid" href="/analyze/">Analyze my games</a>`;
 }
 function drawSocials() {
   const so = profile.socials || {}; const n = SOCIALS.filter(([k]) => so[k]).length;
@@ -20,6 +32,7 @@ function drawSocials() {
 }
 async function drawAnalyses() {
   const { data, error } = await sb.from("analyses").select("id,created_at,site,username,games,accuracy,avg_loss,band,top_leak").order("created_at", { ascending: false }).limit(30);
+  if (!error) drawOverview(data);
   const box = $("#m-list"); if (error) { box.innerHTML = `<p class="small">Could not load your analyses.</p>`; return; }
   if (!data.length) { box.innerHTML = `<p>No saved reports yet. <a href="/analyze/">Analyze your games</a> while you are logged in and your report is saved here.</p>`; return; }
   let trend = ""; if (data.length >= 2) { const d = (data[0].avg_loss - data[data.length - 1].avg_loss); trend = `<p class="az-what"><b>Pawns lost per move:</b> ${Number(data[data.length - 1].avg_loss).toFixed(2)} &rarr; ${Number(data[0].avg_loss).toFixed(2)} (${d <= 0 ? "" : "+"}${d.toFixed(2)} since your first saved report). Lower is better.</p>`; }
