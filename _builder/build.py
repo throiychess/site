@@ -237,12 +237,16 @@ form.contact{display:grid;gap:18px;max-width:620px}
 """
 e = html.escape
 
-def csp():
+TURNSTILE_SITEKEY = "0x4AAAAAAFso4wm5naB8oZGB"  # public Cloudflare Turnstile site key (secret lives in Supabase Auth > Attack Protection)
+
+def csp(path=""):
     conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else []) + (["https://assets.mailerlite.com"] if NEWSLETTER_URL else []) + ["https://api.chess.com", "https://lichess.org", "https://ytxrrmvszifvtdyilezn.supabase.co"] + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
     scr = ["'self'", "'unsafe-inline'"] + (["https://gc.zgo.at"] if ANALYTICS else []) + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
     img = "img-src 'self' data:" + (" https://tracker.metricool.com" if METRICOOL_HASH else "")
+    hc = path.startswith("/members") and TURNSTILE_SITEKEY
+    if hc: scr += ["https://challenges.cloudflare.com"]
     return (f"default-src 'self'; {img}; style-src 'self' 'unsafe-inline'; font-src 'self'; "
-            f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com https://ko-fi.com; "
+            f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com https://ko-fi.com{' https://challenges.cloudflare.com' if hc else ''}; "
             "form-action 'self' https://api.web3forms.com" + (" https://assets.mailerlite.com" if NEWSLETTER_URL else "") + "; base-uri 'self'; object-src 'none'")
 
 def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="website"):
@@ -257,7 +261,7 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
     elif path.startswith("/analyze"): gc = gc.split("<script>function loadScript")[0]  # keep GoatCounter only
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
-            f'<meta http-equiv="Content-Security-Policy" content="{csp()}"><meta name="referrer" content="strict-origin-when-cross-origin">'
+            f'<meta http-equiv="Content-Security-Policy" content="{csp(path)}"><meta name="referrer" content="strict-origin-when-cross-origin">'
             f'<title>{e(title)}</title><meta name="description" content="{e(desc)}"><link rel="canonical" href="{url}">'
             f'<link rel="icon" href="/img/favicon.png"><link rel="apple-touch-icon" href="/img/logo-small.png"><meta name="theme-color" content="#0e0d0b">'
             f'<meta property="og:site_name" content="{NAME}"><meta property="og:type" content="{ogtype}"><meta property="og:title" content="{e(title)}">'
@@ -644,12 +648,12 @@ def members_page():
     body = header("Members") + f'''<style>{AZ_CSS}</style><main class="wrap" style="max-width:900px"><div class="pagehead"><span class="eyebrow">Members · free</span>
 <h1 class="page">Your Throiy Chess page</h1><p>Save your analysis reports and watch your pawns lost per move go down. No password: we e-mail you a login link.</p></div>
 <div id="m-login"><div class="newsletter" style="margin:0;grid-template-columns:1fr"><div><strong>Log in or create your free account</strong><p>Enter your e-mail address. We send a link; opening it confirms the address and logs you in.</p></div>
-<form class="mform" id="m-form"><label class="sr" for="m-mail">E-mail address</label><input id="m-mail" type="email" placeholder="Your e-mail" autocomplete="email" required maxlength="200"><button class="btn solid" type="submit">Send me a login link</button><p class="small" id="m-msg" role="status" aria-live="polite" style="flex-basis:100%;margin:0"></p></form></div></div>
+<form class="mform" id="m-form"><label class="sr" for="m-mail">E-mail address</label><input id="m-mail" type="email" placeholder="Your e-mail" autocomplete="email" required maxlength="200"><button class="btn solid" type="submit">Send me a login link</button><div id="m-hc" style="flex-basis:100%"></div><p class="small" id="m-msg" role="status" aria-live="polite" style="flex-basis:100%;margin:0"></p></form></div></div>
 <div id="m-app" hidden><p>Logged in as <b id="m-email"></b>. <button class="btn" type="button" id="m-out">Log out</button></p>
 <h2>Your saved reports</h2><div id="m-list"><p class="small">Loading…</p></div>
 <h2>Follow Throiy Chess</h2><div id="m-soc"></div><p class="small" id="m-socmsg"></p>
 <h2>Your profile</h2><form class="mform" id="m-prof"><label class="sr" for="m-name">Name</label><input id="m-name" placeholder="Name (optional)" maxlength="60"><label class="sr" for="m-cc">Chess.com username</label><input id="m-cc" placeholder="Chess.com username" maxlength="40"><label class="sr" for="m-li">Lichess username</label><input id="m-li" placeholder="Lichess username" maxlength="40"><button class="btn solid" type="submit">Save</button><span class="small" id="m-pmsg"></span></form>
-<p class="small" style="margin:30px 0 10px">Your data is stored in the EU and visible only to you and us. <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a></p><p style="margin:0 0 50px"><button class="btn" type="button" id="m-del">Delete my account and all my data</button> <span class="small" id="m-delmsg"></span></p></div></main>{SB_SCRIPTS}<script src="/js/members.js"></script>''' + footer(band=False, nl=False)
+<p class="small" style="margin:30px 0 10px">Your data is stored in the EU and visible only to you and us. <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a></p><p style="margin:0 0 50px"><button class="btn" type="button" id="m-del">Delete my account and all my data</button> <span class="small" id="m-delmsg"></span></p></div></main>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}<script src="/js/members.js"></script>''' + footer(band=False, nl=False)
     return "/members/", page("/members/", "Members · Throiy Chess", "Log in to save your analysis reports and track your progress.", body)
 
 def improve_page():
