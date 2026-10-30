@@ -647,7 +647,7 @@ SB_SCRIPTS = '<script src="/js/vendor/supabase-2.117.3.js"></script>'
 MEM_CSS = """
 .mw{max-width:1120px}
 .mhero{padding:46px 0 10px}.mhero h1{font-size:clamp(36px,6vw,64px);line-height:1.02;margin:10px 0 14px}.mhero p{color:var(--mute);max-width:640px;font-size:19px;margin:0}
-.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:30px 0}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin:30px 0}
 .mcard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 20px 18px;position:relative}
 .mcard h3{margin:12px 0 6px;font-size:19px}.mcard p{margin:0;color:var(--mute);font-size:15.5px;line-height:1.5}
 .mico{width:40px;height:40px;border-radius:11px;background:#221d10;border:1px solid #3a3118;display:grid;place-items:center;color:var(--gold)}
@@ -657,6 +657,7 @@ MEM_CSS = """
 .mcard .mbadge{position:absolute;top:18px;right:18px}
 .mlogin{max-width:560px;margin:10px 0 60px}
 .mapp{display:grid;grid-template-columns:232px minmax(0,1fr);gap:34px;padding:30px 0 60px;align-items:start}
+.mapp[hidden]{display:none}.mapp>div{min-width:0}.mview h2{border:0;padding:0;margin-top:0}
 .mnav{position:sticky;top:96px;display:flex;flex-direction:column;gap:4px}
 .mnav a{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;text-decoration:none;color:var(--mute);font-weight:600;font-size:16px}
 .mnav a svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
