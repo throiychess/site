@@ -73,7 +73,7 @@
     "slug": "attack-weak-misplaced-pieces-at-once",
     "title": "Attack weak, misplaced pieces at once",
     "text": "Spot an opponent's misplaced piece, such as a knight on c6 played too early, and put maximum pressure on it with active pieces, for example a bishop on b5 and a queen on a4.",
-    "note": "Checked: sound. Check that the attack does not leave your own pieces loose. Another lesson: look for undefended squares and trap or force a defence with a knight or pawn thrust against a vulnerable knight or cut-off piece."
+    "note": "Checked: sound. Check that the attack does not leave your own pieces loose. Another lesson: look for undefended squares and trap or force a defence with a knight or pawn thrust against a vulnerable knight or cut-off piece. Also covers: when the opponent brings a queen or knight to the centre too early, upset it at once by attacking it with minor pieces or pawns. They lose tempi relocating it. Softened: make sure your attacking move also develops you, or you lose the tempo battle yourself."
    },
    {
     "slug": "win-back-the-sacrificed-pawn",
@@ -123,6 +123,12 @@
     "title": "Trade only when it gains something",
     "text": "Do not make pointless trades in the centre or the opening. If a trade gives you nothing tangible but helps the opponent develop their pieces (such as a queen or knight) with tempo, avoid it. Every trade needs a tactical or positional purpose.",
     "note": "Checked. Softened: a trade is fine when it removes a strong enemy piece or fixes a structure in your favour. Also covers: never trade pawns or pieces automatically. Ask: \"Does this help my opponent build a strong pawn chain or develop for free?\""
+   },
+   {
+    "slug": "choose-the-active-square-over-the-default-routine",
+    "title": "Choose the active square over the default routine",
+    "text": "Do not follow standard patterns blindly (such as automatically fianchettoing on g2). Put a piece on the square where it creates specific danger and controls key diagonals or pins, even if it looks unusual at first sight (for example Bd3 or Be2 instead of Bg2).",
+    "note": "Checked. Softened: the standard squares are standard for a reason, so the exception needs a concrete reason in the position."
    }
   ]
  },
@@ -641,6 +647,12 @@
     "title": "Play greedy: keep the material balance sharp",
     "text": "Keep the material balance clearly in your head. Every pawn won or lost steers your strategic choices, because it is very hard to come back from a bad position without a blunder from your opponent.",
     "note": "Checked: at club level material matters a lot. Balance it with the poisoned-pawn check: not every free pawn is free."
+   },
+   {
+    "slug": "use-advanced-pawns-as-wedges",
+    "title": "Use advanced pawns as wedges",
+    "text": "Do not shy away from pushing central pawns far into the opponent's half, even if it seems to expose your king. An advanced pawn cramps enemy pieces and creates constant threats. Use passed and advanced pawns as wedges to break the opponent's position from the inside.",
+    "note": "Softened: an advanced pawn needs support, or it becomes a target. Calculate the risks to your own king before you push."
    }
   ]
  },
