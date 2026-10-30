@@ -687,7 +687,7 @@
     "slug": "open-lines-by-trading-pawns",
     "title": "Open lines by trading pawns",
     "text": "A pawn storm aims to open lines for your rooks and queen by trading pawns. Removing the pawns around the enemy king exposes the defence and makes quick mating patterns possible.",
-    "note": "Checked: correct."
+    "note": "Checked: correct. Also covers: an attack stalls in a closed position. To make it succeed, open the position, preferably with a controlled pawn break, otherwise with a strong sacrifice, once your pieces are ready to enter."
    },
    {
     "slug": "prepare-the-pawn-storm",
@@ -772,6 +772,30 @@
     "title": "Trade off the key attackers",
     "text": "When the opponent builds pressure with only a few active pieces, the quickest road to safety is to trade exactly those pieces. Once the attackers are gone, the attack collapses and you can take over the initiative.",
     "note": "Checked. Make sure the trade does not open a file or diagonal for their remaining pieces."
+   },
+   {
+    "slug": "plant-a-piece-deep-in-the-enemy-camp",
+    "title": "Plant a piece deep in the enemy camp",
+    "text": "Like dumping the puck into the opponent's zone in ice hockey, planting a piece (such as a knight) deep in the enemy camp can unleash unforeseen tactical chances and threats. Look for outposts where you can place or sacrifice a piece to disrupt the opponent's defence at once.",
+    "note": "Softened: the planted piece must be hard to dislodge or must win something concrete. Otherwise it is simply lost material."
+   },
+   {
+    "slug": "in-an-attack-time-can-be-worth-more-than-material",
+    "title": "In an attack, time can be worth more than material",
+    "text": "The aim of a sacrifice is often not direct mate but time: slowing the opponent's development and locking their position in passivity. Accept a material sacrifice when it forces the opponent to spend tempi on defence instead of development.",
+    "note": "Checked. Calculate concretely: time is only worth it if you can keep the initiative until the pressure pays off."
+   },
+   {
+    "slug": "count-the-pieces-in-the-fight-not-on-the-board",
+    "title": "Count the pieces in the fight, not on the board",
+    "text": "Do not worry about lost pawns or pieces if the pieces that remain are passive spectators. If you concentrate all your active forces on one wing, you win the numbers there. Judge a position by how many active pieces take part, not only by the material balance.",
+    "note": "Checked. Softened: material still counts in the long run, especially if the opponent can bring their pieces back in time."
+   },
+   {
+    "slug": "launch-a-massive-attack-only-when-you-outnumber-the-defenders",
+    "title": "Launch a massive attack only when you outnumber the defenders",
+    "text": "Start a large attack not because you feel like it, but when you can show that you have more attackers than they have defenders near the king. Build up methodically, then open the position.",
+    "note": "Checked. The counterpart of: do not respect an unsupported attack."
    }
   ]
  },
