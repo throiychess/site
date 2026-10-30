@@ -496,6 +496,7 @@ def home():
 <p>Every trap ends with the mate. Every lesson ends with how to avoid it. Step through the moves on the board.</p></div>
 <a class="btn" href="/traps/">All {len(TRAPS)} traps →</a></div>
 <div class="grid">{cards}</div></div></section>
+<section id="members-band"><div class="wrap"><div class="newsletter" style="margin:0;border-color:#4a3d1c"><div><span class="eyebrow">Members</span><h2 style="margin:6px 0 8px">Fix what costs you games.</h2><p>Analyze your own games for free, save every report and watch your progress. Premium adds deeper analysis and puzzles built from your own mistakes.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end"><a class="btn solid" href="/members/?utm_source=home" data-ev="home-members">Join free</a><a class="btn" href="/improve/">See Free vs Premium</a></div></div></div></section>
 <section id="top-games"><div class="wrap"><div class="breaking"><span class="live">Top games</span><div><h3>Clutch Chess: Champions Showdown · 27–29 October</h3>
 <p>Nakamura, Caruana, Praggnanandhaa and Sindarov play rapid chess. We break down the sharpest moment of each day in a Short.</p></div></div>{top_cards}</div></section>
 <section id="about"><div class="wrap about"><img src="/img/avatar-thumbs_up.png" width="220" height="220" alt="Throiy, illustrated, giving a thumbs up">
@@ -716,6 +717,7 @@ MEM_CSS = """
 .mbadge{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mute)}
 .mbadge.free{color:#9fd5a5;border-color:#2c4a30}.mbadge.pro{color:var(--on-gold);background:var(--gold);border-color:var(--gold)}
 .mcard .mbadge{position:absolute;top:18px;right:18px}
+.mtbl .m-row{align-items:center}.mspark{width:90px;height:24px}.mspark polyline{fill:none;stroke:var(--gold,#e3c073);stroke-width:2}.mplan{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin:10px 0;cursor:pointer}.mplan input{margin-top:5px;width:20px;height:20px;flex:none}.mpz{max-width:460px;margin:12px 0}.mpz svg{width:100%;height:auto;display:block}
 .mlogin{margin:26px 0 8px!important;display:grid!important;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)!important;gap:14px 40px;align-items:center}.mlogin .mlr{min-width:0}.mlogin .mform{flex-wrap:wrap;gap:10px}.mlogin .mform input{flex:1;min-width:0}.mlogin .mform .btn{white-space:nowrap}.mlogin .mdiv{margin:12px 0}
 @media(max-width:820px){.mlogin{grid-template-columns:minmax(0,1fr)!important}.mlogin .mform{flex-wrap:wrap}}
 .mlogin{padding:28px!important}.mgbtn[hidden]{display:none}.mdiv{display:flex;align-items:center;gap:12px;margin:18px 0 14px;color:#5b4a1d;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em}.mdiv::before,.mdiv::after{content:"";flex:1;height:1px;background:rgba(20,17,11,.28)}.mlogin .mform{max-width:none}
@@ -803,7 +805,7 @@ def members_page():
 <div><nav class="mnav" aria-label="Members">{_NAVH}<div class="mwho"><span class="mava" id="m-ava">&#9823;&#xFE0E;</span><span class="small">Logged in as</span><b id="m-email"></b><button class="btn" type="button" id="m-out" style="margin-top:10px">Log out</button></div></nav></div>
 <div>
 <section class="mview" data-view="overview"><h2 id="m-hello">Welcome</h2><p class="lead">Your Throiy Chess home. Everything you saved and what to do next.</p>
-<div class="mstats" id="m-stats"></div><div class="mnext" id="m-next"></div>
+<div class="mstats" id="m-stats"></div><div class="mnext" id="m-next"></div><div class="mcard" id="m-goal" style="margin-top:16px"></div>
 <div class="mpromo"><h3>The improvement program is coming</h3><p>Deeper analysis, puzzles made from your own mistakes and courses by rating band. Join the waitlist and get your first in-depth analysis free.</p><a class="btn" href="/improve/">Join the waitlist</a></div>
 </section>
 <section class="mview" data-view="analyze" hidden><h2>Analyze games</h2><p class="lead">Standard analysis: pick a site and username, choose up to 5 games. Your report is saved here automatically.</p>
@@ -812,12 +814,12 @@ def members_page():
 <label class="sr" for="az-user">Username</label><input id="az-user" placeholder="Username" autocomplete="off" required><button class="btn solid" type="submit">Find games</button></form>
 <div id="az-games"></div><div id="az-report"></div>
 <p class="small" style="margin:24px 0 10px">The analysis runs in your own browser with Stockfish 17.1. Games are loaded from the public Chess.com and Lichess APIs.</p></section>
-<section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-charts"></div><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="#analyze">Analyze new games</a></p></section>
+<section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-charts"></div><div id="m-ins"></div><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="#analyze">Analyze new games</a></p></section>
 <section class="mview" data-view="training" hidden><h2>Training</h2><p class="lead">Courses by rating band, with exercises after every lesson. They open with the improvement program. Until then, start with the free kit.</p>
-<div class="mnext"><p><b>Free now:</b> the 10 Opening Traps, with a quiz made for your phone.</p><a class="btn solid" href="/traps/">Open the traps</a></div><div class="mcourse">{_COURSEH}</div></section>
+<div class="mnext"><p><b>Free now:</b> the 10 Opening Traps, with a quiz made for your phone.</p><a class="btn solid" href="/traps/">Open the traps</a></div><div id="m-plan" style="margin-top:20px"></div><div class="mcourse">{_COURSEH}</div></section>
 <section class="mview" data-view="puzzles" hidden><h2>Puzzles</h2><p class="lead">Pattern recognition is what makes you win. Your puzzles come from your own games, so you train exactly what you miss.</p>
-<ol class="msteps"><li><span><b>You analyze your games.</b><br><span class="small">The same free analyzer you use now.</span></span></li><li><span><b>We find the patterns you miss.</b><br><span class="small">Forks, pins, loose pieces: whatever cost you the most.</span></span></li><li><span><b>You train on puzzles built from them.</b><br><span class="small">Short sessions, a score and a streak.</span></span></li></ol>
-<div class="mpromo"><h3>Opens with the improvement program</h3><p>Join the waitlist and be first in.</p><a class="btn" href="/improve/">Join the waitlist</a></div></section>
+<div id="m-puz"></div><div id="m-puz-static"><ol class="msteps"><li><span><b>You analyze your games.</b><br><span class="small">The same free analyzer you use now.</span></span></li><li><span><b>We find the patterns you miss.</b><br><span class="small">Forks, pins, loose pieces: whatever cost you the most.</span></span></li><li><span><b>You train on puzzles built from them.</b><br><span class="small">Short sessions, a score and a streak.</span></span></li></ol>
+</div></section>
 <section class="mview" data-view="earn" hidden><h2>Share &amp; earn</h2><p class="lead">Collect points, keep your streak and unlock badges. Rewards grow as the program grows.</p>
 <div class="mtwo"><div class="mcard" id="m-level"></div><div class="mcard" id="m-streak"></div></div>
 <h3>Your avatar</h3><div class="mavs" id="m-av"></div>
@@ -831,7 +833,7 @@ def members_page():
 <section class="mview" data-view="profile" hidden><h2>Profile</h2><p class="lead">Add your usernames so the analyzer is one click away.</p>
 <form class="mform" id="m-prof"><label class="sr" for="m-name">Name</label><input id="m-name" placeholder="Name (optional)" maxlength="60"><label class="sr" for="m-cc">Chess.com username</label><input id="m-cc" placeholder="Chess.com username" maxlength="40"><label class="sr" for="m-li">Lichess username</label><input id="m-li" placeholder="Lichess username" maxlength="40"><button class="btn solid" type="submit">Save</button><span class="small" id="m-pmsg"></span></form>
 <div class="mfoot">Your data is stored in the EU and visible only to you and us. <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a><p style="margin:14px 0 0"><button class="btn" type="button" id="m-del">Delete my account and all my data</button> <span class="small" id="m-delmsg"></span></p></div></section>
-</div></div></main>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}{('<script src="https://accounts.google.com/gsi/client" async defer></script><script>window.G_ID="794037102761-cb6a8qinqp5n98ptggid81ep1ji2b0q9.apps.googleusercontent.com"</script>') if GOOGLE_LOGIN else ''}<script type="application/json" id="trap-data">{json.dumps(_tdata())}</script><script src="/js/members.js"></script><script type="module" src="/js/analyze.js"></script>''' + footer(band=False, nl=False)
+</div></div></main>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}{('<script src="https://accounts.google.com/gsi/client" async defer></script><script>window.G_ID="794037102761-cb6a8qinqp5n98ptggid81ep1ji2b0q9.apps.googleusercontent.com"</script>') if GOOGLE_LOGIN else ''}<script type="application/json" id="trap-data">{json.dumps(_tdata())}</script><script src="/js/members.js"></script><script src="/js/premium.js" defer></script><script type="module" src="/js/analyze.js"></script>''' + footer(band=False, nl=False)
     return "/members/", page("/members/", "Members · Throiy Chess", "Log in to save your analysis reports and track your progress.", body)
 
 def improve_page():
