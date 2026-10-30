@@ -301,7 +301,7 @@
     "slug": "improve-with-a-purpose",
     "title": "Improve with a purpose",
     "text": "When you reposition a piece such as your queen, prefer an active square that attacks a target (an undefended piece or a pawn) over a passive retreat.",
-    "note": "Checked: sound. Do not leave a piece hanging for the sake of an active square."
+    "note": "Checked: sound. Do not leave a piece hanging for the sake of an active square. Also covers: improve all your pieces to their best squares, even with quiet waiting moves, before you start risky actions. Do not attack early or force complications while you have a weakness in your own position. Patient improvement reduces blunders and builds pressure."
    },
    {
     "slug": "attack-the-backward-pawn",
@@ -380,6 +380,24 @@
     "title": "Target weak pawns before risky king attacks",
     "text": "Instead of a reckless king attack, put steady pressure on the opponent's weak pawns with your pieces and rooks. This builds your advantage gradually without needless risk.",
     "note": "Softened: not either-or. A well-prepared king attack is fine; this is the lower-risk default."
+   },
+   {
+    "slug": "use-the-centre-to-restrict-your-opponent",
+    "title": "Use the centre to restrict your opponent",
+    "text": "A strong presence in the centre, for example a knight on an outpost, takes away the room your opponent's bishops, knights and rooks need to move. Centre control is not only for your own development, but also to limit theirs.",
+    "note": "Checked."
+   },
+   {
+    "slug": "avoid-trades-when-you-have-a-space-advantage",
+    "title": "Avoid trades when you have a space advantage",
+    "text": "When you have more space or hold the opponent in a bind, avoid needless trades: trades give the cramped side air and open lines for counterplay. Trade only if you get something out of it.",
+    "note": "Contrast with: trade pieces when ahead in material. The difference is the type of advantage: with material up, simplify; with a space bind, keep pieces on."
+   },
+   {
+    "slug": "use-space-to-switch-your-heavy-pieces-quickly",
+    "title": "Use space to switch your heavy pieces quickly",
+    "text": "With more space you can move your rooks and queen easily from one wing to the other, while the opponent is stuck for room. Use that space as a transport route to concentrate on their weak spots.",
+    "note": "Checked."
    }
   ]
  },
