@@ -218,6 +218,53 @@
   ]
  },
  {
+  "group": "Sicilian Defence",
+  "items": [
+   {
+    "slug": "choose-the-sicilian-defence-for-a-dynamic-position",
+    "title": "Choose the Sicilian Defence for a dynamic position",
+    "text": "With 1...c5 Black fights for the centre indirectly, stops White from setting up two central pawns side by side, and creates an asymmetric, aggressive game.",
+    "note": "Checked: that is the idea of the Sicilian. The main lines are full of theory, so it suits players who enjoy learning it."
+   },
+   {
+    "slug": "play-the-flexible-e6-against-side-lines",
+    "title": "Play the flexible ...e6 against side lines",
+    "text": "Against early side lines such as Bc4, ...e6 is a very solid, low-theory set-up for Black.",
+    "note": "Softened: low-theory against sidelines. In the main Open Sicilian there is a lot of theory."
+   },
+   {
+    "slug": "hit-the-centre-with-d5-when-white-is-inaccurate",
+    "title": "Hit the centre with ...d5 when White is inaccurate",
+    "text": "When White plays suboptimal bishop or pawn moves, answer at once with ...d5 to open the centre and chase the enemy bishop.",
+    "note": "Checked: a standard reaction, as long as your pieces are developed enough to support it."
+   },
+   {
+    "slug": "develop-by-the-basic-principles-even-in-a-sharp-opening",
+    "title": "Develop by the basic principles, even in a sharp opening",
+    "text": "Even in a sharp opening like the Sicilian the fundamentals apply: develop your minor pieces, control the centre and get your king safe in time (often with short castling).",
+    "note": "Checked: standard."
+   },
+   {
+    "slug": "use-the-half-open-c-file-and-the-queen-on-c7",
+    "title": "Use the half-open c-file and the queen on c7",
+    "text": "In the Open Sicilian (d4) it is thematic to place the queen on c7, where knights cannot attack it, and put pressure on the c-file with your rooks and pawns (...a6, ...b5).",
+    "note": "Checked: typical for several Sicilian set-ups."
+   },
+   {
+    "slug": "neutralize-early-queen-attacks-with-simplicity",
+    "title": "Neutralize early queen attacks with simplicity",
+    "text": "Early queen tricks against the Sicilian (such as Qh5 or Qf3) are easily parried with ...e6. The exposed queen can then lose time to your developing knights.",
+    "note": "Checked: ...e6 is the standard calm answer. These tricks are rare, but good to know."
+   },
+   {
+    "slug": "be-careful-with-an-early-e5-in-the-sicilian",
+    "title": "Be careful with an early ...e5 in the Sicilian",
+    "text": "In the early opening ...e5 leaves a hole on d5 that White's pieces control. Check before you play it.",
+    "note": "Corrected: \"almost never\" was too strong. Some lines (such as the Sveshnikov and Kalashnikov) accept the d5 hole on purpose in return for activity."
+   }
+  ]
+ },
+ {
   "group": "Middlegame plan",
   "items": [
    {
@@ -676,7 +723,7 @@
     "slug": "doubled-isolated-pawns-are-a-target",
     "title": "Doubled isolated pawns are a target",
     "text": "Aim for positions where the opponent gets doubled, isolated pawns. They are hard to defend and easy to attack in the endgame.",
-    "note": "Checked and aligned with the doubled-pawn principle above: it is the isolation and blocking that make them weak. You can also trade at the right moment to give your opponent doubled pawns, which are permanent targets."
+    "note": "Checked and aligned with the doubled-pawn principle above: it is the isolation and blocking that make them weak. You can also trade at the right moment to give your opponent doubled pawns, which are permanent targets. The other side of it: do not be scared of doubled pawns of your own. In open positions they can strengthen your control of the centre and compensate for the loss of a bishop."
    },
    {
     "slug": "shelter-your-king-from-checks",
