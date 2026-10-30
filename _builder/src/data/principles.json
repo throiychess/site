@@ -343,7 +343,7 @@
     "slug": "activate-a-passive-piece-in-time",
     "title": "Activate a passive piece in time",
     "text": "If one of your pieces, such as a rook, has stood passively on the back rank through the whole middlegame, look for a moment to activate it for a break or to pressure the enemy weaknesses.",
-    "note": "Checked: this is the \"improve your worst piece\" idea for the rook. See also: the least active piece principle."
+    "note": "Checked: this is the \"improve your worst piece\" idea for the rook. See also: the least active piece principle. Also covers: keep all pieces active, scan regularly for a sleeping piece and move it to an open file or a better post first."
    },
    {
     "slug": "create-a-weak-pawn-in-the-enemy-camp",
@@ -408,7 +408,7 @@
     "slug": "deal-with-infiltrators-on-your-half",
     "title": "Deal with infiltrators on your half",
     "text": "Do not leave enemy pieces on your side of the board alone. Trade or chase them early, otherwise they become the base for dangerous combinations against your king.",
-    "note": "Softened: act on it quickly, but only when trading or chasing does not cost you more."
+    "note": "Softened: act on it quickly, but only when trading or chasing does not cost you more. Also covers: do not tolerate enemy outposts on your own half (first four ranks). Trade them off or drive them away before they become a nuisance. Softened: sometimes a trade costs you more than the outpost does, so check first."
    },
    {
     "slug": "back-rank-safety",
@@ -551,7 +551,7 @@
     "slug": "force-reactions-with-early-threats",
     "title": "Force reactions with early threats",
     "text": "Play so your opponent has to answer your threats all the time. Then he has no time for his own plans.",
-    "note": "Checked: keeping the initiative works, as long as your threats are real."
+    "note": "Checked: keeping the initiative works, as long as your threats are real. Also covers: look for moves on the opponent's half that create a direct threat (a check, an annoying pin), so they must react and lose time. Softened: only when the move is sound; a check just to give a check can waste your own tempo."
    },
    {
     "slug": "avoid-hope-chess",
@@ -791,6 +791,12 @@
     "title": "Convert with an outside passed pawn",
     "text": "With extra pawns in a late middlegame, trade in a controlled way, create a distant (outside) passed pawn and force your opponent onto the defensive.",
     "note": "Checked: an outside passed pawn pulls the enemy king away and is a classic winning method."
+   },
+   {
+    "slug": "attack-the-opponent-s-pawns-in-the-endgame",
+    "title": "Attack the opponent's pawns in the endgame",
+    "text": "In the endgame there is usually too little attacking material left to mate. Pawns cannot run away, so make the weak or isolated pawns of the opponent the target of your rooks and king.",
+    "note": "Checked. Softened: \"too little to mate\" holds mostly in minor-piece and rook endings; with queens on, king safety still matters."
    }
   ]
  },
