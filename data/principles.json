@@ -271,6 +271,41 @@
   ]
  },
  {
+  "group": "Answering the early bishop pin",
+  "items": [
+   {
+    "slug": "answer-an-early-bishop-pin-with-h6",
+    "title": "Answer an early bishop pin with ...h6",
+    "text": "When a bishop pins your knight on f6 (or f3) early with Bg5 (or Bg4), ask the question at once with ...h6. If the bishop stays on the pin, you can break it with ...g5.",
+    "note": "Checked: standard. Softened: ...g5 weakens your own king, so play it only if the centre is stable and the tactics work (see the centre principle below)."
+   },
+   {
+    "slug": "do-not-just-endure-a-pin-make-the-bishop-decide",
+    "title": "Do not just endure a pin: make the bishop decide",
+    "text": "Do not passively put up with a pin. Force the bishop to declare itself, or surround it with your wing pawns.",
+    "note": "Checked."
+   },
+   {
+    "slug": "lock-the-bishop-in-and-switch-to-the-other-wing",
+    "title": "Lock the bishop in and switch to the other wing",
+    "text": "If after ...g5 the bishop is driven back to a passive corner such as g3, where your pawns and its own pawns block it, it is out of play. Block that side and move the initiative to the other wing, where you have more pieces.",
+    "note": "Softened: \"playing with an extra piece\" is a figure of speech. A buried bishop is a big positional asset, not a material one. Check that it cannot break out with a pawn move."
+   },
+   {
+    "slug": "strengthen-the-centre-before-the-flank-can-exploit-the-pin",
+    "title": "Strengthen the centre before the flank can exploit the pin",
+    "text": "Before the opponent profits on the wing from the pin, strengthen the centre with flexible moves such as ...c5 or ...e5, so they have no counterplay there. Centre control neutralizes a flank attack on a pinned piece.",
+    "note": "Checked."
+   },
+   {
+    "slug": "reposition-a-knight-to-chase-the-bishop-nf1-e3",
+    "title": "Reposition a knight to chase the bishop (Nf1-e3)",
+    "text": "If the opponent keeps the bishop and you want to increase the pressure, use a classic knight route (such as via f1 to e3) to chase it away actively and regroup harmoniously, without weakening your pawn structure.",
+    "note": "Checked: context-dependent, it works when e3 is not under attack by a pawn."
+   }
+  ]
+ },
+ {
   "group": "Middlegame plan",
   "items": [
    {
