@@ -151,7 +151,7 @@ nav.links a.support{color:var(--gold)}
 .kofi{width:100%;max-width:460px;height:712px;border:0;background:#f9f9f9;display:block}
 .newsletter{display:grid;grid-template-columns:1fr 1fr;gap:18px 32px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:40px 0 0}
 .newsletter p{margin:6px 0 0;color:var(--mute)}
-form.nl{display:flex;flex-wrap:wrap;gap:10px}form.nl input[type=email]{flex:1 1 220px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit}
+form.nl{display:flex;flex-wrap:wrap;gap:10px}.nl input[type=email]{box-sizing:border-box;min-width:0}.newsletter>*{min-width:0}form.nl input[type=email]{flex:1 1 220px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit}
 form.nl .nl-msg{flex-basis:100%;margin:0}.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (max-width:860px){.newsletter{grid-template-columns:1fr}}
 .newsletter{background:var(--gold);color:var(--on-gold);border:0}.newsletter strong{font-size:20px}.newsletter p{color:rgba(20,17,11,.78)}
