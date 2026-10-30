@@ -24,7 +24,7 @@
     "slug": "the-three-opening-principles",
     "title": "The three opening principles",
     "text": "Control the centre, develop your minor pieces and get your king safe. That is what the opening is for. It saves you from aimless moves.",
-    "note": "Checked: the core of the opening. The same list also says: do not move the same piece twice and do not attack too early."
+    "note": "Checked: the core of the opening. The same list also says: do not move the same piece twice and do not attack too early. Short form: C-D-C, Control the centre (a centre pawn on e4 or d4), Develop your minor pieces first, Castle."
    },
    {
     "slug": "be-economical-with-your-moves",
@@ -54,7 +54,7 @@
     "slug": "do-not-bring-the-queen-out-too-early",
     "title": "Do not bring the queen out too early",
     "text": "Do not rush the queen to the centre where enemy minor pieces can attack it. You lose tempo moving it again and again.",
-    "note": "Checked: correct for the opening. A queen move can be fine when nothing can hit it."
+    "note": "Checked: correct for the opening. A queen move can be fine when nothing can hit it. Another lesson repeats this: do not bring the queen out in the first moves; it gets attacked and you lose time moving it again."
    },
    {
     "slug": "watch-for-flank-pawns-challenging-your-centre",
@@ -93,6 +93,24 @@
     "text": "If White delays developing the minor pieces in the Scandinavian, play on the queenside with quick pawn pressure to surprise them.",
     "note": "Draft: this is a specific idea that I could not confirm in a concrete line. It needs an example position from Peter before it gets a page.",
     "draft": true
+   },
+   {
+    "slug": "avoid-tricks-and-gambits-as-your-main-plan",
+    "title": "Avoid tricks and gambits as your main plan",
+    "text": "Quick opening tricks (such as the Schiller Gambit or early queen attacks) look fun for a fast win, but in the long run they give bad positions, a lead in development for your opponent and a weak pawn structure.",
+    "note": "Checked: sound as a long-term strategy. This does not contradict our trap lessons: they teach you to recognize traps and not fall for them, not to rely on them."
+   },
+   {
+    "slug": "do-not-push-pawns-aimlessly",
+    "title": "Do not push pawns aimlessly",
+    "text": "Do not shove pawns around in the opening unless it helps control the centre or develop your minor pieces.",
+    "note": "Checked: standard."
+   },
+   {
+    "slug": "do-not-move-the-same-piece-again-and-again",
+    "title": "Do not move the same piece again and again",
+    "text": "Do not move one knight or bishop several times in a row (or launch an early g5 attack) before your other pieces are developed. It costs tempi and leaves you behind in development.",
+    "note": "Checked: standard. Exception: a repeat move that wins material or stops a threat."
    }
   ]
  },
@@ -194,7 +212,7 @@
     "slug": "optimize-improve-your-worst-piece",
     "title": "Optimize: improve your worst piece",
     "text": "When there is no check, capture or forcing threat, improve your passive pieces, starting with the ones still on your back rank (minor pieces first).",
-    "note": "Checked: this is the 'improve your worst piece' rule."
+    "note": "Checked: this is the 'improve your worst piece' rule. For example by bringing a rook to an open or semi-open file."
    },
    {
     "slug": "improve-with-a-purpose",
@@ -249,6 +267,12 @@
     "title": "Create a weak pawn in the enemy camp",
     "text": "Trade pieces or open lines in a way that leaves your opponent with a weak, backward or isolated pawn, then keep permanent pressure on it.",
     "note": "Checked: the way to get the target in the first place. See \"Attack the backward pawn\"."
+   },
+   {
+    "slug": "read-the-pawn-structure-as-a-skeleton",
+    "title": "Read the pawn structure as a skeleton",
+    "text": "Read the structure to see which squares and routes are ideal for your pieces, such as a knight route to f4.",
+    "note": "Checked: pawn structure decides where your pieces belong."
    }
   ]
  },
@@ -295,7 +319,7 @@
     "slug": "sit-on-your-hands",
     "title": "Sit on your hands",
     "text": "Stop at every move of your opponent. Ask: what is the purpose of this move, what would he do with a free move, and does he have checks or captures?",
-    "note": "Checked: a good habit. It is the same question as \"what does this move threaten?\""
+    "note": "Checked: a good habit. It is the same question as \"what does this move threaten?\" Before carrying out your own plan, check what your opponent attacks and whether all your pieces are protected."
    },
    {
     "slug": "solve-immediate-problems-first",
@@ -308,6 +332,18 @@
     "title": "Set a trap with a defensive move",
     "text": "Sometimes a defensive or passive-looking move (such as moving a rook) is a clever trap. The opponent is punished when he tries to grab your poisoned pawn.",
     "note": "Checked: traps work well at club level. Only set one when your move is also fine if he does not fall for it. You can also offer a \"poisoned\" pawn: the opponent grabs it and ends up with badly placed pieces or an open file for your rooks (the poisoned-pawn idea is real, such as in the Najdorf). Never offer it unless you are fine when he does not take it."
+   },
+   {
+    "slug": "tactics-beat-opening-theory",
+    "title": "Tactics beat opening theory",
+    "text": "Most games below master level are decided by tactical blunders, not by opening theory. Spend your time reducing mistakes rather than memorizing tricks.",
+    "note": "Softened: the claim \"more than 90%\" is the coach's estimate and I could not verify it. It is clearly true that blunders decide most club games."
+   },
+   {
+    "slug": "scan-for-the-three-kinds-of-tactical-blunders",
+    "title": "Scan for the three kinds of tactical blunders",
+    "text": "Train yourself to check for: 1) missed enemy threats (direct and discovered attacks), 2) missed tactical chances of your own (such as forks), and 3) missing your opponent's reply to your move.",
+    "note": "Checked: a good checklist. The third one is the \"what would he do after this?\" question."
    }
   ]
  },
@@ -366,7 +402,7 @@
     "slug": "calculate-sacrifices-three-moves-deep",
     "title": "Calculate sacrifices three moves deep",
     "text": "Before you sacrifice a piece, force yourself to calculate at least three moves. If you have not gained anything by then, the sacrifice is probably wrong or too complex.",
-    "note": ""
+    "note": "A stricter version from another lesson: calculate the whole line. A sacrifice is right when you end up with more material, or give mate."
    },
    {
     "slug": "open-the-king-with-a-pawn-storm",
@@ -397,6 +433,12 @@
     "title": "Avoid hope chess",
     "text": "Do not play a move hoping your opponent blunders (such as leaving a bishop hanging). Play on objective pressure and concrete calculation.",
     "note": "Checked: \"hope chess\" is a known term. A trap is fine when your move is also sound if he does not fall for it (see \"Set a trap with a defensive move\")."
+   },
+   {
+    "slug": "play-greedy-keep-the-material-balance-sharp",
+    "title": "Play greedy: keep the material balance sharp",
+    "text": "Keep the material balance clearly in your head. Every pawn won or lost steers your strategic choices, because it is very hard to come back from a bad position without a blunder from your opponent.",
+    "note": "Checked: at club level material matters a lot. Balance it with the poisoned-pawn check: not every free pawn is free."
    }
   ]
  },
@@ -472,13 +514,13 @@
     "slug": "trade-pieces-when-ahead",
     "title": "Trade pieces when ahead",
     "text": "With a material lead, trading pieces is the fastest way to win. Fewer pieces make it easier to cash in. Trade pieces, not pawns.",
-    "note": "Checked: correct. Be careful with fortress positions. Other lessons say the same: fewer pieces make your extra material weigh more. Another lesson adds: do it once your opponent's attack is neutralized. Softened: it is not completely risk-free. One pawn up is enough to simplify, but see the opposite-coloured bishops warning."
+    "note": "Checked: correct. Be careful with fortress positions. Other lessons say the same: fewer pieces make your extra material weigh more. Another lesson adds: do it once your opponent's attack is neutralized. Softened: it is not completely risk-free. One pawn up is enough to simplify, but see the opposite-coloured bishops warning. When you are behind, avoid needless trades."
    },
    {
     "slug": "create-a-passed-pawn",
     "title": "Create a passed pawn",
     "text": "Use a majority on one wing to make a pawn that can run to the other side. A passed pawn ties down the opponent and often decides the endgame.",
-    "note": " Once you have broken up your opponent's structure, creating a passed pawn and pushing it (best close to promotion) is the fastest way to put them on the defensive."
+    "note": " Once you have broken up your opponent's structure, creating a passed pawn and pushing it (best close to promotion) is the fastest way to put them on the defensive. Softened: another lesson says an equal endgame is won almost only by a passed pawn. It is the most common way, but king activity and winning pawns win games too."
    },
    {
     "slug": "rook-versus-minor-piece-win-it-with-technique",
@@ -562,7 +604,7 @@
     "slug": "stay-careful-until-the-last-move",
     "title": "Stay careful until the last move",
     "text": "Even in a won endgame one slip can throw away the win or allow a draw. Keep calculating and look for the cleanest forced finish.",
-    "note": ""
+    "note": " Calculate to the very last move: a wrong king square against a mate threat can turn a won position into a loss."
    },
    {
     "slug": "the-scissor-technique-with-a-bishop",
