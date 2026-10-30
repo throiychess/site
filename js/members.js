@@ -49,7 +49,7 @@ function drawSocials() {
   $("#m-socmsg").textContent = n === 4 ? "You follow Throiy Chess everywhere. Thank you! You get a free in-depth analysis when the improvement program starts." : `${n} of 4. Follow all four and you get a free in-depth analysis when the improvement program starts.`;
 }
 function chart(data, key, title, lowerBetter, dec, suffix) {
-  const d = data.slice().reverse(), vals = d.map((x) => Number(x[key])), n = vals.length, W = 600, H = 170, pl = 46, pr = 16, pt = 14, pb = 30;
+  const d = data.slice().reverse(), vals = d.map((x) => Number(x[key])), n = vals.length, W = 600, H = 190, pl = 58, pr = 18, pt = 16, pb = 34;
   let lo = Math.min(...vals), hi = Math.max(...vals); if (hi - lo < 1e-9) { const pad = Math.abs(hi) * 0.1 + 0.02; lo -= pad; hi += pad; } else { const pad = (hi - lo) * 0.2; lo -= pad; hi += pad; }
   const X = (i) => (n === 1 ? (pl + W - pr) / 2 : pl + (i * (W - pl - pr)) / (n - 1)), Y = (v) => pt + ((hi - v) / (hi - lo)) * (H - pt - pb);
   const pts = vals.map((v, i) => `${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(" "), last = vals[n - 1], diff = last - vals[0], good = n > 1 && (lowerBetter ? diff < 0 : diff > 0);
