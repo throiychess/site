@@ -104,7 +104,7 @@ async function analyseGame(g, user, progress) {
     const h = hist[i]; if (side && h.color !== side) continue; const white = h.color === "w";
     const before = clip(pov(evals[i].score, white)), after = clip(pov(evals[i + 1].score, white)); const loss = Math.max(0, before - after);
     lossSum += Math.min(loss, 1000); nMoves++;
-    accSum += Math.max(0, Math.min(100, 103.1668 * Math.exp(-0.04354 * Math.max(0, winPct(before) - winPct(after))) - 3.1669));
+    const aMove = Math.max(0, Math.min(100, 103.1668 * Math.exp(-0.04354 * Math.max(0, winPct(before) - winPct(after))) - 3.1669)); accSum += aMove;
     const mm = material(h.before); const phase = i < 20 ? "opening" : (!mm.q && mm.w <= 13 && mm.b <= 13) ? "endgame" : "middlegame";
     ph[phase].n++; ph[phase].loss += Math.min(loss, 1000); if (loss >= 120) ph[phase].big++;
     if (loss >= 300) nBlund++; else if (loss >= 150) nMist++; else if (loss >= 60) nInacc++;
@@ -133,7 +133,7 @@ async function analyseGame(g, user, progress) {
     }
     if (cat === "other") { const m = material(h.before); if (!m.q && m.w <= 13 && m.b <= 13) { cat = "endgame"; detail = ""; } }
     const prevClock = (() => { for (let j = i - 2; j >= 0; j -= 2) { const t = clk(comments[hist[j].after]); if (t !== null) return t; } return null; })();
-    moments.push({ ply, moveNo, color: h.color, san: h.san, best: bm ? bm.san : null, bFrom: bm ? bm.from : null, bTo: bm ? bm.to : null, loss, cat, detail, fen: h.before, from: h.from, to: h.to,
+    moments.push({ a: aMove, ply, moveNo, color: h.color, san: h.san, best: bm ? bm.san : null, bFrom: bm ? bm.from : null, bTo: bm ? bm.to : null, loss, cat, detail, fen: h.before, from: h.from, to: h.to,
       clock: g.tc === "daily" || g.tc === "correspondence" ? null : prevClock, before, after });
   }
   const res = side === "w" ? g.wres : g.bres;
@@ -192,8 +192,11 @@ function report(results) {
   const sum = (f) => results.reduce((a, r) => a + f(r), 0); const nm = sum((r) => r.nMoves) || 1;
   const acc = sum((r) => r.acc * r.nMoves) / nm, nB = sum((r) => r.nBlund), nM = sum((r) => r.nMist), nI = sum((r) => r.nInacc);
   const outc = (r) => fmtRes(r.g, state.user); const wins = results.filter((r) => outc(r) === "Won").length, losses = results.filter((r) => outc(r) === "Lost").length, draws = results.length - wins - losses;
+  const top3 = all.slice().sort((a, b) => b.loss - a.loss).slice(0, 3);
+  const accFix = (sum((r) => r.acc * r.nMoves) + top3.reduce((a, m) => a + (100 - m.a), 0)) / nm, lossNow = sum((r) => r.avgLoss * r.nMoves) / nm, lossFix = (sum((r) => r.avgLoss * r.nMoves) - top3.reduce((a, m) => a + Math.min(m.loss, 1000), 0)) / nm;
+  const whatIf = top3.length === 3 ? `<p class="az-what"><b>What if you had found the better move in your 3 biggest moments?</b> Your accuracy would have been about <b>${accFix.toFixed(0)}%</b> instead of ${acc.toFixed(0)}%, and you would have lost <b>${(lossFix / 100).toFixed(2)}</b> instead of ${(lossNow / 100).toFixed(2)} pawns per move. Those are the moves in "Key moments" below.</p>` : "";
   let h = `<h2>Your report</h2><p>${results.length} game${results.length > 1 ? "s" : ""} analyzed for <b>${esc(state.user)}</b>. We found <b>${all.length}</b> moment${all.length === 1 ? "" : "s"} where the evaluation dropped by more than a pawn.</p>`;
-  h += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy (our estimate)</span></div><div><b>${nB}</b><span>Blunders</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Inaccuracies</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div><p class="small">Accuracy here is our own estimate at a light engine depth. It is not on the same scale as the Chess.com or Lichess accuracy, so compare moves, not percentages.</p>`;
+  h += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy (our estimate)</span></div><div><b>${(sum((r) => r.avgLoss * r.nMoves) / nm / 100).toFixed(2)}</b><span>Pawns lost per move</span></div><div><b>${nB}</b><span>Blunders</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Inaccuracies</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div>${whatIf}<p class="small">Accuracy here is our own estimate at a light engine depth. It is not on the same scale as the Chess.com or Lichess accuracy, so compare moves, not percentages.</p>`;
   // phases
   const phs = {}; for (const k of Object.keys(PHN)) { phs[k] = { n: 0, loss: 0, big: 0 }; for (const r of results) { phs[k].n += r.ph[k].n; phs[k].loss += r.ph[k].loss; phs[k].big += r.ph[k].big; } }
   const worst = Object.keys(PHN).filter((k) => phs[k].n >= 5).sort((a, b) => phs[b].loss / phs[b].n - phs[a].loss / phs[a].n)[0];
