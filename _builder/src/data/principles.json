@@ -957,7 +957,13 @@
     "slug": "attack-the-opponent-s-pawns-in-the-endgame",
     "title": "Attack the opponent's pawns in the endgame",
     "text": "In the endgame there is usually too little attacking material left to mate. Pawns cannot run away, so make the weak or isolated pawns of the opponent the target of your rooks and king.",
-    "note": "Checked. Softened: \"too little to mate\" holds mostly in minor-piece and rook endings; with queens on, king safety still matters."
+    "note": "Checked. Softened: \"too little to mate\" holds mostly in minor-piece and rook endings; with queens on, king safety still matters. Also covers: the goal changes. In the middlegame you hunt the king; in the endgame there is too little attacking material, so aim all your firepower at the weak pawns."
+   },
+   {
+    "slug": "prefer-the-bishop-with-pawns-on-both-wings",
+    "title": "Prefer the bishop with pawns on both wings",
+    "text": "In endgames with pawns on both sides of the board a bishop is usually better than a knight, because it works on both wings at once and across the whole board, while a knight can operate on only one side at a time.",
+    "note": "Corrected: \"superior\" was too strong. It is a small, general edge. In closed positions with pawns locked on the bishop's colour, a knight can be just as good or better."
    }
   ]
  },
@@ -1025,6 +1031,12 @@
     "title": "Make the opponent's life uncomfortable",
     "text": "You do not always need the very best computer move. Among good moves, prefer the one that is practically and psychologically hardest for the opponent. Ask questions with active, provocative moves that test the defence.",
     "note": "Softened: pick among sound moves only. A move that is objectively bad is not \"provocative\", it is just a mistake."
+   },
+   {
+    "slug": "create-confusion-with-a-complicating-sacrifice",
+    "title": "Create confusion with a complicating sacrifice",
+    "text": "A sacrifice does not always need to lead to a forced mate. It can also make the position so complicated and unclear that even strong players find it very hard to find the right defence at the board. In balanced or closed positions, dare to bring creative sacrifices to raise the pressure and use the human factor (stress, time trouble).",
+    "note": "Softened: this is a practical choice for human opponents and not a rule against engines. Only do it when the sacrifice is at worst roughly balanced; a bad sacrifice just loses material."
    }
   ]
  }
