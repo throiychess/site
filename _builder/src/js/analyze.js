@@ -211,11 +211,25 @@ document.addEventListener("click", (e0) => { const bt = e0.target.closest(".az-r
     if (!mv) { svg().outerHTML = orig; bt.disabled = false; return; }
     svg().outerHTML = boardSVG(c.fen(), mv.from, mv.to, m.r.side === "b"); box.querySelector(".az-rp").textContent = ` ${lab(i)}: ${mv.san}`; i++; setTimeout(step, 1300); };
   step(); });
+function openingName(pgn) {
+  const h = (k) => { const m = pgn.match(new RegExp('\\[' + k + ' "([^"]*)"\\]')); return m ? m[1] : ""; };
+  let n = h("Opening"); if (!n) { const u = h("ECOUrl"); if (u) n = decodeURIComponent(u.split("/openings/")[1] || "").replace(/-/g, " ").replace(/\s\d.*$/, ""); }
+  if (!n) return "Unknown opening"; n = n.split(":")[0].split(",")[0].trim(); return n.split(" ").slice(0, 4).join(" ").slice(0, 40) || "Unknown opening";
+}
+function extras(L) {
+  const openings = L.results.map((r) => ({ o: openingName(r.g.pgn || ""), s: r.side, r: fmtRes(r.g, state.user), m: r.moments.length, b: r.nBlund }));
+  const phases = { opening: { n: 0, loss: 0, big: 0 }, middlegame: { n: 0, loss: 0, big: 0 }, endgame: { n: 0, loss: 0, big: 0 } };
+  let known = 0, low = 0; const pool = [];
+  for (const r of L.results) { for (const k of Object.keys(phases)) { const p = r.ph[k]; phases[k].n += p.n; phases[k].loss += Math.round(p.loss); phases[k].big += p.big; }
+    for (const m of r.moments) { if (m.clock != null) { known++; if (m.clock < 30) low++; } if (m.loss >= 150 && m.bFrom && m.best) pool.push({ f: m.fen, c: m.color, b: m.best, bf: m.bFrom, bt: m.bTo, s: m.san, k: m.cat, l: Math.round(m.loss), n: m.moveNo }); } }
+  pool.sort((a, b) => b.l - a.l);
+  return { openings, phases, lc: { known, low }, puz: pool.slice(0, 40) };
+}
 async function saveReport() {
   const box = $("#az-save"); if (!box) return; const L = window.__azLast; const sbc = window.supabase ? (window.__sb = window.__sb || window.supabase.createClient("https://ytxrrmvszifvtdyilezn.supabase.co", "sb_publishable_nARSIxN5aKJghUK745Frdw_QbXhdf29", { auth: { persistSession: true, detectSessionInUrl: false } })) : null; if (!sbc) return;
   const { data } = await sbc.auth.getSession();
   if (!data.session) { box.innerHTML = `<p class="small">&#128190; <a href="/members/?utm_source=analyze">Log in</a> (free, no password) to save this report and track your progress over time.</p>`; return; }
-  const rep = { depth: DEPTH, cats: L.cnt, moments: SHOWN.map((m) => ({ n: m.moveNo, c: m.color, san: m.san, best: m.best, cat: m.cat, loss: Math.round(m.loss), fen: m.fen })) };
+  const rep = { ...extras(L), depth: DEPTH, cats: L.cnt, moments: SHOWN.map((m) => ({ n: m.moveNo, c: m.color, san: m.san, best: m.best, cat: m.cat, loss: Math.round(m.loss), fen: m.fen })) };
   const { error } = await sbc.from("analyses").insert({ site: state.site, username: state.user.slice(0, 40), games: L.results.length, accuracy: +L.acc.toFixed(1), avg_loss: +(L.lossNow / 100).toFixed(3), blunders: L.nB, mistakes: L.nM, inaccuracies: L.nI,
     band: bandName(L.bNow), top_leak: L.order[0] ? P[L.order[0]].t : null, report: rep });
   box.innerHTML = error ? `<p class="small">${/limit/i.test(error.message || "") ? "You reached the limit of saved reports. Delete older ones on your members page." : "Could not save this report."}</p>` : `<p class="small">&#10003; Saved to your <a href="/members/#reports">reports</a>.</p>`; if (!error) { ev("analyze-report-saved"); window.dispatchEvent(new Event("az-saved")); }
@@ -283,4 +297,5 @@ function report(results) {
   $("#az-report").innerHTML = h; saveReport(); try { if (window.tcFeedback) window.tcFeedback.inline($("#az-fb"), "analysis-report", "Was this report useful?", { games: results.length, depth: DEPTH, prem: isPrem() }); } catch (e) {} $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
 }
 
+window.__azP = { P, DRILL }; window.__azBoard = boardSVG;
 if (/[?&]bench=1/.test(location.search)) window.__az = { analyseGame };

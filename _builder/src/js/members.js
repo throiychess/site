@@ -12,11 +12,11 @@ async function render(session) {
   if (location.hash === "#logout") { await sb.auth.signOut(); try { localStorage.removeItem("tc_av"); } catch (e) {} history.replaceState(null, "", "/members/"); session = null; }
   $("#m-login").hidden = !!session; $("#m-app").hidden = !session; if (!session) { document.documentElement.removeAttribute("data-in"); return; } document.documentElement.setAttribute("data-in", "1");
   $("#m-email").textContent = session.user.email; show();
-  const { data: p } = await sb.from("profiles").select("*").eq("id", session.user.id).maybeSingle(); profile = p || { socials: {} }; window.__plan = profile.plan || "free";
+  const { data: p } = await sb.from("profiles").select("*").eq("id", session.user.id).maybeSingle(); profile = p || { socials: {} }; window.__plan = profile.plan || "free"; window.__profile = Object.assign(profile, { id: session.user.id });
   $("#m-name").value = profile.display_name || ""; $("#m-cc").value = profile.chesscom_username || ""; $("#m-li").value = profile.lichess_username || "";
   const { data: c } = await sb.rpc("daily_checkin"); const r = Array.isArray(c) ? c[0] : c; if (r) { Object.assign(profile, { points: r.points, streak: r.streak, best_streak: r.best_streak, last_checkin: r.last_checkin }); profile._gained = r.gained || 0; }
   const u = $("#az-user"); if (u && !u.value) { if (profile.chesscom_username) { u.value = profile.chesscom_username; $("#az-site").value = "chesscom"; } else if (profile.lichess_username) { u.value = profile.lichess_username; $("#az-site").value = "lichess"; } }
-  drawHello(); drawSocials(); await drawAnalyses(); drawEarn();
+  drawHello(); drawSocials(); await drawAnalyses(); drawEarn(); window.dispatchEvent(new Event("m-ready"));
 }
 window.addEventListener("az-saved", () => { drawAnalyses().then(drawEarn); });
 function drawHello() {
