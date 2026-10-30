@@ -74,6 +74,25 @@
     "title": "Attack weak, misplaced pieces at once",
     "text": "Spot an opponent's misplaced piece, such as a knight on c6 played too early, and put maximum pressure on it with active pieces, for example a bishop on b5 and a queen on a4.",
     "note": "Checked: sound. Check that the attack does not leave your own pieces loose."
+   },
+   {
+    "slug": "win-back-the-sacrificed-pawn",
+    "title": "Win back the sacrificed pawn",
+    "text": "If you sacrifice a pawn in the opening for development or activity, winning it back in the early middlegame is usually the top priority.",
+    "note": "Softened: \"absolute priority\" is too strong. If your compensation (initiative, development) is worth more than the pawn, keep playing for that. Do not let the gambit drag on without a plan."
+   },
+   {
+    "slug": "answer-a4-with-b4-to-claim-space-in-some-structures",
+    "title": "Answer a4 with b4 to claim space (in some structures)",
+    "text": "When your opponent tries to disturb you on the wing with a4, you can answer with b4 to claim space, take squares from the knights and strengthen the structure.",
+    "note": "Softened: this is right in some structures, not in all. Check what b4 leaves behind (the c4 square and the pawn on a-file)."
+   },
+   {
+    "slug": "scandinavian-queenside-pressure-against-slow-development",
+    "title": "Scandinavian: queenside pressure against slow development",
+    "text": "If White delays developing the minor pieces in the Scandinavian, play on the queenside with quick pawn pressure to surprise them.",
+    "note": "Draft: this is a specific idea that I could not confirm in a concrete line. It needs an example position from Peter before it gets a page.",
+    "draft": true
    }
   ]
  },
@@ -84,7 +103,7 @@
     "slug": "build-a-system-opening",
     "title": "Build a system opening",
     "text": "Use a fixed set-up that lets you play the same solid plan against almost any reply, so you have less theory to remember.",
-    "note": "Checked: a real approach (the Colle, London or similar systems). The label 'peer-to-peer recognition' in the notes looks like a dictation error, so I used 'system opening'. The price is less flexibility against well-prepared opponents."
+    "note": "Checked: a real approach (the Colle, London or similar systems). The label 'peer-to-peer recognition' in the notes looks like a dictation error, so I used 'system opening'. The price is less flexibility against well-prepared opponents. This works for Black too: a repeating Black set-up against almost any White move means little theory to remember."
    },
    {
     "slug": "use-a-flexible-knight-move-to-prepare-e4",
@@ -288,7 +307,7 @@
     "slug": "set-a-trap-with-a-defensive-move",
     "title": "Set a trap with a defensive move",
     "text": "Sometimes a defensive or passive-looking move (such as moving a rook) is a clever trap. The opponent is punished when he tries to grab your poisoned pawn.",
-    "note": "Checked: traps work well at club level. Only set one when your move is also fine if he does not fall for it."
+    "note": "Checked: traps work well at club level. Only set one when your move is also fine if he does not fall for it. You can also offer a \"poisoned\" pawn: the opponent grabs it and ends up with badly placed pieces or an open file for your rooks (the poisoned-pawn idea is real, such as in the Najdorf). Never offer it unless you are fine when he does not take it."
    }
   ]
  },
@@ -425,6 +444,24 @@
     "title": "Tighten the net with flank pawns (f3, g4, h4)",
     "text": "Use pawns such as f3, g4 or h4 to tighten the net around enemy pieces, such as a trapped knight or bishop, and to control squares.",
     "note": "Checked: a real tactic (trapping a piece on the edge). Check your own king safety first: these pawn moves also open lines near your own king."
+   },
+   {
+    "slug": "coordinate-knights-and-rooks-for-mate",
+    "title": "Coordinate knights and rooks for mate",
+    "text": "Bring knights and rooks along open files to advanced squares (such as f4) to create deadly mating patterns on the back rank or around the enemy king.",
+    "note": "Checked: a core attacking idea. The \"f4\" square comes from one example, so it is generalized here."
+   },
+   {
+    "slug": "remove-the-defending-bishop",
+    "title": "Remove the defending bishop",
+    "text": "Trade or chase the specific enemy bishop that covers key defensive squares (such as the dark squares around the king), so your attack can get pieces in.",
+    "note": "Checked: removing the defender is a standard attacking idea."
+   },
+   {
+    "slug": "be-patient-in-an-attack",
+    "title": "Be patient in an attack",
+    "text": "Sometimes you should prepare a position calmly (for example with g6 or a quiet regrouping) to build maximum pressure, rather than playing hasty forcing tactics the opponent can parry.",
+    "note": "Checked: good advice. Softened: if a forcing line is calculated and works, play it."
    }
   ]
  },
@@ -501,13 +538,13 @@
     "slug": "castling-is-not-automatic-without-queens",
     "title": "Castling is not automatic without queens",
     "text": "When queens are off, your king is in less danger. Do not castle out of habit: use the king in the centre to fight and support pawns.",
-    "note": "Checked: castling is just no longer a priority. Also: a short-castled king in the corner can get boxed in and loses tempi getting to the centre. Softened from \"almost never\": it is just rarely worth the time. Another lesson repeats this: do not castle out of habit when queens left the board early. A king in the corner takes no part in the game."
+    "note": "Checked: castling is just no longer a priority. Also: a short-castled king in the corner can get boxed in and loses tempi getting to the centre. Softened from \"almost never\": it is just rarely worth the time. Another lesson repeats this: do not castle out of habit when queens left the board early. A king in the corner takes no part in the game. Do not be lured by strong players who still castle short long after the queens are off. Their king ends up in a useless corner instead of the active centre."
    },
    {
     "slug": "doubled-isolated-pawns-are-a-target",
     "title": "Doubled isolated pawns are a target",
     "text": "Aim for positions where the opponent gets doubled, isolated pawns. They are hard to defend and easy to attack in the endgame.",
-    "note": "Checked and aligned with the doubled-pawn principle above: it is the isolation and blocking that make them weak."
+    "note": "Checked and aligned with the doubled-pawn principle above: it is the isolation and blocking that make them weak. You can also trade at the right moment to give your opponent doubled pawns, which are permanent targets."
    },
    {
     "slug": "shelter-your-king-from-checks",
