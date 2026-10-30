@@ -916,10 +916,13 @@ def board_svg(fen, flip=False):
 def principle_page(group, x):
     rel = [y for g in PRINCIPLES if g["group"] == group for y in g["items"] if y["slug"] != x["slug"] and not y.get("draft")][:4]
     rl = "".join(f'<li><a href="/principles/{y["slug"]}/">{e(y["title"])}</a></li>' for y in rel)
+    flat = [y for g in PRINCIPLES for y in g["items"] if not y.get("draft")]
+    ix = [i for i, y in enumerate(flat) if y["slug"] == x["slug"]][0]
+    pn = ((f'<a href="/principles/{flat[ix-1]["slug"]}/">&larr; {e(flat[ix-1]["title"])}</a>') if ix else "<span></span>") + ((f'<a href="/principles/{flat[ix+1]["slug"]}/">{e(flat[ix+1]["title"])} &rarr;</a>') if ix < len(flat) - 1 else "<span></span>")
     ex_html = "".join(f'<div style="margin:12px 0">{board_svg(q["fen"])}<p class="small" style="margin-top:8px">{e(q["caption"])}</p>' + (f'<p class="small" style="opacity:.7">Source: {e(q["source"])}</p>' if q.get("source") else '') + '</div>' for q in x.get("examples", [])) or (f'<p>{e(x["scenario"])}</p>' if x.get("scenario") else "<p>Worked examples with positions are being added. Until then, see this principle in your own games.</p>")
     body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow"><a href="/principles/" style="color:inherit">Principles</a> &middot; {e(group)} &middot; {e(x.get("level","").capitalize())} &middot; {e(x.get("phase","").capitalize())}</span><h1>{e(x["title"])}</h1><p>{e(x["text"])}</p></div>
 <div class="mcard" style="margin:20px 0">{''}<h3>Examples</h3>{ex_html}<p style="margin-top:12px"><a class="btn solid" href="/analyze/">Analyze my games free</a></p></div>
-{('<h3>More in ' + e(group) + '</h3><ul>' + rl + '</ul>') if rl else ''}<p class="small" style="margin:24px 0">Principles are guidelines, not laws. Distilled by Throiy Chess.</p></main>''' + footer()
+{('<h3>More in ' + e(group) + '</h3><ul>' + rl + '</ul>') if rl else ''}<div style="display:flex;justify-content:space-between;gap:16px;margin:24px 0;flex-wrap:wrap">{pn}</div><p class="small" style="margin:24px 0">Principles are guidelines, not laws. Distilled by Throiy Chess. <a href="/principles/">All principles</a> &middot; <a href="/members/#library">Your library</a></p></main>''' + footer()
     return f"/principles/{x['slug']}/", page(f"/principles/{x['slug']}/", f"{x['title']} · Chess principle · Throiy Chess", x["text"][:155], body, noindex=True)
 
 def llms_txt():
