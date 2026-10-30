@@ -9,6 +9,7 @@ const LEVELS = [["Pawn", 0], ["Knight", 100], ["Bishop", 250], ["Rook", 500], ["
 let profile = null, A = [];
 
 async function render(session) {
+  if (location.hash === "#logout") { await sb.auth.signOut(); try { localStorage.removeItem("tc_av"); } catch (e) {} history.replaceState(null, "", "/members/"); session = null; }
   $("#m-login").hidden = !!session; $("#m-app").hidden = !session; if (!session) return;
   $("#m-email").textContent = session.user.email; show();
   const { data: p } = await sb.from("profiles").select("*").eq("id", session.user.id).maybeSingle(); profile = p || { socials: {} };
@@ -18,13 +19,13 @@ async function render(session) {
 }
 function drawHello() {
   $("#m-hello").textContent = profile.display_name ? "Welcome back, " + profile.display_name : "Welcome back";
-  $("#m-ava").textContent = AV[profile.avatar] || AV.pawn;
+  $("#m-ava").textContent = AV[profile.avatar] || AV.pawn; try { localStorage.setItem("tc_av", AV[profile.avatar] || AV.pawn); } catch (e) {}
 }
 const VIEWS = ["overview", "reports", "training", "puzzles", "earn", "plan", "profile"];
 function show() { const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "overview";
   document.querySelectorAll(".mview").forEach((s) => { s.hidden = s.dataset.view !== v; });
   document.querySelectorAll(".mnav a").forEach((a) => { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); }); }
-window.addEventListener("hashchange", show);
+window.addEventListener("hashchange", () => { if (location.hash === "#logout") render(null); else show(); });
 
 function followCount() { const so = (profile && profile.socials) || {}; return SOCIALS.filter(([k]) => so[k]).length; }
 function totalPoints() { return (profile.points || 0) + A.length * 20 + followCount() * 10; }
@@ -94,7 +95,7 @@ document.addEventListener("click", async (e) => {
   if (c && s) { const so = { ...(profile.socials || {}), [c.dataset.claim]: new Date().toISOString() }; const { error } = await sb.from("profiles").update({ socials: so }).eq("id", s.user.id); if (!error) { profile.socials = so; drawSocials(); drawEarn(); ev("members-follow-" + c.dataset.claim); } }
   if (av && s) { const { error } = await sb.from("profiles").update({ avatar: av.dataset.av }).eq("id", s.user.id); if (!error) { profile.avatar = av.dataset.av; drawEarn(); ev("members-avatar"); } }
   if (d && s) { await sb.from("analyses").delete().eq("id", d.dataset.del); drawAnalyses().then(drawEarn); }
-  if (o) { await sb.auth.signOut(); render(null); }
+  if (o) { await sb.auth.signOut(); try { localStorage.removeItem("tc_av"); } catch (e) {} document.documentElement.removeAttribute("data-in"); render(null); }
   if (e.target.closest("#m-del") && s) { if (!confirm("Delete your account and all saved reports? This cannot be undone.")) return; $("#m-delmsg").textContent = "Deleting…";
     const { error } = await sb.functions.invoke("delete-account"); if (error) { $("#m-delmsg").textContent = "Could not delete. Please contact us."; return; } await sb.auth.signOut(); ev("members-account-deleted"); render(null); $("#m-msg").textContent = "Your account has been deleted."; }
 });
