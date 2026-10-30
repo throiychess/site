@@ -111,6 +111,12 @@
     "title": "Do not move the same piece again and again",
     "text": "Do not move one knight or bishop several times in a row (or launch an early g5 attack) before your other pieces are developed. It costs tempi and leaves you behind in development.",
     "note": "Checked: standard. Exception: a repeat move that wins material or stops a threat."
+   },
+   {
+    "slug": "finish-development-before-you-attack",
+    "title": "Finish development before you attack",
+    "text": "Do not attack too early (with premature bishop or pawn moves) when your position is not fully developed. Incomplete development leaves holes your opponent can punish tactically.",
+    "note": "Checked: standard. The exception is a concrete attack you have calculated."
    }
   ]
  },
@@ -309,6 +315,18 @@
     "title": "Park the queen behind your pieces (a8 or b7)",
     "text": "In some closed structures the queen can go to secondary squares such as a8 behind your own pieces, where it builds a battery on a diagonal or file without being exposed to a trade.",
     "note": "Checked: a real idea (for example ...Qa8 behind a bishop on b7 in some Queen's Indian lines). Only in specific structures."
+   },
+   {
+    "slug": "keep-control-of-the-break-squares-e5-c5",
+    "title": "Keep control of the break squares (e5, c5)",
+    "text": "In open or semi-open positions, use your active pieces to stop your opponent from making space-gaining breaks in the centre, such as ...e5 or ...c5.",
+    "note": "Checked: this is prophylaxis against breaks."
+   },
+   {
+    "slug": "check-that-your-pieces-do-not-get-in-each-other-s-way",
+    "title": "Check that your pieces do not get in each other's way",
+    "text": "The higher you climb, the less standard development is enough. Calculate that your pieces do not block each other and that you do not block flexible plans too early (such as a flank break with c4 or d4).",
+    "note": "Checked: true. The wording in the source was general, so I kept it general."
    }
   ]
  },
@@ -380,6 +398,12 @@
     "title": "Scan for the three kinds of tactical blunders",
     "text": "Train yourself to check for: 1) missed enemy threats (direct and discovered attacks), 2) missed tactical chances of your own (such as forks), and 3) missing your opponent's reply to your move.",
     "note": "Checked: a good checklist. The third one is the \"what would he do after this?\" question."
+   },
+   {
+    "slug": "look-for-in-between-moves-against-a-pin-or-threat",
+    "title": "Look for in-between moves against a pin or threat",
+    "text": "When your opponent sets up an awkward pin or threat (such as a queen move pressing on a diagonal), look for strong in-between moves or counterattacks, such as a mate threat or an attack on a piece, to force them onto the defensive.",
+    "note": "Checked: the in-between move (zwischenzug) is a standard tactic. Make sure the in-between move really forces the issue."
    }
   ]
  },
@@ -564,6 +588,12 @@
     "title": "Use the bishop pair against weak dark squares",
     "text": "If you keep the bishop pair, or trade off the enemy defenders, you can invade the weakened squares (such as the dark squares around the enemy king) step by step.",
     "note": "Checked: a standard strategic theme."
+   },
+   {
+    "slug": "use-opposite-coloured-bishops-as-an-attacking-weapon",
+    "title": "Use opposite-coloured bishops as an attacking weapon",
+    "text": "In a middlegame with opposite-coloured bishops, your bishop works like an extra attacker that your opponent cannot challenge. Use it to find and hit weaknesses around the enemy king.",
+    "note": "Checked: true in the middlegame. In the endgame the same bishops tend to draw (see the warning above)."
    }
   ]
  },
@@ -690,6 +720,12 @@
     "title": "Trade down when the structure is equal",
     "text": "If your opponent allows a symmetrical or similar structure, do not hesitate to trade minor pieces and simplify into a calm endgame.",
     "note": "Checked: good for a safe game. If you need to win, keep the tension instead."
+   },
+   {
+    "slug": "convert-with-an-outside-passed-pawn",
+    "title": "Convert with an outside passed pawn",
+    "text": "With extra pawns in a late middlegame, trade in a controlled way, create a distant (outside) passed pawn and force your opponent onto the defensive.",
+    "note": "Checked: an outside passed pawn pulls the enemy king away and is a classic winning method."
    }
   ]
  },
@@ -709,6 +745,12 @@
     "text": "Waiting a few seconds before a forced move can look like you are playing casually, which tempts your opponent to capture carelessly.",
     "note": "Not a chess principle but gamesmanship. Use it sparingly, never waste your clock, and do not rely on it. It is also a draft until we agree it belongs in a chess library.",
     "draft": true
+   },
+   {
+    "slug": "win-or-learn",
+    "title": "Win or learn",
+    "text": "Do not let a missed chance or a lost game spoil your enjoyment. Analyze the missed tactics calmly afterwards (such as hidden rook traps or missed in-between moves) to come back stronger.",
+    "note": "Not a chess rule but a useful mindset. Wording: the source said the loss should not \"increase\" your fun; I read it as \"spoil\"."
    }
   ]
  }
