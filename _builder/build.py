@@ -878,15 +878,15 @@ def _pitems():
 
 def principles_index():
     h = "".join(f'<h2 style="margin:34px 0 10px">{e(g["group"])}</h2><div class="mgrid" style="margin:0">' + "".join(f'<a class="mcard" href="/principles/{x["slug"]}/" style="text-decoration:none;color:inherit"><h3 style="margin:0 0 6px">{e(x["title"])}</h3><p>{e(x["text"])}</p></a>' for x in g["items"] if not x.get("draft")) + "</div>" for g in PRINCIPLES)
-    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow">Principles</span><h1>Chess principles, explained.</h1><p>Guidelines from coach Peter, distilled by Throiy Chess. They are made for beginner to expert players. Every position is different, so when two principles clash, calculate the actual moves.</p></div>{h}<p class="small" style="margin:30px 0">Want to see which principles cost you games? <a href="/analyze/">Analyze your own games for free</a>.</p></main>''' + footer()
-    return "/principles/", page("/principles/", "Chess principles, explained · Throiy Chess", "Chess principles from coach Peter, distilled by Throiy Chess, for beginner to expert players.", body, noindex=True)
+    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow">Principles</span><h1>Chess principles, explained.</h1><p>Guidelines distilled by Throiy Chess. They are made for beginner to expert players. Every position is different, so when two principles clash, calculate the actual moves.</p></div>{h}<p class="small" style="margin:30px 0">Want to see which principles cost you games? <a href="/analyze/">Analyze your own games for free</a>.</p></main>''' + footer()
+    return "/principles/", page("/principles/", "Chess principles, explained · Throiy Chess", "Chess principles distilled by Throiy Chess, for beginner to expert players.", body, noindex=True)
 
 def principle_page(group, x):
     rel = [y for g in PRINCIPLES if g["group"] == group for y in g["items"] if y["slug"] != x["slug"] and not y.get("draft")][:4]
     rl = "".join(f'<li><a href="/principles/{y["slug"]}/">{e(y["title"])}</a></li>' for y in rel)
     body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow"><a href="/principles/" style="color:inherit">Principles</a> &middot; {e(group)}</span><h1>{e(x["title"])}</h1><p>{e(x["text"])}</p></div>
 <div class="mcard" style="margin:20px 0">{('<h3>Good to know</h3><p>' + e(x["note"]) + '</p>') if x["note"] else ''}<h3>Examples</h3><p>Worked examples with positions are being added. Until then, see this principle in your own games.</p><p style="margin-top:12px"><a class="btn solid" href="/analyze/">Analyze my games free</a></p></div>
-{('<h3>More in ' + e(group) + '</h3><ul>' + rl + '</ul>') if rl else ''}<p class="small" style="margin:24px 0">Principles are guidelines, not laws. Source: coach Peter, distilled by Throiy Chess.</p></main>''' + footer()
+{('<h3>More in ' + e(group) + '</h3><ul>' + rl + '</ul>') if rl else ''}<p class="small" style="margin:24px 0">Principles are guidelines, not laws. Distilled by Throiy Chess.</p></main>''' + footer()
     return f"/principles/{x['slug']}/", page(f"/principles/{x['slug']}/", f"{x['title']} · Chess principle · Throiy Chess", x["text"][:155], body, noindex=True)
 
 def llms_txt():
