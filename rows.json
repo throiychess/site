@@ -1,139 +1,13 @@
 {
-"generated": "2026-10-29T04:10:00Z",
-"start": "2026-08-01",
-"end": "2026-10-29",
+"generated": "2026-10-30T04:11:02Z",
+"start": "2026-08-02",
+"end": "2026-10-30",
 "rows": [
-{
-"kind": "daily",
-"key": "2026-10-26",
-"label": "2026-10-26",
-"value": 2,
-"group": ""
-},
-{
-"kind": "daily",
-"key": "2026-10-27",
-"label": "2026-10-27",
-"value": 44,
-"group": ""
-},
-{
-"kind": "daily",
-"key": "2026-10-28",
-"label": "2026-10-28",
-"value": 24,
-"group": ""
-},
-{
-"kind": "daily",
-"key": "2026-10-29",
-"label": "2026-10-29",
-"value": 0,
-"group": ""
-},
-{
-"kind": "page",
-"key": "/",
-"label": "Throiy Chess",
-"value": 26,
-"group": "Overige pagina"
-},
-{
-"kind": "page",
-"key": "/traps/scholars-mate",
-"label": "Scholar's Mate: moves, mate and how to avoid it",
-"value": 8,
-"group": "Trap-pagina"
-},
-{
-"kind": "page",
-"key": "/support",
-"label": "Support",
-"value": 7,
-"group": "Overige pagina"
-},
-{
-"kind": "page",
-"key": "/contact",
-"label": "Contact",
-"value": 7,
-"group": "Overige pagina"
-},
-{
-"kind": "page",
-"key": "/shorts",
-"label": "All Shorts",
-"value": 6,
-"group": "Overige pagina"
-},
-{
-"kind": "page",
-"key": "/videos",
-"label": "Videos",
-"value": 5,
-"group": "Overige pagina"
-},
-{
-"kind": "page",
-"key": "/traps/fried-liver-attack",
-"label": "Fried Liver Attack: moves, mate and how to avoid it",
-"value": 3,
-"group": "Trap-pagina"
-},
-{
-"kind": "page",
-"key": "/traps/fishing-pole-trap",
-"label": "Fishing Pole Trap: moves, mate and how to avoid it",
-"value": 2,
-"group": "Trap-pagina"
-},
-{
-"kind": "page",
-"key": "/traps/blackburne-shilling-gambit",
-"label": "Blackburne Shilling Gambit: moves, mate and how to avoid it",
-"value": 1,
-"group": "Trap-pagina"
-},
-{
-"kind": "page",
-"key": "/traps",
-"label": "Trap library",
-"value": 1,
-"group": "Overige pagina"
-},
-{
-"kind": "page",
-"key": "/traps/stafford-gambit",
-"label": "Stafford Gambit: moves, mate and how to avoid it",
-"value": 1,
-"group": "Trap-pagina"
-},
-{
-"kind": "page",
-"key": "/traps/lasker-trap",
-"label": "Lasker Trap: moves, mate and how to avoid it",
-"value": 1,
-"group": "Trap-pagina"
-},
-{
-"kind": "page",
-"key": "/traps/legals-mate",
-"label": "Légal's Mate: moves, mate and how to avoid it",
-"value": 1,
-"group": "Trap-pagina"
-},
-{
-"kind": "page",
-"key": "/404.html",
-"label": "Page not found",
-"value": 1,
-"group": "Fout (404)"
-},
 {
 "kind": "source",
 "key": "(direct)",
 "label": "Direct of onbekend",
-"value": 31,
+"value": 35,
 "group": "Direct"
 },
 {
@@ -142,6 +16,13 @@
 "label": "urlscan.io",
 "value": 2,
 "group": "Bot of scanner"
+},
+{
+"kind": "source",
+"key": "www.facebook.com",
+"label": "www.facebook.com",
+"value": 1,
+"group": "Social"
 },
 {
 "kind": "source",
@@ -161,7 +42,7 @@
 "kind": "country",
 "key": "US",
 "label": "United States",
-"value": 14,
+"value": 15,
 "group": ""
 },
 {
@@ -182,7 +63,7 @@
 "kind": "country",
 "key": "CA",
 "label": "Canada",
-"value": 2,
+"value": 3,
 "group": ""
 },
 {
@@ -203,14 +84,14 @@
 "kind": "device",
 "key": "phone",
 "label": "Telefoon",
-"value": 12,
+"value": 13,
 "group": ""
 },
 {
 "kind": "device",
 "key": "tablet",
 "label": "Tablet",
-"value": 7,
+"value": 8,
 "group": ""
 },
 {
@@ -224,7 +105,7 @@
 "kind": "browser",
 "key": "Chrome",
 "label": "Chrome",
-"value": 42,
+"value": 43,
 "group": ""
 },
 {
@@ -238,7 +119,7 @@
 "kind": "browser",
 "key": "Safari",
 "label": "Safari",
-"value": 11,
+"value": 12,
 "group": ""
 },
 {
@@ -252,14 +133,14 @@
 "kind": "system",
 "key": "iOS",
 "label": "iOS",
-"value": 11,
+"value": 12,
 "group": ""
 },
 {
 "kind": "system",
 "key": "Linux",
 "label": "Linux",
-"value": 8,
+"value": 9,
 "group": ""
 },
 {
@@ -272,14 +153,14 @@
 {
 "kind": "meta",
 "key": "generated",
-"label": "2026-10-29T04:10:00Z",
+"label": "2026-10-30T04:11:02Z",
 "value": 0,
 "group": ""
 },
 {
 "kind": "meta",
 "key": "start",
-"label": "2026-08-01",
+"label": "2026-08-02",
 "value": 0,
 "group": ""
 }
