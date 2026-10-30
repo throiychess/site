@@ -73,7 +73,7 @@
     "slug": "attack-weak-misplaced-pieces-at-once",
     "title": "Attack weak, misplaced pieces at once",
     "text": "Spot an opponent's misplaced piece, such as a knight on c6 played too early, and put maximum pressure on it with active pieces, for example a bishop on b5 and a queen on a4.",
-    "note": "Checked: sound. Check that the attack does not leave your own pieces loose."
+    "note": "Checked: sound. Check that the attack does not leave your own pieces loose. Another lesson: look for undefended squares and trap or force a defence with a knight or pawn thrust against a vulnerable knight or cut-off piece."
    },
    {
     "slug": "win-back-the-sacrificed-pawn",
@@ -190,6 +190,24 @@
     "title": "A knight plan in the Italian Game",
     "text": "Use a fixed knight manoeuvre (for example Nbd2, then Nf1 and Ng3 or Nf5) and bring your last remaining bishop (from c1) out only when the position really opens.",
     "note": "Checked: a typical plan in the slow Italian (c3, d3, Nbd2-f1-g3)."
+   },
+   {
+    "slug": "a-simple-universal-black-system-against-1-d4",
+    "title": "A simple, universal Black system against 1.d4",
+    "text": "As Black, pick a reliable set-up (such as the Queen's Gambit Declined with ...Nf6 and ...e6/...d5) that you can use against almost any White move, so you do not have to learn thousands of variations.",
+    "note": "Checked: the QGD is a classic system. No system covers everything (the London and Catalan need their own plans), but the core stays the same."
+   },
+   {
+    "slug": "develop-the-kingside-first-then-castle",
+    "title": "Develop the kingside first, then castle",
+    "text": "In this set-up develop your kingside minor pieces (knight and bishop) first and get your king safe with short castling in time.",
+    "note": "Checked: standard."
+   },
+   {
+    "slug": "challenge-the-centre-from-the-flank-c5",
+    "title": "Challenge the centre from the flank (...c5)",
+    "text": "Support your position with flexible pawn structures (such as ...b6, ...Bb7 and the break ...c5) to raise the pressure on White's centre and open lines.",
+    "note": "Checked: a typical plan in Queen's Indian and Benoni-type structures."
    }
   ]
  },
@@ -224,7 +242,7 @@
     "slug": "optimize-improve-your-worst-piece",
     "title": "Optimize: improve your worst piece",
     "text": "When there is no check, capture or forcing threat, improve your passive pieces, starting with the ones still on your back rank (minor pieces first).",
-    "note": "Checked: this is the 'improve your worst piece' rule. For example by bringing a rook to an open or semi-open file."
+    "note": "Checked: this is the 'improve your worst piece' rule. For example by bringing a rook to an open or semi-open file. Do it systematically: find your least active piece (a passive rook or bishop) and bring it to an active (semi-)open file."
    },
    {
     "slug": "improve-with-a-purpose",
@@ -285,6 +303,12 @@
     "title": "Read the pawn structure as a skeleton",
     "text": "Read the structure to see which squares and routes are ideal for your pieces, such as a knight route to f4.",
     "note": "Checked: pawn structure decides where your pieces belong."
+   },
+   {
+    "slug": "park-the-queen-behind-your-pieces-a8-or-b7",
+    "title": "Park the queen behind your pieces (a8 or b7)",
+    "text": "In some closed structures the queen can go to secondary squares such as a8 behind your own pieces, where it builds a battery on a diagonal or file without being exposed to a trade.",
+    "note": "Checked: a real idea (for example ...Qa8 behind a bishop on b7 in some Queen's Indian lines). Only in specific structures."
    }
   ]
  },
@@ -534,6 +558,12 @@
     "title": "Clear the way for a kingside attack (f4 or d4)",
     "text": "In closed positions prepare a break with pawn moves such as d4 or f4, so the lines open and your passive pieces (such as the bishop on c1) suddenly become active.",
     "note": "Checked: a typical plan in closed centres. Prepare it first, and check the pawn weaknesses it creates."
+   },
+   {
+    "slug": "use-the-bishop-pair-against-weak-dark-squares",
+    "title": "Use the bishop pair against weak dark squares",
+    "text": "If you keep the bishop pair, or trade off the enemy defenders, you can invade the weakened squares (such as the dark squares around the enemy king) step by step.",
+    "note": "Checked: a standard strategic theme."
    }
   ]
  },
@@ -654,6 +684,12 @@
     "title": "Trade off a passive defender",
     "text": "If the enemy rook stands passively on the back rank to defend, force exchanges that centralize your own pieces and steer towards the endgame.",
     "note": "Checked: sound, as long as the endgame you reach is actually better for you."
+   },
+   {
+    "slug": "trade-down-when-the-structure-is-equal",
+    "title": "Trade down when the structure is equal",
+    "text": "If your opponent allows a symmetrical or similar structure, do not hesitate to trade minor pieces and simplify into a calm endgame.",
+    "note": "Checked: good for a safe game. If you need to win, keep the tension instead."
    }
   ]
  },
