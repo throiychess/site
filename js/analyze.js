@@ -216,7 +216,7 @@ async function saveReport() {
   const rep = { moments: SHOWN.map((m) => ({ n: m.moveNo, c: m.color, san: m.san, best: m.best, cat: m.cat, loss: Math.round(m.loss), fen: m.fen })) };
   const { error } = await sbc.from("analyses").insert({ site: state.site, username: state.user.slice(0, 40), games: L.results.length, accuracy: +L.acc.toFixed(1), avg_loss: +(L.lossNow / 100).toFixed(3), blunders: L.nB, mistakes: L.nM, inaccuracies: L.nI,
     band: bandName(L.bNow), top_leak: L.order[0] ? P[L.order[0]].t : null, report: rep });
-  box.innerHTML = error ? `<p class="small">${/limit/i.test(error.message || "") ? "You reached the limit of saved reports. Delete older ones on your members page." : "Could not save this report."}</p>` : `<p class="small">&#10003; Saved to your <a href="/members/">members page</a>.</p>`; if (!error) ev("analyze-report-saved");
+  box.innerHTML = error ? `<p class="small">${/limit/i.test(error.message || "") ? "You reached the limit of saved reports. Delete older ones on your members page." : "Could not save this report."}</p>` : `<p class="small">&#10003; Saved to your <a href="/members/#reports">reports</a>.</p>`; if (!error) { ev("analyze-report-saved"); window.dispatchEvent(new Event("az-saved")); }
 }
 function ratingsLine(cur, latest) {
   const R = state.ratings || {}, parts = [["Rapid", R.rapid], ["Blitz", R.blitz], ["Daily", R.daily], [R.puzzlesBest ? "Puzzles (best)" : "Puzzles", R.puzzles]].filter((x) => x[1]);

@@ -314,7 +314,7 @@ nav.links a.cta{order:-2;text-align:center;margin:6px 0 4px;padding:13px 18px!im
 </style>"""
 NAV_JS = """<script>(function(){var h=document.querySelector("header.top"),n=h.querySelector("nav.links"),b=h.querySelector(".burger"),i=false,a="";
 try{var k=Object.keys(localStorage).filter(function(x){return/^sb-.*-auth-token$/.test(x)})[0];if(k){var s=JSON.parse(localStorage.getItem(k));i=!!(s&&s.refresh_token)}a=localStorage.getItem("tc_av")||""}catch(e){}
-if(i){document.documentElement.setAttribute("data-in","1");var g=h.querySelector(".avab");if(g&&a)g.textContent=a}
+if(i){document.documentElement.setAttribute("data-in","1");h.querySelectorAll('a[href="/analyze/"]').forEach(function(x){x.setAttribute("href","/members/#analyze")});var g=h.querySelector(".avab");if(g&&a)g.textContent=a}
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});
 h.querySelectorAll(".ddb,.avab").forEach(function(x){x.addEventListener("click",function(e){var d=x.closest(".dd,.acct-in"),o=d.classList.contains("open");h.querySelectorAll(".open").forEach(function(y){if(y!==n)y.classList.remove("open")});if(!o)d.classList.add("open");x.setAttribute("aria-expanded",!o);e.stopPropagation()})});
 document.addEventListener("click",function(){h.querySelectorAll(".dd.open,.acct-in.open").forEach(function(y){y.classList.remove("open")})});
@@ -333,7 +333,7 @@ def _nav_html(active):
     out.append(f'<a class="cta" href="/improve/"{" aria-current=page" if active == "Improve" else ""}>Improve</a>')
     out.append('<div class="acct"><a class="login acct-out" href="/members/">' + _KEY + 'Log in</a>'
                '<div class="dd acct-in"><button type="button" class="avab" aria-haspopup="true" aria-expanded="false" aria-label="Your account">&#9823;&#xFE0E;</button><div class="ddm">'
-               '<a href="/members/#overview">Overview</a><a href="/members/#reports">My reports</a><a href="/members/#earn">Share &amp; earn</a><a href="/members/#profile">Profile</a><a class="out" href="/members/#logout">Log out</a></div></div></div>')
+               '<a href="/members/#overview">Overview</a><a href="/members/#analyze">Analyze</a><a href="/members/#reports">My reports</a><a href="/members/#earn">Share &amp; earn</a><a href="/members/#profile">Profile</a><a class="out" href="/members/#logout">Log out</a></div></div></div>')
     return "".join(out)
 def header(active=""):
     return promo_bar(active) + NAV_CSS + ('<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt="">'
@@ -685,11 +685,15 @@ svg.mini{width:200px;height:200px;border-radius:8px}svg.mini .lt{fill:#e9dcc0}sv
 svg.mini text{font-size:.82px;text-anchor:middle;font-family:"DejaVu Sans","Segoe UI Symbol",serif}svg.mini .pw{fill:#fff;stroke:#1d1b17;stroke-width:.03}svg.mini .pb{fill:#1d1b17}
 .az-cta{border-radius:14px;background:#1b1813;padding:20px;margin:26px 0 40px}.az-follow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}.az-follow .btn{flex:1 1 0;min-width:0;justify-content:center;text-align:center;padding-inline:8px}.az-replay{margin:8px 10px 4px 0;padding:6px 12px;font-size:13px}.mform{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.mform input{flex:1 1 200px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit}.newsletter .mform input{border:2px solid var(--on-gold);color:var(--on-gold);background:rgba(255,255,255,.35)}.m-soc{display:grid;grid-template-columns:1fr 92px 112px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.m-soc>.small{grid-column:2 / 4;text-align:right}.m-soc .btn{margin:0;width:100%;justify-content:center;text-align:center;padding-inline:6px}.m-row{display:grid;grid-template-columns:90px 1fr auto;gap:4px 12px;align-items:center;padding:11px 14px;border:1px solid #2c2820;border-radius:12px}.m-row .small:nth-child(3){grid-column:2}.m-row .btn{grid-column:3;grid-row:1/3;padding:6px 12px;font-size:13px}.az-pro{border:2px solid #d9a93d;border-radius:14px;padding:18px 20px;margin:24px 0}.az-tips{padding-left:22px}.az-tips li{margin:8px 0}.az-what{border-left:3px solid #d9a93d;padding:4px 0 4px 14px;margin:14px 0}.az-score{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}.az-score div{border:1px solid #2c2820;border-radius:12px;padding:12px 8px;text-align:center}.az-score b{display:block;font-size:26px;color:#d9a93d}.az-score span{font-size:12px;color:#bdb6a8}.az-ph{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}.az-ph div{border:1px solid #2c2820;border-radius:12px;padding:12px;text-align:center}.az-ph .worst{border-color:#d9a93d;background:#1b1813}.az-ph b{display:block;font-size:24px}.az-ph span{font-weight:700}.az-ph small{color:#bdb6a8;font-size:12px}.az-gm{display:grid;gap:8px;margin:10px 0 18px}.az-gm a{display:grid;grid-template-columns:60px 1fr;gap:4px 12px;padding:11px 14px;border:1px solid #2c2820;border-radius:12px;text-decoration:none;color:inherit}.az-gm a .small{grid-column:2}.az-plan{display:grid;gap:12px;margin:10px 0 18px}.az-plan>div:not(:last-child){border:1px solid #2c2820;border-radius:12px;padding:14px 16px}svg.mini .hl2{fill:#4fae6b;opacity:.55}svg.mini .arw{stroke:#4fae6b;stroke-width:.14;stroke-linecap:round;opacity:.9}@media (max-width:560px){.az-score{grid-template-columns:repeat(2,1fr)}}.az-cta{background:var(--gold);color:var(--on-gold)}.az-cta p{color:rgba(20,17,11,.82)}.az-cta .az-follow .btn{border:2px solid var(--on-gold);color:var(--on-gold);font-weight:800}.az-cta hr{border:0;border-top:1px solid #2c2820;margin:20px 0}@media (max-width:560px){.az-m{grid-template-columns:1fr}.az-g{grid-template-columns:auto 52px 1fr}.az-g .small{grid-column:2/-1}}"""
 
-def analyze_page():
+def _tdata():
     tdata = []
     for t in TRAPS:
         bl = [int(k) for k, v in t.get("notes", {}).items() if "BLUNDER" in v[0] or "MISTAKE" in v[0] or "GREED" in v[0]]
         tdata.append({"slug": t["slug"], "name": t["name"], "moves": t["moves"], "side": t["side"], "blunder": max(bl) if bl else None})
+    return tdata
+
+def analyze_page():
+    tdata = _tdata()
     body = header("Analyze") + f'''<style>{AZ_CSS}</style><main class="wrap" style="max-width:900px"><div class="pagehead"><span class="eyebrow">Beta · free</span>
 <h1 class="page">Analyze your games</h1><p>Enter a Chess.com or Lichess username, pick up to 5 games, and see <b>which chess principles</b> cost you the most points, in plain words. Any player works: yours, a friend's, or a grandmaster's.</p></div>
 <form class="az-form" id="az-form"><label class="sr" for="az-site">Site</label><select id="az-site"><option value="chesscom">Chess.com</option><option value="lichess">Lichess</option></select>
@@ -746,7 +750,7 @@ MEM_CSS = """
 .mtwo{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:0 0 22px}
 .mavs{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 26px}.mavb{width:54px;height:54px;border-radius:14px;background:var(--panel);border:1px solid var(--line);color:var(--ink);font-size:28px;cursor:pointer}.mavb:hover{border-color:var(--gold)}.mavb.on{border-color:var(--gold);color:var(--gold);box-shadow:0 0 0 2px #4a3d1c}
 .mbdgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0 26px}.mbdg{border:1px dashed var(--line);border-radius:12px;padding:12px 14px;opacity:.6}.mbdg b{display:block}.mbdg.on{opacity:1;border:1px solid #4a3d1c;background:#1c1810}.mbdg.on b{color:var(--gold)}
-.mview h3{margin:26px 0 8px}
+.mview h3{margin:26px 0 8px}.mview .az-cta{display:none}
 .mcharts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:0 0 20px}.mchart{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 14px 6px}
 .mch{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:4px}.mch span{font-size:14px;color:var(--mute)}.mch .up{color:#9fd5a5}.mch .down{color:#e08a7c}
 .mchart svg{width:100%;height:auto;display:block}.mchart line{stroke:#2c271d}.mchart text{fill:#a59a83;font-size:15px}.mchart polyline{fill:none;stroke:var(--gold);stroke-width:2.5;stroke-linejoin:round}.mchart circle{fill:#17150f;stroke:var(--gold);stroke-width:2}.mchart circle.last{fill:var(--gold)}
@@ -771,7 +775,7 @@ _FEATS = "".join([
  _feat("book", "Courses by rating band", "Clear lessons and exercises, ordered so you always know the next step. Like a coach in your pocket.", _PRO),
  _feat("star", "First in line", "Waitlist members hear first and get their first in-depth analysis free.", _FREE),
 ])
-_NAV = [("overview", "home", "Overview", ""), ("reports", "chart", "My reports", ""), ("training", "book", "Training", '<span class="mbadge">Soon</span>'),
+_NAV = [("overview", "home", "Overview", ""), ("analyze", "target", "Analyze", ""), ("reports", "chart", "My reports", ""), ("training", "book", "Training", '<span class="mbadge">Soon</span>'),
         ("puzzles", "puzzle", "Puzzles", '<span class="mbadge">Soon</span>'), ("earn", "gift", "Share & earn", ""), ("plan", "star", "Premium", ""), ("profile", "user", "Profile", "")]
 _NAVH = "".join(f'<a href="#{k}" data-v="{k}">{_ic(i)}<span>{t}</span>{bd}</a>' for k, i, t, bd in _NAV)
 _COURSES = [("Stop hanging pieces", "The 3-second check before every move. Ends most blunders at every level.", "Foundations"),
@@ -799,7 +803,12 @@ def members_page():
 <div class="mstats" id="m-stats"></div><div class="mnext" id="m-next"></div>
 <div class="mpromo"><h3>The improvement program is coming</h3><p>Deeper analysis, puzzles made from your own mistakes and courses by rating band. Join the waitlist and get your first in-depth analysis free.</p><a class="btn" href="/improve/">Join the waitlist</a></div>
 </section>
-<section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-charts"></div><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="/analyze/">Analyze new games</a></p></section>
+<section class="mview" data-view="analyze" hidden><h2>Analyze games</h2><p class="lead">Pick a site and username, choose up to 5 games and get your report. It is saved here automatically.</p>
+<form class="az-form" id="az-form"><label class="sr" for="az-site">Site</label><select id="az-site"><option value="chesscom">Chess.com</option><option value="lichess">Lichess</option></select>
+<label class="sr" for="az-user">Username</label><input id="az-user" placeholder="Username" autocomplete="off" required><button class="btn solid" type="submit">Find games</button></form>
+<div id="az-games"></div><div id="az-report"></div>
+<p class="small" style="margin:24px 0 10px">The analysis runs in your own browser with Stockfish 17.1. Games are loaded from the public Chess.com and Lichess APIs.</p></section>
+<section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-charts"></div><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="#analyze">Analyze new games</a></p></section>
 <section class="mview" data-view="training" hidden><h2>Training</h2><p class="lead">Courses by rating band, with exercises after every lesson. They open with the improvement program. Until then, start with the free kit.</p>
 <div class="mnext"><p><b>Free now:</b> the 10 Opening Traps, with a quiz made for your phone.</p><a class="btn solid" href="/traps/">Open the traps</a></div><div class="mcourse">{_COURSEH}</div></section>
 <section class="mview" data-view="puzzles" hidden><h2>Puzzles</h2><p class="lead">Pattern recognition is what makes you win. Your puzzles come from your own games, so you train exactly what you miss.</p>
@@ -818,7 +827,7 @@ def members_page():
 <section class="mview" data-view="profile" hidden><h2>Profile</h2><p class="lead">Add your usernames so the analyzer is one click away.</p>
 <form class="mform" id="m-prof"><label class="sr" for="m-name">Name</label><input id="m-name" placeholder="Name (optional)" maxlength="60"><label class="sr" for="m-cc">Chess.com username</label><input id="m-cc" placeholder="Chess.com username" maxlength="40"><label class="sr" for="m-li">Lichess username</label><input id="m-li" placeholder="Lichess username" maxlength="40"><button class="btn solid" type="submit">Save</button><span class="small" id="m-pmsg"></span></form>
 <div class="mfoot">Your data is stored in the EU and visible only to you and us. <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a><p style="margin:14px 0 0"><button class="btn" type="button" id="m-del">Delete my account and all my data</button> <span class="small" id="m-delmsg"></span></p></div></section>
-</div></div></main>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}{('<script src="https://accounts.google.com/gsi/client" async defer></script><script>window.G_ID="794037102761-cb6a8qinqp5n98ptggid81ep1ji2b0q9.apps.googleusercontent.com"</script>') if GOOGLE_LOGIN else ''}<script src="/js/members.js"></script>''' + footer(band=False, nl=False)
+</div></div></main>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}{('<script src="https://accounts.google.com/gsi/client" async defer></script><script>window.G_ID="794037102761-cb6a8qinqp5n98ptggid81ep1ji2b0q9.apps.googleusercontent.com"</script>') if GOOGLE_LOGIN else ''}<script type="application/json" id="trap-data">{json.dumps(_tdata())}</script><script src="/js/members.js"></script><script type="module" src="/js/analyze.js"></script>''' + footer(band=False, nl=False)
     return "/members/", page("/members/", "Members · Throiy Chess", "Log in to save your analysis reports and track your progress.", body)
 
 def improve_page():
