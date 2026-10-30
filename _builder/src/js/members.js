@@ -25,9 +25,13 @@ async function drawAnalyses() {
   let trend = ""; if (data.length >= 2) { const d = (data[0].avg_loss - data[data.length - 1].avg_loss); trend = `<p class="az-what"><b>Pawns lost per move:</b> ${Number(data[data.length - 1].avg_loss).toFixed(2)} &rarr; ${Number(data[0].avg_loss).toFixed(2)} (${d <= 0 ? "" : "+"}${d.toFixed(2)} since your first saved report). Lower is better.</p>`; }
   box.innerHTML = trend + `<div class="az-gm">` + data.map((a) => `<div class="m-row"><span class="small">${new Date(a.created_at).toLocaleDateString()}</span><span><b>${esc(a.username)}</b> <span class="small">${a.site === "chesscom" ? "Chess.com" : "Lichess"} &middot; ${a.games} game${a.games > 1 ? "s" : ""}</span></span><span class="small">${Number(a.accuracy).toFixed(0)}% accuracy &middot; ${Number(a.avg_loss).toFixed(2)} pawns/move${a.band ? " &middot; looks like " + esc(a.band) : ""}</span><button class="btn" type="button" data-del="${a.id}">Delete</button></div>`).join("") + `</div>`;
 }
+let hcId = null, hcTok = null;
+function hcInit() { if (!window.TS_KEY || hcId !== null) return; if (!window.turnstile) return setTimeout(hcInit, 300); hcId = window.turnstile.render("#m-hc", { sitekey: window.TS_KEY, callback: (t) => { hcTok = t; }, "expired-callback": () => { hcTok = null; } }); }
+hcInit();
 $("#m-form").addEventListener("submit", async (e) => {
-  e.preventDefault(); const email = $("#m-mail").value.trim(), msg = $("#m-msg"); if (!email) return; msg.textContent = "Sending…"; ev("members-login-request");
-  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + "/members/", shouldCreateUser: true } });
+  e.preventDefault(); const email = $("#m-mail").value.trim(), msg = $("#m-msg"); if (!email) return; if (window.TS_KEY && !hcTok) { msg.textContent = "Please wait a second while we check that you are human, then try again."; return; } msg.textContent = "Sending…"; ev("members-login-request");
+  const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + "/members/", shouldCreateUser: true, ...(hcTok ? { captchaToken: hcTok } : {}) } });
+  if (window.turnstile && hcId !== null) { window.turnstile.reset(hcId); hcTok = null; }
   msg.textContent = error ? (error.status === 429 ? "Too many tries. Please wait a few minutes." : "That did not work. Check the address and try again.") : "Check your inbox: we sent you a login link. Open it on this device.";
 });
 $("#m-prof").addEventListener("submit", async (e) => { e.preventDefault(); const s = (await sb.auth.getSession()).data.session; if (!s) return;
