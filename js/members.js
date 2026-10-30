@@ -95,7 +95,7 @@ async function gInit() {
   const raw = Array.from(crypto.getRandomValues(new Uint8Array(16)), (x) => x.toString(16).padStart(2, "0")).join("");
   const hashed = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(raw))), (x) => x.toString(16).padStart(2, "0")).join("");
   google.accounts.id.initialize({ client_id: window.G_ID, nonce: hashed, ux_mode: "popup", callback: async (r) => { ev("members-login-google"); const { error } = await sb.auth.signInWithIdToken({ provider: "google", token: r.credential, nonce: raw }); if (error) { $("#m-msg").textContent = "Google login did not work. Try the e-mail link instead."; } } });
-  google.accounts.id.renderButton(box, { type: "standard", theme: "outline", size: "large", text: "continue_with", shape: "pill", width: 360 });
+  google.accounts.id.renderButton(box, { type: "standard", theme: "outline", size: "large", text: "continue_with", shape: "pill", width: Math.max(200, Math.min(360, Math.floor(box.getBoundingClientRect().width) || 360)) });
 }
 gInit();
 $("#m-prof").addEventListener("submit", async (e) => { e.preventDefault(); const s = (await sb.auth.getSession()).data.session; if (!s) return;
