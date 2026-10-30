@@ -237,6 +237,7 @@ form.contact{display:grid;gap:18px;max-width:620px}
 """
 e = html.escape
 
+GOOGLE_LOGIN = False  # set True after enabling the Google provider in Supabase
 TURNSTILE_SITEKEY = "0x4AAAAAAFso4wm5naB8oZGB"  # public Cloudflare Turnstile site key (secret lives in Supabase Auth > Attack Protection)
 
 def csp(path=""):
@@ -271,17 +272,54 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             + ('<meta name="robots" content="noindex,nofollow">' if path == '/members/' else '')
             + f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}</body></html>')
 
-NAV = [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Traps", "/traps/"), ("Analyze", "/analyze/"), ("Members", "/members/"), ("Top games", "/#top-games"), ("About", "/#about"), ("Contact", "/contact/"), ("Support", "/support/")]
 def promo_bar(active):
     if active == "Free": return ""
     return ('<div class="promo"><div class="wrap"><span>Free: 10 Opening Traps cheat sheet + quiz, made for your phone.</span>'
             '<a data-ev="promo-bar-click" href="/free/?utm_source=site&amp;utm_campaign=promo-bar">Get it free &rarr;</a>'
             '<button class="promo-x" type="button" aria-label="Close" onclick="try{sessionStorage.setItem(\'promo\',1)}catch(e){}this.closest(\'.promo\').remove()">&times;</button></div></div>'
             '<script>try{if(sessionStorage.getItem("promo"))document.querySelector(".promo").remove()}catch(e){}</script>')
+NAVG = [("Watch", [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Top games", "/#top-games")]),
+        ("Train", [("Traps", "/traps/"), ("Analyze", "/analyze/"), ("Premium", "/improve/")]),
+        ("Members", "/members/"), ("About", [("About", "/#about"), ("Contact", "/contact/")]), ("Support", "/support/")]
+NAV = [(n, u) for g, x in NAVG for (n, u) in (x if isinstance(x, list) else [(g, x)])]
+NAV_CSS = """<style>
+nav.links{overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;width:auto!important;flex-wrap:nowrap!important;gap:0 22px!important;align-items:center}
+.ddb{font:inherit;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:none;border:0;cursor:pointer;padding:8px 0}
+.ddb::after{content:"";display:inline-block;width:5px;height:5px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);margin:0 0 3px 8px}
+.dd{position:relative}.dd:hover .ddb,.dd.cur .ddb,.dd.open .ddb{color:var(--gold)}
+.ddm{display:none;position:absolute;top:100%;left:-14px;min-width:200px;padding:8px;background:#17150f;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.dd:hover .ddm,.dd:focus-within .ddm,.dd.open .ddm{display:block}
+.ddm a{display:block;padding:10px 12px!important;border-radius:9px;white-space:nowrap}.ddm a:hover{background:#221d10}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:9px 12px;font:inherit;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+nav.links a.members{color:var(--gold);border:1px solid #4a3d1c;border-radius:99px;padding:6px 14px!important}
+@media(max-width:860px){.burger{display:block}header.top .wrap{flex-wrap:wrap}
+nav.links{display:none!important;order:3;width:100%!important;flex-direction:column;align-items:stretch!important;gap:2px!important;padding:4px 0 14px}
+nav.links.open{display:flex!important}
+.ddb{pointer-events:none;font-size:11.5px;color:#7d745f;padding:12px 0 2px;text-align:left}.ddb::after{display:none}
+.ddm{display:block;position:static;background:none;border:0;box-shadow:none;padding:0 0 0 0;min-width:0}
+.ddm a,nav.links>a{padding:11px 4px!important;font-size:15px!important}nav.links a.members{display:inline-block;align-self:flex-start;margin:8px 0}}
+</style>"""
+NAV_JS = """<script>(function(){var h=document.querySelector("header.top"),n=h.querySelector("nav.links"),b=h.querySelector(".burger");
+b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});
+h.querySelectorAll(".ddb").forEach(function(x){x.addEventListener("click",function(e){var d=x.parentNode,o=d.classList.contains("open");h.querySelectorAll(".dd.open").forEach(function(y){y.classList.remove("open")});if(!o)d.classList.add("open");x.setAttribute("aria-expanded",!o);e.stopPropagation()})});
+document.addEventListener("click",function(){h.querySelectorAll(".dd.open").forEach(function(y){y.classList.remove("open")})});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){h.querySelectorAll(".dd.open").forEach(function(y){y.classList.remove("open")});n.classList.remove("open")}})})();</script>"""
+def _nl(n, u, active):
+    cls = " class=support" if n == "Support" else (" class=members" if n == "Members" else "")
+    return f'<a href="{u}"{cls}{" aria-current=page" if n == active else ""}>{n}</a>'
+def _nav_html(active):
+    out = []
+    for g, x in NAVG:
+        if isinstance(x, list):
+            cur = " cur" if any(n == active for n, _ in x) else ""
+            out.append(f'<div class="dd{cur}"><button type="button" class="ddb" aria-haspopup="true" aria-expanded="false">{g}</button><div class="ddm">' + "".join(_nl(n, u, active) for n, u in x) + '</div></div>')
+        else:
+            out.append(_nl(g, x, active))
+    return "".join(out)
 def header(active=""):
-    return promo_bar(active) + ('<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt="">'
-            '<span>THROIY<b>CHESS</b></span></a><nav class="links" aria-label="Main">'
-            + "".join(f'<a href="{u}"{" class=support" if n == "Support" else ""}{" aria-current=page" if n == active else ""}>{n}</a>' for n, u in NAV) + '</nav></div></header>')
+    return promo_bar(active) + NAV_CSS + ('<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt="">'
+            '<span>THROIY<b>CHESS</b></span></a><button class="burger" type="button" aria-controls="mainnav" aria-expanded="false">Menu</button><nav class="links" id="mainnav" aria-label="Main">'
+            + _nav_html(active) + '</nav></div></header>') + NAV_JS
 
 def support_bar():
     return ('<div class="wrap"><div class="supportbar"><p><strong>Enjoying the lessons?</strong> They stay free. A small tip keeps new traps coming every day.</p>'
@@ -683,6 +721,17 @@ MEM_CSS = """
 .mcmp th{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);background:var(--panel2)}.mcmp th:last-child,.mcmp td:last-child{color:var(--gold)}
 .mcmp td:nth-child(n+2),.mcmp th:nth-child(n+2){text-align:center;width:22%}
 .mfoot{font-size:13.5px;color:var(--mute);margin-top:34px;border-top:1px solid var(--line);padding-top:16px}
+.mava{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#221d10;border:1px solid #4a3d1c;color:var(--gold);font-size:19px;line-height:1;vertical-align:middle;margin-right:8px}.mava.big{width:64px;height:64px;font-size:36px;margin:0}
+.mlv{display:flex;gap:16px;align-items:center}.mlv b{font-size:22px}.mflame{font-size:40px;line-height:1}.mlv>div{flex:1;min-width:0}
+.mbar{height:8px;border-radius:99px;background:#2a2417;margin:8px 0 6px;overflow:hidden}.mbar i{display:block;height:100%;background:var(--gold);border-radius:99px}
+.mtwo{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:0 0 22px}
+.mavs{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 26px}.mavb{width:54px;height:54px;border-radius:14px;background:var(--panel);border:1px solid var(--line);color:var(--ink);font-size:28px;cursor:pointer}.mavb:hover{border-color:var(--gold)}.mavb.on{border-color:var(--gold);color:var(--gold);box-shadow:0 0 0 2px #4a3d1c}
+.mbdgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:8px 0 26px}.mbdg{border:1px dashed var(--line);border-radius:12px;padding:12px 14px;opacity:.6}.mbdg b{display:block}.mbdg.on{opacity:1;border:1px solid #4a3d1c;background:#1c1810}.mbdg.on b{color:var(--gold)}
+.mview h3{margin:26px 0 8px}
+.mcharts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin:0 0 20px}.mchart{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 14px 6px}
+.mch{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:4px}.mch span{font-size:14px;color:var(--mute)}.mch .up{color:#9fd5a5}.mch .down{color:#e08a7c}
+.mchart svg{width:100%;height:auto;display:block}.mchart line{stroke:#2c271d}.mchart text{fill:#a59a83;font-size:11px}.mchart polyline{fill:none;stroke:var(--gold);stroke-width:2.5;stroke-linejoin:round}.mchart circle{fill:#17150f;stroke:var(--gold);stroke-width:2}.mchart circle.last{fill:var(--gold)}
+.mgbtn{display:block;width:100%;margin:0 0 10px;background:#fff;color:#1b1b1b;border:0;border-radius:10px;padding:12px;font:inherit;font-weight:700;cursor:pointer}
 @media(max-width:860px){.mapp{grid-template-columns:1fr;gap:14px;padding-top:14px}.mnav{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:6px;scrollbar-width:none;margin:0 -16px;padding-inline:16px}
 .mnav::-webkit-scrollbar{display:none}.mnav a{white-space:nowrap;padding:9px 13px;background:var(--panel)}.mnav .mbadge,.mwho{display:none}.mcmp th,.mcmp td{padding:11px 9px;font-size:14px}}
 """
@@ -690,7 +739,7 @@ _ICO = {
  "home": '<path d="M3 11l9-8 9 8M5 10v10h14V10"/>', "chart": '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
  "book": '<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2zM4 21V5M8 7h7"/>', "puzzle": '<path d="M9 3h5v3a2 2 0 104 0V3h3v6h-3a2 2 0 100 4h3v8H9v-3a2 2 0 10-4 0v3H3v-8h3a2 2 0 100-4H3V3z" transform="scale(.9) translate(1.3 1.3)"/>',
  "star": '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>', "user": '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
- "bolt": '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', "target": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12l7-7"/>', "lock": '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 118 0v3"/>',
+ "bolt": '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>', "target": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12l7-7"/>', "gift": '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M5 12v9h14v-9M12 8c-2-4-6-4-5-1s5 1 5 1zM12 8c2-4 6-4 5-1s-5 1-5 1z"/>', "flame": '<path d="M12 3c1 4 5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4 0-6 1-9z"/>', "lock": '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 118 0v3"/>',
 }
 def _ic(k): return f'<svg viewBox="0 0 24 24" aria-hidden="true">{_ICO[k]}</svg>'
 def _feat(k, t, d, tag): return f'<div class="mcard"><span class="mbadge {tag[0]}">{tag[1]}</span><div class="mico">{_ic(k)}</div><h3>{t}</h3><p>{d}</p></div>'
@@ -704,7 +753,7 @@ _FEATS = "".join([
  _feat("star", "First in line", "Waitlist members hear first and get their first in-depth analysis free.", _FREE),
 ])
 _NAV = [("overview", "home", "Overview", ""), ("reports", "chart", "My reports", ""), ("training", "book", "Training", '<span class="mbadge">Soon</span>'),
-        ("puzzles", "puzzle", "Puzzles", '<span class="mbadge">Soon</span>'), ("plan", "star", "Premium", ""), ("profile", "user", "Profile", "")]
+        ("puzzles", "puzzle", "Puzzles", '<span class="mbadge">Soon</span>'), ("earn", "gift", "Share & earn", ""), ("plan", "star", "Premium", ""), ("profile", "user", "Profile", "")]
 _NAVH = "".join(f'<a href="#{k}" data-v="{k}">{_ic(i)}<span>{t}</span>{bd}</a>' for k, i, t, bd in _NAV)
 _COURSES = [("Stop hanging pieces", "The 3-second check before every move. Ends most blunders at every level.", "Foundations"),
             ("Opening traps that win material", "Ten traps with the mistakes that trigger them. The free kit is the first taste.", "Foundations"),
@@ -716,28 +765,36 @@ _COURSEH = "".join(f'<div class="mcard"><span class="mbadge pro">Premium</span><
 _CMP = "".join(f"<tr><td>{a}</td><td>{x}</td><td>{y}</td></tr>" for a, x, y in [
   ("Free analyzer (5 games)", "&#10003;", "&#10003;"), ("Saved reports + progress chart", "&#10003;", "&#10003;"), ("10 Opening Traps kit", "&#10003;", "&#10003;"),
   ("Any number of games", "&ndash;", "&#10003;"), ("Deeper engine analysis", "&ndash;", "&#10003;"), ("Puzzles from your own mistakes", "&ndash;", "&#10003;"), ("Courses by rating band", "&ndash;", "&#10003;")])
+_CMPT = '<table class="mcmp"><thead><tr><th>What you get</th><th>Free</th><th>Premium</th></tr></thead><tbody>' + _CMP + '</tbody></table>'
 
 def members_page():
     body = header("Members") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw">
 <div id="m-login"><div class="mhero"><span class="eyebrow">Members</span><h1>Fix what costs you games.</h1><p>Your own page with your reports, your progress and, soon, training built from your mistakes. Free to join, no password.</p></div>
 <div class="mgrid">{_FEATS}</div>
 <div class="newsletter mlogin" style="grid-template-columns:1fr"><div><strong>Log in or create your free account</strong><p>Enter your e-mail address. We send a link; opening it confirms the address and logs you in.</p></div>
-<form class="mform" id="m-form"><label class="sr" for="m-mail">E-mail address</label><input id="m-mail" type="email" placeholder="Your e-mail" autocomplete="email" required maxlength="200"><button class="btn solid" type="submit">Send me a login link</button><div id="m-hc" style="flex-basis:100%"></div><p class="small" id="m-msg" role="status" aria-live="polite" style="flex-basis:100%;margin:0"></p></form></div></div>
+{('<button class="mgbtn" type="button" id="m-google">Continue with Google</button>' if GOOGLE_LOGIN else '')}<form class="mform" id="m-form"><label class="sr" for="m-mail">E-mail address</label><input id="m-mail" type="email" placeholder="Your e-mail" autocomplete="email" required maxlength="200"><button class="btn solid" type="submit">Send me a login link</button><div id="m-hc" style="flex-basis:100%"></div><p class="small" id="m-msg" role="status" aria-live="polite" style="flex-basis:100%;margin:0"></p></form></div></div>
 <div id="m-app" class="mapp" hidden>
-<div><nav class="mnav" aria-label="Members">{_NAVH}<div class="mwho">Logged in as<b id="m-email"></b><button class="btn" type="button" id="m-out" style="margin-top:10px">Log out</button></div></nav></div>
+<div><nav class="mnav" aria-label="Members">{_NAVH}<div class="mwho"><span class="mava" id="m-ava">&#9823;&#xFE0E;</span><span class="small">Logged in as</span><b id="m-email"></b><button class="btn" type="button" id="m-out" style="margin-top:10px">Log out</button></div></nav></div>
 <div>
 <section class="mview" data-view="overview"><h2 id="m-hello">Welcome</h2><p class="lead">Your Throiy Chess home. Everything you saved and what to do next.</p>
 <div class="mstats" id="m-stats"></div><div class="mnext" id="m-next"></div>
 <div class="mpromo"><h3>The improvement program is coming</h3><p>Deeper analysis, puzzles made from your own mistakes and courses by rating band. Join the waitlist and get your first in-depth analysis free.</p><a class="btn" href="/improve/">Join the waitlist</a></div>
-<h3>Follow Throiy Chess</h3><div id="m-soc"></div><p class="small" id="m-socmsg"></p></section>
-<section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="/analyze/">Analyze new games</a></p></section>
+</section>
+<section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-charts"></div><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="/analyze/">Analyze new games</a></p></section>
 <section class="mview" data-view="training" hidden><h2>Training</h2><p class="lead">Courses by rating band, with exercises after every lesson. They open with the improvement program. Until then, start with the free kit.</p>
 <div class="mnext"><p><b>Free now:</b> the 10 Opening Traps, with a quiz made for your phone.</p><a class="btn solid" href="/traps/">Open the traps</a></div><div class="mcourse">{_COURSEH}</div></section>
 <section class="mview" data-view="puzzles" hidden><h2>Puzzles</h2><p class="lead">Pattern recognition is what makes you win. Your puzzles come from your own games, so you train exactly what you miss.</p>
 <ol class="msteps"><li><span><b>You analyze your games.</b><br><span class="small">The same free analyzer you use now.</span></span></li><li><span><b>We find the patterns you miss.</b><br><span class="small">Forks, pins, loose pieces: whatever cost you the most.</span></span></li><li><span><b>You train on puzzles built from them.</b><br><span class="small">Short sessions, a score and a streak.</span></span></li></ol>
 <div class="mpromo"><h3>Opens with the improvement program</h3><p>Join the waitlist and be first in.</p><a class="btn" href="/improve/">Join the waitlist</a></div></section>
+<section class="mview" data-view="earn" hidden><h2>Share &amp; earn</h2><p class="lead">Collect points, keep your streak and unlock badges. Rewards grow as the program grows.</p>
+<div class="mtwo"><div class="mcard" id="m-level"></div><div class="mcard" id="m-streak"></div></div>
+<h3>Your avatar</h3><div class="mavs" id="m-av"></div>
+<h3>Badges</h3><div class="mbdgs" id="m-badges"></div>
+<h3>Follow Throiy Chess</h3><div id="m-soc"></div><p class="small" id="m-socmsg"></p>
+<h3>Coming rewards</h3><div class="mnext"><p>Avatar frames and a badge next to your name, a free in-depth analysis when the program starts, and a free month for friends you invite. Points you collect now count.</p></div>
+</section>
 <section class="mview" data-view="plan" hidden><h2>Premium</h2><p class="lead">Free gets you the analyzer and your progress. Premium goes deeper and builds training around you.</p>
-<table class="mcmp"><thead><tr><th>What you get</th><th>Free</th><th>Premium</th></tr></thead><tbody>{_CMP}</tbody></table>
+{_CMPT}
 <div class="mpromo"><h3>Premium opens soon</h3><p>Price and start date follow at launch. Waitlist members hear first and get their first in-depth analysis free.</p><a class="btn" href="/improve/">Join the waitlist</a></div></section>
 <section class="mview" data-view="profile" hidden><h2>Profile</h2><p class="lead">Add your usernames so the analyzer is one click away.</p>
 <form class="mform" id="m-prof"><label class="sr" for="m-name">Name</label><input id="m-name" placeholder="Name (optional)" maxlength="60"><label class="sr" for="m-cc">Chess.com username</label><input id="m-cc" placeholder="Chess.com username" maxlength="40"><label class="sr" for="m-li">Lichess username</label><input id="m-li" placeholder="Lichess username" maxlength="40"><button class="btn solid" type="submit">Save</button><span class="small" id="m-pmsg"></span></form>
@@ -746,10 +803,10 @@ def members_page():
     return "/members/", page("/members/", "Members · Throiy Chess", "Log in to save your analysis reports and track your progress.", body)
 
 def improve_page():
-    body = header("Improve") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Coming soon · waitlist</span>
+    body = header("Premium") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Coming soon · waitlist</span>
 <h1 class="page">The Throiy Chess improvement program</h1>
 <p>The free analyzer finds your biggest mistakes in 5 games. The program goes further: a stronger engine looking deeper, all your games, and training built from your own mistakes.</p></div>
-<div class="twocol" style="padding-bottom:40px"><div class="prose"><h2>What you get</h2>
+<style>{MEM_CSS}</style><div class="twocol" style="padding-bottom:40px"><div class="prose"><h2>What you get</h2>
 <ul><li><b>Deeper analysis</b> with a stronger engine and more depth, so the better move is also the right one</li><li><b>Any number of games</b>, not just 5</li><li><b>Puzzles made for you</b>: pattern recognition is what makes you win, so we build puzzles from the patterns you miss in your own games</li><li><b>Progress you can see</b>: score per session, streaks, and pawns lost per move over time</li><li><b>A rating guide</b>: which rating band your play matches, and what moves you up</li></ul>
 <p class="small">Price and start date are not set yet. Waitlist members hear first, and get the first analysis free.</p></div>
 <div><div class="newsletter" style="margin:0;grid-template-columns:1fr"><div><strong>Join the waitlist</strong><p>One confirmation mail to check your address. No spam, unsubscribe in one click.</p></div>
@@ -759,7 +816,8 @@ def improve_page():
 <input type="hidden" name="ml-submit" value="1"><input type="hidden" name="anticsrf" value="true">
 <div class="hp" aria-hidden="true"><input type="text" name="nl_website" tabindex="-1" autocomplete="off"></div>
 <button class="btn solid" type="submit">Join the waitlist</button>
-<p class="nl-msg small" role="status" aria-live="polite"></p></form></div></div></div></main>''' + footer(band=False, nl=False)
+<p class="nl-msg small" role="status" aria-live="polite"></p></form></div></div>
+<h2 style="margin-top:50px">Free and Premium</h2><div class="mgrid">{_FEATS}</div>{_CMPT}</div></main>''' + footer(band=False, nl=False)
     return "/improve/", page("/improve/", "Improvement program waitlist · Throiy Chess", "Join the waitlist for deeper chess analysis, your own puzzles and progress tracking.", body)
 
 def terms():
