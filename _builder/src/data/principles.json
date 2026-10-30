@@ -129,6 +129,12 @@
     "title": "Choose the active square over the default routine",
     "text": "Do not follow standard patterns blindly (such as automatically fianchettoing on g2). Put a piece on the square where it creates specific danger and controls key diagonals or pins, even if it looks unusual at first sight (for example Bd3 or Be2 instead of Bg2).",
     "note": "Checked. Softened: the standard squares are standard for a reason, so the exception needs a concrete reason in the position."
+   },
+   {
+    "slug": "develop-quickly-time-matters",
+    "title": "Develop quickly: time matters",
+    "text": "Bring your pieces into the game quickly and directly. Do not waste precious time on distractions or aimless moves; focus on fast, efficient development, so you can outnumber the opponent later on.",
+    "note": "Checked. Same idea as: finish development before you attack, and be economical with your moves."
    }
   ]
  },
@@ -659,29 +665,12 @@
     "title": "Activity can be worth more than material",
     "text": "Material is worth little if all your pieces are passive. A sacrifice can be justified if your other pieces keep active pressure, threaten the opponent and keep the initiative. Quality of activity beats quantity of pawns and pieces.",
     "note": "Softened: a guideline for calculated sacrifices. Unsound sacrifices lose; check that the pressure is lasting and that the opponent has no safe way to return the material."
-   }
-  ]
- },
- {
-  "group": "The T.A.L. formula",
-  "items": [
-   {
-    "slug": "t-a-l-formula-time",
-    "title": "T.A.L. formula: Time",
-    "text": "Bring your pieces into the game quickly and directly. Do not waste precious time on distractions or aimless moves; focus on fast, efficient development, so you can outnumber the opponent later on.",
-    "note": "Checked. Same idea as: finish development before you attack, and be economical with your moves."
    },
    {
-    "slug": "t-a-l-formula-activity",
-    "title": "T.A.L. formula: Activity",
+    "slug": "judge-activity-by-squares-controlled-and-mobility",
+    "title": "Judge activity by squares controlled and mobility",
     "text": "Activity means the number of squares you control and the dynamic value of your pieces. If you win a passive rook or piece in a corner but lose your active bishops and knights for it, you give away valuable dominance. Keep active pieces on the board and push the opponent into a passive role.",
     "note": "Softened: activity is not a replacement for material. Count both, and check how long the activity lasts."
-   },
-   {
-    "slug": "t-a-l-formula-liquidate-the-key-defenders",
-    "title": "T.A.L. formula: Liquidate the key defenders",
-    "text": "An attack often fails because specific key pieces (such as a bishop or a defending knight) hold the enemy king together. To make the attack succeed, deliberately remove or deflect those key defenders.",
-    "note": "Checked. See also: remove the defending bishop."
    }
   ]
  },
@@ -825,6 +814,12 @@
     "title": "Punish a king stuck in the centre",
     "text": "If the opponent fails to castle in time and leaves the king in the middle, often behind a weakened pawn shield such as e6 and f7, act at once: open the centre and create strong threats, with a sacrifice if needed.",
     "note": "Softened: only when you are better developed. If your own pieces are not out yet, opening the centre can backfire."
+   },
+   {
+    "slug": "eliminate-the-key-defenders-of-the-king",
+    "title": "Eliminate the key defenders of the king",
+    "text": "An attack often fails because specific key pieces (such as a bishop or a defending knight) hold the enemy king together. To make the attack succeed, deliberately remove or deflect those key defenders.",
+    "note": "Checked. See also: remove the defending bishop."
    }
   ]
  },
