@@ -780,7 +780,7 @@ _FEATS = "".join([
  _feat("star", "First in line", "Waitlist members hear first and get their first in-depth analysis free.", _FREE),
 ])
 _NAV = [("overview", "home", "Overview", ""), ("analyze", "target", "Analyze", ""), ("reports", "chart", "My reports", ""), ("training", "book", "Training", '<span class="mbadge">Soon</span>'),
-        ("puzzles", "puzzle", "Puzzles", '<span class="mbadge">Pro</span>'), ("earn", "gift", "Share & earn", ""), ("plan", "star", "Premium", ""), ("profile", "user", "Profile", "")]
+        ("library", "book", "Library", ""), ("puzzles", "puzzle", "Puzzles", '<span class="mbadge">Pro</span>'), ("earn", "gift", "Share & earn", ""), ("plan", "star", "Premium", ""), ("profile", "user", "Profile", "")]
 _NAVH = "".join(f'<a href="#{k}" data-v="{k}">{_ic(i)}<span>{t}</span>{bd}</a>' for k, i, t, bd in _NAV)
 _COURSES = [("Stop hanging pieces", "The 3-second check before every move. Ends most blunders at every level.", "Foundations"),
             ("Opening traps that win material", "Ten traps with the mistakes that trigger them. The free kit is the first taste.", "Foundations"),
@@ -817,7 +817,8 @@ def members_page():
 <p class="small" style="margin:24px 0 10px">The analysis runs in your own browser with Stockfish 17.1. Games are loaded from the public Chess.com and Lichess APIs.</p></section>
 <section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-charts"></div><div id="m-share" style="margin:20px 0"></div><div id="m-ins"></div><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="#analyze">Analyze new games</a></p></section>
 <section class="mview" data-view="training" hidden><h2>Training</h2><p class="lead">Your weekly plan, your openings and the principles behind your reports. Courses by rating band follow.</p>
-<div class="mnext"><p><b>Free now:</b> the 10 Opening Traps, with a quiz made for your phone.</p><a class="btn solid" href="/traps/">Open the traps</a></div><div id="m-plan" style="margin-top:20px"></div><div id="m-open" style="margin-top:20px"></div><div id="m-princ" style="margin-top:20px"></div><div class="mcourse">{_COURSEH}</div></section>
+<div class="mnext"><p><b>Free now:</b> the 10 Opening Traps, with a quiz made for your phone.</p><a class="btn solid" href="/traps/">Open the traps</a></div><div id="m-plan" style="margin-top:20px"></div><div id="m-open" style="margin-top:20px"></div><div class="mcourse">{_COURSEH}</div></section>
+<section class="mview" data-view="library" hidden><h2>Library</h2><p class="lead">Chess principles distilled by Throiy Chess, matched to your own games.</p><div id="m-princ"></div></section>
 <section class="mview" data-view="puzzles" hidden><h2>Puzzles</h2><p class="lead">Pattern recognition is what makes you win. Your puzzles come from your own games, so you train exactly what you miss.</p>
 <div id="m-puz"></div><div id="m-puz-static"><ol class="msteps"><li><span><b>You analyze your games.</b><br><span class="small">The same free analyzer you use now.</span></span></li><li><span><b>We find the patterns you miss.</b><br><span class="small">Forks, pins, loose pieces: whatever cost you the most.</span></span></li><li><span><b>You train on puzzles built from them.</b><br><span class="small">Short sessions, a score and a streak.</span></span></li></ol>
 </div></section>

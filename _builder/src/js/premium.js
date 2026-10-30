@@ -92,25 +92,48 @@
     var ex = PZ.filter(function (p) { return p.k === k; }).slice(0, 3); if (!ex.length || !window.__azBoard) return "<br><span class=\"small\">No examples from your games yet. They appear here when this pattern shows up in your reports.</span>";
     return "<details style=\"margin-top:8px\"><summary><b>" + ex.length + " example" + (ex.length > 1 ? "s" : "") + " from your own games</b></summary>" + ex.map(function (p) { return "<div style=\"margin:10px 0;max-width:300px\">" + window.__azBoard(p.f, null, null, p.c === "b", p.bf, p.bt) + "<span class=\"small\">Move " + p.n + ". You played " + esc(p.s) + ", the better move was <b>" + esc(p.b) + "</b> (arrow).</span></div>"; }).join("") + "</details>";
   }
-  var PF = { lv: "all", ph: "all" };
+  var PF = { lv: "all", ph: "all", pg: 0 }, PER = 10;
   var LVL = { beginner: "Beginner", intermediate: "Intermediate", expert: "Expert", all: "All levels" };
   var PHS = { opening: "Opening", middlegame: "Middlegame", endgame: "Endgame", all: "All phases" };
+  var SEL = {
+    hang: ["keep-everything-connected-and-nothing-hanging", "look-first-do-not-play-too-fast"],
+    threat: ["ask-after-every-move-what-does-he-want", "look-first-do-not-play-too-fast"],
+    tactic: ["checks-captures-threats-a-fixed-thinking-system", "look-first-do-not-play-too-fast"],
+    mate: ["back-rank-safety", "do-not-weaken-your-king-shelter-lightly"],
+    queen: ["do-not-bring-the-queen-out-too-early", "develop-your-minor-pieces"],
+    king: ["castle-early", "do-not-weaken-your-king-shelter-lightly"],
+    twice: ["develop-your-minor-pieces", "finish-development-before-you-attack"],
+    endgame: ["activate-your-king-in-the-endgame", "push-your-passed-pawn", "pieces-first-then-pawns"],
+    other: ["optimize-improve-your-worst-piece", "improve-with-a-purpose"]
+  };
+  function allItems() { var o = []; LIB.forEach(function (g) { g.items.forEach(function (x) { if (!x.draft) { x._g = g.group; o.push(x); } }); }); return o; }
   function pcard(x) {
-    return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(x.title) + "</b> <span class=\"small\">" + esc(LVL[x.level] || "") + " &middot; " + esc(PHS[x.phase] || "") + "</span><br>" + esc(x.text) + "<br><a class=\"small\" href=\"/principles/" + esc(x.slug) + "/\">Explanation and examples</a></span></div>";
+    return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(x.title) + "</b> <span class=\"small\">" + esc(LVL[x.level] || "") + " &middot; " + esc(PHS[x.phase] || "") + (x._g ? " &middot; " + esc(x._g) : "") + "</span><br>" + esc(x.text) + "<br><a class=\"small\" href=\"/principles/" + esc(x.slug) + "/\">Explanation and examples</a></span></div>";
   }
   function chips(kind, map) {
     return Object.keys(map).map(function (k) { return "<button type=\"button\" class=\"btn" + (PF[kind] === k ? " solid" : "") + "\" data-pf=\"" + kind + ":" + k + "\" style=\"padding:6px 12px;margin:0 6px 6px 0\">" + (k === "all" ? "Any" : map[k]) + "</button>"; }).join("");
   }
+  function selected(items) {
+    var c = {}, any = false; rows.slice(0, 3).forEach(function (r) { var k = r.report && r.report.cats; if (k) { any = true; Object.keys(k).forEach(function (x) { c[x] = (c[x] || 0) + k[x]; }); } });
+    var by = {}; items.forEach(function (x) { by[x.slug] = x; });
+    if (!any) return "<h3>Selected for you</h3><p class=\"small\">Run a report and the principles that match your own mistakes show up here, with examples from your games. Until then, start with these.</p>" + items.filter(function (x) { return x.start; }).map(pcard).join("");
+    var top = Object.keys(c).filter(function (k) { return SEL[k]; }).sort(function (a, b) { return c[b] - c[a]; }).slice(0, 3);
+    if (!top.length) return "";
+    return "<h3>Selected for you</h3><p class=\"small\">Based on your last reports. Each pattern comes with the principles that fix it and examples from your own games.</p>" + top.map(function (k) { return "<h4 style=\"margin:16px 0 6px\">" + esc(NAME(k)) + "</h4>" + SEL[k].map(function (s) { return by[s] ? pcard(by[s]) : ""; }).join("") + examples(k); }).join("");
+  }
   function drawPrinc() {
-    var box = $("#m-princ"); if (!box) return; var keys = Object.keys(PRINC);
-    var shown = function (x) { return !x.draft && (PF.lv === "all" || x.level === PF.lv || x.level === "all") && (PF.ph === "all" || x.phase === PF.ph || x.phase === "all"); };
-    var filt = PF.lv !== "all" || PF.ph !== "all";
-    var body = LIB.map(function (g) { var it = g.items.filter(shown); return it.length ? "<h4 style=\"margin:18px 0 6px\">" + esc(g.group) + "</h4>" + it.map(pcard).join("") : ""; }).join("");
-    var start = filt ? "" : "<h4 style=\"margin:18px 0 6px\">Start here</h4>" + LIB.map(function (g) { return g.items.filter(function (x) { return x.start && !x.draft; }).map(pcard).join(""); }).join("");
-    box.innerHTML = "<h3>Principle library</h3><p class=\"small\"><b>Guidelines, not laws.</b> They are made for beginner to expert players, every position is different and principles can point in different directions. When they clash, calculate the actual moves.</p><p class=\"small\">Distilled by Throiy Chess from coaching insights, Stockfish checks, classic chess books and our own experience. Each one is reviewed before it is added.</p>" +
-      "<p class=\"small\" style=\"margin:12px 0 4px\">Level</p>" + chips("lv", LVL) + "<p class=\"small\" style=\"margin:8px 0 4px\">Phase</p>" + chips("ph", PHS) + start + (body || "<p class=\"small\">Nothing matches this filter.</p>") +
-      "<h4 style=\"margin:18px 0 6px\">Rules behind your report patterns</h4>" + keys.map(function (k) { return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(PRINC[k][0]) + "</b><br>" + esc(PRINC[k][1]) + "<br><span class=\"small\">Pattern: " + esc(NAME(k)) + " &middot; Source: Throiy Chess</span>" + examples(k) + "</span></div>"; }).join("");
-    box.querySelectorAll("[data-pf]").forEach(function (b) { b.onclick = function () { var p = b.getAttribute("data-pf").split(":"); PF[p[0]] = p[1]; drawPrinc(); }; });
+    var box = $("#m-princ"); if (!box) return;
+    var items = allItems();
+    var list = items.filter(function (x) { return (PF.lv === "all" || x.level === PF.lv || x.level === "all") && (PF.ph === "all" || x.phase === PF.ph || x.phase === "all"); });
+    var pages = Math.max(1, Math.ceil(list.length / PER)); PF.pg = Math.min(PF.pg, pages - 1);
+    var nav = pages > 1 ? "<p class=\"small\" style=\"margin:12px 0\">" + "<button type=\"button\" class=\"btn\" data-pg=\"-1\"" + (PF.pg ? "" : " disabled") + ">&larr; Previous</button> Page " + (PF.pg + 1) + " of " + pages + " &middot; " + list.length + " principles <button type=\"button\" class=\"btn\" data-pg=\"1\"" + (PF.pg < pages - 1 ? "" : " disabled") + ">Next &rarr;</button></p>" : "";
+    box.innerHTML = "<p class=\"small\"><b>These principles are applied to your own games.</b> You do not have to read them all. Based on your reports we select the ones that matter for you, and you can browse the rest by level and phase.</p>" +
+      selected(items) +
+      "<h3 style=\"margin-top:28px\">Browse the library</h3><p class=\"small\"><b>Guidelines, not laws.</b> They are made for beginner to expert players, every position is different and principles can point in different directions. When they clash, calculate the actual moves. Distilled by Throiy Chess from coaching insights, Stockfish checks, classic chess books and our own experience.</p>" +
+      "<p class=\"small\" style=\"margin:12px 0 4px\">Level</p>" + chips("lv", LVL) + "<p class=\"small\" style=\"margin:8px 0 4px\">Phase</p>" + chips("ph", PHS) + nav +
+      (list.length ? list.slice(PF.pg * PER, PF.pg * PER + PER).map(pcard).join("") : "<p class=\"small\">Nothing matches this filter.</p>") + nav;
+    box.querySelectorAll("[data-pf]").forEach(function (b) { b.onclick = function () { var p = b.getAttribute("data-pf").split(":"); PF[p[0]] = p[1]; PF.pg = 0; drawPrinc(); }; });
+    box.querySelectorAll("[data-pg]").forEach(function (b) { b.onclick = function () { PF.pg += +b.getAttribute("data-pg"); drawPrinc(); }; });
   }
 
   // ---------- share card ----------
