@@ -774,13 +774,13 @@ _FREE, _PRO = ("free", "Free"), ("pro", "Premium")
 _FEATS = "".join([
  _feat("chart", "Saved reports and progress", "Every analysis you run while logged in is kept. Watch your pawns lost per move go down over time.", _FREE),
  _feat("target", "Know your level", "See which rating band your play matches and which habit holds you back most.", _FREE),
- _feat("bolt", "Deeper analysis, any number of games", "A stronger engine looking deeper, across all your games instead of five.", _PRO),
- _feat("puzzle", "Puzzles made from your mistakes", "Pattern recognition wins games. We build puzzles from the patterns you miss in your own games.", _PRO),
+ _feat("bolt", "Deeper analysis, any number of games", "A deeper engine and up to 25 games at once, with your patterns, openings and time pressure over time.", _PRO),
+ _feat("puzzle", "Puzzles made from your mistakes", "Pattern recognition wins games. Every costly mistake becomes a puzzle you repeat until it sticks.", _PRO),
  _feat("book", "Courses by rating band", "Clear lessons and exercises, ordered so you always know the next step. Like a coach in your pocket.", _PRO),
  _feat("star", "First in line", "Waitlist members hear first and get their first in-depth analysis free.", _FREE),
 ])
 _NAV = [("overview", "home", "Overview", ""), ("analyze", "target", "Analyze", ""), ("reports", "chart", "My reports", ""), ("training", "book", "Training", '<span class="mbadge">Soon</span>'),
-        ("puzzles", "puzzle", "Puzzles", '<span class="mbadge">Soon</span>'), ("earn", "gift", "Share & earn", ""), ("plan", "star", "Premium", ""), ("profile", "user", "Profile", "")]
+        ("puzzles", "puzzle", "Puzzles", '<span class="mbadge">Pro</span>'), ("earn", "gift", "Share & earn", ""), ("plan", "star", "Premium", ""), ("profile", "user", "Profile", "")]
 _NAVH = "".join(f'<a href="#{k}" data-v="{k}">{_ic(i)}<span>{t}</span>{bd}</a>' for k, i, t, bd in _NAV)
 _COURSES = [("Stop hanging pieces", "The 3-second check before every move. Ends most blunders at every level.", "Foundations"),
             ("Opening traps that win material", "Ten traps with the mistakes that trigger them. The free kit is the first taste.", "Foundations"),
@@ -790,8 +790,9 @@ _COURSES = [("Stop hanging pieces", "The 3-second check before every move. Ends 
             ("Convert a won position", "Turn an advantage into a win without giving it back.", "Advanced")]
 _COURSEH = "".join(f'<div class="mcard"><span class="mbadge pro">Premium</span><div class="mico">{_ic("book")}</div><h3>{t}</h3><p>{d}</p><div class="mlock">{_ic("lock")} {lv} &middot; opens with the program</div></div>' for t, d, lv in _COURSES)
 _CMP = "".join(f"<tr><td>{a}</td><td>{x}</td><td>{y}</td></tr>" for a, x, y in [
-  ("Free analyzer (5 games)", "&#10003;", "&#10003;"), ("Saved reports + progress chart", "&#10003;", "&#10003;"), ("10 Opening Traps kit", "&#10003;", "&#10003;"),
-  ("Any number of games", "&ndash;", "&#10003;"), ("Deeper engine analysis", "&ndash;", "&#10003;"), ("Puzzles from your own mistakes", "&ndash;", "&#10003;"), ("Courses by rating band", "&ndash;", "&#10003;")])
+  ("Free analyzer (5 games)", "&#10003;", "&#10003;"), ("Saved reports + progress charts", "&#10003;", "&#10003;"), ("Your goal, tracked", "&#10003;", "&#10003;"), ("10 Opening Traps kit", "&#10003;", "&#10003;"),
+  ("Up to 25 games at once", "&ndash;", "&#10003;"), ("Deeper engine (depth 18)", "&ndash;", "&#10003;"), ("Patterns over time and your openings", "&ndash;", "&#10003;"), ("Time-pressure check", "&ndash;", "&#10003;"),
+  ("Weekly plan: your top 3 leaks", "&ndash;", "&#10003;"), ("Puzzles from your own mistakes", "&ndash;", "&#10003;"), ("Courses by rating band", "&ndash;", "Soon")])
 _CMPT = '<table class="mcmp"><thead><tr><th>What you get</th><th>Free</th><th>Premium</th></tr></thead><tbody>' + _CMP + '</tbody></table>'
 
 def members_page():
@@ -806,7 +807,7 @@ def members_page():
 <div>
 <section class="mview" data-view="overview"><h2 id="m-hello">Welcome</h2><p class="lead">Your Throiy Chess home. Everything you saved and what to do next.</p>
 <div class="mstats" id="m-stats"></div><div class="mnext" id="m-next"></div><div class="mcard" id="m-goal" style="margin-top:16px"></div>
-<div class="mpromo"><h3>The improvement program is coming</h3><p>Deeper analysis, puzzles made from your own mistakes and courses by rating band. Join the waitlist and get your first in-depth analysis free.</p><a class="btn" href="/improve/">Join the waitlist</a></div>
+<div class="mpromo"><h3>Premium is almost here</h3><p>Deeper analysis, a weekly plan and puzzles made from your own mistakes are built. Courses by rating band follow. Join the waitlist and get your first in-depth analysis free.</p><a class="btn" href="/improve/">Join the waitlist</a></div>
 </section>
 <section class="mview" data-view="analyze" hidden><h2>Analyze games</h2><p class="lead">Standard analysis: pick a site and username, choose up to 5 games. Your report is saved here automatically.</p>
 <div class="mcard" style="margin:0 0 20px;padding-right:110px"><span class="mbadge pro">Premium</span><div class="mico">{_ic("bolt")}</div><h3>Advanced analysis</h3><p>A deeper engine, up to 25 games at once, trends per pattern over time and puzzles made from your mistakes. Opens with the improvement program.</p><p style="margin-top:12px"><a class="btn" href="#plan">See what Premium gives you</a></p></div>
