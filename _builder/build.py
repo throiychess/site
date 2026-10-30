@@ -716,7 +716,7 @@ MEM_CSS = """
 .mbadge{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mute)}
 .mbadge.free{color:#9fd5a5;border-color:#2c4a30}.mbadge.pro{color:var(--on-gold);background:var(--gold);border-color:var(--gold)}
 .mcard .mbadge{position:absolute;top:18px;right:18px}
-.mlogin{max-width:560px;margin:10px 0 60px}
+.mlogin{max-width:720px;margin:10px 0 60px;padding:28px!important}.mgbtn[hidden]{display:none}.mdiv{display:flex;align-items:center;gap:12px;margin:18px 0 14px;color:#5b4a1d;font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em}.mdiv::before,.mdiv::after{content:"";flex:1;height:1px;background:rgba(20,17,11,.28)}.mlogin .mform{max-width:none}
 .mapp{display:grid;grid-template-columns:232px minmax(0,1fr);gap:34px;padding:30px 0 60px;align-items:start}
 .mapp[hidden]{display:none}.mapp>div{min-width:0}section.mview{border:0;padding-block:0}
 .mnav{position:sticky;top:96px;display:flex;flex-direction:column;gap:4px}
@@ -795,7 +795,7 @@ def members_page():
 <div id="m-login"><div class="mhero"><span class="eyebrow">Members</span><h1>Fix what costs you games.</h1><p>Your own page with your reports, your progress and, soon, training built from your mistakes. Free to join, no password.</p></div>
 <div class="mgrid">{_FEATS}</div>
 <div class="newsletter mlogin" style="grid-template-columns:1fr"><div><strong>Log in or create your free account</strong><p>Enter your e-mail address. We send a link; opening it confirms the address and logs you in.</p></div>
-{('<div id="m-gid" style="margin:0 0 12px;min-height:44px"></div><button class="mgbtn" type="button" id="m-google" hidden>Continue with Google</button>' if GOOGLE_LOGIN else '')}<form class="mform" id="m-form"><label class="sr" for="m-mail">E-mail address</label><input id="m-mail" type="email" placeholder="Your e-mail" autocomplete="email" required maxlength="200"><button class="btn solid" type="submit">Send me a login link</button><div id="m-hc" style="flex-basis:100%"></div><p class="small" id="m-msg" role="status" aria-live="polite" style="flex-basis:100%;margin:0"></p></form></div></div>
+{('<div id="m-gid" style="margin:4px 0 0;min-height:44px;color-scheme:light"></div><button class="mgbtn" type="button" id="m-google" hidden>Continue with Google</button><div class="mdiv">or with e-mail</div>' if GOOGLE_LOGIN else '')}<form class="mform" id="m-form"><label class="sr" for="m-mail">E-mail address</label><input id="m-mail" type="email" placeholder="Your e-mail" autocomplete="email" required maxlength="200"><button class="btn solid" type="submit">Send me a login link</button><div id="m-hc" style="flex-basis:100%"></div><p class="small" id="m-msg" role="status" aria-live="polite" style="flex-basis:100%;margin:0"></p></form></div></div>
 <div id="m-app" class="mapp" hidden>
 <div><nav class="mnav" aria-label="Members">{_NAVH}<div class="mwho"><span class="mava" id="m-ava">&#9823;&#xFE0E;</span><span class="small">Logged in as</span><b id="m-email"></b><button class="btn" type="button" id="m-out" style="margin-top:10px">Log out</button></div></nav></div>
 <div>

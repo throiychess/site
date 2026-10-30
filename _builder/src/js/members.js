@@ -10,7 +10,7 @@ let profile = null, A = [];
 
 async function render(session) {
   if (location.hash === "#logout") { await sb.auth.signOut(); try { localStorage.removeItem("tc_av"); } catch (e) {} history.replaceState(null, "", "/members/"); session = null; }
-  $("#m-login").hidden = !!session; $("#m-app").hidden = !session; if (!session) return;
+  $("#m-login").hidden = !!session; $("#m-app").hidden = !session; if (!session) { document.documentElement.removeAttribute("data-in"); return; } document.documentElement.setAttribute("data-in", "1");
   $("#m-email").textContent = session.user.email; show();
   const { data: p } = await sb.from("profiles").select("*").eq("id", session.user.id).maybeSingle(); profile = p || { socials: {} };
   $("#m-name").value = profile.display_name || ""; $("#m-cc").value = profile.chesscom_username || ""; $("#m-li").value = profile.lichess_username || "";
@@ -79,7 +79,7 @@ async function drawAnalyses() {
   box.innerHTML = `<div class="az-gm">` + data.map((a) => `<div class="m-row"><span class="small">${new Date(a.created_at).toLocaleDateString()}</span><span><b>${esc(a.username)}</b> <span class="small">${a.site === "chesscom" ? "Chess.com" : "Lichess"} &middot; ${a.games} game${a.games > 1 ? "s" : ""}</span></span><span class="small">${Number(a.accuracy).toFixed(0)}% accuracy &middot; ${Number(a.avg_loss).toFixed(2)} pawns/move${a.band ? " &middot; looks like " + esc(a.band) : ""}</span><button class="btn" type="button" data-del="${a.id}">Delete</button></div>`).join("") + `</div>`;
 }
 let hcId = null, hcTok = null;
-function hcInit() { if (!window.TS_KEY || hcId !== null) return; if (!window.turnstile) return setTimeout(hcInit, 300); hcId = window.turnstile.render("#m-hc", { sitekey: window.TS_KEY, callback: (t) => { hcTok = t; }, "expired-callback": () => { hcTok = null; } }); }
+function hcInit() { if (!window.TS_KEY || hcId !== null) return; if (!window.turnstile) return setTimeout(hcInit, 300); hcId = window.turnstile.render("#m-hc", { sitekey: window.TS_KEY, size: "flexible", callback: (t) => { hcTok = t; }, "expired-callback": () => { hcTok = null; } }); }
 hcInit();
 $("#m-form").addEventListener("submit", async (e) => {
   e.preventDefault(); const email = $("#m-mail").value.trim(), msg = $("#m-msg"); if (!email) return; if (window.TS_KEY && !hcTok) { msg.textContent = "Please wait a second while we check that you are human, then try again."; return; } msg.textContent = "Sending…"; ev("members-login-request");
@@ -95,7 +95,7 @@ async function gInit() {
   const raw = Array.from(crypto.getRandomValues(new Uint8Array(16)), (x) => x.toString(16).padStart(2, "0")).join("");
   const hashed = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(raw))), (x) => x.toString(16).padStart(2, "0")).join("");
   google.accounts.id.initialize({ client_id: window.G_ID, nonce: hashed, ux_mode: "popup", callback: async (r) => { ev("members-login-google"); const { error } = await sb.auth.signInWithIdToken({ provider: "google", token: r.credential, nonce: raw }); if (error) { $("#m-msg").textContent = "Google login did not work. Try the e-mail link instead."; } } });
-  google.accounts.id.renderButton(box, { type: "standard", theme: "filled_black", size: "large", text: "continue_with", shape: "pill", width: 300 });
+  google.accounts.id.renderButton(box, { type: "standard", theme: "outline", size: "large", text: "continue_with", shape: "pill", width: 360 });
 }
 gInit();
 $("#m-prof").addEventListener("submit", async (e) => { e.preventDefault(); const s = (await sb.auth.getSession()).data.session; if (!s) return;
