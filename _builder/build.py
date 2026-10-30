@@ -279,33 +279,46 @@ def promo_bar(active):
             '<button class="promo-x" type="button" aria-label="Close" onclick="try{sessionStorage.setItem(\'promo\',1)}catch(e){}this.closest(\'.promo\').remove()">&times;</button></div></div>'
             '<script>try{if(sessionStorage.getItem("promo"))document.querySelector(".promo").remove()}catch(e){}</script>')
 NAVG = [("Watch", [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Top games", "/#top-games")]),
-        ("Train", [("Traps", "/traps/"), ("Analyze", "/analyze/"), ("Premium", "/improve/")]),
-        ("Members", "/members/"), ("About", [("About", "/#about"), ("Contact", "/contact/")]), ("Support", "/support/")]
+        ("Train", [("Traps", "/traps/"), ("Analyze", "/analyze/")]),
+        ("About", [("About", "/#about"), ("Contact", "/contact/")]), ("Support", "/support/")]
 NAV = [(n, u) for g, x in NAVG for (n, u) in (x if isinstance(x, list) else [(g, x)])]
+_KEY = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg>'
 NAV_CSS = """<style>
 nav.links{overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;width:auto!important;flex-wrap:nowrap!important;gap:0 22px!important;align-items:center}
 .ddb{font:inherit;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:none;border:0;cursor:pointer;padding:8px 0}
 .ddb::after{content:"";display:inline-block;width:5px;height:5px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);margin:0 0 3px 8px}
 .dd{position:relative}.dd:hover .ddb,.dd.cur .ddb,.dd.open .ddb{color:var(--gold)}
-.ddm{display:none;position:absolute;top:100%;left:-14px;min-width:200px;padding:8px;background:#17150f;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.ddm{display:none;position:absolute;top:100%;left:-14px;min-width:200px;padding:8px;background:#17150f;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.5);z-index:5}
 .dd:hover .ddm,.dd:focus-within .ddm,.dd.open .ddm{display:block}
 .ddm a{display:block;padding:10px 12px!important;border-radius:9px;white-space:nowrap}.ddm a:hover{background:#221d10}
 .burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:9px 12px;font:inherit;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
-nav.links a.members{color:var(--gold);border:1px solid #4a3d1c;border-radius:99px;padding:6px 14px!important}
+nav.links a.cta{background:var(--gold);color:var(--on-gold);border-radius:99px;padding:8px 18px!important;font-weight:800}nav.links a.cta:hover{filter:brightness(1.08);color:var(--on-gold)}
+.acct{display:flex;align-items:center;margin-left:4px}
+nav.links a.login{display:inline-flex;align-items:center;gap:8px;border:1px solid #4a3d1c;border-radius:99px;padding:6px 14px 6px 10px!important;color:var(--gold)}
+nav.links a.login svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.acct-in{display:none}[data-in="1"] .acct-in{display:block}[data-in="1"] .acct-out{display:none}
+.avab{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--gold);background:#221d10;color:var(--gold);font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
+.acct-in .ddm{left:auto;right:0;min-width:190px}.acct-in .ddm a.out{color:#e08a7c}
 @media(max-width:860px){.burger{display:block}header.top .wrap{flex-wrap:wrap}
 nav.links{display:none!important;order:3;width:100%!important;flex-direction:column;align-items:stretch!important;gap:2px!important;padding:4px 0 14px}
 nav.links.open{display:flex!important}
 .ddb{pointer-events:none;font-size:11.5px;color:#7d745f;padding:12px 0 2px;text-align:left}.ddb::after{display:none}
-.ddm{display:block;position:static;background:none;border:0;box-shadow:none;padding:0 0 0 0;min-width:0}
-.ddm a,nav.links>a{padding:11px 4px!important;font-size:15px!important}nav.links a.members{display:inline-block;align-self:flex-start;margin:8px 0}}
+.ddm{display:block;position:static;background:none;border:0;box-shadow:none;padding:0;min-width:0}
+.ddm a,nav.links>a{padding:11px 4px!important;font-size:15px!important}
+nav.links a.cta{order:-2;text-align:center;margin:6px 0 4px;padding:13px 18px!important;font-size:15px!important}
+.acct{order:-1;margin:0 0 4px}nav.links a.login{width:100%;justify-content:center;padding:11px!important}
+.acct-in .ddb{display:none}.acct-in .ddm{position:static;display:block;border-top:1px solid var(--line);border-radius:0;padding-top:8px}.acct-in .avab{display:none}
+.acct-in{width:100%}.acct-in .ddm a::before{content:""}}
 </style>"""
-NAV_JS = """<script>(function(){var h=document.querySelector("header.top"),n=h.querySelector("nav.links"),b=h.querySelector(".burger");
+NAV_JS = """<script>(function(){var h=document.querySelector("header.top"),n=h.querySelector("nav.links"),b=h.querySelector(".burger"),i=false,a="";
+try{var k=Object.keys(localStorage).filter(function(x){return/^sb-.*-auth-token$/.test(x)})[0];if(k){var s=JSON.parse(localStorage.getItem(k));i=!!(s&&s.refresh_token)}a=localStorage.getItem("tc_av")||""}catch(e){}
+if(i){document.documentElement.setAttribute("data-in","1");var g=h.querySelector(".avab");if(g&&a)g.textContent=a}
 b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttribute("aria-expanded",o)});
-h.querySelectorAll(".ddb").forEach(function(x){x.addEventListener("click",function(e){var d=x.parentNode,o=d.classList.contains("open");h.querySelectorAll(".dd.open").forEach(function(y){y.classList.remove("open")});if(!o)d.classList.add("open");x.setAttribute("aria-expanded",!o);e.stopPropagation()})});
-document.addEventListener("click",function(){h.querySelectorAll(".dd.open").forEach(function(y){y.classList.remove("open")})});
-document.addEventListener("keydown",function(e){if(e.key==="Escape"){h.querySelectorAll(".dd.open").forEach(function(y){y.classList.remove("open")});n.classList.remove("open")}})})();</script>"""
+h.querySelectorAll(".ddb,.avab").forEach(function(x){x.addEventListener("click",function(e){var d=x.closest(".dd,.acct-in"),o=d.classList.contains("open");h.querySelectorAll(".open").forEach(function(y){if(y!==n)y.classList.remove("open")});if(!o)d.classList.add("open");x.setAttribute("aria-expanded",!o);e.stopPropagation()})});
+document.addEventListener("click",function(){h.querySelectorAll(".dd.open,.acct-in.open").forEach(function(y){y.classList.remove("open")})});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"){h.querySelectorAll(".dd.open,.acct-in.open").forEach(function(y){y.classList.remove("open")});n.classList.remove("open")}})})();</script>"""
 def _nl(n, u, active):
-    cls = " class=support" if n == "Support" else (" class=members" if n == "Members" else "")
+    cls = " class=support" if n == "Support" else ""
     return f'<a href="{u}"{cls}{" aria-current=page" if n == active else ""}>{n}</a>'
 def _nav_html(active):
     out = []
@@ -315,6 +328,10 @@ def _nav_html(active):
             out.append(f'<div class="dd{cur}"><button type="button" class="ddb" aria-haspopup="true" aria-expanded="false">{g}</button><div class="ddm">' + "".join(_nl(n, u, active) for n, u in x) + '</div></div>')
         else:
             out.append(_nl(g, x, active))
+    out.append(f'<a class="cta" href="/improve/"{" aria-current=page" if active == "Improve" else ""}>Improve</a>')
+    out.append('<div class="acct"><a class="login acct-out" href="/members/">' + _KEY + 'Log in</a>'
+               '<div class="dd acct-in"><button type="button" class="avab" aria-haspopup="true" aria-expanded="false" aria-label="Your account">&#9823;&#xFE0E;</button><div class="ddm">'
+               '<a href="/members/#overview">Overview</a><a href="/members/#reports">My reports</a><a href="/members/#earn">Share &amp; earn</a><a href="/members/#profile">Profile</a><a class="out" href="/members/#logout">Log out</a></div></div></div>')
     return "".join(out)
 def header(active=""):
     return promo_bar(active) + NAV_CSS + ('<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt="">'
@@ -803,7 +820,7 @@ def members_page():
     return "/members/", page("/members/", "Members · Throiy Chess", "Log in to save your analysis reports and track your progress.", body)
 
 def improve_page():
-    body = header("Premium") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Coming soon · waitlist</span>
+    body = header("Improve") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Coming soon · waitlist</span>
 <h1 class="page">The Throiy Chess improvement program</h1>
 <p>The free analyzer finds your biggest mistakes in 5 games. The program goes further: a stronger engine looking deeper, all your games, and training built from your own mistakes.</p></div>
 <style>{MEM_CSS}</style><div class="twocol" style="padding-bottom:40px"><div class="prose"><h2>What you get</h2>
