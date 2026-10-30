@@ -122,7 +122,7 @@
     "slug": "trade-only-when-it-gains-something",
     "title": "Trade only when it gains something",
     "text": "Do not make pointless trades in the centre or the opening. If a trade gives you nothing tangible but helps the opponent develop their pieces (such as a queen or knight) with tempo, avoid it. Every trade needs a tactical or positional purpose.",
-    "note": "Checked. Softened: a trade is fine when it removes a strong enemy piece or fixes a structure in your favour. Also covers: never trade pawns or pieces automatically. Ask: \"Does this help my opponent build a strong pawn chain or develop for free?\" Also covers: keep the tension. Do not capture in the centre or on the wing if it helps the opponent post a knight or pawn on a better square. Release the tension only when it confuses the opponent or activates your pieces, not just to resolve it."
+    "note": "Checked. Softened: a trade is fine when it removes a strong enemy piece or fixes a structure in your favour. Also covers: never trade pawns or pieces automatically. Ask: \"Does this help my opponent build a strong pawn chain or develop for free?\" Also covers: keep the tension. Do not capture in the centre or on the wing if it helps the opponent post a knight or pawn on a better square. Release the tension only when it confuses the opponent or activates your pieces, not just to resolve it. Also covers: before you trade, ask whether you are activating the opponent's pieces or removing one of their weaknesses."
    },
    {
     "slug": "choose-the-active-square-over-the-default-routine",
@@ -463,6 +463,18 @@
     "title": "Put rooks on open files",
     "text": "A rook is a linear piece that gains enormous power on an open or half-open file. Look for ways to manoeuvre your rooks to open files and dominate the edges and depth of the board.",
     "note": "Checked. If no file is open yet, prepare one with a pawn trade or break."
+   },
+   {
+    "slug": "know-the-three-kinds-of-weaknesses",
+    "title": "Know the three kinds of weaknesses",
+    "text": "There are three main weaknesses: weak colour complexes (diagonals not covered by your own bishops), weak squares or holes (often outposts for knights), and weak pawns (doubled, isolated and backward pawns). Fight each with the right piece.",
+    "note": "Checked. Rule of thumb: colour complexes with bishops and queens, holes with knights, backward pawns with rooks and queens."
+   },
+   {
+    "slug": "space-is-decided-by-your-pawn-chain",
+    "title": "Space is decided by your pawn chain",
+    "text": "Space advantage is set by your pawn chain, the \"mountain tops\". The side with the most space controls the area behind its pawns and dictates where the action takes place. Play and attack on the part of the board where your pawn chain points and where you have the most space.",
+    "note": "Softened: the opponent's counter is to attack the base of your chain. Space also needs good piece placement, or it becomes a target."
    }
   ]
  },
@@ -558,6 +570,12 @@
     "title": "Tactics flow from a superior position",
     "text": "Do not hunt desperately for wild combinations or loose tricks. First build a strong, dominant position with space, harmony and active pieces; then the winning tactical blows tend to appear by themselves.",
     "note": "Softened: a strong guideline, not a law. Tactics still decide when the position is balanced, so keep calculating every move."
+   },
+   {
+    "slug": "do-not-weaken-your-king-shelter-lightly",
+    "title": "Do not weaken your king shelter lightly",
+    "text": "Castling and keeping the pawns in front of your king in place are about king safety. Do not weaken the king's position for a small material gain, unless enough of your own pieces are close to defend a weakened king.",
+    "note": "Checked."
    }
   ]
  },
@@ -670,7 +688,7 @@
     "slug": "judge-activity-by-squares-controlled-and-mobility",
     "title": "Judge activity by squares controlled and mobility",
     "text": "Activity means the number of squares you control and the dynamic value of your pieces. If you win a passive rook or piece in a corner but lose your active bishops and knights for it, you give away valuable dominance. Keep active pieces on the board and push the opponent into a passive role.",
-    "note": "Softened: activity is not a replacement for material. Count both, and check how long the activity lasts."
+    "note": "Softened: activity is not a replacement for material. Count both, and check how long the activity lasts. Also covers: activity is not only the number of squares a piece controls, but which squares it reaches on the opponent's half. Improve it by manoeuvring pieces to better squares, moving your own blocking pawns, or opening the structure with a pawn break."
    }
   ]
  },
@@ -820,6 +838,12 @@
     "title": "Eliminate the key defenders of the king",
     "text": "An attack often fails because specific key pieces (such as a bishop or a defending knight) hold the enemy king together. To make the attack succeed, deliberately remove or deflect those key defenders.",
     "note": "Checked. See also: remove the defending bishop."
+   },
+   {
+    "slug": "use-a-pawn-as-an-umbrella-when-under-pressure",
+    "title": "Use a pawn as an umbrella when under pressure",
+    "text": "When you are under heavy attack, an advanced pawn can act as a shield or umbrella that blocks the view and activity of enemy pieces.",
+    "note": "Softened: the term is used in different ways; this describes the effect. Check that the pawn itself can be defended, or it just becomes a target."
    }
   ]
  },
