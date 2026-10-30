@@ -238,7 +238,7 @@ form.contact{display:grid;gap:18px;max-width:620px}
 e = html.escape
 
 def csp():
-    conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else []) + (["https://assets.mailerlite.com"] if NEWSLETTER_URL else []) + ["https://api.chess.com", "https://lichess.org"] + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
+    conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else []) + (["https://assets.mailerlite.com"] if NEWSLETTER_URL else []) + ["https://api.chess.com", "https://lichess.org", "https://ytxrrmvszifvtdyilezn.supabase.co"] + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
     scr = ["'self'", "'unsafe-inline'"] + (["https://gc.zgo.at"] if ANALYTICS else []) + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
     img = "img-src 'self' data:" + (" https://tracker.metricool.com" if METRICOOL_HASH else "")
     return (f"default-src 'self'; {img}; style-src 'self' 'unsafe-inline'; font-src 'self'; "
