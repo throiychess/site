@@ -252,7 +252,7 @@ def csp(path=""):
             f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com https://ko-fi.com{' https://challenges.cloudflare.com' if hc else ''}{' https://accounts.google.com' if gg else ''}; "
             "form-action 'self' https://api.web3forms.com" + (" https://assets.mailerlite.com" if NEWSLETTER_URL else "") + "; base-uri 'self'; object-src 'none'")
 
-def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="website"):
+def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="website", noindex=False):
     url = SITE + path
     ld = "".join(f'<script type="application/ld+json">{json.dumps(j, ensure_ascii=False)}</script>' for j in (jsonld or []))
     gc = (f'<script data-goatcounter="https://{ANALYTICS}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>' if ANALYTICS else "")
@@ -271,7 +271,7 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             f'<meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{SITE}{og_image}">'
             f'<meta name="twitter:card" content="summary_large_image">'
             f'<link rel="preload" href="/fonts/Inter-Black.woff" as="font" type="font/woff" crossorigin>'
-            + ('<meta name="robots" content="noindex,nofollow">' if path == '/members/' else '')
+            + ('<meta name="robots" content="noindex,nofollow">' if path == '/members/' else ('<meta name="robots" content="noindex,follow">' if noindex else ''))
             + f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}<script src="/js/fb.js" defer></script></body></html>')
 
 def promo_bar(active):
@@ -872,6 +872,23 @@ def notfound():
 <p>The page you were looking for doesn't exist (anymore).</p><div class="btns"><a class="btn solid" href="/">Back to the homepage</a><a class="btn" href="/shorts/">All Shorts</a></div></div></main>''' + footer()
     return page("/404.html", "Page not found · Throiy Chess", "Page not found.", body)
 
+PRINCIPLES = json.load(open(os.path.join(ROOT, "src", "data", "principles.json")))
+def _pitems():
+    return [(g["group"], x) for g in PRINCIPLES for x in g["items"] if not x.get("draft")]
+
+def principles_index():
+    h = "".join(f'<h2 style="margin:34px 0 10px">{e(g["group"])}</h2><div class="mgrid" style="margin:0">' + "".join(f'<a class="mcard" href="/principles/{x["slug"]}/" style="text-decoration:none;color:inherit"><h3 style="margin:0 0 6px">{e(x["title"])}</h3><p>{e(x["text"])}</p></a>' for x in g["items"] if not x.get("draft")) + "</div>" for g in PRINCIPLES)
+    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow">Principles</span><h1>Chess principles, explained.</h1><p>Guidelines from coach Peter, distilled by Throiy Chess. They are made for beginner to expert players. Every position is different, so when two principles clash, calculate the actual moves.</p></div>{h}<p class="small" style="margin:30px 0">Want to see which principles cost you games? <a href="/analyze/">Analyze your own games for free</a>.</p></main>''' + footer()
+    return "/principles/", page("/principles/", "Chess principles, explained · Throiy Chess", "Chess principles from coach Peter, distilled by Throiy Chess, for beginner to expert players.", body, noindex=True)
+
+def principle_page(group, x):
+    rel = [y for g in PRINCIPLES if g["group"] == group for y in g["items"] if y["slug"] != x["slug"] and not y.get("draft")][:4]
+    rl = "".join(f'<li><a href="/principles/{y["slug"]}/">{e(y["title"])}</a></li>' for y in rel)
+    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow"><a href="/principles/" style="color:inherit">Principles</a> &middot; {e(group)}</span><h1>{e(x["title"])}</h1><p>{e(x["text"])}</p></div>
+<div class="mcard" style="margin:20px 0">{('<h3>Good to know</h3><p>' + e(x["note"]) + '</p>') if x["note"] else ''}<h3>Examples</h3><p>Worked examples with positions are being added. Until then, see this principle in your own games.</p><p style="margin-top:12px"><a class="btn solid" href="/analyze/">Analyze my games free</a></p></div>
+{('<h3>More in ' + e(group) + '</h3><ul>' + rl + '</ul>') if rl else ''}<p class="small" style="margin:24px 0">Principles are guidelines, not laws. Source: coach Peter, distilled by Throiy Chess.</p></main>''' + footer()
+    return f"/principles/{x['slug']}/", page(f"/principles/{x['slug']}/", f"{x['title']} · Chess principle · Throiy Chess", x["text"][:155], body, noindex=True)
+
 def llms_txt():
     lines = [f"# {NAME}", "", f"> {TAGLINE} Short chess lessons (YouTube Shorts, TikTok, Instagram, Facebook) about opening traps, "
              "how to avoid them, named mating patterns, and key moments from recent top-level games.", "",
@@ -886,14 +903,14 @@ def build():
     d = os.environ.get("OUT_DIR") or os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True) if not os.environ.get("OUT_DIR") else None
     fetch_thumbs(SHORTS + VIDEOS)
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
-    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [support_page(), contact(), privacy(), free_page(), analyze_page(), members_page(), improve_page(), terms()]
+    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [principles_index()] + [principle_page(g, x) for g, x in _pitems()] + [support_page(), contact(), privacy(), free_page(), analyze_page(), members_page(), improve_page(), terms()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
     open(os.path.join(d, "404.html"), "w").write(notfound())
     today = datetime.date.today().isoformat()
     open(os.path.join(d, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{today}</lastmod></url>\n" for p, _ in pages if p != "/members/") + "</urlset>\n")
+        + "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{today}</lastmod></url>\n" for p, _ in pages if p != "/members/" and not p.startswith("/principles/")) + "</urlset>\n")
     open(os.path.join(d, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /m/\nDisallow: /members/\n\nSitemap: {SITE}/sitemap.xml\n")
     open(os.path.join(d, "llms.txt"), "w").write(llms_txt())
     open(os.path.join(d, "CNAME"), "w").write(DOMAIN + "\n"); open(os.path.join(d, ".nojekyll"), "w").write("")
