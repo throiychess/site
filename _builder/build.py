@@ -253,6 +253,8 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
         gc += ('<script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");'
                'c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}'
                'loadScript(function(){beTracker.t({hash:"' + METRICOOL_HASH + '"})});</script>')
+    if path.startswith("/members"): gc = ""  # no third-party scripts where auth codes appear in the URL
+    elif path.startswith("/analyze"): gc = gc.split("<script>function loadScript")[0]  # keep GoatCounter only
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">'
             f'<meta http-equiv="Content-Security-Policy" content="{csp()}"><meta name="referrer" content="strict-origin-when-cross-origin">'
@@ -637,7 +639,7 @@ def analyze_page():
     return "/analyze/", page("/analyze/", "Analyze your games · Throiy Chess", "Free: find out which chess principles cost you the most points. Works with Chess.com and Lichess usernames.", body)
 
 WAITLIST_URL = "https://assets.mailerlite.com/jsonp/2747354/forms/202754728493319697/subscribe"  # MailerLite form -> group "Improvement waitlist" (double opt-in)
-SB_SCRIPTS = '<script src="/js/vendor/supabase-2.45.4.js"></script>'
+SB_SCRIPTS = '<script src="/js/vendor/supabase-2.117.3.js"></script>'
 def members_page():
     body = header("Members") + f'''<style>{AZ_CSS}</style><main class="wrap" style="max-width:900px"><div class="pagehead"><span class="eyebrow">Members · free</span>
 <h1 class="page">Your Throiy Chess page</h1><p>Save your analysis reports and watch your pawns lost per move go down. No password: we e-mail you a login link.</p></div>

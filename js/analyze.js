@@ -8,7 +8,8 @@ const VAL = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
 const NAMES = { p: "pawn", n: "knight", b: "bishop", r: "rook", q: "queen", k: "king" };
 const TRAPS = JSON.parse($("#trap-data").textContent);
 const ev = (n) => { try { if (window.goatcounter && goatcounter.count) goatcounter.count({ path: n, title: n, event: true }); } catch (e) {} };
-const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const safeUrl = (u) => (/^https:\/\/(www\.chess\.com|lichess\.org)\//.test(String(u)) ? String(u) : "#");
+const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 // ---------- principles (plain words; every one is a test, not a guess) ----------
 const P = {
@@ -219,8 +220,8 @@ async function saveReport() {
 }
 function ratingsLine(cur, latest) {
   const R = state.ratings || {}, parts = [["Rapid", R.rapid], ["Blitz", R.blitz], ["Daily", R.daily], [R.puzzlesBest ? "Puzzles (best)" : "Puzzles", R.puzzles]].filter((x) => x[1]);
-  if (parts.length) return `<p>Your ratings: ${parts.map(([n, v]) => `${n} <b>${v}</b>`).join(" &middot; ")}</p>`;
-  return cur ? `<p>Your current rating: <b>${cur}</b> (${esc(latest.g.tc || "")}).</p>` : "";
+  if (parts.length) return `<p>Your ratings: ${parts.map(([n, v]) => `${esc(n)} <b>${Number(v) || 0}</b>`).join(" &middot; ")}</p>`;
+  return cur ? `<p>Your current rating: <b>${Number(cur) || 0}</b> (${esc(latest.g.tc || "")}).</p>` : "";
 }
 function report(results) {
   const all = results.flatMap((r, ri) => r.moments.map((m) => ({ ...m, r, ri }))); const cnt = {}; for (const m of all) cnt[m.cat] = (cnt[m.cat] || 0) + 1;
@@ -250,7 +251,7 @@ function report(results) {
   if (worst) h += `<p class="small">Your biggest leak: the <b>${PHN[worst].toLowerCase()}</b>. That is where your moves cost the most on average.</p>`;
   // per game
   h += `<h3>Game by game</h3><div class="az-gm">` + results.map((r) => { const opp = r.side === "w" ? r.g.black : r.g.white; const top = r.moments.slice().sort((a, b) => b.loss - a.loss)[0];
-    return `<a href="${esc(r.g.url)}" target="_blank" rel="noopener"><span class="res ${outc(r).toLowerCase()}">${outc(r)}</span><span>${r.side === "w" ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${r.acc.toFixed(0)}% accuracy${top ? ` · biggest drop: move ${top.moveNo}${top.color === "w" ? "." : "…"}${esc(top.san)}` : " · no big drops"}</span></a>`; }).join("") + `</div>`;
+    return `<a href="${esc(safeUrl(r.g.url))}" target="_blank" rel="noopener"><span class="res ${outc(r).toLowerCase()}">${outc(r)}</span><span>${r.side === "w" ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${r.acc.toFixed(0)}% accuracy${top ? ` · biggest drop: move ${top.moveNo}${top.color === "w" ? "." : "…"}${esc(top.san)}` : " · no big drops"}</span></a>`; }).join("") + `</div>`;
   if (order.length) {
     const top = order[0];
     h += `<div class="az-top"><span class="eyebrow">Train this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p></div>`;
@@ -266,7 +267,7 @@ function report(results) {
     h += `<div class="az-m">${boardSVG(m.fen, m.from, m.to, m.r.side === "b", m.bFrom, m.bTo)}<div><span class="eyebrow">${P[m.cat].t}</span>${m.pv && m.pv.length ? `<button class="btn az-replay" type="button" data-i="${mi}">&#9654; Replay what happens</button>` : ""}
       <h3>Move ${m.moveNo}${m.color === "w" ? "." : "…"}${esc(m.san)} <span class="small">vs ${esc(opp)}</span></h3>
       <p>${m.detail ? esc(m.detail) + " " : ""}${m.best ? `Better was <b>${esc(m.best)}</b>.` : ""}</p>
-      <p class="small">Evaluation for you: ${(m.before / 100).toFixed(1)} → ${(m.after / 100).toFixed(1)}${m.clock !== null ? ` · ${Math.round(m.clock)} s on your clock` : ""} · <a href="${esc(m.r.g.url)}" target="_blank" rel="noopener">open game</a></p>
+      <p class="small">Evaluation for you: ${(m.before / 100).toFixed(1)} → ${(m.after / 100).toFixed(1)}${m.clock !== null ? ` · ${Math.round(m.clock)} s on your clock` : ""} · <a href="${esc(safeUrl(m.r.g.url))}" target="_blank" rel="noopener">open game</a></p>
       <p class="small"><b>Principle:</b> ${P[m.cat].tip}</p></div></div>`;
   }
   { const t1 = order.length ? `Your most common leak: <b>${P[order[0]].t.toLowerCase()}</b> (${cnt[order[0]]} time${cnt[order[0]] > 1 ? "s" : ""} in ${results.length} game${results.length > 1 ? "s" : ""}). ${P[order[0]].tip}` : "No big leaks found. Keep doing what you do and analyze a few losses.";
