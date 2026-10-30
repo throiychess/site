@@ -68,7 +68,7 @@ async function fetchChesscom(user) {
   for (const m of months) { const r = await fetch(m); if (r.ok) games = games.concat((await r.json()).games || []); if (games.length >= 30) break; }
   return games.filter((g) => g.pgn && (g.rules || "chess") === "chess").sort((x, y) => y.end_time - x.end_time).slice(0, 30).map((g) => ({
     pgn: g.pgn, white: g.white.username, black: g.black.username, wres: g.white.result, bres: g.black.result,
-    tc: g.time_class, date: new Date(g.end_time * 1000), url: g.url }));
+    tc: g.time_class, wrat: g.white.rating, brat: g.black.rating, date: new Date(g.end_time * 1000), url: g.url }));
 }
 async function fetchLichess(user) {
   const r = await fetch(`https://lichess.org/api/games/user/${encodeURIComponent(user)}?max=30&clocks=true&pgnInJson=true&perfType=ultraBullet,bullet,blitz,rapid,classical,correspondence`,
@@ -78,7 +78,7 @@ async function fetchLichess(user) {
   return lines.filter((g) => g.variant === "standard" && g.pgn).map((g) => ({
     pgn: g.pgn, white: g.players.white.user ? g.players.white.user.name : "Anonymous", black: g.players.black.user ? g.players.black.user.name : "Anonymous",
     wres: g.winner === "white" ? "win" : g.winner ? "loss" : "draw", bres: g.winner === "black" ? "win" : g.winner ? "loss" : "draw",
-    tc: g.speed, date: new Date(g.createdAt), url: "https://lichess.org/" + g.id }));
+    tc: g.speed, wrat: g.players.white.rating, brat: g.players.black.rating, date: new Date(g.createdAt), url: "https://lichess.org/" + g.id }));
 }
 
 // ---------- helpers ----------
@@ -219,8 +219,13 @@ function report(results) {
   const top3 = results.map((r, ri) => all.filter((m) => m.ri === ri).sort((x, y) => y.loss - x.loss)[0]).filter(Boolean);
   const accFix = (sum((r) => r.acc * r.nMoves) + top3.reduce((a, m) => a + (100 - m.a), 0)) / nm, lossNow = sum((r) => r.avgLoss * r.nMoves) / nm, lossFix = (sum((r) => r.avgLoss * r.nMoves) - top3.reduce((a, m) => a + Math.min(m.loss, 1000), 0)) / nm;
   const bNow = bandOf(lossNow / 100), bFix = bandOf(lossFix / 100), bNext = Math.min(BANDS.length - 1, bNow + 1), blPer = nB / results.length;
-  const whatIf = top3.length ? `<div class="az-what"><p><b>What if you had found the better move in the biggest mistake of each game?</b> Accuracy about <b>${accFix.toFixed(0)}%</b> instead of ${acc.toFixed(0)}%, and <b>${(lossFix / 100).toFixed(2)}</b> instead of ${(lossNow / 100).toFixed(2)} pawns lost per move.</p>
-    <p><b>Improve your rating with this:</b> your play looks like players rated about <b>${bandName(bNow)}</b>. ${bFix > bNow ? `With those mistakes fixed it looks like players rated about <b>${bandName(bFix)}</b>.` : `Players rated about ${bandName(bNext)} lose ${BANDS[bNext].loss.toFixed(2)} pawns per move on average; you lose ${(lossNow / 100).toFixed(2)}.`}</p>
+  const latest = results.slice().sort((x, y) => y.g.date - x.g.date)[0]; const cur = latest && latest.side ? (latest.side === "w" ? latest.g.wrat : latest.g.brat) : null;
+  const nTop = top3.length, mWord = nTop === 1 ? "your biggest mistake" : `your ${nTop} biggest mistakes (one per game)`;
+  const whatIf = nTop ? `<div class="az-what"><p><b>Without ${mWord}:</b></p><ul>
+    <li>Your accuracy would go up from ${acc.toFixed(0)}% to <b>${accFix.toFixed(0)}%</b>.</li>
+    <li>You would lose <b>${(lossFix / 100).toFixed(2)}</b> instead of ${(lossNow / 100).toFixed(2)} pawns per move.</li>
+    <li>${bFix > bNow ? `Your play would look like players rated about <b>${bandName(bFix)}</b> (today: ${bandName(bNow)}).` : `You would stay in the ${bandName(bNow)} band, a step closer to ${bandName(bNext)}.`}</li></ul>
+    ${cur ? `<p>Your current rating: <b>${cur}</b> (${esc(latest.g.tc || "")}). Your play today looks like players rated about <b>${bandName(bNow)}</b>.</p>` : `<p>Your play today looks like players rated about <b>${bandName(bNow)}</b>.</p>`}
     <p class="small">Based on our own sample of 270 Chess.com rapid games (30 per rating band), analyzed with the same engine. A guide, not an official rating${results.length < 3 ? ". Analyze 3 to 5 games for a steadier estimate" : ""}.</p></div>` : "";
   const tip3 = bNow < BANDS.length - 1 ? `Players rated about ${bandName(bNext)} make about ${BANDS[bNext].bl.toFixed(1)} blunders per game (moves that lose 3+ pawns). You made ${blPer.toFixed(1)}. Blunders are the fastest way up: before every move, check their checks, captures and threats.` : `Players in your band make about ${BANDS[bNow].bl.toFixed(1)} blunders per game and you made ${blPer.toFixed(1)}. Keep the 3-second check (checks, captures, threats) before every move.`;
   let h = `<h2>Your report</h2><p>${results.length} game${results.length > 1 ? "s" : ""} analyzed for <b>${esc(state.user)}</b>. We found <b>${all.length}</b> moment${all.length === 1 ? "" : "s"} where the evaluation dropped by more than a pawn.</p>`;
