@@ -70,6 +70,14 @@ async function fetchChesscom(user) {
     pgn: g.pgn, white: g.white.username, black: g.black.username, wres: g.white.result, bres: g.black.result,
     tc: g.time_class, wrat: g.white.rating, brat: g.black.rating, date: new Date(g.end_time * 1000), url: g.url }));
 }
+async function fetchRatings(site, user) { // current ratings: rapid, blitz, daily, puzzles. Never blocks the report.
+  const out = {}; try {
+    if (site === "lichess") { const r = await fetch(`https://lichess.org/api/user/${encodeURIComponent(user)}`); if (r.ok) { const p = (await r.json()).perfs || {};
+      out.rapid = p.rapid && p.rapid.rating; out.blitz = p.blitz && p.blitz.rating; out.daily = p.correspondence && p.correspondence.rating; out.puzzles = p.puzzle && p.puzzle.rating; } }
+    else { const r = await fetch(`https://api.chess.com/pub/player/${encodeURIComponent(user.toLowerCase())}/stats`); if (r.ok) { const j = await r.json(), l = (k) => j[k] && j[k].last && j[k].last.rating;
+      out.rapid = l("chess_rapid"); out.blitz = l("chess_blitz"); out.daily = l("chess_daily"); out.puzzles = j.tactics && j.tactics.highest && j.tactics.highest.rating; out.puzzlesBest = true; } }
+  } catch (e) {} return out;
+}
 async function fetchLichess(user) {
   const r = await fetch(`https://lichess.org/api/games/user/${encodeURIComponent(user)}?max=30&clocks=true&pgnInJson=true&perfType=ultraBullet,bullet,blitz,rapid,classical,correspondence`,
     { headers: { Accept: "application/x-ndjson" } });
@@ -168,7 +176,7 @@ function fmtRes(g, user) { const w = g.white.toLowerCase() === user.toLowerCase(
 $("#az-form").addEventListener("submit", async (e) => {
   e.preventDefault(); const user = $("#az-user").value.trim(); const site = $("#az-site").value; if (!user) return;
   state = { games: [], user, site }; const out = $("#az-games"); out.innerHTML = '<p class="small">Fetching games…</p>'; $("#az-report").innerHTML = "";
-  try { const games = site === "lichess" ? await fetchLichess(user) : await fetchChesscom(user); state.games = games; ev("analyze-fetch-" + site);
+  try { const games = site === "lichess" ? await fetchLichess(user) : await fetchChesscom(user); state.games = games; state.ratings = {}; fetchRatings(site, user).then((r) => { state.ratings = r; }); ev("analyze-fetch-" + site);
     if (!games.length) { out.innerHTML = '<p class="small">No standard games found in the last months.</p>'; return; }
     out.innerHTML = `<p>Pick up to <strong>${MAX_FREE} games</strong> to analyze. Tip: your losses teach the most.</p><div class="az-list">` +
       games.map((g, i) => { const w = g.white.toLowerCase() === user.toLowerCase(); const opp = w ? g.black : g.white;
@@ -209,6 +217,11 @@ async function saveReport() {
     band: bandName(L.bNow), top_leak: L.order[0] ? P[L.order[0]].t : null, report: rep });
   box.innerHTML = error ? `<p class="small">Could not save this report.</p>` : `<p class="small">&#10003; Saved to your <a href="/members/">members page</a>.</p>`; if (!error) ev("analyze-report-saved");
 }
+function ratingsLine(cur, latest) {
+  const R = state.ratings || {}, parts = [["Rapid", R.rapid], ["Blitz", R.blitz], ["Daily", R.daily], [R.puzzlesBest ? "Puzzles (best)" : "Puzzles", R.puzzles]].filter((x) => x[1]);
+  if (parts.length) return `<p>Your ratings: ${parts.map(([n, v]) => `${n} <b>${v}</b>`).join(" &middot; ")}</p>`;
+  return cur ? `<p>Your current rating: <b>${cur}</b> (${esc(latest.g.tc || "")}).</p>` : "";
+}
 function report(results) {
   const all = results.flatMap((r, ri) => r.moments.map((m) => ({ ...m, r, ri }))); const cnt = {}; for (const m of all) cnt[m.cat] = (cnt[m.cat] || 0) + 1;
   const order = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]); const max = Math.max(1, ...Object.values(cnt));
@@ -225,7 +238,7 @@ function report(results) {
     <li>Your accuracy would go up from ${acc.toFixed(0)}% to <b>${accFix.toFixed(0)}%</b>.</li>
     <li>You would lose <b>${(lossFix / 100).toFixed(2)}</b> instead of ${(lossNow / 100).toFixed(2)} pawns per move.</li>
     <li>${bFix > bNow ? `Your play would look like players rated about <b>${bandName(bFix)}</b> (today: ${bandName(bNow)}).` : `You would stay in the ${bandName(bNow)} band, a step closer to ${bandName(bNext)}.`}</li></ul>
-    ${cur ? `<p>Your current rating: <b>${cur}</b> (${esc(latest.g.tc || "")}). Your play today looks like players rated about <b>${bandName(bNow)}</b>.</p>` : `<p>Your play today looks like players rated about <b>${bandName(bNow)}</b>.</p>`}
+    ${ratingsLine(cur, latest)}<p>Your play today looks like players rated about <b>${bandName(bNow)}</b>.</p>
     <p class="small">Based on our own sample of 270 Chess.com rapid games (30 per rating band), analyzed with the same engine. A guide, not an official rating${results.length < 3 ? ". Analyze 3 to 5 games for a steadier estimate" : ""}.</p></div>` : "";
   const tip3 = bNow < BANDS.length - 1 ? `Players rated about ${bandName(bNext)} make about ${BANDS[bNext].bl.toFixed(1)} blunders per game (moves that lose 3+ pawns). You made ${blPer.toFixed(1)}. Blunders are the fastest way up: before every move, check their checks, captures and threats.` : `Players in your band make about ${BANDS[bNow].bl.toFixed(1)} blunders per game and you made ${blPer.toFixed(1)}. Keep the 3-second check (checks, captures, threats) before every move.`;
   let h = `<h2>Your report</h2><p>${results.length} game${results.length > 1 ? "s" : ""} analyzed for <b>${esc(state.user)}</b>. We found <b>${all.length}</b> moment${all.length === 1 ? "" : "s"} where the evaluation dropped by more than a pawn.</p>`;
@@ -259,7 +272,7 @@ function report(results) {
   { const t1 = order.length ? `Your most common leak: <b>${P[order[0]].t.toLowerCase()}</b> (${cnt[order[0]]} time${cnt[order[0]] > 1 ? "s" : ""} in ${results.length} game${results.length > 1 ? "s" : ""}). ${P[order[0]].tip}` : "No big leaks found. Keep doing what you do and analyze a few losses.";
     const tips = { opening: "Your opening costs you the most. Play the same opening for a month, know its first 8 moves, and develop knights and bishops before the queen.", middlegame: "Your middlegame costs you the most. When the position gets busy, slow down: list your opponent's forcing moves (checks, captures, threats) before you choose.", endgame: "Your endgame costs you the most. Practice king and pawn endings 10 minutes a day: activate the king, push passed pawns." };
     h += `<h3>3 top tips for you</h3><ol class="az-tips"><li>${t1}</li><li>${worst ? tips[worst] : "Analyze more games to see which phase costs you most."}</li><li>${tip3}</li></ol>`; }
-  h += `<div class="az-pro"><span class="eyebrow">Go deeper</span><h3>Want a more in-depth analysis?</h3><p>This report uses a light engine and 5 games. Join the improvement program: a stronger engine looking deeper, all your games, your own mistakes as puzzles, and your progress over time.</p><a class="btn solid" data-ev="analyze-cta-improve" href="/improve/?utm_source=analyze&amp;utm_campaign=improve">Join the waitlist</a></div>`;
+  h += `<div class="az-pro"><span class="eyebrow">Go deeper</span><h3>Want a more in-depth analysis?</h3><p>This report uses a light engine and 5 games. Join the improvement program: a stronger engine looking deeper, all your games, puzzles built from the patterns you miss (pattern recognition is what makes you faster), and your progress over time.</p><a class="btn solid" data-ev="analyze-cta-improve" href="/improve/?utm_source=analyze&amp;utm_campaign=improve">Join the waitlist</a></div>`;
   h += `<div class="az-cta"><h3>Keep improving</h3><p>This report is advice based on your own games. Next step: learn the 10 opening traps every beginner meets. Get the free cheat sheet, plus one trap a week in your inbox.</p><a class="btn solid" data-ev="analyze-cta-free" href="/free/?utm_source=analyze&amp;utm_campaign=analyze">Get the free cheat sheet</a><hr><h3>Learn one trap a day</h3><p>Under-a-minute lessons on traps, patterns and the mistakes we all make. Follow Throiy Chess:</p><div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
   { const sv = `<div class="az-save" id="az-save"></div>`; h = h.replace('<h2>Key moments</h2>', sv + '<h2>Key moments</h2>'); }
   window.__azLast = { acc, lossNow, nB, nM, nI, bNow, order, cnt, results, SHOWN };
