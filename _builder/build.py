@@ -594,7 +594,7 @@ def free_page():
 <button class="btn solid" type="submit">Send me the cheat sheet</button>
 <p class="nl-msg small" role="status" aria-live="polite"></p></form>
 <p class="small">We use MailerLite (EU) to send the e-mails and use your address for nothing else. Unsubscribe in one click and we delete it. <a href="/privacy/">Privacy</a></p>
-</div><aside><img src="/free/cheat-sheet-cover.png" width="600" height="848" alt="Cover of the 10 Opening Traps cheat sheet" style="width:100%;height:auto;border-radius:14px;border:2px solid #d9a93d"></aside></div></main>''' + footer(band=False, nl=False)
+</div><aside><img src="/free/cheat-sheet-cover.png" width="540" height="960" alt="Cover of the 10 Opening Traps cheat sheet" style="width:100%;max-width:340px;margin:0 auto;display:block;height:auto;border-radius:14px;border:2px solid #d9a93d"></aside></div></main>''' + footer(band=False, nl=False)
     return "/free/", page("/free/", "Free: 10 Opening Traps Cheat Sheet · Throiy Chess", "Free PDF: the ten opening traps every beginner meets, in plain words, with the fix for each one.", body)
 
 AZ_CSS = """.az-form{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.az-form select,.az-form input{padding:13px 14px;border-radius:10px;border:1px solid #3a352c;background:#16140f;color:inherit;font:inherit}
