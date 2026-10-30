@@ -122,7 +122,7 @@
     "slug": "trade-only-when-it-gains-something",
     "title": "Trade only when it gains something",
     "text": "Do not make pointless trades in the centre or the opening. If a trade gives you nothing tangible but helps the opponent develop their pieces (such as a queen or knight) with tempo, avoid it. Every trade needs a tactical or positional purpose.",
-    "note": "Checked. Softened: a trade is fine when it removes a strong enemy piece or fixes a structure in your favour. Also covers: never trade pawns or pieces automatically. Ask: \"Does this help my opponent build a strong pawn chain or develop for free?\""
+    "note": "Checked. Softened: a trade is fine when it removes a strong enemy piece or fixes a structure in your favour. Also covers: never trade pawns or pieces automatically. Ask: \"Does this help my opponent build a strong pawn chain or develop for free?\" Also covers: keep the tension. Do not capture in the centre or on the wing if it helps the opponent post a knight or pawn on a better square. Release the tension only when it confuses the opponent or activates your pieces, not just to resolve it."
    },
    {
     "slug": "choose-the-active-square-over-the-default-routine",
@@ -653,6 +653,12 @@
     "title": "Use advanced pawns as wedges",
     "text": "Do not shy away from pushing central pawns far into the opponent's half, even if it seems to expose your king. An advanced pawn cramps enemy pieces and creates constant threats. Use passed and advanced pawns as wedges to break the opponent's position from the inside.",
     "note": "Softened: an advanced pawn needs support, or it becomes a target. Calculate the risks to your own king before you push."
+   },
+   {
+    "slug": "activity-can-be-worth-more-than-material",
+    "title": "Activity can be worth more than material",
+    "text": "Material is worth little if all your pieces are passive. A sacrifice can be justified if your other pieces keep active pressure, threaten the opponent and keep the initiative. Quality of activity beats quantity of pawns and pieces.",
+    "note": "Softened: a guideline for calculated sacrifices. Unsound sacrifices lose; check that the pressure is lasting and that the opponent has no safe way to return the material."
    }
   ]
  },
@@ -753,7 +759,7 @@
     "slug": "bring-your-rooks-into-the-game",
     "title": "Bring your rooks into the game",
     "text": "In the heat of an attack players often forget their rooks on a1 or h1. Make sure every piece joins the attack, and before a serious attack check that your rooks and heavy pieces have left their starting squares.",
-    "note": "Checked: a very common mistake at club level."
+    "note": "Checked: a very common mistake at club level. Also covers: before a decisive attack every piece, including bishops and rooks on the back rank, must take part. Check for passive pieces in your own camp and bring them to open files or central squares."
    },
    {
     "slug": "do-not-respect-an-unsupported-attack",
@@ -965,6 +971,12 @@
     "title": "Stay calm against an unfamiliar early gambit",
     "text": "Do not panic against a strange or rare gambit. Often you can take the offered pawn, solidify (for example with c3) and send your pieces back to safe squares.",
     "note": "Softened: \"take the pawn\" is not always right. First check that the pawn is not poisoned and that you are not falling behind in development."
+   },
+   {
+    "slug": "make-the-opponent-s-life-uncomfortable",
+    "title": "Make the opponent's life uncomfortable",
+    "text": "You do not always need the very best computer move. Among good moves, prefer the one that is practically and psychologically hardest for the opponent. Ask questions with active, provocative moves that test the defence.",
+    "note": "Softened: pick among sound moves only. A move that is objectively bad is not \"provocative\", it is just a mistake."
    }
   ]
  }
