@@ -32,7 +32,7 @@ const DRILL = {
   king:   ["Castle by move 10. Do not move the king by hand unless you have to.", "Play 5 games: after move 6, check whether you can castle now."],
   twice:  ["Each opening move brings a new piece into play. Ask: which piece have I not moved yet?", "Play 5 games: do not move the same piece twice before move 8 unless it wins material."],
   endgame:["Activate your king in the endgame and push your passed pawns.", "Practice king and pawn endings for 10 minutes a day."],
-  other:  ["Compare your move with the engine's: which piece does it improve? Ask what your worst piece is.", "Pick one game, go through the key moments, and write one sentence for each."],
+  other:  ["In a quiet position, before you move: point at your worst piece (the one doing the least) and look for a move that improves it. Then check what your opponent threatens.", "In your next 5 games, do this from move 10 on, every quiet move: worst piece first, then threats. Stop as soon as you see a check, capture or threat."],
 };
 const PHN = { opening: "Opening", middlegame: "Middlegame", endgame: "Endgame" };
 
@@ -45,10 +45,10 @@ class Engine {
   async init() { const p = this.wait((l) => l === "uciok"); this.cmd("uci"); await p; this.cmd("setoption name Hash value 32");
     const r = this.wait((l) => l === "readyok"); this.cmd("isready"); await r; }
   analyse(fen, depth = DEPTH) { // score from White's point of view, in pawns*100; mate as +-(10000 - n)
-    return (this.q = this.q.then(() => new Promise((res) => { let score = 0, best = null; const white = fen.split(" ")[1] === "w";
+    return (this.q = this.q.then(() => new Promise((res) => { let score = 0, best = null, pv = []; const white = fen.split(" ")[1] === "w";
       this.lis = (l) => { if (l.startsWith("info") && l.includes(" score ")) { const m = l.match(/score (cp|mate) (-?\d+)/);
-          if (m) { let s = +m[2]; if (m[1] === "mate") s = s > 0 ? 10000 - s : -10000 - s; score = white ? s : -s; } }
-        else if (l.startsWith("bestmove")) { best = l.split(" ")[1]; this.lis = null; res({ score, best: best === "(none)" ? null : best }); } };
+          if (m) { let s = +m[2]; if (m[1] === "mate") s = s > 0 ? 10000 - s : -10000 - s; score = white ? s : -s; } const pm = l.match(/ pv (.+)$/); if (pm) pv = pm[1].split(" "); }
+        else if (l.startsWith("bestmove")) { best = l.split(" ")[1]; this.lis = null; res({ score, pv, best: best === "(none)" ? null : best }); } };
       this.cmd("position fen " + fen); this.cmd("go depth " + depth); })));
   }
 }
@@ -133,7 +133,7 @@ async function analyseGame(g, user, progress) {
     }
     if (cat === "other") { const m = material(h.before); if (!m.q && m.w <= 13 && m.b <= 13) { cat = "endgame"; detail = ""; } }
     const prevClock = (() => { for (let j = i - 2; j >= 0; j -= 2) { const t = clk(comments[hist[j].after]); if (t !== null) return t; } return null; })();
-    moments.push({ a: aMove, ply, moveNo, color: h.color, san: h.san, best: bm ? bm.san : null, bFrom: bm ? bm.from : null, bTo: bm ? bm.to : null, loss, cat, detail, fen: h.before, from: h.from, to: h.to,
+    moments.push({ pv: (evals[i + 1].pv || []).slice(0, 3), a: aMove, ply, moveNo, color: h.color, san: h.san, best: bm ? bm.san : null, bFrom: bm ? bm.from : null, bTo: bm ? bm.to : null, loss, cat, detail, fen: h.before, from: h.from, to: h.to,
       clock: g.tc === "daily" || g.tc === "correspondence" ? null : prevClock, before, after });
   }
   const res = side === "w" ? g.wres : g.bres;
@@ -155,6 +155,7 @@ function boardSVG(fen, from, to, flip, bf, bt) {
 }
 
 // ---------- UI ----------
+let SHOWN = [];
 let state = { games: [], user: "", site: "chesscom" };
 function fmtRes(g, user) { const w = g.white.toLowerCase() === user.toLowerCase(); const r = w ? g.wres : g.bres;
   return r === "win" ? "Won" : ["agreed", "repetition", "stalemate", "insufficient", "50move", "timevsinsufficient", "draw"].includes(r) ? "Draw" : "Lost"; }
@@ -185,8 +186,17 @@ async function run() {
   prog.textContent = "Done."; $("#az-go").disabled = false; report(results);
 }
 
+document.addEventListener("click", (ev) => { const bt = ev.target.closest(".az-replay"); if (!bt || bt.disabled) return; const m = SHOWN[+bt.dataset.i]; if (!m) return;
+  const box = bt.closest(".az-m"), svg = () => box.querySelector("svg.mini"), orig = svg().outerHTML; bt.disabled = true; ev("analyze-replay");
+  const c = new Chess(m.fen), seq = [m.from + m.to + (m.promo || "")].concat(m.pv); const lab = (i) => i === 0 ? "Your move" : "Opponent's best reply" + (i > 1 ? " and the line continues" : ""); let i = 0;
+  const msg = box.querySelector(".az-rp") || bt.insertAdjacentElement("afterend", Object.assign(document.createElement("span"), { className: "az-rp small" })) || box.querySelector(".az-rp");
+  const step = () => { if (i >= seq.length) { setTimeout(() => { svg().outerHTML = orig; box.querySelector(".az-rp").textContent = ""; bt.disabled = false; }, 1600); return; }
+    const u = seq[i]; let mv = null; try { mv = c.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] || "q" }); } catch (e) {}
+    if (!mv) { svg().outerHTML = orig; bt.disabled = false; return; }
+    svg().outerHTML = boardSVG(c.fen(), mv.from, mv.to, m.r.side === "b"); box.querySelector(".az-rp").textContent = ` ${lab(i)}: ${mv.san}`; i++; setTimeout(step, 1300); };
+  step(); });
 function report(results) {
-  const all = results.flatMap((r) => r.moments.map((m) => ({ ...m, r }))); const cnt = {}; for (const m of all) cnt[m.cat] = (cnt[m.cat] || 0) + 1;
+  const all = results.flatMap((r, ri) => r.moments.map((m) => ({ ...m, r, ri }))); const cnt = {}; for (const m of all) cnt[m.cat] = (cnt[m.cat] || 0) + 1;
   const order = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]); const max = Math.max(1, ...Object.values(cnt));
   const late = all.filter((m) => m.clock !== null && m.clock < 30).length;
   const sum = (f) => results.reduce((a, r) => a + f(r), 0); const nm = sum((r) => r.nMoves) || 1;
@@ -214,9 +224,10 @@ function report(results) {
   if (late) h += `<p class="small">⏱ ${late} of these moments came with less than 30 seconds on your clock. Part of the fix may be using your time earlier in the game.</p>`;
   for (const r of results) if (r.trap) h += `<div class="az-trap">${r.trap.fell ? "🪤 You fell for the" : "🎯 You set the"} <a href="/traps/${r.trap.t.slug}/?utm_source=analyze&amp;utm_campaign=${r.trap.t.slug}">${esc(r.trap.t.name)}</a>${r.trap.fell ? ". Here's how to avoid it next time." : ". Nice!"}</div>`;
   h += `<h2>Key moments</h2><p class="small">On the boards: gold = the move you played, green = the better move.</p>`;
-  for (const m of all.sort((a, b) => b.loss - a.loss).slice(0, 12)) {
+  SHOWN = all.slice().sort((a, b) => b.loss - a.loss).slice(0, 12).sort((a, b) => a.ri - b.ri || a.ply - b.ply);
+  for (const [mi, m] of SHOWN.entries()) {
     const opp = m.r.side === "w" ? m.r.g.black : m.r.g.white;
-    h += `<div class="az-m">${boardSVG(m.fen, m.from, m.to, m.r.side === "b", m.bFrom, m.bTo)}<div><span class="eyebrow">${P[m.cat].t}</span>
+    h += `<div class="az-m">${boardSVG(m.fen, m.from, m.to, m.r.side === "b", m.bFrom, m.bTo)}<div><span class="eyebrow">${P[m.cat].t}</span>${m.pv && m.pv.length ? `<button class="btn az-replay" type="button" data-i="${mi}">&#9654; Replay what happens</button>` : ""}
       <h3>Move ${m.moveNo}${m.color === "w" ? "." : "…"}${esc(m.san)} <span class="small">vs ${esc(opp)}</span></h3>
       <p>${m.detail ? esc(m.detail) + " " : ""}${m.best ? `Better was <b>${esc(m.best)}</b>.` : ""}</p>
       <p class="small">Evaluation for you: ${(m.before / 100).toFixed(1)} → ${(m.after / 100).toFixed(1)}${m.clock !== null ? ` · ${Math.round(m.clock)} s on your clock` : ""} · <a href="${esc(m.r.g.url)}" target="_blank" rel="noopener">open game</a></p>
@@ -225,3 +236,5 @@ function report(results) {
   h += `<div class="az-cta"><h3>Keep improving</h3><p>This report is advice based on your own games. Next step: learn the 10 opening traps every beginner meets. Get the free cheat sheet, plus one trap a week in your inbox.</p><a class="btn solid" data-ev="analyze-cta-free" href="/free/?utm_source=analyze&amp;utm_campaign=analyze">Get the free cheat sheet</a><hr><h3>Learn one trap a day</h3><p>Under-a-minute lessons on traps, patterns and the mistakes we all make. Follow Throiy Chess:</p><div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
   $("#az-report").innerHTML = h; $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
 }
+
+if (/[?&]bench=1/.test(location.search)) window.__az = { analyseGame };
