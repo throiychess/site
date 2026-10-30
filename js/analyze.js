@@ -191,9 +191,9 @@ function report(results) {
   const late = all.filter((m) => m.clock !== null && m.clock < 30).length;
   const sum = (f) => results.reduce((a, r) => a + f(r), 0); const nm = sum((r) => r.nMoves) || 1;
   const acc = sum((r) => r.acc * r.nMoves) / nm, nB = sum((r) => r.nBlund), nM = sum((r) => r.nMist), nI = sum((r) => r.nInacc);
-  const wins = results.filter((r) => r.result === "win").length, losses = results.filter((r) => r.result === "loss").length, draws = results.length - wins - losses;
+  const outc = (r) => fmtRes(r.g, state.user); const wins = results.filter((r) => outc(r) === "Won").length, losses = results.filter((r) => outc(r) === "Lost").length, draws = results.length - wins - losses;
   let h = `<h2>Your report</h2><p>${results.length} game${results.length > 1 ? "s" : ""} analyzed for <b>${esc(state.user)}</b>. We found <b>${all.length}</b> moment${all.length === 1 ? "" : "s"} where the evaluation dropped by more than a pawn.</p>`;
-  h += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy (our estimate)</span></div><div><b>${nB}</b><span>Blunders</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Inaccuracies</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div>`;
+  h += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy (our estimate)</span></div><div><b>${nB}</b><span>Blunders</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Inaccuracies</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div><p class="small">Accuracy here is our own estimate at a light engine depth. It is not on the same scale as the Chess.com or Lichess accuracy, so compare moves, not percentages.</p>`;
   // phases
   const phs = {}; for (const k of Object.keys(PHN)) { phs[k] = { n: 0, loss: 0, big: 0 }; for (const r of results) { phs[k].n += r.ph[k].n; phs[k].loss += r.ph[k].loss; phs[k].big += r.ph[k].big; } }
   const worst = Object.keys(PHN).filter((k) => phs[k].n >= 5).sort((a, b) => phs[b].loss / phs[b].n - phs[a].loss / phs[a].n)[0];
@@ -201,7 +201,7 @@ function report(results) {
   if (worst) h += `<p class="small">Your biggest leak: the <b>${PHN[worst].toLowerCase()}</b>. That is where your moves cost the most on average.</p>`;
   // per game
   h += `<h3>Game by game</h3><div class="az-gm">` + results.map((r) => { const opp = r.side === "w" ? r.g.black : r.g.white; const top = r.moments.slice().sort((a, b) => b.loss - a.loss)[0];
-    return `<a href="${esc(r.g.url)}" target="_blank" rel="noopener"><span class="res ${r.result === "win" ? "won" : r.result === "loss" ? "lost" : "draw"}">${r.result === "win" ? "Won" : r.result === "loss" ? "Lost" : "Draw"}</span><span>${r.side === "w" ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${r.acc.toFixed(0)}% accuracy${top ? ` · biggest drop: move ${top.moveNo}${top.color === "w" ? "." : "…"}${esc(top.san)}` : " · no big drops"}</span></a>`; }).join("") + `</div>`;
+    return `<a href="${esc(r.g.url)}" target="_blank" rel="noopener"><span class="res ${outc(r).toLowerCase()}">${outc(r)}</span><span>${r.side === "w" ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${r.acc.toFixed(0)}% accuracy${top ? ` · biggest drop: move ${top.moveNo}${top.color === "w" ? "." : "…"}${esc(top.san)}` : " · no big drops"}</span></a>`; }).join("") + `</div>`;
   if (order.length) {
     const top = order[0];
     h += `<div class="az-top"><span class="eyebrow">Train this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p></div>`;
