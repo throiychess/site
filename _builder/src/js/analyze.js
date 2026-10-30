@@ -210,14 +210,14 @@ function report(results) {
   if (order.length) { h += `<h3>Your 5-game training plan</h3><div class="az-plan">` + order.slice(0, 2).map((c, i) => `<div><span class="eyebrow">Focus ${i + 1}: ${P[c].t}</span><p><b>Habit:</b> ${DRILL[c][0]}</p><p><b>Practice:</b> ${DRILL[c][1]}</p></div>`).join("") + `<p class="small">Play your next 5 games with only these two focuses, then analyze them again here and compare. The free cheat sheet has a 3-second check and a quiz that train exactly this.</p></div>`; }
   if (late) h += `<p class="small">⏱ ${late} of these moments came with less than 30 seconds on your clock. Part of the fix may be using your time earlier in the game.</p>`;
   for (const r of results) if (r.trap) h += `<div class="az-trap">${r.trap.fell ? "🪤 You fell for the" : "🎯 You set the"} <a href="/traps/${r.trap.t.slug}/?utm_source=analyze&amp;utm_campaign=${r.trap.t.slug}">${esc(r.trap.t.name)}</a>${r.trap.fell ? ". Here's how to avoid it next time." : ". Nice!"}</div>`;
-  h += `<h2>Key moments</h2>`;
+  h += `<h2>Key moments</h2><p class="small">On the boards: gold = the move you played, green = the better move.</p>`;
   for (const m of all.sort((a, b) => b.loss - a.loss).slice(0, 12)) {
     const opp = m.r.side === "w" ? m.r.g.black : m.r.g.white;
     h += `<div class="az-m">${boardSVG(m.fen, m.from, m.to, m.r.side === "b", m.bFrom, m.bTo)}<div><span class="eyebrow">${P[m.cat].t}</span>
       <h3>Move ${m.moveNo}${m.color === "w" ? "." : "…"}${esc(m.san)} <span class="small">vs ${esc(opp)}</span></h3>
       <p>${m.detail ? esc(m.detail) + " " : ""}${m.best ? `Better was <b>${esc(m.best)}</b>.` : ""}</p>
       <p class="small">Evaluation for you: ${(m.before / 100).toFixed(1)} → ${(m.after / 100).toFixed(1)}${m.clock !== null ? ` · ${Math.round(m.clock)} s on your clock` : ""} · <a href="${esc(m.r.g.url)}" target="_blank" rel="noopener">open game</a></p>
-      <p class="small"><b>Principle:</b> ${P[m.cat].tip}</p>${m.best ? `<p class="small">On the board: gold = your move, green = the better move.</p>` : ""}</div></div>`;
+      <p class="small"><b>Principle:</b> ${P[m.cat].tip}</p></div></div>`;
   }
   h += `<div class="az-cta"><h3>Keep improving</h3><p>This report is advice based on your own games. Next step: learn the 10 opening traps every beginner meets. Get the free cheat sheet, plus one trap a week in your inbox.</p><a class="btn solid" data-ev="analyze-cta-free" href="/free/?utm_source=analyze&amp;utm_campaign=analyze">Get the free cheat sheet</a><hr><h3>Learn one trap a day</h3><p>Under-a-minute lessons on traps, patterns and the mistakes we all make. Follow Throiy Chess:</p><div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
   $("#az-report").innerHTML = h; $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
