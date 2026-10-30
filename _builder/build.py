@@ -885,7 +885,7 @@ def principles_index():
 
 
 def board_svg(fen, flip=False):
-    G = {"K":"\u2654","Q":"\u2655","R":"\u2656","B":"\u2657","N":"\u2658","P":"\u2659","k":"\u265a","q":"\u265b","r":"\u265c","b":"\u265d","n":"\u265e","p":"\u265f"}
+    G = {"K":"\u265a","Q":"\u265b","R":"\u265c","B":"\u265d","N":"\u265e","P":"\u265f","k":"\u265a","q":"\u265b","r":"\u265c","b":"\u265d","n":"\u265e","p":"\u265f"}
     rows = fen.split()[0].split("/"); s = '<svg viewBox="0 0 80 80" width="320" height="320" role="img" aria-label="Chess position" style="max-width:100%;height:auto;border-radius:6px">'
     for r, row in enumerate(rows):
         f = 0
