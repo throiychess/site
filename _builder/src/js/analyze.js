@@ -34,6 +34,11 @@ const DRILL = {
   endgame:["Activate your king in the endgame and push your passed pawns.", "Practice king and pawn endings for 10 minutes a day."],
   other:  ["In a quiet position, before you move: point at your worst piece (the one doing the least) and look for a move that improves it. Then check what your opponent threatens.", "In your next 5 games, do this from move 10 on, every quiet move: worst piece first, then threats. Stop as soon as you see a check, capture or threat."],
 };
+// Our own benchmark: 270 Chess.com rapid games (30 per band, Oct 2026), same engine and depth, median pawns lost per move and mean blunders per game.
+const BANDS = [{ lo: 0, hi: 600, loss: 0.94, bl: 3.0 }, { lo: 600, hi: 800, loss: 0.78, bl: 2.5 }, { lo: 800, hi: 1000, loss: 0.67, bl: 1.8 }, { lo: 1000, hi: 1200, loss: 0.59, bl: 1.6 },
+  { lo: 1200, hi: 1400, loss: 0.54, bl: 0.9 }, { lo: 1400, hi: 1600, loss: 0.44, bl: 1.1 }, { lo: 1600, hi: 2400, loss: 0.38, bl: 0.8 }];
+const bandOf = (loss) => { let k = 0, d = 9; BANDS.forEach((b, i) => { const x = Math.abs(b.loss - loss); if (x < d) { d = x; k = i; } }); return k; };
+const bandName = (i) => i >= BANDS.length - 1 ? "1600+" : `${BANDS[i].lo}\u2013${BANDS[i].hi}`;
 const PHN = { opening: "Opening", middlegame: "Middlegame", endgame: "Endgame" };
 
 // ---------- engine ----------
@@ -202,9 +207,13 @@ function report(results) {
   const sum = (f) => results.reduce((a, r) => a + f(r), 0); const nm = sum((r) => r.nMoves) || 1;
   const acc = sum((r) => r.acc * r.nMoves) / nm, nB = sum((r) => r.nBlund), nM = sum((r) => r.nMist), nI = sum((r) => r.nInacc);
   const outc = (r) => fmtRes(r.g, state.user); const wins = results.filter((r) => outc(r) === "Won").length, losses = results.filter((r) => outc(r) === "Lost").length, draws = results.length - wins - losses;
-  const top3 = all.slice().sort((a, b) => b.loss - a.loss).slice(0, 3);
+  const top3 = results.map((r, ri) => all.filter((m) => m.ri === ri).sort((x, y) => y.loss - x.loss)[0]).filter(Boolean);
   const accFix = (sum((r) => r.acc * r.nMoves) + top3.reduce((a, m) => a + (100 - m.a), 0)) / nm, lossNow = sum((r) => r.avgLoss * r.nMoves) / nm, lossFix = (sum((r) => r.avgLoss * r.nMoves) - top3.reduce((a, m) => a + Math.min(m.loss, 1000), 0)) / nm;
-  const whatIf = top3.length === 3 ? `<p class="az-what"><b>What if you had found the better move in your 3 biggest moments?</b> Your accuracy would have been about <b>${accFix.toFixed(0)}%</b> instead of ${acc.toFixed(0)}%, and you would have lost <b>${(lossFix / 100).toFixed(2)}</b> instead of ${(lossNow / 100).toFixed(2)} pawns per move. Those are the moves in "Key moments" below.</p>` : "";
+  const bNow = bandOf(lossNow / 100), bFix = bandOf(lossFix / 100), bNext = Math.min(BANDS.length - 1, bNow + 1), blPer = nB / results.length;
+  const whatIf = top3.length ? `<div class="az-what"><p><b>What if you had found the better move in the biggest mistake of each game?</b> Accuracy about <b>${accFix.toFixed(0)}%</b> instead of ${acc.toFixed(0)}%, and <b>${(lossFix / 100).toFixed(2)}</b> instead of ${(lossNow / 100).toFixed(2)} pawns lost per move.</p>
+    <p><b>Improve your rating with this:</b> your play looks like players rated about <b>${bandName(bNow)}</b>. ${bFix > bNow ? `With those mistakes fixed it looks like players rated about <b>${bandName(bFix)}</b>.` : `Players rated about ${bandName(bNext)} lose ${BANDS[bNext].loss.toFixed(2)} pawns per move on average; you lose ${(lossNow / 100).toFixed(2)}.`}</p>
+    <p class="small">Based on our own sample of 270 Chess.com rapid games (30 per rating band), analyzed with the same engine. A guide, not an official rating${results.length < 3 ? ". Analyze 3 to 5 games for a steadier estimate" : ""}.</p></div>` : "";
+  const tip3 = bNow < BANDS.length - 1 ? `Players rated about ${bandName(bNext)} make about ${BANDS[bNext].bl.toFixed(1)} blunders per game (moves that lose 3+ pawns). You made ${blPer.toFixed(1)}. Blunders are the fastest way up: before every move, check their checks, captures and threats.` : `Players in your band make about ${BANDS[bNow].bl.toFixed(1)} blunders per game and you made ${blPer.toFixed(1)}. Keep the 3-second check (checks, captures, threats) before every move.`;
   let h = `<h2>Your report</h2><p>${results.length} game${results.length > 1 ? "s" : ""} analyzed for <b>${esc(state.user)}</b>. We found <b>${all.length}</b> moment${all.length === 1 ? "" : "s"} where the evaluation dropped by more than a pawn.</p>`;
   h += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy (our estimate)</span></div><div><b>${(sum((r) => r.avgLoss * r.nMoves) / nm / 100).toFixed(2)}</b><span>Pawns lost per move</span></div><div><b>${nB}</b><span>Blunders</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Inaccuracies</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div>${whatIf}<p class="small">Accuracy here is our own estimate at a light engine depth. It is not on the same scale as the Chess.com or Lichess accuracy, so compare moves, not percentages.</p>`;
   // phases
@@ -220,6 +229,9 @@ function report(results) {
     h += `<div class="az-top"><span class="eyebrow">Train this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p></div>`;
     h += `<div class="az-bars">` + order.map((c) => `<div class="az-bar"><span>${P[c].t}</span><i style="width:${(100 * cnt[c]) / max}%"></i><b>${cnt[c]}</b></div>`).join("") + `</div>`;
   } else h += `<div class="az-top"><h3>Clean games!</h3><p>No big drops in these games. Try a few losses to find what to train.</p></div>`;
+  { const t1 = order.length ? `Your most common leak: <b>${P[order[0]].t.toLowerCase()}</b> (${cnt[order[0]]} time${cnt[order[0]] > 1 ? "s" : ""} in ${results.length} game${results.length > 1 ? "s" : ""}). ${P[order[0]].tip}` : "No big leaks found. Keep doing what you do and analyze a few losses.";
+    const tips = { opening: "Your opening costs you the most. Play the same opening for a month, know its first 8 moves, and develop knights and bishops before the queen.", middlegame: "Your middlegame costs you the most. When the position gets busy, slow down: list your opponent's forcing moves (checks, captures, threats) before you choose.", endgame: "Your endgame costs you the most. Practice king and pawn endings 10 minutes a day: activate the king, push passed pawns." };
+    h += `<h3>3 top tips for you</h3><ol class="az-tips"><li>${t1}</li><li>${worst ? tips[worst] : "Analyze more games to see which phase costs you most."}</li><li>${tip3}</li></ol>`; }
   if (order.length) { h += `<h3>Your 5-game training plan</h3><div class="az-plan">` + order.slice(0, 2).map((c, i) => `<div><span class="eyebrow">Focus ${i + 1}: ${P[c].t}</span><p><b>Habit:</b> ${DRILL[c][0]}</p><p><b>Practice:</b> ${DRILL[c][1]}</p></div>`).join("") + `<p class="small">Play your next 5 games with only these two focuses, then analyze them again here and compare. The free cheat sheet has a 3-second check and a quiz that train exactly this.</p></div>`; }
   if (late) h += `<p class="small">⏱ ${late} of these moments came with less than 30 seconds on your clock. Part of the fix may be using your time earlier in the game.</p>`;
   for (const r of results) if (r.trap) h += `<div class="az-trap">${r.trap.fell ? "🪤 You fell for the" : "🎯 You set the"} <a href="/traps/${r.trap.t.slug}/?utm_source=analyze&amp;utm_campaign=${r.trap.t.slug}">${esc(r.trap.t.name)}</a>${r.trap.fell ? ". Here's how to avoid it next time." : ". Nice!"}</div>`;
