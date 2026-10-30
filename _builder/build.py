@@ -883,11 +883,33 @@ def principles_index():
     body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow">Principles</span><h1>Chess principles, explained.</h1><p>Guidelines distilled by Throiy Chess. They are made for beginner to expert players. Every position is different, so when two principles clash, calculate the actual moves.</p></div>{st}{h}<p class="small" style="margin:30px 0">Want to see which principles cost you games? <a href="/analyze/">Analyze your own games for free</a>.</p></main>''' + footer()
     return "/principles/", page("/principles/", "Chess principles, explained · Throiy Chess", "Chess principles distilled by Throiy Chess, for beginner to expert players.", body, noindex=True)
 
+
+def board_svg(fen, flip=False):
+    G = {"K":"\u2654","Q":"\u2655","R":"\u2656","B":"\u2657","N":"\u2658","P":"\u2659","k":"\u265a","q":"\u265b","r":"\u265c","b":"\u265d","n":"\u265e","p":"\u265f"}
+    rows = fen.split()[0].split("/"); s = '<svg viewBox="0 0 80 80" width="320" height="320" role="img" aria-label="Chess position" style="max-width:100%;height:auto;border-radius:6px">'
+    for r, row in enumerate(rows):
+        f = 0
+        for ch in row:
+            if ch.isdigit(): f += int(ch); continue
+            f += 1
+        f = 0
+        for ch in row:
+            if ch.isdigit():
+                f += int(ch); continue
+            x, y = f * 10 + 5, r * 10 + 8
+            col = "#f4f4f4" if ch.isupper() else "#111"
+            st = "#111" if ch.isupper() else "#f4f4f4"
+            s += f'<text x="{x}" y="{y}" text-anchor="middle" font-size="9" fill="{col}" stroke="{st}" stroke-width="0.25" style="font-family:\'Segoe UI Symbol\',\'DejaVu Sans\',serif">{G[ch]}</text>'
+            f += 1
+    bg = "".join(f'<rect x="{f*10}" y="{r*10}" width="10" height="10" fill="{"#b58863" if (r+f)%2 else "#f0d9b5"}"/>' for r in range(8) for f in range(8))
+    return s.replace('">', '">' + bg, 1) + "</svg>"
+
 def principle_page(group, x):
     rel = [y for g in PRINCIPLES if g["group"] == group for y in g["items"] if y["slug"] != x["slug"] and not y.get("draft")][:4]
     rl = "".join(f'<li><a href="/principles/{y["slug"]}/">{e(y["title"])}</a></li>' for y in rel)
+    ex_html = "".join(f'<div style="margin:12px 0">{board_svg(q["fen"])}<p class="small" style="margin-top:8px">{e(q["caption"])}</p></div>' for q in x.get("examples", [])) or "<p>Worked examples with positions are being added. Until then, see this principle in your own games.</p>"
     body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow"><a href="/principles/" style="color:inherit">Principles</a> &middot; {e(group)} &middot; {e(x.get("level","").capitalize())} &middot; {e(x.get("phase","").capitalize())}</span><h1>{e(x["title"])}</h1><p>{e(x["text"])}</p></div>
-<div class="mcard" style="margin:20px 0">{''}<h3>Examples</h3><p>Worked examples with positions are being added. Until then, see this principle in your own games.</p><p style="margin-top:12px"><a class="btn solid" href="/analyze/">Analyze my games free</a></p></div>
+<div class="mcard" style="margin:20px 0">{''}<h3>Examples</h3>{ex_html}<p style="margin-top:12px"><a class="btn solid" href="/analyze/">Analyze my games free</a></p></div>
 {('<h3>More in ' + e(group) + '</h3><ul>' + rl + '</ul>') if rl else ''}<p class="small" style="margin:24px 0">Principles are guidelines, not laws. Distilled by Throiy Chess.</p></main>''' + footer()
     return f"/principles/{x['slug']}/", page(f"/principles/{x['slug']}/", f"{x['title']} · Chess principle · Throiy Chess", x["text"][:155], body, noindex=True)
 
