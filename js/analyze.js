@@ -23,6 +23,19 @@ const P = {
   other:  { t: "Strategic error", tip: "Compare your move with the better one: which pieces does it improve? Ask what your worst piece is and improve it." },
 };
 
+const DRILL = {
+  mate:   ["Before every move, say the three words out loud: checks, captures, threats. Start with the checks your opponent has.", "Play 5 games with this rule only. Do not worry about the opening."],
+  threat: ["After each opponent move, ask: what does it want to do next? Answer that before your own plan.", "In your next 5 games, write down (or say) the opponent's threat before every move."],
+  hang:   ["Before you press the move, look at the piece you moved and at all your loose pieces: attacked? defended?", "In your next 5 games, never move without a 'blunder check' of the square you move to."],
+  tactic: ["Every move, scan your own checks and captures first, even if they look bad. Then decide.", "Solve 10 tactics puzzles a day for a week, with a time limit of 30 seconds each."],
+  queen:  ["In the opening: knights and bishops first, queen later. Count how many pieces you have developed before you move the queen.", "Play 5 games where the queen stays home until move 8."],
+  king:   ["Castle by move 10. Do not move the king by hand unless you have to.", "Play 5 games: after move 6, check whether you can castle now."],
+  twice:  ["Each opening move brings a new piece into play. Ask: which piece have I not moved yet?", "Play 5 games: do not move the same piece twice before move 8 unless it wins material."],
+  endgame:["Activate your king in the endgame and push your passed pawns.", "Practice king and pawn endings for 10 minutes a day."],
+  other:  ["Compare your move with the engine's: which piece does it improve? Ask what your worst piece is.", "Pick one game, go through the key moments, and write one sentence for each."],
+};
+const PHN = { opening: "Opening", middlegame: "Middlegame", endgame: "Endgame" };
+
 // ---------- engine ----------
 class Engine {
   constructor() { this.w = new Worker("/js/stockfish/stockfish-17.1-lite-single-03e3232.js"); this.q = Promise.resolve(); this.lis = null;
@@ -85,11 +98,16 @@ async function analyseGame(g, user, progress) {
   const sans = hist.map((h) => h.san); const E = await getEngine();
   const fens = [hist.length ? hist[0].before : c.fen()].concat(hist.map((h) => h.after)); const evals = [];
   for (let i = 0; i < fens.length; i++) { evals.push(await E.analyse(fens[i])); progress(i + 1, fens.length); }
-  const moments = []; let lossSum = 0, nMoves = 0; const moved = {};
+  const moments = []; let lossSum = 0, nMoves = 0, accSum = 0; const moved = {}; const ph = { opening: { n: 0, loss: 0, big: 0 }, middlegame: { n: 0, loss: 0, big: 0 }, endgame: { n: 0, loss: 0, big: 0 } };
+  const winPct = (cp) => 50 + 50 * (2 / (1 + Math.exp(-0.00368208 * cp)) - 1); let nBlund = 0, nMist = 0, nInacc = 0;
   for (let i = 0; i < hist.length; i++) {
     const h = hist[i]; if (side && h.color !== side) continue; const white = h.color === "w";
     const before = clip(pov(evals[i].score, white)), after = clip(pov(evals[i + 1].score, white)); const loss = Math.max(0, before - after);
     lossSum += Math.min(loss, 1000); nMoves++;
+    accSum += Math.max(0, Math.min(100, 103.1668 * Math.exp(-0.04354 * Math.max(0, winPct(before) - winPct(after))) - 3.1669));
+    const mm = material(h.before); const phase = i < 20 ? "opening" : (!mm.q && mm.w <= 13 && mm.b <= 13) ? "endgame" : "middlegame";
+    ph[phase].n++; ph[phase].loss += Math.min(loss, 1000); if (loss >= 120) ph[phase].big++;
+    if (loss >= 300) nBlund++; else if (loss >= 150) nMist++; else if (loss >= 60) nInacc++;
     const key = h.piece + h.from; moved[h.to] = (moved[h.from] || 0) + 1; delete moved[h.from];
     const decided = Math.abs(before) > 500 && Math.sign(before) === Math.sign(after) && Math.abs(after) > 300;
     if (loss < 120 || decided) continue;
@@ -115,22 +133,24 @@ async function analyseGame(g, user, progress) {
     }
     if (cat === "other") { const m = material(h.before); if (!m.q && m.w <= 13 && m.b <= 13) { cat = "endgame"; detail = ""; } }
     const prevClock = (() => { for (let j = i - 2; j >= 0; j -= 2) { const t = clk(comments[hist[j].after]); if (t !== null) return t; } return null; })();
-    moments.push({ ply, moveNo, color: h.color, san: h.san, best: bm ? bm.san : null, loss, cat, detail, fen: h.before, from: h.from, to: h.to,
+    moments.push({ ply, moveNo, color: h.color, san: h.san, best: bm ? bm.san : null, bFrom: bm ? bm.from : null, bTo: bm ? bm.to : null, loss, cat, detail, fen: h.before, from: h.from, to: h.to,
       clock: g.tc === "daily" || g.tc === "correspondence" ? null : prevClock, before, after });
   }
   const res = side === "w" ? g.wres : g.bres;
-  return { g, side, moments, avgLoss: nMoves ? lossSum / nMoves : 0, trap: side ? trapHit(sans, side) : null, result: res, plies: hist.length };
+  return { g, side, moments, ph, nBlund, nMist, nInacc, nMoves, acc: nMoves ? accSum / nMoves : 0, avgLoss: nMoves ? lossSum / nMoves : 0, trap: side ? trapHit(sans, side) : null, result: res, plies: hist.length };
 }
 
 // ---------- drawing ----------
 const GLYPH = { k: "♚", q: "♛", r: "♜", b: "♝", n: "♞", p: "♟" };
-function boardSVG(fen, from, to, flip) {
+function boardSVG(fen, from, to, flip, bf, bt) {
   const rows = fen.split(" ")[0].split("/"); let s = `<svg viewBox="0 0 8 8" class="mini" role="img" aria-label="Board position">`;
   for (let r = 0; r < 8; r++) { let f = 0; for (const ch of rows[r]) { if (/\d/.test(ch)) { f += +ch; continue; }
       const x = flip ? 7 - f : f, y = flip ? 7 - r : r; s += `<text x="${x + 0.5}" y="${y + 0.82}" class="${ch === ch.toUpperCase() ? "pw" : "pb"}">${GLYPH[ch.toLowerCase()]}</text>`; f++; } }
   const sq = (n) => { const f = n.charCodeAt(0) - 97, r = 8 - +n[1]; return flip ? [7 - f, 7 - r] : [f, r]; };
   let bg = ""; for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) bg += `<rect x="${x}" y="${y}" width="1" height="1" class="${(x + y) % 2 ? "dk" : "lt"}"/>`;
   for (const n of [from, to]) { if (!n) continue; const [x, y] = sq(n); bg += `<rect x="${x}" y="${y}" width="1" height="1" class="hl"/>`; }
+  for (const n of [bf, bt]) { if (!n) continue; const [x, y] = sq(n); bg += `<rect x="${x}" y="${y}" width="1" height="1" class="hl2"/>`; }
+  if (bf && bt) { const [x1, y1] = sq(bf), [x2, y2] = sq(bt); bg += `<line x1="${x1 + .5}" y1="${y1 + .5}" x2="${x2 + .5}" y2="${y2 + .5}" class="arw"/>`; }
   return s.replace(`role="img" aria-label="Board position">`, `role="img" aria-label="Board position">${bg}`) + "</svg>";
 }
 
@@ -169,22 +189,35 @@ function report(results) {
   const all = results.flatMap((r) => r.moments.map((m) => ({ ...m, r }))); const cnt = {}; for (const m of all) cnt[m.cat] = (cnt[m.cat] || 0) + 1;
   const order = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]); const max = Math.max(1, ...Object.values(cnt));
   const late = all.filter((m) => m.clock !== null && m.clock < 30).length;
+  const sum = (f) => results.reduce((a, r) => a + f(r), 0); const nm = sum((r) => r.nMoves) || 1;
+  const acc = sum((r) => r.acc * r.nMoves) / nm, nB = sum((r) => r.nBlund), nM = sum((r) => r.nMist), nI = sum((r) => r.nInacc);
+  const wins = results.filter((r) => r.result === "win").length, losses = results.filter((r) => r.result === "loss").length, draws = results.length - wins - losses;
   let h = `<h2>Your report</h2><p>${results.length} game${results.length > 1 ? "s" : ""} analyzed for <b>${esc(state.user)}</b>. We found <b>${all.length}</b> moment${all.length === 1 ? "" : "s"} where the evaluation dropped by more than a pawn.</p>`;
+  h += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy (our estimate)</span></div><div><b>${nB}</b><span>Blunders</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Inaccuracies</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div>`;
+  // phases
+  const phs = {}; for (const k of Object.keys(PHN)) { phs[k] = { n: 0, loss: 0, big: 0 }; for (const r of results) { phs[k].n += r.ph[k].n; phs[k].loss += r.ph[k].loss; phs[k].big += r.ph[k].big; } }
+  const worst = Object.keys(PHN).filter((k) => phs[k].n >= 5).sort((a, b) => phs[b].loss / phs[b].n - phs[a].loss / phs[a].n)[0];
+  h += `<h3>Where you lose points</h3><div class="az-ph">` + Object.keys(PHN).map((k) => `<div class="${k === worst ? "worst" : ""}"><span>${PHN[k]}</span><b>${phs[k].n ? (phs[k].loss / phs[k].n / 100).toFixed(2) : "–"}</b><small>pawns lost per move<br>${phs[k].big} big drop${phs[k].big === 1 ? "" : "s"} in ${phs[k].n} moves</small></div>`).join("") + `</div>`;
+  if (worst) h += `<p class="small">Your biggest leak: the <b>${PHN[worst].toLowerCase()}</b>. That is where your moves cost the most on average.</p>`;
+  // per game
+  h += `<h3>Game by game</h3><div class="az-gm">` + results.map((r) => { const opp = r.side === "w" ? r.g.black : r.g.white; const top = r.moments.slice().sort((a, b) => b.loss - a.loss)[0];
+    return `<a href="${esc(r.g.url)}" target="_blank" rel="noopener"><span class="res ${r.result === "win" ? "won" : r.result === "loss" ? "lost" : "draw"}">${r.result === "win" ? "Won" : r.result === "loss" ? "Lost" : "Draw"}</span><span>${r.side === "w" ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${r.acc.toFixed(0)}% accuracy${top ? ` · biggest drop: move ${top.moveNo}${top.color === "w" ? "." : "…"}${esc(top.san)}` : " · no big drops"}</span></a>`; }).join("") + `</div>`;
   if (order.length) {
     const top = order[0];
     h += `<div class="az-top"><span class="eyebrow">Train this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p></div>`;
     h += `<div class="az-bars">` + order.map((c) => `<div class="az-bar"><span>${P[c].t}</span><i style="width:${(100 * cnt[c]) / max}%"></i><b>${cnt[c]}</b></div>`).join("") + `</div>`;
   } else h += `<div class="az-top"><h3>Clean games!</h3><p>No big drops in these games. Try a few losses to find what to train.</p></div>`;
+  if (order.length) { h += `<h3>Your 5-game training plan</h3><div class="az-plan">` + order.slice(0, 2).map((c, i) => `<div><span class="eyebrow">Focus ${i + 1}: ${P[c].t}</span><p><b>Habit:</b> ${DRILL[c][0]}</p><p><b>Practice:</b> ${DRILL[c][1]}</p></div>`).join("") + `<p class="small">Play your next 5 games with only these two focuses, then analyze them again here and compare. The free cheat sheet has a 3-second check and a quiz that train exactly this.</p></div>`; }
   if (late) h += `<p class="small">⏱ ${late} of these moments came with less than 30 seconds on your clock. Part of the fix may be using your time earlier in the game.</p>`;
   for (const r of results) if (r.trap) h += `<div class="az-trap">${r.trap.fell ? "🪤 You fell for the" : "🎯 You set the"} <a href="/traps/${r.trap.t.slug}/?utm_source=analyze&amp;utm_campaign=${r.trap.t.slug}">${esc(r.trap.t.name)}</a>${r.trap.fell ? ". Here's how to avoid it next time." : ". Nice!"}</div>`;
   h += `<h2>Key moments</h2>`;
   for (const m of all.sort((a, b) => b.loss - a.loss).slice(0, 12)) {
     const opp = m.r.side === "w" ? m.r.g.black : m.r.g.white;
-    h += `<div class="az-m">${boardSVG(m.fen, m.from, m.to, m.r.side === "b")}<div><span class="eyebrow">${P[m.cat].t}</span>
+    h += `<div class="az-m">${boardSVG(m.fen, m.from, m.to, m.r.side === "b", m.bFrom, m.bTo)}<div><span class="eyebrow">${P[m.cat].t}</span>
       <h3>Move ${m.moveNo}${m.color === "w" ? "." : "…"}${esc(m.san)} <span class="small">vs ${esc(opp)}</span></h3>
       <p>${m.detail ? esc(m.detail) + " " : ""}${m.best ? `Better was <b>${esc(m.best)}</b>.` : ""}</p>
       <p class="small">Evaluation for you: ${(m.before / 100).toFixed(1)} → ${(m.after / 100).toFixed(1)}${m.clock !== null ? ` · ${Math.round(m.clock)} s on your clock` : ""} · <a href="${esc(m.r.g.url)}" target="_blank" rel="noopener">open game</a></p>
-      <p class="small"><b>Principle:</b> ${P[m.cat].tip}</p></div></div>`;
+      <p class="small"><b>Principle:</b> ${P[m.cat].tip}</p>${m.best ? `<p class="small">On the board: gold = your move, green = the better move.</p>` : ""}</div></div>`;
   }
   h += `<div class="az-cta"><h3>Keep improving</h3><p>This report is advice based on your own games. Next step: learn the 10 opening traps every beginner meets. Get the free cheat sheet, plus one trap a week in your inbox.</p><a class="btn solid" data-ev="analyze-cta-free" href="/free/?utm_source=analyze&amp;utm_campaign=analyze">Get the free cheat sheet</a><hr><h3>Learn one trap a day</h3><p>Under-a-minute lessons on traps, patterns and the mistakes we all make. Follow Throiy Chess:</p><div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
   $("#az-report").innerHTML = h; $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
