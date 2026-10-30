@@ -92,9 +92,25 @@
     var ex = PZ.filter(function (p) { return p.k === k; }).slice(0, 3); if (!ex.length || !window.__azBoard) return "<br><span class=\"small\">No examples from your games yet. They appear here when this pattern shows up in your reports.</span>";
     return "<details style=\"margin-top:8px\"><summary><b>" + ex.length + " example" + (ex.length > 1 ? "s" : "") + " from your own games</b></summary>" + ex.map(function (p) { return "<div style=\"margin:10px 0;max-width:300px\">" + window.__azBoard(p.f, null, null, p.c === "b", p.bf, p.bt) + "<span class=\"small\">Move " + p.n + ". You played " + esc(p.s) + ", the better move was <b>" + esc(p.b) + "</b> (arrow).</span></div>"; }).join("") + "</details>";
   }
+  var PF = { lv: "all", ph: "all" };
+  var LVL = { beginner: "Beginner", intermediate: "Intermediate", expert: "Expert", all: "All levels" };
+  var PHS = { opening: "Opening", middlegame: "Middlegame", endgame: "Endgame", all: "All phases" };
+  function pcard(x) {
+    return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(x.title) + "</b> <span class=\"small\">" + esc(LVL[x.level] || "") + " &middot; " + esc(PHS[x.phase] || "") + "</span><br>" + esc(x.text) + "<br><a class=\"small\" href=\"/principles/" + esc(x.slug) + "/\">Explanation and examples</a></span></div>";
+  }
+  function chips(kind, map) {
+    return Object.keys(map).map(function (k) { return "<button type=\"button\" class=\"btn" + (PF[kind] === k ? " solid" : "") + "\" data-pf=\"" + kind + ":" + k + "\" style=\"padding:6px 12px;margin:0 6px 6px 0\">" + (k === "all" ? "Any" : map[k]) + "</button>"; }).join("");
+  }
   function drawPrinc() {
     var box = $("#m-princ"); if (!box) return; var keys = Object.keys(PRINC);
-    box.innerHTML = "<h3>Principle library</h3><p class=\"small\"><b>Guidelines, not laws.</b> They are made for beginner to expert players, every position is different and principles can point in different directions. When they clash, calculate the actual moves.</p><p class=\"small\">Distilled by Throiy Chess from coaching insights, Stockfish checks, classic chess books and our own experience. Every one is checked before we add it.</p>" + "<h4 style=\"margin:18px 0 6px\">Start here</h4>" + LIB.map(function (g) { return g.items.filter(function (x) { return x.start && !x.draft; }).map(function (x) { return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(x.title) + "</b><br>" + esc(x.text) + "<br><a class=\"small\" href=\"/principles/" + esc(x.slug) + "/\">Explanation and examples</a></span></div>"; }).join(""); }).join("") + LIB.map(function (g) { return "<h4 style=\"margin:18px 0 6px\">" + esc(g.group) + "</h4>" + g.items.map(function (x) { return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(x.title) + "</b><br>" + esc(x.text) + (x.draft ? "" : "<br><a class=\"small\" href=\"/principles/" + esc(x.slug) + "/\">Explanation and examples</a>") + "</span></div>"; }).join(""); }).join("") + "<h4 style=\"margin:18px 0 6px\">Rules behind your report patterns</h4>" + keys.map(function (k) { return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(PRINC[k][0]) + "</b><br>" + esc(PRINC[k][1]) + "<br><span class=\"small\">Pattern: " + esc(NAME(k)) + " &middot; Source: Throiy Chess</span>" + examples(k) + "</span></div>"; }).join("");
+    var shown = function (x) { return !x.draft && (PF.lv === "all" || x.level === PF.lv || x.level === "all") && (PF.ph === "all" || x.phase === PF.ph || x.phase === "all"); };
+    var filt = PF.lv !== "all" || PF.ph !== "all";
+    var body = LIB.map(function (g) { var it = g.items.filter(shown); return it.length ? "<h4 style=\"margin:18px 0 6px\">" + esc(g.group) + "</h4>" + it.map(pcard).join("") : ""; }).join("");
+    var start = filt ? "" : "<h4 style=\"margin:18px 0 6px\">Start here</h4>" + LIB.map(function (g) { return g.items.filter(function (x) { return x.start && !x.draft; }).map(pcard).join(""); }).join("");
+    box.innerHTML = "<h3>Principle library</h3><p class=\"small\"><b>Guidelines, not laws.</b> They are made for beginner to expert players, every position is different and principles can point in different directions. When they clash, calculate the actual moves.</p><p class=\"small\">Distilled by Throiy Chess from coaching insights, Stockfish checks, classic chess books and our own experience. Each one is reviewed before it is added.</p>" +
+      "<p class=\"small\" style=\"margin:12px 0 4px\">Level</p>" + chips("lv", LVL) + "<p class=\"small\" style=\"margin:8px 0 4px\">Phase</p>" + chips("ph", PHS) + start + (body || "<p class=\"small\">Nothing matches this filter.</p>") +
+      "<h4 style=\"margin:18px 0 6px\">Rules behind your report patterns</h4>" + keys.map(function (k) { return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(PRINC[k][0]) + "</b><br>" + esc(PRINC[k][1]) + "<br><span class=\"small\">Pattern: " + esc(NAME(k)) + " &middot; Source: Throiy Chess</span>" + examples(k) + "</span></div>"; }).join("");
+    box.querySelectorAll("[data-pf]").forEach(function (b) { b.onclick = function () { var p = b.getAttribute("data-pf").split(":"); PF[p[0]] = p[1]; drawPrinc(); }; });
   }
 
   // ---------- share card ----------

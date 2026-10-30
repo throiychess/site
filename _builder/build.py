@@ -885,7 +885,7 @@ def principles_index():
 def principle_page(group, x):
     rel = [y for g in PRINCIPLES if g["group"] == group for y in g["items"] if y["slug"] != x["slug"] and not y.get("draft")][:4]
     rl = "".join(f'<li><a href="/principles/{y["slug"]}/">{e(y["title"])}</a></li>' for y in rel)
-    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow"><a href="/principles/" style="color:inherit">Principles</a> &middot; {e(group)}</span><h1>{e(x["title"])}</h1><p>{e(x["text"])}</p></div>
+    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow"><a href="/principles/" style="color:inherit">Principles</a> &middot; {e(group)} &middot; {e(x.get("level","").capitalize())} &middot; {e(x.get("phase","").capitalize())}</span><h1>{e(x["title"])}</h1><p>{e(x["text"])}</p></div>
 <div class="mcard" style="margin:20px 0">{''}<h3>Examples</h3><p>Worked examples with positions are being added. Until then, see this principle in your own games.</p><p style="margin-top:12px"><a class="btn solid" href="/analyze/">Analyze my games free</a></p></div>
 {('<h3>More in ' + e(group) + '</h3><ul>' + rl + '</ul>') if rl else ''}<p class="small" style="margin:24px 0">Principles are guidelines, not laws. Distilled by Throiy Chess.</p></main>''' + footer()
     return f"/principles/{x['slug']}/", page(f"/principles/{x['slug']}/", f"{x['title']} · Chess principle · Throiy Chess", x["text"][:155], body, noindex=True)
