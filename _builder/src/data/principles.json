@@ -663,6 +663,29 @@
   ]
  },
  {
+  "group": "The T.A.L. formula",
+  "items": [
+   {
+    "slug": "t-a-l-formula-time",
+    "title": "T.A.L. formula: Time",
+    "text": "Bring your pieces into the game quickly and directly. Do not waste precious time on distractions or aimless moves; focus on fast, efficient development, so you can outnumber the opponent later on.",
+    "note": "Checked. Same idea as: finish development before you attack, and be economical with your moves."
+   },
+   {
+    "slug": "t-a-l-formula-activity",
+    "title": "T.A.L. formula: Activity",
+    "text": "Activity means the number of squares you control and the dynamic value of your pieces. If you win a passive rook or piece in a corner but lose your active bishops and knights for it, you give away valuable dominance. Keep active pieces on the board and push the opponent into a passive role.",
+    "note": "Softened: activity is not a replacement for material. Count both, and check how long the activity lasts."
+   },
+   {
+    "slug": "t-a-l-formula-liquidate-the-key-defenders",
+    "title": "T.A.L. formula: Liquidate the key defenders",
+    "text": "An attack often fails because specific key pieces (such as a bishop or a defending knight) hold the enemy king together. To make the attack succeed, deliberately remove or deflect those key defenders.",
+    "note": "Checked. See also: remove the defending bishop."
+   }
+  ]
+ },
+ {
   "group": "Attack and defence",
   "items": [
    {
@@ -796,6 +819,12 @@
     "title": "Launch a massive attack only when you outnumber the defenders",
     "text": "Start a large attack not because you feel like it, but when you can show that you have more attackers than they have defenders near the king. Build up methodically, then open the position.",
     "note": "Checked. The counterpart of: do not respect an unsupported attack."
+   },
+   {
+    "slug": "punish-a-king-stuck-in-the-centre",
+    "title": "Punish a king stuck in the centre",
+    "text": "If the opponent fails to castle in time and leaves the king in the middle, often behind a weakened pawn shield such as e6 and f7, act at once: open the centre and create strong threats, with a sacrifice if needed.",
+    "note": "Softened: only when you are better developed. If your own pieces are not out yet, opening the centre can backfire."
    }
   ]
  },
