@@ -116,7 +116,7 @@
     "slug": "finish-development-before-you-attack",
     "title": "Finish development before you attack",
     "text": "Do not attack too early (with premature bishop or pawn moves) when your position is not fully developed. Incomplete development leaves holes your opponent can punish tactically.",
-    "note": "Checked: standard. The exception is a concrete attack you have calculated."
+    "note": "Checked: standard. The exception is a concrete attack you have calculated. Also covers: do not go looking for complications or early flank pawn pushes before your own pieces are safe."
    }
   ]
  },
@@ -295,7 +295,7 @@
     "slug": "optimize-improve-your-worst-piece",
     "title": "Optimize: improve your worst piece",
     "text": "When there is no check, capture or forcing threat, improve your passive pieces, starting with the ones still on your back rank (minor pieces first).",
-    "note": "Checked: this is the 'improve your worst piece' rule. For example by bringing a rook to an open or semi-open file. Do it systematically: find your least active piece (a passive rook or bishop) and bring it to an active (semi-)open file."
+    "note": "Checked: this is the 'improve your worst piece' rule. For example by bringing a rook to an open or semi-open file. Do it systematically: find your least active piece (a passive rook or bishop) and bring it to an active (semi-)open file. Same idea as the least active piece: look at the piece that does the least or is stuck, and fix that first. Do not attack aimlessly; improve the weakest spot in your own army."
    },
    {
     "slug": "improve-with-a-purpose",
@@ -343,7 +343,7 @@
     "slug": "activate-a-passive-piece-in-time",
     "title": "Activate a passive piece in time",
     "text": "If one of your pieces, such as a rook, has stood passively on the back rank through the whole middlegame, look for a moment to activate it for a break or to pressure the enemy weaknesses.",
-    "note": "Checked: this is the \"improve your worst piece\" idea for the rook."
+    "note": "Checked: this is the \"improve your worst piece\" idea for the rook. See also: the least active piece principle."
    },
    {
     "slug": "create-a-weak-pawn-in-the-enemy-camp",
@@ -374,6 +374,12 @@
     "title": "Check that your pieces do not get in each other's way",
     "text": "The higher you climb, the less standard development is enough. Calculate that your pieces do not block each other and that you do not block flexible plans too early (such as a flank break with c4 or d4).",
     "note": "Checked: true. The wording in the source was general, so I kept it general."
+   },
+   {
+    "slug": "target-weak-pawns-before-risky-king-attacks",
+    "title": "Target weak pawns before risky king attacks",
+    "text": "Instead of a reckless king attack, put steady pressure on the opponent's weak pawns with your pieces and rooks. This builds your advantage gradually without needless risk.",
+    "note": "Softened: not either-or. A well-prepared king attack is fine; this is the lower-risk default."
    }
   ]
  },
@@ -451,6 +457,18 @@
     "title": "Look for in-between moves against a pin or threat",
     "text": "When your opponent sets up an awkward pin or threat (such as a queen move pressing on a diagonal), look for strong in-between moves or counterattacks, such as a mate threat or an attack on a piece, to force them onto the defensive.",
     "note": "Checked: the in-between move (zwischenzug) is a standard tactic. Make sure the in-between move really forces the issue."
+   },
+   {
+    "slug": "keep-everything-connected-and-nothing-hanging",
+    "title": "Keep everything connected and nothing hanging",
+    "text": "Avoid isolated pawns and loose pieces far from the rest of your army. Let pawns and pieces protect each other and stay close, so tactical blunders are reduced to a minimum.",
+    "note": "Checked: \"loose pieces drop off\" is a classic rule. Weak or flank pawns are best fixed early or connected to the group."
+   },
+   {
+    "slug": "ask-after-every-move-what-does-he-want",
+    "title": "Ask after every move: what does he want?",
+    "text": "After each opponent move ask what the threat or plan is. Parry it in time, for example a pawn advancing in the centre or a threat on the wing, and close their break squares.",
+    "note": "Checked. This keeps you out of hope chess: look first at the intention of the opponent."
    }
   ]
  },
@@ -657,7 +675,7 @@
     "slug": "create-a-passed-pawn",
     "title": "Create a passed pawn",
     "text": "Use a majority on one wing to make a pawn that can run to the other side. A passed pawn ties down the opponent and often decides the endgame.",
-    "note": " Once you have broken up your opponent's structure, creating a passed pawn and pushing it (best close to promotion) is the fastest way to put them on the defensive. Softened: another lesson says an equal endgame is won almost only by a passed pawn. It is the most common way, but king activity and winning pawns win games too."
+    "note": " Once you have broken up your opponent's structure, creating a passed pawn and pushing it (best close to promotion) is the fastest way to put them on the defensive. Softened: another lesson says an equal endgame is won almost only by a passed pawn. It is the most common way, but king activity and winning pawns win games too. Softened: \"endgames are won by passed pawns\" is a strong guideline, not a law. With fewer pieces a mating attack becomes unlikely, so the creation and support of a passed pawn, together with an active king, becomes the main winning plan."
    },
    {
     "slug": "rook-versus-minor-piece-win-it-with-technique",
@@ -798,6 +816,42 @@
     "title": "Win or learn",
     "text": "Do not let a missed chance or a lost game spoil your enjoyment. Analyze the missed tactics calmly afterwards (such as hidden rook traps or missed in-between moves) to come back stronger.",
     "note": "Not a chess rule but a useful mindset. Wording: the source said the loss should not \"increase\" your fun; I read it as \"spoil\"."
+   },
+   {
+    "slug": "set-a-fixed-number-of-games-per-session",
+    "title": "Set a fixed number of games per session",
+    "text": "Decide before you start how many games you will play, and stick to it. This stops you from playing on out of frustration or revenge after a loss (tilt) and keeps you fresh and focused.",
+    "note": "Checked: standard advice. Softened: the exact number is personal; a stop-loss rule (such as stopping after two losses in a row) is a good addition."
+   },
+   {
+    "slug": "set-a-loss-budget",
+    "title": "Set a loss budget",
+    "text": "Accept that you will lose roughly as often as you win against opponents of your own strength. Losses are your best teachers. Expecting them helps you recover faster and brood less.",
+    "note": "Corrected: \"about 50%\" only holds against similarly rated opponents, which rating systems aim for. Against stronger players you lose more."
+   },
+   {
+    "slug": "understanding-is-not-the-same-as-executing",
+    "title": "Understanding is not the same as executing",
+    "text": "Understanding a master move or plan in a video does not mean you can play it yourself over the board. Mistakes happen at every level, even among grandmasters, so keep training.",
+    "note": "Checked."
+   },
+   {
+    "slug": "choose-a-growth-mindset",
+    "title": "Choose a growth mindset",
+    "text": "Do not identify with your results. Enjoy the process of improving your visualisation, calculation and pattern recognition more than the score.",
+    "note": "Checked: well supported in learning research."
+   },
+   {
+    "slug": "analyse-your-lost-and-difficult-games",
+    "title": "Analyse your lost and difficult games",
+    "text": "Real curiosity shows after the game. If you skip analysis and only play for points, you miss the chance to improve in a structural way and to see where the position went wrong.",
+    "note": "Checked. This is exactly what the game report is for."
+   },
+   {
+    "slug": "stay-calm-against-an-unfamiliar-early-gambit",
+    "title": "Stay calm against an unfamiliar early gambit",
+    "text": "Do not panic against a strange or rare gambit. Often you can take the offered pawn, solidify (for example with c3) and send your pieces back to safe squares.",
+    "note": "Softened: \"take the pawn\" is not always right. First check that the pawn is not poisoned and that you are not falling behind in development."
    }
   ]
  }
