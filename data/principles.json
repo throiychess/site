@@ -122,7 +122,7 @@
     "slug": "trade-only-when-it-gains-something",
     "title": "Trade only when it gains something",
     "text": "Do not make pointless trades in the centre or the opening. If a trade gives you nothing tangible but helps the opponent develop their pieces (such as a queen or knight) with tempo, avoid it. Every trade needs a tactical or positional purpose.",
-    "note": "Checked. Softened: a trade is fine when it removes a strong enemy piece or fixes a structure in your favour."
+    "note": "Checked. Softened: a trade is fine when it removes a strong enemy piece or fixes a structure in your favour. Also covers: never trade pawns or pieces automatically. Ask: \"Does this help my opponent build a strong pawn chain or develop for free?\""
    }
   ]
  },
@@ -467,7 +467,7 @@
     "slug": "deal-with-infiltrators-on-your-half",
     "title": "Deal with infiltrators on your half",
     "text": "Do not leave enemy pieces on your side of the board alone. Trade or chase them early, otherwise they become the base for dangerous combinations against your king.",
-    "note": "Softened: act on it quickly, but only when trading or chasing does not cost you more. Also covers: do not tolerate enemy outposts on your own half (first four ranks). Trade them off or drive them away before they become a nuisance. Softened: sometimes a trade costs you more than the outpost does, so check first."
+    "note": "Softened: act on it quickly, but only when trading or chasing does not cost you more. Also covers: do not tolerate enemy outposts on your own half (first four ranks). Trade them off or drive them away before they become a nuisance. Softened: sometimes a trade costs you more than the outpost does, so check first. Also covers: neutralize an intruder before you start your own attack, so your half stays tidy and tactical blunders are less likely."
    },
    {
     "slug": "back-rank-safety",
@@ -580,7 +580,7 @@
     "slug": "defend-aggressively",
     "title": "Defend aggressively",
     "text": "When you have to defend, for example against an attack on your queen, try to answer with an attack of your own on an enemy pawn or piece.",
-    "note": "Checked: a good counterpunch, as long as your counter is real."
+    "note": "Checked: a good counterpunch, as long as your counter is real. Also covers: do not panic when the opponent threatens on the wing or in the centre. Look for an active counter-move, an in-between move or a direct threat on their half. Softened: a counterattack only works if it is faster or stronger than the threat. Sometimes the right answer is simply a calm defensive move."
    },
    {
     "slug": "calculate-sacrifices-three-moves-deep",
