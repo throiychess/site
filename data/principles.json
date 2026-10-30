@@ -9,7 +9,10 @@
     "check": "Fine advice for club players. At master level theory matters more.",
     "phase": "opening",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "General"
+    ]
    },
    {
     "slug": "a-doubled-pawn-is-not-always-weak",
@@ -18,7 +21,11 @@
     "check": "Checked: the weakness usually comes from isolation, blocked pawns or lost flexibility, not from the doubling itself.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Pawns"
+    ]
    },
    {
     "slug": "be-flexible-in-the-opening",
@@ -27,7 +34,10 @@
     "check": "Checked: works only if you understand the position. Sound principles still come first.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development"
+    ]
    },
    {
     "slug": "control-the-centre-in-the-opening",
@@ -37,7 +47,12 @@
     "start": true,
     "phase": "opening",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "develop-your-minor-pieces",
@@ -47,7 +62,11 @@
     "start": true,
     "phase": "opening",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "Pieces"
+    ]
    },
    {
     "slug": "be-economical-with-your-moves",
@@ -56,7 +75,11 @@
     "check": "Checked: this is the idea of tempo.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "Pieces"
+    ]
    },
    {
     "slug": "castle-early",
@@ -66,7 +89,11 @@
     "start": true,
     "phase": "opening",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "King safety"
+    ]
    },
    {
     "slug": "flexible-move-order-centre-and-development-first",
@@ -75,7 +102,13 @@
     "check": "Checked: sound, and it fits the opening principles above.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Development",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "pawn-support-frees-your-pieces",
@@ -84,7 +117,13 @@
     "check": "Checked: the idea behind the Caro-Kann and Slav set-ups.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "King safety",
+     "Attack",
+     "Defence"
+    ]
    },
    {
     "slug": "do-not-bring-the-queen-out-too-early",
@@ -93,7 +132,13 @@
     "check": "Checked: correct for the opening. A queen move can be fine when nothing can hit it. Another lesson repeats this: do not bring the queen out in the first moves; it gets attacked and you lose time moving it again.",
     "phase": "opening",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Development",
+     "Attack",
+     "Pieces"
+    ]
    },
    {
     "slug": "watch-for-flank-pawns-challenging-your-centre",
@@ -102,7 +147,12 @@
     "check": "Checked: a typical theme (Sicilian, Benoni structures).",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Pawns",
+     "Trades"
+    ]
    },
    {
     "slug": "the-accordion-pawn-structure",
@@ -112,7 +162,12 @@
     "check": "Draft: I could not confirm the name \"accordion\" or this exact idea. It needs a concrete position from Peter before we publish it.",
     "phase": "opening",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack",
+     "Pawns",
+     "Trades"
+    ]
    },
    {
     "slug": "attack-weak-misplaced-pieces-at-once",
@@ -121,7 +176,11 @@
     "check": "Checked: sound. Check that the attack does not leave your own pieces loose. Another lesson: look for undefended squares and trap or force a defence with a knight or pawn thrust against a vulnerable knight or cut-off piece. Also covers: when the opponent brings a queen or knight to the centre too early, upset it at once by attacking it with minor pieces or pawns. They lose tempi relocating it. Softened: make sure your attacking move also develops you, or you lose the tempo battle yourself.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack",
+     "Pieces"
+    ]
    },
    {
     "slug": "win-back-the-sacrificed-pawn",
@@ -130,7 +189,12 @@
     "check": "Softened: \"absolute priority\" is too strong. If your compensation (initiative, development) is worth more than the pawn, keep playing for that. Do not let the gambit drag on without a plan.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "Attack",
+     "Pawns"
+    ]
    },
    {
     "slug": "answer-a4-with-b4-to-claim-space-in-some-structures",
@@ -139,7 +203,12 @@
     "check": "Softened: this is right in some structures, not in all. Check what b4 leaves behind (the c4 square and the pawn on a-file).",
     "phase": "opening",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "scandinavian-queenside-pressure-against-slow-development",
@@ -149,7 +218,12 @@
     "check": "Draft: this is a specific idea that I could not confirm in a concrete line. It needs an example position from Peter before it gets a page.",
     "phase": "opening",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "avoid-tricks-and-gambits-as-your-main-plan",
@@ -158,7 +232,13 @@
     "check": "Checked: sound as a long-term strategy. This does not contradict our trap lessons: they teach you to recognize traps and not fall for them, not to rely on them.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "Attack",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "do-not-push-pawns-aimlessly",
@@ -167,7 +247,13 @@
     "check": "Checked: standard.",
     "phase": "opening",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Development",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "finish-development-before-you-attack",
@@ -176,7 +262,13 @@
     "check": "Checked: standard. The exception is a concrete attack you have calculated. Also covers: do not go looking for complications or early flank pawn pushes before your own pieces are safe.",
     "phase": "opening",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "Tactics",
+     "Attack",
+     "Pawns"
+    ]
    },
    {
     "slug": "trade-only-when-it-gains-something",
@@ -186,7 +278,13 @@
     "start": true,
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Development",
+     "Tactics",
+     "Pieces"
+    ]
    },
    {
     "slug": "choose-the-active-square-over-the-default-routine",
@@ -195,7 +293,10 @@
     "check": "Checked. Softened: the standard squares are standard for a reason, so the exception needs a concrete reason in the position.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pieces"
+    ]
    },
    {
     "slug": "develop-quickly-time-matters",
@@ -204,7 +305,12 @@
     "check": "Checked. Same idea as: finish development before you attack, and be economical with your moves.",
     "phase": "opening",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "Attack",
+     "Pieces"
+    ]
    }
   ]
  },
@@ -218,7 +324,11 @@
     "check": "Checked: a real approach (the Colle, London or similar systems). The label 'peer-to-peer recognition' in the notes looks like a dictation error, so I used 'system opening'. The price is less flexibility against well-prepared opponents. This works for Black too: a repeating Black set-up against almost any White move means little theory to remember.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Space and plans"
+    ]
    },
    {
     "slug": "use-a-flexible-knight-move-to-prepare-e4",
@@ -227,7 +337,13 @@
     "check": "Checked for d4 + e3 set-ups. Softened: it does not force one reply, but ...d5 is the natural one.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "support-your-centre-pawn-then-challenge",
@@ -237,7 +353,13 @@
     "check": "Wording in the source was unclear (which pawn is doubly defended). Kept as a draft until we confirm the position with Peter.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "queen-to-b3-at-the-right-moment",
@@ -246,7 +368,13 @@
     "check": "Checked: a known idea. Softened: only when b7 is really loose and the queen cannot be harassed (for example by ...Nxd4 or ...Qb6 tricks). The queen-out-too-early rule still applies.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Development",
+     "Tactics",
+     "Pieces"
+    ]
    },
    {
     "slug": "hunt-the-defending-bishop",
@@ -255,7 +383,13 @@
     "check": "Checked: a typical plan in e3 set-ups. Check that your knight on h4 is not trapped.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Defence",
+     "Pieces"
+    ]
    },
    {
     "slug": "bring-the-queen-to-the-centre",
@@ -264,7 +398,13 @@
     "check": "Checked: sound. Do not leave the queen loose.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "punish-a-forced-short-castle",
@@ -274,7 +414,13 @@
     "check": "Draft: the classic sacrifice is Bxh7+ (the Greek gift). I could not confirm Bxh6 as a standard idea. Needs a concrete position and a calculation before publishing.",
     "phase": "opening",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Development",
+     "King safety",
+     "Attack"
+    ]
    },
    {
     "slug": "punish-passive-play-with-a-direct-break",
@@ -283,7 +429,13 @@
     "check": "Checked: sound. Make sure the break is prepared. Another lesson says the same: if the opponent answers passively (slow bishop or pawn moves), open the centre at once, for example with d4.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Defence",
+     "Pieces"
+    ]
    },
    {
     "slug": "create-deadly-forks-in-the-middlegame",
@@ -292,7 +444,13 @@
     "check": "Checked: forks are a main tactic. Use CCTO to find them.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "King safety",
+     "Tactics"
+    ]
    },
    {
     "slug": "keep-looking-at-poisoned-pawns",
@@ -301,7 +459,13 @@
     "check": "Checked: always check before taking a free pawn (the same idea as the Fishing Pole Trap).",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "King safety",
+     "Tactics",
+     "Pawns"
+    ]
    },
    {
     "slug": "choose-a-reliable-repeatable-system-the-italian-game",
@@ -310,7 +474,12 @@
     "check": "Checked: the Italian is played at every level. Some lines are sharp and full of theory (Evans Gambit, Two Knights). The slow plan-based lines (Giuoco Pianissimo) are the ones that fit this principle.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Development"
+    ]
    },
    {
     "slug": "a-knight-plan-in-the-italian-game",
@@ -319,7 +488,12 @@
     "check": "Checked: a typical plan in the slow Italian (c3, d3, Nbd2-f1-g3).",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "a-simple-universal-black-system-against-1-d4",
@@ -328,7 +502,13 @@
     "check": "Checked: the QGD is a classic system. No system covers everything (the London and Catalan need their own plans), but the core stays the same.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Attack",
+     "Pieces"
+    ]
    },
    {
     "slug": "develop-the-kingside-first-then-castle",
@@ -337,7 +517,13 @@
     "check": "Checked: standard.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Development",
+     "King safety",
+     "Pieces"
+    ]
    },
    {
     "slug": "challenge-the-centre-from-the-flank-c5",
@@ -346,7 +532,13 @@
     "check": "Checked: a typical plan in Queen's Indian and Benoni-type structures.",
     "phase": "opening",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Pawns",
+     "Space and plans"
+    ]
    }
   ]
  },
@@ -360,7 +552,13 @@
     "check": "Checked: that is the idea of the Sicilian. The main lines are full of theory, so it suits players who enjoy learning it.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Defence",
+     "Pawns"
+    ]
    },
    {
     "slug": "play-the-flexible-e6-against-side-lines",
@@ -369,7 +567,10 @@
     "check": "Softened: low-theory against sidelines. In the main Open Sicilian there is a lot of theory.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems"
+    ]
    },
    {
     "slug": "hit-the-centre-with-d5-when-white-is-inaccurate",
@@ -378,7 +579,13 @@
     "check": "Checked: a standard reaction, as long as your pieces are developed enough to support it.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "develop-by-the-basic-principles-even-in-a-sharp-opening",
@@ -387,7 +594,13 @@
     "check": "Checked: standard.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Development",
+     "King safety"
+    ]
    },
    {
     "slug": "use-the-half-open-c-file-and-the-queen-on-c7",
@@ -396,7 +609,11 @@
     "check": "Checked: typical for several Sicilian set-ups.",
     "phase": "opening",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Pieces"
+    ]
    },
    {
     "slug": "neutralize-early-queen-attacks-with-simplicity",
@@ -405,7 +622,13 @@
     "check": "Checked: ...e6 is the standard calm answer. These tricks are rare, but good to know.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Development",
+     "Attack",
+     "Defence"
+    ]
    },
    {
     "slug": "be-careful-with-an-early-e5-in-the-sicilian",
@@ -414,7 +637,13 @@
     "check": "Corrected: \"almost never\" was too strong. Some lines (such as the Sveshnikov and Kalashnikov) accept the d5 hole on purpose in return for activity.",
     "phase": "opening",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Tactics",
+     "Pieces",
+     "Space and plans"
+    ]
    }
   ]
  },
@@ -428,7 +657,13 @@
     "check": "Checked: standard. Softened: ...g5 weakens your own king, so play it only if the centre is stable and the tactics work (see the centre principle below).",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Tactics",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "lock-the-bishop-in-and-switch-to-the-other-wing",
@@ -437,7 +672,13 @@
     "check": "Softened: \"playing with an extra piece\" is a figure of speech. A buried bishop is a big positional asset, not a material one. Check that it cannot break out with a pawn move.",
     "phase": "opening",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Attack",
+     "Defence",
+     "Pawns"
+    ]
    },
    {
     "slug": "strengthen-the-centre-before-the-flank-can-exploit-the-pin",
@@ -446,7 +687,13 @@
     "check": "Checked.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Centre",
+     "Tactics",
+     "Attack"
+    ]
    },
    {
     "slug": "reposition-a-knight-to-chase-the-bishop-nf1-e3",
@@ -455,7 +702,12 @@
     "check": "Checked: context-dependent, it works when e3 is not under attack by a pawn.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Opening systems",
+     "Pawns",
+     "Pieces"
+    ]
    }
   ]
  },
@@ -469,7 +721,11 @@
     "check": "",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Space and plans"
+    ]
    },
    {
     "slug": "prepare-the-break-then-play-it",
@@ -478,7 +734,13 @@
     "check": "Checked: a good rule of thumb, not an absolute one. With the initiative, an early break can be right.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Pawns",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "block-the-line-instead-of-adding-a-defender",
@@ -487,7 +749,13 @@
     "check": "",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Attack",
+     "Defence",
+     "Pawns"
+    ]
    },
    {
     "slug": "simple-controlled-play-wins",
@@ -496,7 +764,10 @@
     "check": "Checked: sound for club play. One pawn is enough only if you convert carefully.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack"
+    ]
    },
    {
     "slug": "optimize-improve-your-worst-piece",
@@ -506,7 +777,13 @@
     "start": true,
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "King safety",
+     "Tactics",
+     "Defence"
+    ]
    },
    {
     "slug": "improve-with-a-purpose",
@@ -515,7 +792,13 @@
     "check": "Checked: sound. Do not leave a piece hanging for the sake of an active square. Also covers: improve all your pieces to their best squares, even with quiet waiting moves, before you start risky actions. Do not attack early or force complications while you have a weakness in your own position. Patient improvement reduces blunders and builds pressure.",
     "phase": "all",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack",
+     "Defence",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "attack-the-backward-pawn",
@@ -524,7 +807,12 @@
     "check": "Corrected: it is a target, not literally a 'dead pawn'. You will not always win it, but it ties down your opponent's pieces.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack",
+     "Pawns",
+     "Space and plans"
+    ]
    },
    {
     "slug": "build-up-pressure-then-break",
@@ -533,7 +821,13 @@
     "check": "Softened: 'often cracks', not always.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Defence",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "pawns-leave-holes-behind",
@@ -542,7 +836,12 @@
     "check": "Checked: true. Softened: a hole only hurts if an enemy piece can actually use it.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "prophylaxis-control-the-key-squares",
@@ -551,7 +850,11 @@
     "check": "Checked: a classic idea (prophylaxis). It does not make the opponent helpless. Ask yourself every move: which checks, captures or threats can my opponent play? If needed, play a prophylactic move before it gets painful.",
     "phase": "all",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Defence",
+     "Space and plans"
+    ]
    },
    {
     "slug": "after-you-win-material-check-their-compensation",
@@ -560,7 +863,12 @@
     "check": "Checked: good habit. Material is not everything, so look at what the other side gained.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "optimize-with-a-pawn-move-gain-space",
@@ -569,7 +877,12 @@
     "check": "Checked: a good idea. Check the weaknesses the pawn move leaves behind.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "activate-a-passive-piece-in-time",
@@ -578,7 +891,13 @@
     "check": "Checked: this is the \"improve your worst piece\" idea for the rook. See also: the least active piece principle. Also covers: keep all pieces active, scan regularly for a sleeping piece and move it to an open file or a better post first.",
     "phase": "all",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Defence",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "create-a-weak-pawn-in-the-enemy-camp",
@@ -587,7 +906,12 @@
     "check": "Checked: the way to get the target in the first place. See \"Attack the backward pawn\".",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "read-the-pawn-structure-as-a-skeleton",
@@ -596,7 +920,11 @@
     "check": "Checked: pawn structure decides where your pieces belong.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "park-the-queen-behind-your-pieces-a8-or-b7",
@@ -605,7 +933,12 @@
     "check": "Checked: a real idea (for example ...Qa8 behind a bishop on b7 in some Queen's Indian lines). Only in specific structures.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "keep-control-of-the-break-squares-e5-c5",
@@ -614,7 +947,13 @@
     "check": "Checked: this is prophylaxis against breaks.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "King safety",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "check-that-your-pieces-do-not-get-in-each-other-s-way",
@@ -623,7 +962,13 @@
     "check": "Checked: true. The wording in the source was general, so I kept it general.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Development",
+     "Tactics",
+     "Pieces"
+    ]
    },
    {
     "slug": "target-weak-pawns-before-risky-king-attacks",
@@ -632,7 +977,13 @@
     "check": "Softened: not either-or. A well-prepared king attack is fine; this is the lower-risk default.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Attack",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "use-the-centre-to-restrict-your-opponent",
@@ -641,7 +992,13 @@
     "check": "Checked.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Development",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "avoid-trades-when-you-have-a-space-advantage",
@@ -650,7 +1007,12 @@
     "check": "Contrast with: trade pieces when ahead in material. The difference is the type of advantage: with material up, simplify; with a space bind, keep pieces on.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Defence",
+     "Space and plans",
+     "Trades"
+    ]
    },
    {
     "slug": "use-space-to-switch-your-heavy-pieces-quickly",
@@ -659,7 +1021,11 @@
     "check": "Checked.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "drive-knights-back-with-pawns",
@@ -668,7 +1034,13 @@
     "check": "Softened: every pawn push leaves holes behind it (see pawns leave holes), so check which squares you give away.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics",
+     "Pawns",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "put-rooks-on-open-files",
@@ -677,7 +1049,10 @@
     "check": "Checked. If no file is open yet, prepare one with a pawn trade or break.",
     "phase": "middlegame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pieces"
+    ]
    },
    {
     "slug": "know-the-three-kinds-of-weaknesses",
@@ -686,7 +1061,12 @@
     "check": "Checked. Rule of thumb: colour complexes with bishops and queens, holes with knights, backward pawns with rooks and queens.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "space-is-decided-by-your-pawn-chain",
@@ -695,7 +1075,12 @@
     "check": "Softened: the opponent's counter is to attack the base of your chain. Space also needs good piece placement, or it becomes a target.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack",
+     "Pawns",
+     "Space and plans"
+    ]
    }
   ]
  },
@@ -710,7 +1095,11 @@
     "start": true,
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics"
+    ]
    },
    {
     "slug": "beware-a-free-piece-when-a-rook-pawn-opens-a-file-at-your-king",
@@ -719,7 +1108,13 @@
     "check": "Example: in our Fishing Pole Trap (Ruy Lopez, Black sets it) the bait is a knight on g4 and Black opens the h-file against the castled king.",
     "phase": "middlegame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Attack",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "deal-with-infiltrators-on-your-half",
@@ -728,7 +1123,13 @@
     "check": "Softened: act on it quickly, but only when trading or chasing does not cost you more. Also covers: do not tolerate enemy outposts on your own half (first four ranks). Trade them off or drive them away before they become a nuisance. Softened: sometimes a trade costs you more than the outpost does, so check first. Also covers: neutralize an intruder before you start your own attack, so your half stays tidy and tactical blunders are less likely.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "back-rank-safety",
@@ -737,7 +1138,10 @@
     "check": "Also in the endgame: when you trade or sacrifice pieces, check the back rank first and adjust your defence in time.",
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety"
+    ]
    },
    {
     "slug": "master-both-kinds-of-blunders",
@@ -746,7 +1150,11 @@
     "check": "Checked: both matter. One is a mistake you make, the other is a chance you miss.",
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics"
+    ]
    },
    {
     "slug": "look-first-do-not-play-too-fast",
@@ -762,6 +1170,9 @@
       "fen": "rn1qkbnr/ppp2p1p/3p2p1/4N3/2B1P1b1/2N5/PPPP1PPP/R1BQK2R b KQkq - 0 5",
       "caption": "Black to move after 5.Nxe5 (Légal's trap). 5...Bxd1?? looks like winning a queen, but 6.Bxf7+ Ke7 7.Nd5# is mate. Checking the opponent's checks and captures first, as the principle says, finds the calm 5...dxe5. Stockfish agrees."
      }
+    ],
+    "tags": [
+     "Tactics"
     ]
    },
    {
@@ -771,7 +1182,13 @@
     "check": "Checked: correct, with one exception: a stronger forcing move of your own (a check or a mate) can come first if you have calculated it.",
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Attack",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "set-a-trap-with-a-defensive-move",
@@ -780,7 +1197,13 @@
     "check": "Checked: traps work well at club level. Only set one when your move is also fine if he does not fall for it. You can also offer a \"poisoned\" pawn: the opponent grabs it and ends up with badly placed pieces or an open file for your rooks (the poisoned-pawn idea is real, such as in the Najdorf). Never offer it unless you are fine when he does not take it.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics",
+     "Defence",
+     "Pawns"
+    ]
    },
    {
     "slug": "tactics-beat-opening-theory",
@@ -789,7 +1212,10 @@
     "check": "Softened: the claim \"more than 90%\" is the coach's estimate and I could not verify it. It is clearly true that blunders decide most club games.",
     "phase": "all",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics"
+    ]
    },
    {
     "slug": "look-for-in-between-moves-against-a-pin-or-threat",
@@ -798,7 +1224,13 @@
     "check": "Checked: the in-between move (zwischenzug) is a standard tactic. Make sure the in-between move really forces the issue.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics",
+     "Attack",
+     "Defence"
+    ]
    },
    {
     "slug": "keep-everything-connected-and-nothing-hanging",
@@ -808,7 +1240,12 @@
     "start": true,
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "ask-after-every-move-what-does-he-want",
@@ -818,7 +1255,13 @@
     "start": true,
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Tactics",
+     "Pawns",
+     "Space and plans"
+    ]
    },
    {
     "slug": "tactics-flow-from-a-superior-position",
@@ -827,7 +1270,12 @@
     "check": "Softened: a strong guideline, not a law. Tactics still decide when the position is balanced, so keep calculating every move.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "do-not-weaken-your-king-shelter-lightly",
@@ -836,7 +1284,13 @@
     "check": "Checked.",
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "King safety",
+     "Pawns",
+     "Pieces"
+    ]
    }
   ]
  },
@@ -850,7 +1304,13 @@
     "check": "A style, not a rule. Keep calculating: the other principles still apply. Wanting activity is not an excuse to be reckless. Also covers: take the initiative first. As White you have the first move, so use it to create early threats that force a reaction. Softened: Black can take the initiative too, usually a move later. Tie your development to a real or latent threat on the enemy half instead of developing aimlessly.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Attack",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "play-forcing-active-moves-in-the-opening",
@@ -859,7 +1319,11 @@
     "check": "Checked: good, as long as the move is also sound.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "Pieces"
+    ]
    },
    {
     "slug": "do-not-defend-passively-out-of-fear",
@@ -868,7 +1332,11 @@
     "check": "Checked: but first check the opponent's real threats (see CCTO).",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Defence",
+     "Space and plans"
+    ]
    },
    {
     "slug": "castle-long-only-when-it-is-safe",
@@ -877,7 +1345,11 @@
     "check": "Checked: correct. The king is a bit more exposed on the queenside and the pawn cover is thinner.",
     "phase": "opening",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "King safety"
+    ]
    },
    {
     "slug": "keep-fighting-for-the-centre",
@@ -886,7 +1358,12 @@
     "check": "Checked: standard. Also covers: centralization is the key to dominance. Central pieces cover the most squares and push the opponent onto the defensive, so keep pressure on the central squares.",
     "phase": "middlegame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "defend-aggressively",
@@ -895,7 +1372,12 @@
     "check": "Checked: a good counterpunch, as long as your counter is real. Also covers: do not panic when the opponent threatens on the wing or in the centre. Look for an active counter-move, an in-between move or a direct threat on their half. Softened: a counterattack only works if it is faster or stronger than the threat. Sometimes the right answer is simply a calm defensive move. Also covers: passive defence is dangerous. It lets the opponent keep attacking undisturbed, so ask: which attacking or countering move can I place on their half?",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "calculate-sacrifices-three-moves-deep",
@@ -904,7 +1386,10 @@
     "check": "A stricter version from another lesson: calculate the whole line. A sacrifice is right when you end up with more material, or give mate.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack"
+    ]
    },
    {
     "slug": "open-the-king-with-a-pawn-storm",
@@ -913,7 +1398,13 @@
     "check": "Checked: mainly with opposite-side castling. On the same side it loosens your own king.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Attack",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "fix-problems-with-pieces-not-pawns",
@@ -922,7 +1413,12 @@
     "check": "Checked: a good default. A pawn move is sometimes right, for example to make luft.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "do-not-panic-and-weaken",
@@ -931,7 +1427,12 @@
     "check": "Checked: keep calm; only keep pushing when your own attack is real.",
     "phase": "middlegame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack",
+     "Defence",
+     "Pawns"
+    ]
    },
    {
     "slug": "force-reactions-with-early-threats",
@@ -940,7 +1441,10 @@
     "check": "Checked: keeping the initiative works, as long as your threats are real. Also covers: look for moves on the opponent's half that create a direct threat (a check, an annoying pin), so they must react and lose time. Softened: only when the move is sound; a check just to give a check can waste your own tempo.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "General"
+    ]
    },
    {
     "slug": "avoid-hope-chess",
@@ -949,7 +1453,11 @@
     "check": "Checked: \"hope chess\" is a known term. A trap is fine when your move is also sound if he does not fall for it (see \"Set a trap with a defensive move\").",
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics",
+     "Pieces"
+    ]
    },
    {
     "slug": "keep-track-of-the-material-balance",
@@ -958,7 +1466,10 @@
     "check": "Checked: at club level material matters a lot. Balance it with the poisoned-pawn check: not every free pawn is free.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns"
+    ]
    },
    {
     "slug": "use-advanced-pawns-as-wedges",
@@ -967,7 +1478,11 @@
     "check": "Softened: an advanced pawn needs support, or it becomes a target. Calculate the risks to your own king before you push.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Pawns"
+    ]
    },
    {
     "slug": "activity-can-be-worth-more-than-material",
@@ -976,7 +1491,11 @@
     "check": "Softened: a guideline for calculated sacrifices. Unsound sacrifices lose; check that the pressure is lasting and that the opponent has no safe way to return the material.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics",
+     "Pieces"
+    ]
    },
    {
     "slug": "judge-activity-by-squares-controlled-and-mobility",
@@ -985,7 +1504,11 @@
     "check": "Softened: activity is not a replacement for material. Count both, and check how long the activity lasts. Also covers: activity is not only the number of squares a piece controls, but which squares it reaches on the opponent's half. Improve it by manoeuvring pieces to better squares, moving your own blocking pawns, or opening the structure with a pawn break.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Defence",
+     "Pieces"
+    ]
    }
   ]
  },
@@ -999,7 +1522,13 @@
     "check": "Softened: the first version said the first storm almost always wins. Tempo is key, but development and counterplay in the centre still matter.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "King safety",
+     "Attack",
+     "Pawns"
+    ]
    },
    {
     "slug": "support-the-pawn-storm",
@@ -1008,7 +1537,12 @@
     "check": "Checked: a pawn storm needs a supported spearhead, so the leading pawn is backed by a second pawn or a piece.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "answer-a-wing-attack-in-the-centre",
@@ -1017,7 +1551,13 @@
     "check": "Checked: a classical principle. Also covers: counter a premature flank attack by striking at once in the centre (for example with d4). Central pieces have the most power and force the opponent to defend. Softened: only when your pieces are developed enough to support the break.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Attack",
+     "Defence",
+     "Pawns"
+    ]
    },
    {
     "slug": "open-lines-by-trading-pawns",
@@ -1026,7 +1566,13 @@
     "check": "Checked: correct. Also covers: an attack stalls in a closed position. To make it succeed, open the position, preferably with a controlled pawn break, otherwise with a strong sacrifice, once your pieces are ready to enter.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Attack",
+     "Defence",
+     "Pawns"
+    ]
    },
    {
     "slug": "prepare-the-pawn-storm",
@@ -1035,7 +1581,13 @@
     "check": "Checked: correct.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics",
+     "Attack",
+     "Pawns"
+    ]
    },
    {
     "slug": "exchange-sacrifice-on-the-wing",
@@ -1044,7 +1596,13 @@
     "check": "Softened: only when you can calculate it. The original called it forcing, which is not true in general. This also goes against 'simple, controlled play', so use it only with a clear calculation.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "King safety",
+     "Attack",
+     "Pieces"
+    ]
    },
    {
     "slug": "tighten-the-net-with-flank-pawns-f3-g4-h4",
@@ -1053,7 +1611,13 @@
     "check": "Checked: a real tactic (trapping a piece on the edge). Check your own king safety first: these pawn moves also open lines near your own king.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "coordinate-knights-and-rooks-for-mate",
@@ -1062,7 +1626,11 @@
     "check": "Checked: a core attacking idea. The \"f4\" square comes from one example, so it is generalized here.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Pieces"
+    ]
    },
    {
     "slug": "be-patient-in-an-attack",
@@ -1071,7 +1639,11 @@
     "check": "Checked: good advice. Softened: if a forcing line is calculated and works, play it. Also covers: coordinate as a connected team before the final attack. A loose attack with too few active pieces fails against good defence. First harmony and centre control, then forcing combinations and sacrifices.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics",
+     "Attack"
+    ]
    },
    {
     "slug": "watch-for-long-range-snipers",
@@ -1080,7 +1652,12 @@
     "check": "Checked: long-range pieces are easy to overlook. Look along every long diagonal and open file.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics",
+     "Pieces"
+    ]
    },
    {
     "slug": "clear-the-way-for-a-kingside-attack-f4-or-d4",
@@ -1089,7 +1666,13 @@
     "check": "Checked: a typical plan in closed centres. Prepare it first, and check the pawn weaknesses it creates.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "King safety",
+     "Attack",
+     "Pieces"
+    ]
    },
    {
     "slug": "use-the-bishop-pair-against-weak-dark-squares",
@@ -1098,7 +1681,12 @@
     "check": "Checked: a standard strategic theme.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "use-opposite-coloured-bishops-as-an-attacking-weapon",
@@ -1107,7 +1695,13 @@
     "check": "Checked: true in the middlegame. In the endgame the same bishops tend to draw (see the warning above).",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Attack",
+     "Pieces",
+     "Space and plans"
+    ]
    },
    {
     "slug": "bring-your-rooks-into-the-game",
@@ -1122,6 +1716,11 @@
       "fen": "r3kb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR3R b kq - 2 12",
       "caption": "After 12.O-O-O, both white rooks take part in the attack at once (Rd1 pins the d7 knight, Rh1 supports). Black's rooks are still sleeping. Stockfish: White is far ahead. Source: Opera Game (Morphy vs Duke of Brunswick and Count Isouard, Paris 1858)."
      }
+    ],
+    "tags": [
+     "Tactics",
+     "Attack",
+     "Pieces"
     ]
    },
    {
@@ -1131,7 +1730,13 @@
     "check": "Checked. Softened: a single piece can still win material with a tactic, so check the concrete threat first.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics",
+     "Attack",
+     "Defence",
+     "Pawns"
+    ]
    },
    {
     "slug": "trade-off-the-key-attackers",
@@ -1140,7 +1745,12 @@
     "check": "Checked. Make sure the trade does not open a file or diagonal for their remaining pieces.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "plant-a-piece-deep-in-the-enemy-camp",
@@ -1149,7 +1759,11 @@
     "check": "Softened: the planted piece must be hard to dislodge or must win something concrete. Otherwise it is simply lost material.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics",
+     "Pieces"
+    ]
    },
    {
     "slug": "in-an-attack-time-can-be-worth-more-than-material",
@@ -1158,7 +1772,13 @@
     "check": "Checked. Calculate concretely: time is only worth it if you can keep the initiative until the pressure pays off.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "King safety",
+     "Attack",
+     "Defence"
+    ]
    },
    {
     "slug": "count-the-pieces-in-the-fight-not-on-the-board",
@@ -1167,7 +1787,12 @@
     "check": "Checked. Softened: material still counts in the long run, especially if the opponent can bring their pieces back in time.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Defence",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "launch-a-massive-attack-only-when-you-outnumber-the-defenders",
@@ -1176,7 +1801,11 @@
     "check": "Checked. The counterpart of: do not respect an unsupported attack.",
     "phase": "middlegame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Attack"
+    ]
    },
    {
     "slug": "punish-a-king-stuck-in-the-centre",
@@ -1191,6 +1820,12 @@
       "fen": "rn2kb1r/p3qppp/2p2n2/1p2p1B1/2B1P3/1QN5/PPP2PPP/R3K2R w KQkq - 0 10",
       "caption": "White to move after 9...b5. White has developed fast, Black's king is still in the middle and Black's queenside pieces are not out. 10.Nxb5! opens the position at once (Stockfish: White is about +3.4). Source: Opera Game (Morphy vs Duke of Brunswick and Count Isouard, Paris 1858)."
      }
+    ],
+    "tags": [
+     "Centre",
+     "Development",
+     "King safety",
+     "Attack"
     ]
    },
    {
@@ -1206,6 +1841,11 @@
       "fen": "3rkb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR3R w kq - 0 13",
       "caption": "White to move after 12...Rd8. The knight on d7 is the key defender: it blocks the d-file and guards the king. 13.Rxd7! Rxd7 14.Rd1 and the pin wins (Stockfish: about +5). Source: Opera Game (Morphy vs Duke of Brunswick and Count Isouard, Paris 1858)."
      }
+    ],
+    "tags": [
+     "King safety",
+     "Attack",
+     "Pieces"
     ]
    },
    {
@@ -1215,7 +1855,12 @@
     "check": "Softened: the term is used in different ways; this describes the effect. Check that the pawn itself can be defended, or it just becomes a target.",
     "phase": "middlegame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Tactics",
+     "Attack",
+     "Pawns"
+    ]
    }
   ]
  },
@@ -1229,7 +1874,12 @@
     "check": "Checked: correct. Be careful with fortress positions. Other lessons say the same: fewer pieces make your extra material weigh more. Another lesson adds: do it once your opponent's attack is neutralized. Softened: it is not completely risk-free. One pawn up is enough to simplify, but see the opposite-coloured bishops warning. When you are behind, avoid needless trades. Another lesson: if you won a piece or the exchange, trade methodically (the minor pieces first) to simplify and steer the endgame to a win.",
     "phase": "all",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "create-a-passed-pawn",
@@ -1238,7 +1888,11 @@
     "check": " Once you have broken up your opponent's structure, creating a passed pawn and pushing it (best close to promotion) is the fastest way to put them on the defensive. Softened: another lesson says an equal endgame is won almost only by a passed pawn. It is the most common way, but king activity and winning pawns win games too. Softened: \"endgames are won by passed pawns\" is a strong guideline, not a law. With fewer pieces a mating attack becomes unlikely, so the creation and support of a passed pawn, together with an active king, becomes the main winning plan.",
     "phase": "endgame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Endgame technique"
+    ]
    },
    {
     "slug": "rook-versus-minor-piece-win-it-with-technique",
@@ -1247,7 +1901,13 @@
     "check": "Corrected: it is not automatically won. In the middlegame it usually wins with a pawn or more; in endgames with blocked pawns or no pawns the minor piece can draw.",
     "phase": "endgame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Development",
+     "King safety",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "activate-your-king-in-the-endgame",
@@ -1257,7 +1917,13 @@
     "start": true,
     "phase": "endgame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "King safety",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "push-your-passed-pawn",
@@ -1266,7 +1932,12 @@
     "check": "Checked: a standard rule. Do not run it unsupported and watch for the enemy king. Priority number one in an endgame when it can run unhindered: push it, but in a controlled way.",
     "phase": "endgame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Endgame technique"
+    ]
    },
    {
     "slug": "put-your-pawns-on-the-opposite-colour-of-the-enemy-bishop",
@@ -1275,7 +1946,11 @@
     "check": "Corrected: the title said 'same colour', but the rule is the opposite colour of his bishop. It makes the bishop much weaker, not completely useless.",
     "phase": "endgame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "mate-with-king-and-queen",
@@ -1284,7 +1959,13 @@
     "check": "Checked: always wins if you avoid stalemate. Wording: 'mirroring' became 'a knight's move away'.",
     "phase": "endgame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics",
+     "Pieces",
+     "Endgame technique"
+    ]
    },
    {
     "slug": "trade-queens-when-you-are-a-pawn-up",
@@ -1293,7 +1974,12 @@
     "check": "Softened: often right, not always. A queenless endgame can still be drawn, and check the trade does not give the opponent compensation.",
     "phase": "endgame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "pieces-first-then-pawns",
@@ -1302,7 +1988,12 @@
     "check": "Softened: usually. In pawn races, speed can matter more.",
     "phase": "endgame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "fewer-pawn-islands",
@@ -1311,7 +2002,10 @@
     "check": "Corrected: the idea is right. The exact rule depends on the position: recapture with the pawn or the piece that keeps your pawns together, not always with a piece.",
     "phase": "endgame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns"
+    ]
    },
    {
     "slug": "beware-opposite-coloured-bishops",
@@ -1320,7 +2014,12 @@
     "check": "Checked: correct. With queens and rooks on the board, opposite bishops can help the attacker instead.",
     "phase": "endgame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Endgame technique"
+    ]
    },
    {
     "slug": "castling-is-not-automatic-without-queens",
@@ -1329,7 +2028,13 @@
     "check": "Checked: castling is just no longer a priority. Also: a short-castled king in the corner can get boxed in and loses tempi getting to the centre. Softened from \"almost never\": it is just rarely worth the time. Another lesson repeats this: do not castle out of habit when queens left the board early. A king in the corner takes no part in the game. Do not be lured by strong players who still castle short long after the queens are off. Their king ends up in a useless corner instead of the active centre.",
     "phase": "endgame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Development",
+     "King safety",
+     "Pawns"
+    ]
    },
    {
     "slug": "doubled-isolated-pawns-are-a-target",
@@ -1338,7 +2043,12 @@
     "check": "Checked and aligned with the doubled-pawn principle above: it is the isolation and blocking that make them weak. You can also trade at the right moment to give your opponent doubled pawns, which are permanent targets. The other side of it: do not be scared of doubled pawns of your own. In open positions they can strengthen your control of the centre and compensate for the loss of a bishop.",
     "phase": "endgame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Attack",
+     "Pawns",
+     "Endgame technique"
+    ]
    },
    {
     "slug": "shelter-your-king-from-checks",
@@ -1347,7 +2057,13 @@
     "check": "Checked: a known technique. Balance it with an active king when there are no annoying checks. In won rook endings you can hide king and rook behind or between your own pawns, so that the enemy rook cannot give permanent checks.",
     "phase": "endgame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "watch-out-for-stalemate",
@@ -1356,7 +2072,13 @@
     "check": "Checked: stalemate turns wins into draws. In won endgames stay alert until the last move so you do not take away all legal moves before you give mate.",
     "phase": "endgame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Tactics",
+     "Pawns",
+     "Endgame technique"
+    ]
    },
    {
     "slug": "stay-careful-until-the-last-move",
@@ -1365,7 +2087,10 @@
     "check": " Calculate to the very last move: a wrong king square against a mate threat can turn a won position into a loss.",
     "phase": "endgame",
     "level": "beginner",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Endgame technique"
+    ]
    },
    {
     "slug": "the-scissor-technique-with-a-bishop",
@@ -1375,7 +2100,12 @@
     "check": "Draft: I could not confirm the name. The idea only works in specific positions. It needs a concrete example before it gets its own page.",
     "phase": "endgame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Endgame technique"
+    ]
    },
    {
     "slug": "march-a-pawn-majority",
@@ -1384,7 +2114,13 @@
     "check": "Checked: a standard endgame plan. Keep the pawns supported and watch the enemy king.",
     "phase": "endgame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Defence",
+     "Pawns",
+     "Pieces",
+     "Endgame technique"
+    ]
    },
    {
     "slug": "keep-the-opponent-s-pieces-passive",
@@ -1393,7 +2129,13 @@
     "check": "Checked: sound, as long as the endgame you reach is actually better for you.",
     "phase": "endgame",
     "level": "expert",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Centre",
+     "Defence",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "trade-down-when-the-structure-is-equal",
@@ -1402,7 +2144,13 @@
     "check": "Checked: good for a safe game. If you need to win, keep the tension instead.",
     "phase": "endgame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Pawns",
+     "Pieces",
+     "Trades"
+    ]
    },
    {
     "slug": "convert-with-an-outside-passed-pawn",
@@ -1411,7 +2159,13 @@
     "check": "Checked: an outside passed pawn pulls the enemy king away and is a classic winning method.",
     "phase": "endgame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Defence",
+     "Pawns",
+     "Trades",
+     "Endgame technique"
+    ]
    },
    {
     "slug": "attack-the-opponent-s-pawns-in-the-endgame",
@@ -1420,7 +2174,13 @@
     "check": "Checked. Softened: \"too little to mate\" holds mostly in minor-piece and rook endings; with queens on, king safety still matters. Also covers: the goal changes. In the middlegame you hunt the king; in the endgame there is too little attacking material, so aim all your firepower at the weak pawns.",
     "phase": "endgame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "King safety",
+     "Attack",
+     "Pawns",
+     "Pieces"
+    ]
    },
    {
     "slug": "prefer-the-bishop-with-pawns-on-both-wings",
@@ -1429,7 +2189,13 @@
     "check": "Corrected: \"superior\" was too strong. It is a small, general edge. In closed positions with pawns locked on the bishop's colour, a knight can be just as good or better.",
     "phase": "endgame",
     "level": "intermediate",
-    "reviewed": true
+    "reviewed": true,
+    "tags": [
+     "Pawns",
+     "Pieces",
+     "Space and plans",
+     "Endgame technique"
+    ]
    }
   ]
  },
@@ -1444,7 +2210,12 @@
     "check": "Checked: baits are a known club tactic. The exact position in the source is unclear, so no example yet. Works mainly against weaker players or in blitz; against strong players rely on sound moves.",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: choose a line where a natural-looking mistake loses quickly (an opening trap), and play it for a month in rapid games. Keep track of how often the opponent falls for it and what they do when they do not. Know your own follow-up well enough that the bait never backfires on you.",
+    "tags": [
+     "Psychology",
+     "Attack"
+    ]
    },
    {
     "slug": "wait-a-moment-before-a-forced-move",
@@ -1454,7 +2225,11 @@
     "check": "Not a chess principle but gamesmanship. Use it sparingly, never waste your clock, and do not rely on it. It is also a draft until we agree it belongs in a chess library.",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: when a recapture or an only-move seems forced, still count to five and look at the whole board once. Check whether there is an in-between move or a stronger alternative, and whether the opponent's last move set a trap.",
+    "tags": [
+     "Psychology"
+    ]
    },
    {
     "slug": "win-or-learn",
@@ -1463,7 +2238,11 @@
     "check": "Not a chess rule but a useful mindset. Wording: the source said the loss should not \"increase\" your fun; I read it as \"spoil\".",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: finish every session with one line: \"I won\" or \"I learned: ...\". Never write \"I lost\". It keeps your attention on the lesson, and over a month your notes turn into a personal list of the principles you still need to train.",
+    "tags": [
+     "Psychology"
+    ]
    },
    {
     "slug": "set-a-fixed-number-of-games-per-session",
@@ -1472,7 +2251,11 @@
     "check": "Checked: standard advice. Softened: the exact number is personal; a stop-loss rule (such as stopping after two losses in a row) is a good addition.",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: before you open the app, write down \"3 games\" (or any number that fits your evening). After game 3 you stop, even after a loss, and use the last 10 minutes to review your worst game instead. Notice how often the 4th game you were tempted to play would have been played on tilt.",
+    "tags": [
+     "Psychology"
+    ]
    },
    {
     "slug": "set-a-loss-budget",
@@ -1481,7 +2264,11 @@
     "check": "Corrected: \"about 50%\" only holds against similarly rated opponents, which rating systems aim for. Against stronger players you lose more.",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: expect that out of every 10 games against similar opponents about 4 to 5 are losses. Count them in your head as \"budget spent\", not as failure. When you reach your budget for the day, review one loss and call it a successful session.",
+    "tags": [
+     "Psychology"
+    ]
    },
    {
     "slug": "understanding-is-not-the-same-as-executing",
@@ -1490,7 +2277,11 @@
     "check": "Checked.",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: after watching a master game or a lesson, close the video and set up the key position on a board. Play the idea from memory against an engine or a friend. If you cannot find it yet, you understood it but have not trained it. Repeat on three different days.",
+    "tags": [
+     "Psychology"
+    ]
    },
    {
     "slug": "choose-a-growth-mindset",
@@ -1499,7 +2290,11 @@
     "check": "Checked: well supported in learning research.",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: after each game write down one thing you did better than last week, win or lose. Track that list instead of only your rating. Over a month the list shows progress that the rating hides.",
+    "tags": [
+     "Psychology"
+    ]
    },
    {
     "slug": "analyse-your-lost-and-difficult-games",
@@ -1508,7 +2303,11 @@
     "check": "Checked. This is exactly what the game report is for.",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: after a loss, run it through the Throiy Chess analyzer. Find the first move where the evaluation dropped most, ask what you were thinking, and write one sentence on what you will check next time. One game analysed this way beats five games played on tilt.",
+    "tags": [
+     "Psychology"
+    ]
    },
    {
     "slug": "stay-calm-against-an-unfamiliar-early-gambit",
@@ -1517,7 +2316,13 @@
     "check": "Softened: \"take the pawn\" is not always right. First check that the pawn is not poisoned and that you are not falling behind in development.",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: when your opponent offers a pawn on move 3 or 4 with a move you do not know, take a minute. Check what the offered pawn opens (lines to your king, pins), and decide whether you can take and then return it if needed while developing. Calm development usually beats trying to refute it from memory.",
+    "tags": [
+     "Psychology",
+     "Attack",
+     "Defence"
+    ]
    },
    {
     "slug": "make-the-opponent-s-life-uncomfortable",
@@ -1526,7 +2331,12 @@
     "check": "Softened: pick among sound moves only. A move that is objectively bad is not \"provocative\", it is just a mistake.",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: when two moves are about equally good, pick the one that asks your opponent a harder question, such as the one with a direct threat or a pin. Opponents under time pressure find it much harder to answer concrete questions than to play quiet moves.",
+    "tags": [
+     "Psychology",
+     "Defence"
+    ]
    },
    {
     "slug": "create-confusion-with-a-complicating-sacrifice",
@@ -1535,7 +2345,12 @@
     "check": "Softened: this is a practical choice for human opponents and not a rule against engines. Only do it when the sacrifice is at worst roughly balanced; a bad sacrifice just loses material.",
     "phase": "all",
     "level": "all",
-    "reviewed": true
+    "reviewed": true,
+    "scenario": "Try this: before you sacrifice to complicate, play the main lines to the end: can the opponent safely give the material back or reach a draw? If the worst case is still acceptable, the complication is a practical weapon. If the worst case loses by force, do not play it.",
+    "tags": [
+     "Psychology",
+     "Attack"
+    ]
    }
   ]
  }
