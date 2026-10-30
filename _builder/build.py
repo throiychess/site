@@ -795,9 +795,9 @@ _CMPT = '<table class="mcmp"><thead><tr><th>What you get</th><th>Free</th><th>Pr
 def members_page():
     body = header("Members") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw">
 <div id="m-login"><div class="mhero"><span class="eyebrow">Members</span><h1>Fix what costs you games.</h1><p>Your own page with your reports, your progress and, soon, training built from your mistakes. Free to join, no password.</p></div>
+<div class="mgrid">{_FEATS}</div>
 <div class="newsletter mlogin"><div><strong>Log in or create your free account</strong><p>Enter your e-mail address. We send a link; opening it confirms the address and logs you in.</p></div>
 <div class="mlr">{('<div id="m-gid" style="margin:4px 0 0;min-height:44px;color-scheme:light"></div><button class="mgbtn" type="button" id="m-google" hidden>Continue with Google</button><div class="mdiv">or with e-mail</div>' if GOOGLE_LOGIN else '')}<form class="mform" id="m-form"><label class="sr" for="m-mail">E-mail address</label><input id="m-mail" type="email" placeholder="Your e-mail" autocomplete="email" required maxlength="200"><button class="btn solid" type="submit">Send me a login link</button><div id="m-hc" style="flex-basis:100%"></div><p class="small" id="m-msg" role="status" aria-live="polite" style="flex-basis:100%;margin:0"></p></form></div></div>
-<div class="mgrid">{_FEATS}</div>
 </div>
 <div id="m-app" class="mapp" hidden>
 <div><nav class="mnav" aria-label="Members">{_NAVH}<div class="mwho"><span class="mava" id="m-ava">&#9823;&#xFE0E;</span><span class="small">Logged in as</span><b id="m-email"></b><button class="btn" type="button" id="m-out" style="margin-top:10px">Log out</button></div></nav></div>
