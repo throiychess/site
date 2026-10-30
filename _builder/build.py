@@ -792,7 +792,7 @@ _COURSEH = "".join(f'<div class="mcard"><span class="mbadge pro">Premium</span><
 _CMP = "".join(f"<tr><td>{a}</td><td>{x}</td><td>{y}</td></tr>" for a, x, y in [
   ("Free analyzer (5 games)", "&#10003;", "&#10003;"), ("Saved reports + progress charts", "&#10003;", "&#10003;"), ("Your goal, tracked", "&#10003;", "&#10003;"), ("10 Opening Traps kit", "&#10003;", "&#10003;"),
   ("Up to 25 games at once", "&ndash;", "&#10003;"), ("Deeper engine (depth 18)", "&ndash;", "&#10003;"), ("Patterns over time and your openings", "&ndash;", "&#10003;"), ("Time-pressure check", "&ndash;", "&#10003;"),
-  ("Weekly plan: your top 3 leaks", "&ndash;", "&#10003;"), ("Puzzles from your own mistakes", "&ndash;", "&#10003;"), ("Courses by rating band", "&ndash;", "Soon")])
+  ("Weekly plan: your top 3 leaks", "&ndash;", "&#10003;"), ("Puzzles from your own mistakes", "&ndash;", "&#10003;"), ("Opening trainer from your own games", "&ndash;", "&#10003;"), ("Pro engine (full Stockfish, desktop)", "&ndash;", "&#10003;"), ("Courses by rating band", "&ndash;", "Soon")])
 _CMPT = '<table class="mcmp"><thead><tr><th>What you get</th><th>Free</th><th>Premium</th></tr></thead><tbody>' + _CMP + '</tbody></table>'
 
 def members_page():
@@ -815,9 +815,9 @@ def members_page():
 <label class="sr" for="az-user">Username</label><input id="az-user" placeholder="Username" autocomplete="off" required><button class="btn solid" type="submit">Find games</button></form>
 <div id="az-games"></div><div id="az-report"></div>
 <p class="small" style="margin:24px 0 10px">The analysis runs in your own browser with Stockfish 17.1. Games are loaded from the public Chess.com and Lichess APIs.</p></section>
-<section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-charts"></div><div id="m-ins"></div><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="#analyze">Analyze new games</a></p></section>
-<section class="mview" data-view="training" hidden><h2>Training</h2><p class="lead">Courses by rating band, with exercises after every lesson. They open with the improvement program. Until then, start with the free kit.</p>
-<div class="mnext"><p><b>Free now:</b> the 10 Opening Traps, with a quiz made for your phone.</p><a class="btn solid" href="/traps/">Open the traps</a></div><div id="m-plan" style="margin-top:20px"></div><div class="mcourse">{_COURSEH}</div></section>
+<section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-charts"></div><div id="m-share" style="margin:20px 0"></div><div id="m-ins"></div><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="#analyze">Analyze new games</a></p></section>
+<section class="mview" data-view="training" hidden><h2>Training</h2><p class="lead">Your weekly plan, your openings and the principles behind your reports. Courses by rating band follow.</p>
+<div class="mnext"><p><b>Free now:</b> the 10 Opening Traps, with a quiz made for your phone.</p><a class="btn solid" href="/traps/">Open the traps</a></div><div id="m-plan" style="margin-top:20px"></div><div id="m-open" style="margin-top:20px"></div><div id="m-princ" style="margin-top:20px"></div><div class="mcourse">{_COURSEH}</div></section>
 <section class="mview" data-view="puzzles" hidden><h2>Puzzles</h2><p class="lead">Pattern recognition is what makes you win. Your puzzles come from your own games, so you train exactly what you miss.</p>
 <div id="m-puz"></div><div id="m-puz-static"><ol class="msteps"><li><span><b>You analyze your games.</b><br><span class="small">The same free analyzer you use now.</span></span></li><li><span><b>We find the patterns you miss.</b><br><span class="small">Forks, pins, loose pieces: whatever cost you the most.</span></span></li><li><span><b>You train on puzzles built from them.</b><br><span class="small">Short sessions, a score and a streak.</span></span></li></ol>
 </div></section>

@@ -45,7 +45,7 @@ const PHN = { opening: "Opening", middlegame: "Middlegame", endgame: "Endgame" }
 
 // ---------- engine ----------
 class Engine {
-  constructor() { this.w = new Worker("/js/stockfish/stockfish-17.1-lite-single-03e3232.js"); this.q = Promise.resolve(); this.lis = null;
+  constructor(full) { this.w = new Worker(full ? "/js/stockfish/full/stockfish-17.1-single-a496a04.js" : "/js/stockfish/stockfish-17.1-lite-single-03e3232.js"); this.q = Promise.resolve(); this.lis = null;
     this.w.onmessage = (e) => this.lis && this.lis(String(e.data)); }
   cmd(c) { this.w.postMessage(c); }
   wait(pred) { return new Promise((res) => { this.lis = (l) => { if (pred(l)) { this.lis = null; res(l); } }; }); }
@@ -59,8 +59,8 @@ class Engine {
       this.cmd("position fen " + fen); this.cmd("go depth " + depth); })));
   }
 }
-let engine = null;
-async function getEngine() { if (!engine) { engine = new Engine(); await engine.init(); } return engine; }
+let FULL = false; const engines = {};
+async function getEngine() { const k = FULL ? "full" : "lite"; if (!engines[k]) { const e = new Engine(FULL); await e.init(); engines[k] = e; } return engines[k]; }
 
 // ---------- fetching games ----------
 async function fetchChesscom(user) {
@@ -180,7 +180,7 @@ $("#az-form").addEventListener("submit", async (e) => {
   state = { games: [], user, site }; const out = $("#az-games"); out.innerHTML = '<p class="small">Fetching games…</p>'; $("#az-report").innerHTML = "";
   try { const games = site === "lichess" ? await fetchLichess(user) : await fetchChesscom(user); state.games = games; state.ratings = {}; fetchRatings(site, user).then((r) => { state.ratings = r; }); ev("analyze-fetch-" + site);
     if (!games.length) { out.innerHTML = '<p class="small">No standard games found in the last months.</p>'; return; }
-    out.innerHTML = `<p>Pick up to <strong>${maxGames()} games</strong> to analyze. Tip: your losses teach the most.</p>${isPrem() ? '<p class="small"><label>Depth: <select id="az-depth"><option value="14">Standard (depth 14, fast)</option><option value="18">Deep (depth 18, about 4x slower, finds more)</option></select></label></p>' : '<p class="small">&#128274; Want up to 25 games and deeper engine analysis? <a href="/members/#plan">See Premium</a>.</p>'}<div class="az-list">` +
+    out.innerHTML = `<p>Pick up to <strong>${maxGames()} games</strong> to analyze. Tip: your losses teach the most.</p>${isPrem() ? '<p class="small"><label>Depth: <select id="az-depth"><option value="14">Standard (depth 14, fast)</option><option value="18">Deep (depth 18, about 4x slower, finds more)</option><option value="full">Pro engine (full Stockfish, depth 16, desktop only, 79 MB download once)</option></select></label></p>' : '<p class="small">&#128274; Want up to 25 games and deeper engine analysis? <a href="/members/#plan">See Premium</a>.</p>'}<div class="az-list">` +
       games.map((g, i) => { const w = g.white.toLowerCase() === user.toLowerCase(); const opp = w ? g.black : g.white;
         return `<label class="az-g"><input type="checkbox" value="${i}"><span class="res ${fmtRes(g, user).toLowerCase()}">${fmtRes(g, user)}</span>
           <span>${w ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${esc(g.tc || "")} · ${g.date.toLocaleDateString()}</span></label>`; }).join("") +
@@ -192,8 +192,8 @@ $("#az-form").addEventListener("submit", async (e) => {
 
 async function run() {
   const idx = [...document.querySelectorAll("#az-games input:checked")].map((x) => +x.value); if (!idx.length) return;
-  { const dsel = $("#az-depth"); DEPTH = isPrem() && dsel ? +dsel.value || 14 : 14; }
-  $("#az-go").disabled = true; const prog = $("#az-prog"); prog.textContent = "Loading the engine (7 MB, once)…"; ev("analyze-run");
+  { const dsel = $("#az-depth"); const dv = isPrem() && dsel ? dsel.value : "14"; FULL = dv === "full"; DEPTH = FULL ? 16 : +dv || 14; }
+  $("#az-go").disabled = true; const prog = $("#az-prog"); prog.textContent = "Loading the engine ("+(FULL ? "79 MB, once; this can take a minute" : "7 MB, once")+")…"; ev("analyze-run");
   const results = [];
   for (let k = 0; k < idx.length; k++) {
     const g = state.games[idx[k]];
@@ -221,7 +221,7 @@ function extras(L) {
   const phases = { opening: { n: 0, loss: 0, big: 0 }, middlegame: { n: 0, loss: 0, big: 0 }, endgame: { n: 0, loss: 0, big: 0 } };
   let known = 0, low = 0; const pool = [];
   for (const r of L.results) { for (const k of Object.keys(phases)) { const p = r.ph[k]; phases[k].n += p.n; phases[k].loss += Math.round(p.loss); phases[k].big += p.big; }
-    for (const m of r.moments) { if (m.clock != null) { known++; if (m.clock < 30) low++; } if (m.loss >= 150 && m.bFrom && m.best) pool.push({ f: m.fen, c: m.color, b: m.best, bf: m.bFrom, bt: m.bTo, s: m.san, k: m.cat, l: Math.round(m.loss), n: m.moveNo }); } }
+    for (const m of r.moments) { if (m.clock != null) { known++; if (m.clock < 30) low++; } if (m.loss >= 150 && m.bFrom && m.best) pool.push({ o: openingName(r.g.pgn || ""), f: m.fen, c: m.color, b: m.best, bf: m.bFrom, bt: m.bTo, s: m.san, k: m.cat, l: Math.round(m.loss), n: m.moveNo }); } }
   pool.sort((a, b) => b.l - a.l);
   return { openings, phases, lc: { known, low }, puz: pool.slice(0, 40) };
 }
