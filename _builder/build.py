@@ -877,20 +877,96 @@ PRINCIPLES = json.load(open(os.path.join(ROOT, "src", "data", "principles.json")
 def _pitems():
     return [(g["group"], x) for g in PRINCIPLES for x in g["items"] if not x.get("draft")]
 
+
+PR_CSS = """
+.pl{display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px;align-items:start;margin:22px 0 40px}
+.pside{position:sticky;top:84px;display:grid;gap:16px}
+.pbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+.pbox h4{margin:0 0 10px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600}
+.ptopic{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:0;border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:15px;cursor:pointer;text-align:left}
+.ptopic:hover{background:var(--panel2)}.ptopic.on{background:#221d10;color:var(--gold)}
+.ptopic svg,.pic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ptopic .n{margin-left:auto;font-size:13px;color:var(--mute)}
+.pseg{display:flex;flex-wrap:wrap;gap:6px}.pseg button{padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--mute);font:inherit;font-size:13.5px;cursor:pointer}
+.pseg button.on{color:var(--on-gold);background:var(--gold);border-color:var(--gold)}
+.pfind{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-size:16px}
+.prow{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;margin:0 0 10px;transition:border-color .15s,transform .15s}
+.prow:hover{border-color:#4a3f26;transform:translateY(-1px)}
+.pic{width:44px;height:44px;border-radius:12px;background:#221d10;border:1px solid #3a3118;display:grid;place-items:center;color:var(--gold);flex:none}.pic svg{width:22px;height:22px}
+.prow a.pt{color:var(--ink);text-decoration:none;font-weight:600;font-size:17px;display:block;line-height:1.3}.prow a.pt:hover{color:var(--gold)}
+.prow p{margin:3px 0 0;color:var(--mute);font-size:14.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ppills{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.pill{font-size:11.5px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mute);letter-spacing:.02em}
+.pill.lv-beginner{color:#8fd19e;border-color:#2c4a35}.pill.lv-intermediate{color:#e3c073;border-color:#4a3f26}.pill.lv-expert{color:#e58f7c;border-color:#5a2f27}
+.pact{display:flex;gap:6px}
+.pbtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--mute);display:grid;place-items:center;cursor:pointer;padding:0}
+.pbtn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pbtn:hover{color:var(--ink);border-color:#4a3f26}.pbtn.on{color:var(--gold);border-color:var(--gold);background:#221d10}.pbtn.sv.on svg{fill:currentColor}
+.pmore{display:block;margin:14px auto;padding:10px 22px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;cursor:pointer}
+.ph2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:26px 0 12px;font-weight:600}
+.pp{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:34px;align-items:start;margin:8px 0 40px}
+.pp h1{font-size:clamp(30px,4.6vw,50px);line-height:1.06;margin:10px 0 12px}
+.pidea{border-left:3px solid var(--gold);padding:4px 0 4px 20px;font-size:21px;line-height:1.5;color:var(--ink);margin:20px 0 26px}
+.pex{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;margin:0 0 16px}
+.pex .cap{font-size:16.5px;line-height:1.6}.pex .src{font-size:13px;color:var(--mute);margin-top:10px}
+.ptry{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 24px;display:grid;grid-template-columns:44px 1fr;gap:16px;margin:0 0 16px}.ptry p{margin:0;font-size:17px;line-height:1.6}
+.pnav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:26px 0}
+.pnav a{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;background:var(--panel);font-weight:600;line-height:1.3}.pnav a:hover{border-color:#4a3f26}.pnav small{display:block;color:var(--mute);font-weight:400;font-size:12.5px;margin-bottom:3px}
+.pnav a.r{text-align:right}
+.prel a{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:center;padding:9px 8px;border-radius:12px;color:var(--ink);text-decoration:none}.prel a:hover{background:var(--panel2)}
+.prel .pic{width:36px;height:36px;border-radius:10px}.prel .pic svg{width:18px;height:18px}
+.prel b{display:block;font-weight:600;font-size:15px;line-height:1.3}.prel small{color:var(--mute);font-size:12.5px}
+.pactrow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15.5px}.pactrow:last-child{border:0}
+.ptags{display:flex;gap:6px;flex-wrap:wrap}
+@media(max-width:900px){.pl,.pp{grid-template-columns:1fr}.pside{position:static}.pex{grid-template-columns:1fr}.pnav{grid-template-columns:1fr}}
+@media(max-width:520px){.prow{grid-template-columns:40px minmax(0,1fr)}.prow .pact{grid-column:1/-1;justify-content:flex-end}}
+"""
+TAG_ICONS = {
+ "Centre": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6"/>',
+ "Development": '<path d="M4 20h4v-5h4v-5h4V5h4"/>',
+ "King safety": '<path d="M4 18h16M5 18L4 8l5 4 3-6 3 6 5-4-1 10"/>',
+ "Tactics": '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+ "Attack": '<path d="M5 19L19 5M11 5h8v8"/>',
+ "Defence": '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+ "Pawns": '<circle cx="12" cy="7" r="3"/><path d="M9 21c0-4 1-7 3-9 2 2 3 5 3 9z"/>',
+ "Pieces": '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/><path d="M13 7h4M7 13v4"/>',
+ "Space and plans": '<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>',
+ "Trades": '<path d="M4 8h14l-3-3M20 16H6l3 3"/>',
+ "Endgame technique": '<path d="M5 21V4h12l-2 4 2 4H5"/>',
+ "Psychology": '<circle cx="12" cy="9" r="5"/><path d="M9 21c0-3 1-4 3-5 2 1 3 2 3 5M10 9h4"/>',
+ "Opening systems": '<path d="M4 4h6a3 3 0 013 3v13a2 2 0 00-2-2H4zM20 4h-5a2 2 0 00-2 2"/>',
+ "General": '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+}
+MEM_CSS += PR_CSS
+def tic(tag): return f'<svg viewBox="0 0 24 24" aria-hidden="true">{TAG_ICONS.get(tag, TAG_ICONS["General"])}</svg>'
+_SV = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>'
+_LN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>'
+def pbtns(slug):
+    return (f'<div class="pact"><button type="button" class="pbtn sv" data-mk="s:{slug}" title="Save for later" aria-label="Save for later">{_SV}</button>'
+            f'<button type="button" class="pbtn ln" data-mk="l:{slug}" title="Mark as learned" aria-label="Mark as learned">{_LN}</button></div>')
+def pills(x, grp=None):
+    s = f'<span class="pill lv-{x.get("level","")}">{e(x.get("level","").capitalize())}</span><span class="pill">{e(x.get("phase","").capitalize())}</span>'
+    return s + (f'<span class="pill">{e(grp)}</span>' if grp else "")
+def prow(x, grp=None):
+    t0 = (x.get("tags") or ["General"])[0]
+    q = e((x["title"] + " " + x["text"] + " " + " ".join(x.get("tags", []))).lower())
+    return (f'<div class="prow pc" data-q="{q}" data-tags="{e("|".join(x.get("tags", [])))}" data-lv="{x.get("level","")}" data-ph="{x.get("phase","")}" data-slug="{x["slug"]}">'
+            f'<div class="pic">{tic(t0)}</div><div><a class="pt" href="/principles/{x["slug"]}/">{e(x["title"])}</a><p>{e(x["text"])}</p><div class="ppills">{pills(x)}</div></div>{pbtns(x["slug"])}</div>')
+
+
 def principles_index():
-    tags = sorted({t for g in PRINCIPLES for x in g["items"] if not x.get("draft") for t in x.get("tags", [])})
-    def card(x):
-        q = e((x["title"] + " " + x["text"] + " " + " ".join(x.get("tags", []))).lower())
-        return (f'<a class="mcard pc" data-q="{q}" data-tags="{e("|".join(x.get("tags", [])))}" data-lv="{x.get("level","")}" data-ph="{x.get("phase","")}" href="/principles/{x["slug"]}/" style="text-decoration:none;color:inherit">'
-                f'<h3 style="margin:0 0 6px">{e(x["title"])}</h3><p class="small" style="margin:0 0 6px;opacity:.8">{e(x.get("level","").capitalize())} &middot; {e(x.get("phase","").capitalize())}</p><p>{e(x["text"])}</p></a>')
-    h = "".join(f'<h2 class="pg" style="margin:34px 0 10px">{e(g["group"])}</h2><div class="mgrid pgrid" style="margin:0">' + "".join(card(x) for x in g["items"] if not x.get("draft")) + "</div>" for g in PRINCIPLES)
-    st = '<h2 style="margin:34px 0 10px">Start here</h2><div class="mgrid" style="margin:0">' + "".join(card(x) for g in PRINCIPLES for x in g["items"] if x.get("start") and not x.get("draft")) + '</div>'
-    sel = lambda n, opts: f'<select id="{n}" style="padding:10px;border-radius:10px;background:transparent;color:inherit;border:1px solid #3a3a3a;font:inherit">' + "".join(f'<option value="{v}">{t}</option>' for v, t in opts) + '</select>'
-    ctl = ('<div style="display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 8px"><input id="pq" type="search" placeholder="Search principles (for example: rook, king, passed pawn)" style="flex:1 1 260px;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid #3a3a3a;background:transparent;color:inherit;font:inherit">'
-           + sel("plv", [("", "Any level"), ("beginner", "Beginner"), ("intermediate", "Intermediate"), ("expert", "Expert")])
-           + sel("pph", [("", "Any phase"), ("opening", "Opening"), ("middlegame", "Middlegame"), ("endgame", "Endgame")])
-           + sel("ptag", [("", "Any topic")] + [(t, t) for t in tags]) + '</div><p class="small" id="pcount"></p>')
-    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow">Principles</span><h1>Chess principles, explained.</h1><p>Guidelines distilled by Throiy Chess. They are made for beginner to expert players. Every position is different, so when two principles clash, calculate the actual moves.</p></div>{ctl}<div id="pstart">{st}</div><div id="pall">{h}</div><p class="small" style="margin:24px 0">Principles are guidelines, not laws. Distilled by Throiy Chess.</p></main><script src="/js/principles.js" defer></script>''' + footer()
+    items = [(g["group"], x) for g in PRINCIPLES for x in g["items"] if not x.get("draft")]
+    tc = {}
+    for _, x in items:
+        for t in x.get("tags", []): tc[t] = tc.get(t, 0) + 1
+    topics = "".join(f'<button type="button" class="ptopic" data-tag="{e(t)}">{tic(t)}<span>{e(t)}</span><span class="n">{n}</span></button>' for t, n in sorted(tc.items(), key=lambda a: -a[1]))
+    seg = lambda k, opts: f'<div class="pseg" data-seg="{k}">' + "".join(f'<button type="button" data-v="{v}"{" class=on" if not v else ""}>{t}</button>' for v, t in opts) + '</div>'
+    side = ('<aside class="pside"><div class="pbox"><input id="pq" class="pfind" type="search" placeholder="Search: rook, king, passed pawn" aria-label="Search principles"></div>'
+            f'<div class="pbox"><h4>Topic</h4><button type="button" class="ptopic on" data-tag="">{tic("General")}<span>All topics</span><span class="n">{len(items)}</span></button>{topics}</div>'
+            '<div class="pbox"><h4>Level</h4>' + seg("lv", [("", "Any"), ("beginner", "Beginner"), ("intermediate", "Intermediate"), ("expert", "Expert")]) + '<h4 style="margin-top:14px">Phase</h4>' + seg("ph", [("", "Any"), ("opening", "Opening"), ("middlegame", "Middlegame"), ("endgame", "Endgame")]) + '<h4 style="margin-top:14px">My list</h4>' + seg("st", [("", "All"), ("saved", "Saved"), ("todo", "Not learned"), ("learned", "Learned")]) + '</div></aside>')
+    start = '<div id="pstart"><div class="ph2">Start here</div>' + "".join(prow(x) for _, x in items if x.get("start")) + '</div>'
+    allr = '<div class="ph2" id="pcount">All principles</div><div id="pall">' + "".join(prow(x) for _, x in items) + '</div><button type="button" class="pmore" id="pmore" hidden>Show more</button><p class="small" id="pnone" hidden>Nothing matches. Try fewer words or clear the filters.</p>'
+    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow">Principles</span><h1>Chess principles, explained.</h1><p>Guidelines distilled by Throiy Chess for beginner to expert players. Every position is different, so when two principles clash, calculate the actual moves. Each one has an example from a real game.</p></div><div class="pl">{side}<div>{start}{allr}</div></div></main><script src="/js/principles.js" defer></script>''' + footer()
     return "/principles/", page("/principles/", "Chess principles, explained · Throiy Chess", "Chess principles distilled by Throiy Chess, for beginner to expert players.", body, noindex=True)
 
 def board_svg(fen, flip=False):
@@ -913,16 +989,30 @@ def board_svg(fen, flip=False):
     bg = "".join(f'<rect x="{f*10}" y="{r*10}" width="10" height="10" fill="{"#b58863" if (r+f)%2 else "#f0d9b5"}"/>' for r in range(8) for f in range(8))
     return s.replace('">', '">' + bg, 1) + "</svg>"
 
+
 def principle_page(group, x):
-    rel = [y for g in PRINCIPLES if g["group"] == group for y in g["items"] if y["slug"] != x["slug"] and not y.get("draft")][:4]
-    rl = "".join(f'<li><a href="/principles/{y["slug"]}/">{e(y["title"])}</a></li>' for y in rel)
     flat = [y for g in PRINCIPLES for y in g["items"] if not y.get("draft")]
     ix = [i for i, y in enumerate(flat) if y["slug"] == x["slug"]][0]
-    pn = ((f'<a href="/principles/{flat[ix-1]["slug"]}/">&larr; {e(flat[ix-1]["title"])}</a>') if ix else "<span></span>") + ((f'<a href="/principles/{flat[ix+1]["slug"]}/">{e(flat[ix+1]["title"])} &rarr;</a>') if ix < len(flat) - 1 else "<span></span>")
-    ex_html = "".join(f'<div style="margin:12px 0">{board_svg(q["fen"])}<p class="small" style="margin-top:8px">{e(q["caption"])}</p>' + (f'<p class="small" style="opacity:.7">Source: {e(q["source"])}</p>' if q.get("source") else '') + '</div>' for q in x.get("examples", [])) or (f'<p>{e(x["scenario"])}</p>' if x.get("scenario") else "<p>Worked examples with positions are being added. Until then, see this principle in your own games.</p>")
-    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="mhero"><span class="eyebrow"><a href="/principles/" style="color:inherit">Principles</a> &middot; {e(group)} &middot; {e(x.get("level","").capitalize())} &middot; {e(x.get("phase","").capitalize())}</span><h1>{e(x["title"])}</h1><p>{e(x["text"])}</p></div>
-<div class="mcard" style="margin:20px 0">{''}<h3>Examples</h3>{ex_html}<p style="margin-top:12px"><a class="btn solid" href="/analyze/">Analyze my games free</a></p></div>
-{('<h3>More in ' + e(group) + '</h3><ul>' + rl + '</ul>') if rl else ''}<div style="display:flex;justify-content:space-between;gap:16px;margin:24px 0;flex-wrap:wrap">{pn}</div><p class="small" style="margin:24px 0">Principles are guidelines, not laws. Distilled by Throiy Chess. <a href="/principles/">All principles</a> &middot; <a href="/members/#library">Your library</a></p></main>''' + footer()
+    mine = set(x.get("tags", []))
+    sc = sorted([y for y in flat if y["slug"] != x["slug"]], key=lambda y: (-(len(mine & set(y.get("tags", []))) * 2 + (3 if any(y in g["items"] and g["group"] == group for g in PRINCIPLES) else 0)), flat.index(y)))[:5]
+    rel = "".join(f'<a href="/principles/{y["slug"]}/"><div class="pic">{tic((y.get("tags") or ["General"])[0])}</div><div><b>{e(y["title"])}</b><small>{e(y.get("level","").capitalize())} &middot; {e(y.get("phase","").capitalize())}</small></div></a>' for y in sc)
+    pv, nx = (flat[ix-1] if ix else None), (flat[ix+1] if ix < len(flat) - 1 else None)
+    pn = (f'<a href="/principles/{pv["slug"]}/"><small>&larr; Previous</small>{e(pv["title"])}</a>' if pv else "<span></span>") + (f'<a class="r" href="/principles/{nx["slug"]}/"><small>Next &rarr;</small>{e(nx["title"])}</a>' if nx else "<span></span>")
+    t0 = (x.get("tags") or ["General"])[0]
+    exs = "".join(f'<div class="pex"><div>{board_svg(q["fen"])}</div><div><div class="cap">{e(q["caption"])}</div>' + (f'<div class="src">Source: {e(q["source"])}</div>' if q.get("source") else '') + '</div></div>' for q in x.get("examples", []))
+    scen = ""
+    if x.get("scenario"):
+        sct = x["scenario"]
+        if sct.startswith("Try this:"): sct = sct[len("Try this:"):].strip()
+        scen = f'<div class="ptry"><div class="pic">{tic("Psychology")}</div><div><div class="ph2" style="margin:0 0 6px">Try this</div><p>{e(sct)}</p></div></div>'
+    if not exs and not scen: exs = '<p class="small">Worked examples are being added.</p>'
+    tags = "".join(f'<span class="pill">{e(t)}</span>' for t in x.get("tags", []))
+    side = (f'<aside class="pside"><div class="pbox"><h4>Your list</h4><div class="pactrow"><span>Save for later</span><button type="button" class="pbtn sv" data-mk="s:{x["slug"]}" aria-label="Save for later">{_SV}</button></div>'
+            f'<div class="pactrow"><span>Mark as learned</span><button type="button" class="pbtn ln" data-mk="l:{x["slug"]}" aria-label="Mark as learned">{_LN}</button></div></div>'
+            f'<div class="pbox"><h4>Related principles</h4><div class="prel">{rel}</div></div>'
+            f'<div class="pbox"><h4>Topics</h4><div class="ptags">{tags}</div></div>'
+            '<div class="pbox"><h4>Use it on your games</h4><p class="small" style="margin:0 0 12px">Run your games through the analyzer and see where this principle shows up.</p><a class="btn solid" href="/analyze/">Analyze my games free</a></div></aside>')
+    body = header("Principles") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw"><div class="pp"><div><span class="eyebrow"><a href="/principles/" style="color:inherit">Principles</a> &middot; {e(group)}</span><h1>{e(x["title"])}</h1><div class="ppills">{pills(x)}</div><div class="pidea">{e(x["text"])}</div>{exs}{scen}<div class="pnav">{pn}</div><p class="small">Principles are guidelines, not laws. Distilled by Throiy Chess. <a href="/principles/">All principles</a> &middot; <a href="/members/#library">Your library</a></p></div>{side}</div></main><script src="/js/principles.js" defer></script>''' + footer()
     return f"/principles/{x['slug']}/", page(f"/principles/{x['slug']}/", f"{x['title']} · Chess principle · Throiy Chess", x["text"][:155], body, noindex=True)
 
 def llms_txt():

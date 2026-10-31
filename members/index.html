@@ -256,6 +256,48 @@ svg.mini text{font-size:.82px;text-anchor:middle;font-family:"DejaVu Sans","Sego
 .mgbtn{display:block;width:100%;margin:0 0 10px;background:#fff;color:#1b1b1b;border:0;border-radius:10px;padding:12px;font:inherit;font-weight:700;cursor:pointer}
 @media(max-width:860px){.mapp{grid-template-columns:1fr;gap:14px;padding-top:14px}.mnav{position:static;flex-direction:row;overflow-x:auto;gap:6px;padding-bottom:6px;scrollbar-width:none;margin:0 -16px;padding-inline:16px}
 .mnav::-webkit-scrollbar{display:none}.mnav a{white-space:nowrap;padding:9px 13px;background:var(--panel)}.mnav .mbadge,.mwho{display:none}.mcmp th,.mcmp td{padding:11px 9px;font-size:14px}}
+
+.pl{display:grid;grid-template-columns:270px minmax(0,1fr);gap:28px;align-items:start;margin:22px 0 40px}
+.pside{position:sticky;top:84px;display:grid;gap:16px}
+.pbox{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+.pbox h4{margin:0 0 10px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600}
+.ptopic{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:0;border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:15px;cursor:pointer;text-align:left}
+.ptopic:hover{background:var(--panel2)}.ptopic.on{background:#221d10;color:var(--gold)}
+.ptopic svg,.pic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ptopic .n{margin-left:auto;font-size:13px;color:var(--mute)}
+.pseg{display:flex;flex-wrap:wrap;gap:6px}.pseg button{padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--mute);font:inherit;font-size:13.5px;cursor:pointer}
+.pseg button.on{color:var(--on-gold);background:var(--gold);border-color:var(--gold)}
+.pfind{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-size:16px}
+.prow{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;margin:0 0 10px;transition:border-color .15s,transform .15s}
+.prow:hover{border-color:#4a3f26;transform:translateY(-1px)}
+.pic{width:44px;height:44px;border-radius:12px;background:#221d10;border:1px solid #3a3118;display:grid;place-items:center;color:var(--gold);flex:none}.pic svg{width:22px;height:22px}
+.prow a.pt{color:var(--ink);text-decoration:none;font-weight:600;font-size:17px;display:block;line-height:1.3}.prow a.pt:hover{color:var(--gold)}
+.prow p{margin:3px 0 0;color:var(--mute);font-size:14.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ppills{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.pill{font-size:11.5px;padding:2px 9px;border-radius:99px;border:1px solid var(--line);color:var(--mute);letter-spacing:.02em}
+.pill.lv-beginner{color:#8fd19e;border-color:#2c4a35}.pill.lv-intermediate{color:#e3c073;border-color:#4a3f26}.pill.lv-expert{color:#e58f7c;border-color:#5a2f27}
+.pact{display:flex;gap:6px}
+.pbtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--mute);display:grid;place-items:center;cursor:pointer;padding:0}
+.pbtn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pbtn:hover{color:var(--ink);border-color:#4a3f26}.pbtn.on{color:var(--gold);border-color:var(--gold);background:#221d10}.pbtn.sv.on svg{fill:currentColor}
+.pmore{display:block;margin:14px auto;padding:10px 22px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit;cursor:pointer}
+.ph2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:26px 0 12px;font-weight:600}
+.pp{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:34px;align-items:start;margin:8px 0 40px}
+.pp h1{font-size:clamp(30px,4.6vw,50px);line-height:1.06;margin:10px 0 12px}
+.pidea{border-left:3px solid var(--gold);padding:4px 0 4px 20px;font-size:21px;line-height:1.5;color:var(--ink);margin:20px 0 26px}
+.pex{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;margin:0 0 16px}
+.pex .cap{font-size:16.5px;line-height:1.6}.pex .src{font-size:13px;color:var(--mute);margin-top:10px}
+.ptry{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 24px;display:grid;grid-template-columns:44px 1fr;gap:16px;margin:0 0 16px}.ptry p{margin:0;font-size:17px;line-height:1.6}
+.pnav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:26px 0}
+.pnav a{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;background:var(--panel);font-weight:600;line-height:1.3}.pnav a:hover{border-color:#4a3f26}.pnav small{display:block;color:var(--mute);font-weight:400;font-size:12.5px;margin-bottom:3px}
+.pnav a.r{text-align:right}
+.prel a{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;align-items:center;padding:9px 8px;border-radius:12px;color:var(--ink);text-decoration:none}.prel a:hover{background:var(--panel2)}
+.prel .pic{width:36px;height:36px;border-radius:10px}.prel .pic svg{width:18px;height:18px}
+.prel b{display:block;font-weight:600;font-size:15px;line-height:1.3}.prel small{color:var(--mute);font-size:12.5px}
+.pactrow{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15.5px}.pactrow:last-child{border:0}
+.ptags{display:flex;gap:6px;flex-wrap:wrap}
+@media(max-width:900px){.pl,.pp{grid-template-columns:1fr}.pside{position:static}.pex{grid-template-columns:1fr}.pnav{grid-template-columns:1fr}}
+@media(max-width:520px){.prow{grid-template-columns:40px minmax(0,1fr)}.prow .pact{grid-column:1/-1;justify-content:flex-end}}
 </style><main class="wrap mw">
 <div id="m-login"><div class="mhero"><span class="eyebrow">Members</span><h1>Fix what costs you games.</h1><p>Your own page with your reports, your progress and, soon, training built from your mistakes. Free to join, no password.</p></div>
 <div class="mgrid"><div class="mcard"><span class="mbadge free">Free</span><div class="mico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><h3>Saved reports and progress</h3><p>Every analysis you run while logged in is kept. Watch your pawns lost per move go down over time.</p></div><div class="mcard"><span class="mbadge free">Free</span><div class="mico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 12l7-7"/></svg></div><h3>Know your level</h3><p>See which rating band your play matches and which habit holds you back most.</p></div><div class="mcard"><span class="mbadge pro">Premium</span><div class="mico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><h3>Deeper analysis, any number of games</h3><p>A deeper engine and up to 25 games at once, with your patterns, openings and time pressure over time.</p></div><div class="mcard"><span class="mbadge pro">Premium</span><div class="mico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h5v3a2 2 0 104 0V3h3v6h-3a2 2 0 100 4h3v8H9v-3a2 2 0 10-4 0v3H3v-8h3a2 2 0 100-4H3V3z" transform="scale(.9) translate(1.3 1.3)"/></svg></div><h3>Puzzles made from your mistakes</h3><p>Pattern recognition wins games. Every costly mistake becomes a puzzle you repeat until it sticks.</p></div><div class="mcard"><span class="mbadge pro">Premium</span><div class="mico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2zM4 21V5M8 7h7"/></svg></div><h3>Courses by rating band</h3><p>Clear lessons and exercises, ordered so you always know the next step. Like a coach in your pocket.</p></div><div class="mcard"><span class="mbadge free">Free</span><div class="mico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg></div><h3>First in line</h3><p>Waitlist members hear first and get their first in-depth analysis free.</p></div></div>
