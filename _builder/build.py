@@ -1107,6 +1107,8 @@ def build():
     d = os.environ.get("OUT_DIR") or os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True) if not os.environ.get("OUT_DIR") else None
     fetch_thumbs(SHORTS + VIDEOS)
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
+    try: os.remove(os.path.join(d, "data", "principles.json"))  # member-only: served from Supabase (site_content) behind login
+    except OSError: pass
     pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [principles_index()] + [principle_page(g, x) for g, x in _pitems()] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), members_page(), improve_page(), terms()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
@@ -1115,7 +1117,7 @@ def build():
     today = datetime.date.today().isoformat()
     open(os.path.join(d, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{today}</lastmod></url>\n" for p, _ in pages if p not in ("/members/", "/admin/") and not p.startswith("/principles/")) + "</urlset>\n")
-    open(os.path.join(d, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /m/\nDisallow: /members/\nDisallow: /admin/\n\nSitemap: {SITE}/sitemap.xml\n")
+    open(os.path.join(d, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /m/\nDisallow: /members/\n\nSitemap: {SITE}/sitemap.xml\n")
     open(os.path.join(d, "llms.txt"), "w").write(llms_txt())
     open(os.path.join(d, "CNAME"), "w").write(DOMAIN + "\n"); open(os.path.join(d, ".nojekyll"), "w").write("")
     print("built", len(pages), "pages")
