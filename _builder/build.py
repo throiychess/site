@@ -152,7 +152,7 @@ nav.links a.support{color:var(--gold)}
 .promo{}[data-in="1"] .promo{display:none}.in-only{display:none!important}[data-in="1"] .in-only{display:inline-flex!important}[data-in="1"] .out-only{display:none!important}
 .hslider{position:relative;border-bottom:1px solid var(--line);background:radial-gradient(1200px 400px at 80% 0,rgba(227,192,115,.09),transparent)}
 .hs-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth}.hs-track::-webkit-scrollbar{display:none}
-.hs{flex:0 0 100%;scroll-snap-align:start;min-width:0}.hs-in{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-block:52px 70px;min-height:470px}.hs-in>*{min-width:0}
+.hs{flex:0 0 100%;scroll-snap-align:start;min-width:0}.hs-in{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-block:44px 66px;min-height:420px}.hs-in>*{min-width:0}
 .hs .copy{display:grid;gap:20px;justify-items:start}.hs h1,.hs h2.big{font-size:clamp(34px,5vw,58px);line-height:1.02;margin:0;text-transform:uppercase;letter-spacing:-.02em}.hs h1 em,.hs h2.big em{color:var(--gold);font-style:normal}
 .hs .lead{font-size:18px;color:var(--mute);max-width:52ch;margin:0}.hs-dots{position:absolute;left:0;right:0;bottom:22px;display:flex;gap:8px;justify-content:center;z-index:3}
 .hs-dots button{width:34px;height:6px;border-radius:3px;border:0;background:var(--line);cursor:pointer;padding:0}.hs-dots button.on{background:var(--gold)}
@@ -378,6 +378,7 @@ def footer(band=True, nl=True):
 
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
 SCRIPT = """<script>
+try{if(top!==self)top.location=self.location}catch(e){}
 function gcEv(n){try{if(window.goatcounter&&goatcounter.count)goatcounter.count({path:n,title:n,event:true})}catch(e){}}
 document.addEventListener("click",function(ev){var d=ev.target.closest("[data-ev]");if(d)gcEv(d.dataset.ev);var a=ev.target.closest("a[href]");if(a){if(a.host&&a.host!==location.host)gcEv("out-"+a.host.replace(/^www\\./,""));else if(a.pathname==="/support/")gcEv("click-support");}var y=ev.target.closest("button[data-yt]");if(y)gcEv("play-"+y.dataset.yt);var sh=ev.target.closest(".share button");if(sh)gcEv("share-"+(sh.dataset.app||(sh.classList.contains("sh-native")?"native":"copy")))});
 window.addEventListener("blur",function(){var f=document.activeElement;if(f&&f.tagName==="IFRAME"&&f.src.indexOf("ko-fi.com")>-1&&!window.kfC){window.kfC=1;gcEv("kofi-panel-click")}});
