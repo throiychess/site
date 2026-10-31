@@ -109,8 +109,22 @@
   function allItems() { var o = []; LIB.forEach(function (g) { g.items.forEach(function (x) { if (!x.draft) { x._g = g.group; o.push(x); } }); }); return o; }
   var MARK = (function () { try { return JSON.parse(localStorage.getItem("tc_marks") || "{}"); } catch (e) { return {}; } })();
   function saveMarks() { try { localStorage.setItem("tc_marks", JSON.stringify(MARK)); } catch (e) {} }
+  var TAGIC = {
+    "Centre": '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>', "Development": '<path d="M4 20h4v-5h4v-5h4V5h4"/>',
+    "King safety": '<path d="M4 18h16M5 18L4 8l5 4 3-6 3 6 5-4-1 10"/>', "Tactics": '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+    "Attack": '<path d="M5 19L19 5M11 5h8v8"/>', "Defence": '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+    "Pawns": '<circle cx="12" cy="7" r="3"/><path d="M9 21c0-4 1-7 3-9 2 2 3 5 3 9z"/>', "Pieces": '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
+    "Space and plans": '<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/>', "Trades": '<path d="M4 8h14l-3-3M20 16H6l3 3"/>', "Endgame technique": '<path d="M5 21V4h12l-2 4 2 4H5"/>',
+    "Psychology": '<circle cx="12" cy="9" r="5"/><path d="M9 21c0-3 1-4 3-5 2 1 3 2 3 5"/>', "Opening systems": '<path d="M4 4h6a3 3 0 013 3v13a2 2 0 00-2-2H4zM20 4h-5a2 2 0 00-2 2"/>',
+    "General": '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>'
+  };
+  function tic(t) { return "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\">" + (TAGIC[t] || TAGIC.General) + "</svg>"; }
+  var SVG_SV = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M6 3h12v18l-6-4-6 4z\"/></svg>", SVG_LN = "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M8 12l3 3 5-6\"/></svg>";
+  function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ""; }
   function pcard(x) {
-    return "<div class=\"mplan\" style=\"cursor:default\"><span><b>" + esc(x.title) + "</b> <span class=\"small\">" + esc(LVL[x.level] || "") + " &middot; " + esc(PHS[x.phase] || "") + "</span><br><span class=\"small\" style=\"opacity:.75\">" + (x.tags || []).map(function (t) { return "#" + esc(t); }).join(" &nbsp; ") + "</span><br>" + esc(x.text) + "<br><a class=\"small\" href=\"/principles/" + esc(x.slug) + "/\">Explanation and examples</a> &nbsp; <button type=\"button\" class=\"btn\" data-mk=\"s:" + esc(x.slug) + "\" style=\"padding:3px 10px\">" + ((MARK[x.slug] || "").indexOf("s") >= 0 ? "&#9733; Saved" : "&#9734; Save") + "</button> <button type=\"button\" class=\"btn\" data-mk=\"l:" + esc(x.slug) + "\" style=\"padding:3px 10px\">" + ((MARK[x.slug] || "").indexOf("l") >= 0 ? "&#10003; Learned" : "Mark as learned") + "</button></span></div>";
+    var m = MARK[x.slug] || "", t0 = (x.tags || ["General"])[0];
+    return "<div class=\"prow\"><div class=\"pic\">" + tic(t0) + "</div><div><a class=\"pt\" href=\"/principles/" + esc(x.slug) + "/\">" + esc(x.title) + "</a><p>" + esc(x.text) + "</p><div class=\"ppills\"><span class=\"pill lv-" + esc(x.level) + "\">" + esc(cap(x.level)) + "</span><span class=\"pill\">" + esc(cap(x.phase)) + "</span></div></div>" +
+      "<div class=\"pact\"><button type=\"button\" class=\"pbtn sv" + (m.indexOf("s") >= 0 ? " on" : "") + "\" data-mk=\"s:" + esc(x.slug) + "\" title=\"Save for later\" aria-label=\"Save for later\">" + SVG_SV + "</button><button type=\"button\" class=\"pbtn ln" + (m.indexOf("l") >= 0 ? " on" : "") + "\" data-mk=\"l:" + esc(x.slug) + "\" title=\"Mark as learned\" aria-label=\"Mark as learned\">" + SVG_LN + "</button></div></div>";
   }
   function selected(items) {
     var c = {}, any = false; rows.slice(0, 3).forEach(function (r) { var k = r.report && r.report.cats; if (k) { any = true; Object.keys(k).forEach(function (x) { c[x] = (c[x] || 0) + k[x]; }); } });
@@ -145,7 +159,7 @@
     var c = $("#lib-clear"); if (c) c.onclick = function (ev) { ev.preventDefault(); PF = { q: "", lv: "all", ph: "all", tag: "all", st: "all", pg: 0 }; drawPrinc(); };
     box_tagsync();
   }
-  function box_tagsync() { document.querySelectorAll("#m-princ [data-tag]").forEach(function (b) { b.className = "btn" + (PF.tag === b.getAttribute("data-tag") ? " solid" : ""); }); }
+  function box_tagsync() { document.querySelectorAll("#m-princ [data-tag]").forEach(function (b) { b.classList.toggle("on", PF.tag === b.getAttribute("data-tag")); }); }
   function progress() { var n = allItems().length, k = allItems().filter(function (x) { return (MARK[x.slug] || "").indexOf("l") >= 0; }).length, el = $("#lib-prog"); if (el) el.textContent = k + " of " + n + " principles marked as learned"; }
   function drawPrinc() {
     var box = $("#m-princ"); if (!box) return;
@@ -155,7 +169,7 @@
       selected(items) +
       "<h3 id=\"lib-top\" style=\"margin-top:28px\">Browse the library</h3><p class=\"small\" id=\"lib-prog\"></p><p class=\"small\"><b>Guidelines, not laws.</b> They are made for beginner to expert players, every position is different and principles can point in different directions. When they clash, calculate the actual moves. Distilled by Throiy Chess from coaching insights, Stockfish checks, classic chess books and our own experience.</p>" +
       "<div style=\"display:flex;gap:8px;flex-wrap:wrap;margin:12px 0\"><input id=\"lib-q\" type=\"search\" placeholder=\"Search principles (for example: rook, king, passed pawn)\" value=\"" + esc(PF.q) + "\" style=\"flex:1 1 240px;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid var(--line, #3a3a3a);background:transparent;color:inherit;font:inherit\"><select id=\"lib-lv\" style=\"padding:10px;border-radius:10px;background:transparent;color:inherit;border:1px solid var(--line, #3a3a3a);font:inherit\">" + opts(LVL, PF.lv) + "</select><select id=\"lib-ph\" style=\"padding:10px;border-radius:10px;background:transparent;color:inherit;border:1px solid var(--line, #3a3a3a);font:inherit\">" + opts(PHS, PF.ph) + "</select><select id=\"lib-st\" style=\"padding:10px;border-radius:10px;background:transparent;color:inherit;border:1px solid var(--line, #3a3a3a);font:inherit\"><option value=\"all\">All</option><option value=\"saved\"" + (PF.st === "saved" ? " selected" : "") + ">Saved</option><option value=\"todo\"" + (PF.st === "todo" ? " selected" : "") + ">Not learned yet</option><option value=\"learned\"" + (PF.st === "learned" ? " selected" : "") + ">Learned</option></select></div>" +
-      "<div style=\"margin:6px 0\"><button type=\"button\" class=\"btn\" data-tag=\"all\" style=\"padding:5px 11px;margin:0 6px 6px 0\">All topics</button>" + tags.map(function (t) { return "<button type=\"button\" class=\"btn\" data-tag=\"" + esc(t) + "\" style=\"padding:5px 11px;margin:0 6px 6px 0\">" + esc(t) + " (" + tc[t] + ")</button>"; }).join("") + "</div><div id=\"lib-list\"></div>";
+      "<div style=\"margin:8px 0 4px;display:flex;flex-wrap:wrap;gap:6px\"><button type=\"button\" class=\"ptopic\" data-tag=\"all\" style=\"width:auto;border:1px solid var(--line)\">" + tic("General") + "All topics</button>" + tags.map(function (t) { return "<button type=\"button\" class=\"ptopic\" data-tag=\"" + esc(t) + "\" style=\"width:auto;border:1px solid var(--line)\">" + tic(t) + esc(t) + " <span class=\"n\">" + tc[t] + "</span></button>"; }).join("") + "</div><div id=\"lib-list\"></div>";
     var q = $("#lib-q"); q.oninput = function () { PF.q = q.value; PF.pg = 0; drawList(); };
     $("#lib-lv").onchange = function (ev) { PF.lv = ev.target.value; PF.pg = 0; drawList(); };
     $("#lib-st").onchange = function (ev) { PF.st = ev.target.value; PF.pg = 0; drawList(); };
