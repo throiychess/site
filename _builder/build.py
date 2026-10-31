@@ -286,7 +286,7 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             f'<meta property="og:description" content="{e(desc)}"><meta property="og:url" content="{url}"><meta property="og:image" content="{SITE}{og_image}">'
             f'<meta name="twitter:card" content="summary_large_image">'
             f'<link rel="preload" href="/fonts/Inter-Black.woff" as="font" type="font/woff" crossorigin>'
-            + ('<meta name="robots" content="noindex,nofollow">' if path == '/members/' else ('<meta name="robots" content="noindex,follow">' if noindex else ''))
+            + ('<meta name="robots" content="noindex,nofollow">' if path in ('/members/', '/admin/') else ('<meta name="robots" content="noindex,follow">' if noindex else ''))
             + f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}<script src="/js/fb.js" defer></script></body></html>')
 
 def promo_bar(active):
@@ -843,6 +843,12 @@ _CMP = "".join(f"<tr><td>{a}</td><td>{x}</td><td>{y}</td></tr>" for a, x, y in [
   ("Weekly plan: your top 3 leaks", "&ndash;", "&#10003;"), ("Puzzles from your own mistakes", "&ndash;", "&#10003;"), ("Opening trainer from your own games", "&ndash;", "&#10003;"), ("Pro engine (full Stockfish, desktop)", "&ndash;", "&#10003;"), ("Courses by rating band", "&ndash;", "Soon")])
 _CMPT = '<table class="mcmp"><thead><tr><th>What you get</th><th>Free</th><th>Premium</th></tr></thead><tbody>' + _CMP + '</tbody></table>'
 
+def admin_page():
+    css = """<style>.adm{padding:28px 0 70px}.adm h1{margin:0 0 6px}.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:18px 0}.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:grid;gap:2px}.kpi small{color:var(--mute);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.kpi b{font-size:30px}.kpi span{color:var(--mute);font-size:13px}.acard{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;margin:0 0 14px}.acard h3{margin:0 0 10px;font-size:16px}.two{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}.ch{width:100%;height:auto}.lk{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:14.5px}.mut{color:var(--mute)}.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}.tabs{display:flex;gap:6px;margin-right:auto}.tabs button,.gb{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:14px;cursor:pointer;text-decoration:none}.tabs button.on{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}.bar input{background:var(--panel2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:8px 12px;min-width:180px}.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}th{text-align:left;color:var(--mute);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}.pl{background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:3px 10px;cursor:pointer}.pl.on{border-color:var(--gold);color:var(--gold)}@media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}</style>"""
+    body = header("") + css + '<main class="wrap adm"><span class="eyebrow">Admin</span><h1>Throiy Chess dashboard</h1><p class="mut" style="color:var(--mute)">Members, reports and feedback from Supabase. Only visible to admin accounts.</p><div id="adm"><div class="acard">Loading&hellip;</div></div></main>' + SB_SCRIPTS + '<script src="/js/admin.js" defer></script>' + footer(band=False, nl=False)
+    return "/admin/", page("/admin/", "Admin · Throiy Chess", "Admin dashboard.", body)
+
+
 def members_page():
     body = header("Members") + f'''<style>{AZ_CSS}{MEM_CSS}</style><main class="wrap mw">
 <div id="m-login"><div class="mhero"><span class="eyebrow">Members</span><h1>Fix what costs you games.</h1><p>Your own page with your reports, your progress and, soon, training built from your mistakes. Free to join, no password.</p></div>
@@ -1101,15 +1107,15 @@ def build():
     d = os.environ.get("OUT_DIR") or os.path.join(ROOT, "dist"); shutil.rmtree(d, ignore_errors=True) if not os.environ.get("OUT_DIR") else None
     fetch_thumbs(SHORTS + VIDEOS)
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
-    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [principles_index()] + [principle_page(g, x) for g, x in _pitems()] + [support_page(), contact(), privacy(), free_page(), analyze_page(), members_page(), improve_page(), terms()]
+    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [principles_index()] + [principle_page(g, x) for g, x in _pitems()] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), members_page(), improve_page(), terms()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
     open(os.path.join(d, "404.html"), "w").write(notfound())
     today = datetime.date.today().isoformat()
     open(os.path.join(d, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{today}</lastmod></url>\n" for p, _ in pages if p != "/members/" and not p.startswith("/principles/")) + "</urlset>\n")
-    open(os.path.join(d, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /m/\nDisallow: /members/\n\nSitemap: {SITE}/sitemap.xml\n")
+        + "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{today}</lastmod></url>\n" for p, _ in pages if p not in ("/members/", "/admin/") and not p.startswith("/principles/")) + "</urlset>\n")
+    open(os.path.join(d, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /m/\nDisallow: /members/\nDisallow: /admin/\n\nSitemap: {SITE}/sitemap.xml\n")
     open(os.path.join(d, "llms.txt"), "w").write(llms_txt())
     open(os.path.join(d, "CNAME"), "w").write(DOMAIN + "\n"); open(os.path.join(d, ".nojekyll"), "w").write("")
     print("built", len(pages), "pages")
