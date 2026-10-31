@@ -1405,7 +1405,8 @@
      "Development",
      "Tactics",
      "Pieces"
-    ]
+    ],
+    "scenario": "Try this: before you play a developing move, look at the lines it blocks. A knight on d2 blocks the c1 bishop, a bishop on e2 can block the f1 rook's path to the centre, and a queen on d2 can block both rooks. If a piece blocks another, ask whether a different square (or a different order) lets both work."
    },
    {
     "slug": "target-weak-pawns-before-risky-king-attacks",
@@ -1614,6 +1615,13 @@
      "Attack",
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "r1bqkb1r/pppp1pp1/2n5/1B2p2p/4P1n1/5N1P/PPPP1PP1/RNBQ1RK1 w kq - 0 6",
+      "caption": "White to move after 5...h5 (the Fishing Pole line of the Ruy Lopez). Taking the 'free' knight with 6.hxg4? hxg4 opens the h-file at White's king and Stockfish swings from about +2.0 for White to about -2.9. Calm moves such as 6.c3 or 6.d4 keep White clearly better.",
+      "source": "Ruy Lopez, Fishing Pole variation (opening theory); positions checked with Stockfish 17.1 at depth 18"
+     }
     ]
    },
    {
@@ -1860,7 +1868,8 @@
      "King safety",
      "Pawns",
      "Pieces"
-    ]
+    ],
+    "scenario": "Try this: before you push a pawn in front of your castled king (f, g or h pawn), ask three questions. Which squares can the opponent's pieces now use? Can my pieces still cover them? Is the material or tempo I gain worth more than that? If you cannot answer yes to the last two, leave the pawns where they are."
    }
   ]
  },
