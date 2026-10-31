@@ -148,7 +148,22 @@ a.card:hover .cardimg{filter:brightness(1.06)}
 nav.links a.support{color:var(--gold)}
 .supportbar{border:1px solid var(--line);padding:22px 24px;display:flex;gap:14px 24px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:8px 0 48px}
 .supportbar p{margin:0;color:var(--mute)}.supportbar strong{color:var(--ink)}
-.kofi{width:100%;max-width:460px;height:712px;border:0;background:#f9f9f9;display:block}
+.tipcard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px;display:grid;gap:14px}.tipcard h3{margin:0;font-size:24px}.tipcard p{margin:0;color:var(--mute)}.tipcard .btn{justify-content:center;padding:14px 18px;font-size:16px}
+.promo{}[data-in="1"] .promo{display:none}.in-only{display:none!important}[data-in="1"] .in-only{display:inline-flex!important}[data-in="1"] .out-only{display:none!important}
+.hslider{position:relative;border-bottom:1px solid var(--line);background:radial-gradient(1200px 400px at 80% 0,rgba(227,192,115,.09),transparent)}
+.hs-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;scroll-behavior:smooth}.hs-track::-webkit-scrollbar{display:none}
+.hs{flex:0 0 100%;scroll-snap-align:start;min-width:0}.hs-in{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-block:52px 70px;min-height:470px}.hs-in>*{min-width:0}
+.hs .copy{display:grid;gap:20px;justify-items:start}.hs h1,.hs h2.big{font-size:clamp(34px,5vw,58px);line-height:1.02;margin:0;text-transform:uppercase;letter-spacing:-.02em}.hs h1 em,.hs h2.big em{color:var(--gold);font-style:normal}
+.hs .lead{font-size:18px;color:var(--mute);max-width:52ch;margin:0}.hs-dots{position:absolute;left:0;right:0;bottom:22px;display:flex;gap:8px;justify-content:center;z-index:3}
+.hs-dots button{width:34px;height:6px;border-radius:3px;border:0;background:var(--line);cursor:pointer;padding:0}.hs-dots button.on{background:var(--gold)}
+.hs-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;display:grid;gap:10px;box-shadow:0 20px 60px rgba(0,0,0,.35)}.hs-card .hd{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.hs-row{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:10px 12px}.hs-row .ic{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;background:#14110b}.hs-row svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hs-row b{display:block;font-size:15.5px}.hs-row small{color:var(--mute);font-size:13px}.hs-row .n{font-weight:800;color:var(--gold);font-size:18px}
+.paths{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-block:34px 8px}.path{display:grid;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;text-decoration:none;color:inherit;transition:border-color .15s,transform .15s}.path:hover{border-color:var(--gold);transform:translateY(-2px)}
+.path .ic{width:42px;height:42px;border-radius:11px;background:#14110b;border:1px solid var(--line);display:grid;place-items:center}.path svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.path b{font-size:17px}.path span{color:var(--mute);font-size:14px;line-height:1.45}
+.mband{display:grid;grid-template-columns:1fr 1.3fr;gap:30px;align-items:center;background:linear-gradient(135deg,#1d1a13,#15130e);border:1px solid #4a3d1c;border-radius:22px;padding:30px}.mband h2{margin:6px 0 10px}.mband ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}.mband li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center}.mband li .ic{width:40px;height:40px;border-radius:10px;background:#14110b;border:1px solid var(--line);display:grid;place-items:center}.mband li svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.mband li span{color:var(--mute);font-size:14.5px}.mband li b{display:block;font-size:16px}
+@media(max-width:900px){.hs-in{grid-template-columns:1fr;gap:26px;padding-block:34px 64px;min-height:0}.paths{grid-template-columns:1fr 1fr}.mband{grid-template-columns:1fr}}
+@media(max-width:520px){.paths{grid-template-columns:1fr}}
 .newsletter{display:grid;grid-template-columns:1fr 1fr;gap:18px 32px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:40px 0 0}
 .newsletter p{margin:6px 0 0;color:var(--mute)}
 form.nl{display:flex;flex-wrap:wrap;gap:10px}.nl input[type=email]{box-sizing:border-box;min-width:0}.newsletter>*{min-width:0}form.nl input[type=email]{flex:1 1 220px;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:inherit;font:inherit}
@@ -341,7 +356,7 @@ def header(active=""):
             + _nav_html(active) + '</nav></div></header>') + NAV_JS
 
 def support_bar():
-    return ('<div class="wrap"><div class="supportbar"><p><strong>Enjoying the lessons?</strong> They stay free. A small tip keeps new traps coming every day.</p>'
+    return ('<div class="wrap"><div class="supportbar"><p><strong>Enjoying the lessons?</strong> They stay free. A small tip keeps new lessons coming.</p>'
             '<a class="btn solid" href="/support/">Support Throiy Chess</a></div></div>') if DONATE_URL else ""
 
 def newsletter():
@@ -358,7 +373,7 @@ def newsletter():
 
 def footer(band=True, nl=True):
     ext = " ".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LINKS)
-    return ((newsletter() if nl else "") + (support_bar() if band else "") + f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Quick chess lessons, every day</span>'
+    return ((newsletter() if nl else "") + (support_bar() if band else "") + f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Chess lessons, traps and tools</span>'
             f'<nav aria-label="Footer">{ext}<a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav></div></footer>')
 
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
@@ -474,6 +489,13 @@ def traps_index():
 <div class="grid">{"".join(trap_card(t) for t in TRAPS)}</div><div style="height:56px"></div></main>''' + footer()
     return "/traps/", page("/traps/", "Trap library · Throiy Chess", f"{len(TRAPS)} chess opening traps explained in plain words, with the fix for each.", body)
 
+SLIDER_JS = '''<script>(function(){var t=document.getElementById("hsT"),d=[].slice.call(document.querySelectorAll(".hs-dots button")),i=0,stop=matchMedia("(prefers-reduced-motion:reduce)").matches;
+function go(n){i=(n+d.length)%d.length;t.scrollTo({left:i*t.clientWidth,behavior:"smooth"})}
+d.forEach(function(b,k){b.addEventListener("click",function(){stop=true;go(k)})});
+t.addEventListener("scroll",function(){var k=Math.round(t.scrollLeft/t.clientWidth);d.forEach(function(b,x){b.classList.toggle("on",x===k)});i=k},{passive:true});
+["pointerdown","focusin","mouseenter"].forEach(function(e){t.addEventListener(e,function(){stop=true})});
+setInterval(function(){if(!stop&&!document.hidden)go(i+1)},7000)})()</script>'''
+
 def home():
     cards = "".join(trap_card(t) for t in TRAPS[:HOME_TRAPS])
     for n, o, h, sid in OTHER:
@@ -481,31 +503,57 @@ def home():
         cards += (f'<a class="card soon" href="{href}" target="_blank" rel="noopener"><div class="meta"><span class="label">{e(o)}</span></div>'
                   f'<h3>{e(n)}</h3><p>{e(h)}</p><span class="go">Watch the Short →</span></a>')
     latest = "".join(short_card(s) for s in SHORTS[:4])
+    _flat = [y for g in PRINCIPLES for y in g["items"] if not y.get("draft")]
+    n_pr = f"{len(_flat) // 10 * 10}+"
+    mini = "".join(f'<a class="hs-row" href="/principles/{y["slug"]}/" style="text-decoration:none;color:inherit"><span class="ic">{tic((y.get("tags") or ["General"])[0])}</span><div><b>{e(y["title"])}</b><small>{e(y["level"].capitalize())} &middot; {e(y["phase"].capitalize())}</small></div><span class="n">&rarr;</span></a>' for y in [z for z in _flat if z.get("start")][:3])
+    _P = [("Tactics", "/analyze/", "Analyze my games", "Free. Find the leaks that cost you games."), ("Opening systems", "/principles/", "Principle library", "Guidelines for every phase, with real games."), ("Attack", "/traps/", "Trap library", "Learn the trap, then learn the fix."), ("Pieces", "/shorts/", "Shorts and top games", "One lesson in under a minute.")]
+    paths = "".join(f'<a class="path" href="{h}"><span class="ic">{tic(t)}</span><b>{n}</b><span>{d}</span></a>' for t, h, n, d in _P)
     _top = [s for s in SHORTS if s.get("topic") == "Top game"]
     top_cards = (f'<div class="sechead" style="margin-top:28px"><div><span class="eyebrow">Top games</span><h2>The best moments from elite chess.</h2></div><a class="btn" href="/shorts/">All Shorts →</a></div>'
                  f'<div class="shorts">{"".join(short_card(s) for s in _top[:4])}</div>') if _top else ""
     body = header() + f'''<main>
-<div class="wrap hero"><div class="copy"><span class="eyebrow">Throiy Chess · Lessons &amp; Games</span>
-<h1>Stop falling for <em>chess traps.</em></h1>
+<section class="hslider" aria-roledescription="carousel" aria-label="Highlights"><div class="hs-track" id="hsT">
+<article class="hs" aria-roledescription="slide" aria-label="1 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Free for every player</span>
+<h1>Find out <em>why you lose</em> games.</h1>
+<p class="lead">Enter your Chess.com or Lichess name. Your games are analyzed in your own browser and you see the three leaks that cost you the most.</p>
+<div class="btns"><a class="btn solid" href="/analyze/">Analyze my games free</a><a class="btn out-only" href="/members/?utm_source=home">Join free</a><a class="btn in-only" href="/members/">Open my dashboard</a></div></div>
+<div class="hs-card"><span class="hd">Example report</span>
+<div class="hs-row"><span class="ic">{tic("Defence")}</span><div><b>Pieces left hanging</b><small>Check what is attacked before you move</small></div><span class="n">11</span></div>
+<div class="hs-row"><span class="ic">{tic("Tactics")}</span><div><b>Missed tactics</b><small>A fork and a pin you could have played</small></div><span class="n">7</span></div>
+<div class="hs-row"><span class="ic">{tic("King safety")}</span><div><b>King safety</b><small>Castle early, keep the pawns in front</small></div><span class="n">5</span></div></div></div></article>
+<article class="hs" aria-roledescription="slide" aria-label="2 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Principle library</span>
+<h2 class="big">{n_pr} chess principles, <em>each with a real game.</em></h2>
+<p class="lead">Browse by topic and level. Every principle has a playable board with live analysis. Members get a selection matched to their own games.</p>
+<div class="btns"><a class="btn solid" href="/principles/">Browse the principles</a><a class="btn in-only" href="/members/#library">Open my library</a></div></div>
+<div class="hs-card"><span class="hd">Start here</span>{mini}</div></div></article>
+<article class="hs" aria-roledescription="slide" aria-label="3 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Lessons &amp; games</span>
+<h2 class="big">Stop falling for <em>chess traps.</em></h2>
 <p class="lead">Opening traps, mating patterns and the best moments from top games. Each one explained in under a minute.</p>
 <div class="btns"><a class="btn solid" href="/shorts/">Watch the Shorts</a><a class="btn" href="#traps">Browse the traps</a></div></div>
-<div class="ticks"><img src="/img/fishing-pole-board.jpg" width="720" height="720" alt="Final position of the Fishing Pole Trap: Black's queen mates on h1"><i class="t1"></i><i class="t2"></i></div></div>
+<div class="ticks"><img src="/img/fishing-pole-board.jpg" width="720" height="720" alt="Final position of the Fishing Pole Trap: Black's queen mates on h1"><i class="t1"></i><i class="t2"></i></div></div></article>
+</div><div class="hs-dots"><button type="button" class="on" aria-label="Slide 1"></button><button type="button" aria-label="Slide 2"></button><button type="button" aria-label="Slide 3"></button></div></section>
+{SLIDER_JS}
+<div class="wrap paths">{paths}</div>
 <section id="shorts"><div class="wrap"><div class="sechead"><div><span class="eyebrow">Latest Shorts</span><h2>One lesson a day, under a minute.</h2></div>
 <a class="btn" href="/shorts/">All Shorts →</a></div><div class="shorts">{latest}</div></div></section>
 <section id="traps"><div class="wrap"><div class="sechead"><div><span class="eyebrow">Trap library</span><h2>Learn the trap. Then learn the fix.</h2>
 <p>Every trap ends with the mate. Every lesson ends with how to avoid it. Step through the moves on the board.</p></div>
 <a class="btn" href="/traps/">All {len(TRAPS)} traps →</a></div>
 <div class="grid">{cards}</div></div></section>
-<section id="members-band"><div class="wrap"><div class="newsletter" style="margin:0;border-color:#4a3d1c"><div><span class="eyebrow">Members</span><h2 style="margin:6px 0 8px">Fix what costs you games.</h2><p>Analyze your own games for free, save every report and watch your progress. Premium adds deeper analysis and puzzles built from your own mistakes.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end"><a class="btn solid" href="/members/?utm_source=home" data-ev="home-members">Join free</a><a class="btn" href="/improve/">See Free vs Premium</a></div></div></div></section>
+<section id="members-band"><div class="wrap"><div class="mband"><div><span class="eyebrow">Members</span><h2>Fix what costs you games.</h2><p style="color:var(--mute)">Free to join. Analyze your games, save every report and follow your progress. Premium adds a weekly plan, puzzles from your own mistakes and an opening trainer.</p>
+<div class="btns" style="margin-top:16px"><a class="btn solid out-only" href="/members/?utm_source=home" data-ev="home-members">Join free</a><a class="btn solid in-only" href="/members/">Open my dashboard</a><a class="btn" href="/improve/">Free vs Premium</a></div></div>
+<ul><li><span class="ic">{tic("General")}</span><div><b>Your top 3 leaks</b><span>The mistakes that cost you the most, found in your own games.</span></div></li>
+<li><span class="ic">{tic("Opening systems")}</span><div><b>A library matched to you</b><span>Principles selected from your reports, each with a real game to step through.</span></div></li>
+<li><span class="ic">{tic("Tactics")}</span><div><b>Puzzles from your mistakes</b><span>Train the exact positions where you went wrong.</span></div></li></ul></div></div></section>
 <section id="top-games"><div class="wrap"><div class="breaking"><span class="live">Top games</span><div><h3>Clutch Chess: Champions Showdown · 27–29 October</h3>
 <p>Nakamura, Caruana, Praggnanandhaa and Sindarov play rapid chess. We break down the sharpest moment of each day in a Short.</p></div></div>{top_cards}</div></section>
 <section id="about"><div class="wrap about"><img src="/img/avatar-thumbs_up.png" width="220" height="220" alt="Throiy, illustrated, giving a thumbs up">
-<div><span class="eyebrow">About</span><h2>Hi, I'm Throiy.</h2><p>I'm a chess player sharing what I wish I'd known sooner. Short, clear lessons you can use in your next game. A new one every day on YouTube, TikTok, Instagram and Facebook.</p>
+<div><span class="eyebrow">About</span><h2>Hi, I'm Throiy.</h2><p>I'm a chess player sharing what I wish I'd known sooner. Short, clear lessons you can use in your next game. New ones every week on YouTube, TikTok, Instagram and Facebook.</p>
 <div class="btns" style="margin-top:18px">''' + "".join(f'<a class="btn" href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LINKS) + \
         ('<a class="btn solid" href="/support/">Support the channel</a>' if DONATE_URL else "") + '''</div></div></div></section>
 </main>''' + footer()
     site_ld = {"@context": "https://schema.org", "@type": "WebSite", "name": NAME, "url": SITE, "description": TAGLINE}
-    return page("/", "Throiy Chess · Chess traps and lessons, explained fast", TAGLINE + " A new chess lesson every day.", body,
+    return page("/", "Throiy Chess · Chess traps and lessons, explained fast", TAGLINE + " Free game analysis and a chess principles library.", body,
                 [ORG, site_ld] + [v for v in map(video_ld, SHORTS[:4]) if v])
 
 def shorts_pages():
@@ -649,13 +697,12 @@ def support_page():
 <h2>Why support?</h2>
 <p>Each lesson takes hours: finding the trap, checking every move with a chess engine, writing and recording the voice-over, and building the animation on our own board. Tips pay for the tools and hosting, and buy time to make more.</p>
 <h2>How it works</h2>
-<p>Choose an amount in the panel and pay with card or PayPal. The payment runs through Ko-fi, so we never see your payment details. A one-off tip is enough; no account needed.</p>
-<p>Prefer the full page? <a href="{DONATE_URL}" target="_blank" rel="noopener">Open Ko-fi in a new tab</a>.</p>
+<p>The payment runs through Ko-fi with card or PayPal, so we never see your payment details. A one-off tip is enough; no account needed.</p>
 <h2>Free ways to help</h2>
 <p>Subscribe on <a href="{LINKS[0][1]}" target="_blank" rel="noopener">YouTube</a>, share a Short with a chess friend, or comment with the trap you want explained next. It all helps the channel grow.</p>
 <h2>Coming later</h2>
 <p>Memberships with extra lessons and courses. <a href="/contact/">Tell us</a> what you would want in them.</p>
-</div><aside><iframe class="kofi" src="{DONATE_URL}/?hidefeed=true&amp;widget=true&amp;embed=true&amp;preview=true" title="Support Throiy Chess on Ko-fi" loading="lazy"></iframe></aside></div></main>''' + footer(band=False)
+</div><aside><div class="tipcard"><span class="eyebrow">Tip jar</span><h3>Buy Throiy a coffee</h3><p>Every tip pays for tools and hosting and buys time for new lessons. The site stays free.</p><a class="btn solid" href="{DONATE_URL}" target="_blank" rel="noopener" data-ev="kofi-button">Support on Ko-fi &rarr;</a><p style="font-size:13px">Opens Ko-fi in a new tab. Card or PayPal.</p></div></aside></div></main>''' + footer(band=False)
     return "/support/", page("/support/", "Support · Throiy Chess", "Support Throiy Chess with a small tip and keep the chess lessons free.", body)
 
 def free_page():
