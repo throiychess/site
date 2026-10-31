@@ -12,6 +12,13 @@
     "reviewed": true,
     "tags": [
      "General"
+    ],
+    "examples": [
+     {
+      "fen": "r1bq1rk1/ppp2pp1/1bnp1n1p/4p3/2B1P3/2PP1N1P/PP3PP1/RNBQR1K1 w - - 1 9",
+      "caption": "White to move (move 9). White has built the quiet Italian set-up: c3, d3, h3 and Re1, and now brings the last knight out with Nbd2. Every move follows a simple plan, with no sharp theory to remember. Stockfish: +0.26, almost the top choice (+0.28).",
+      "source": "Caruana, Fabiano vs Nakamura, Hikaru, Norway Chess, 2024 (https://lichess.org/broadcast/norway-chess-2024-open/round-1/I9TLGEOt/Dlc92a2Q)"
+     }
     ]
    },
    {
@@ -44,6 +51,13 @@
     "reviewed": true,
     "tags": [
      "Development"
+    ],
+    "examples": [
+     {
+      "fen": "rnbqkbnr/1p1ppppp/p7/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3",
+      "caption": "White to move (move 3). After 2...a6 White skips the main-line 3.d4 and plays 3.c4, a less common set-up, so Black has to think from the start. Stockfish rates it +0.52, close to its top choice (+0.60), so the unusual move order is fully sound.",
+      "source": "Fabiano Caruana vs Teimour Radjabov, Round 7: Fabiano Caruana - Teimour Radjabov, 2022 (https://lichess.org/broadcast/fide-candidates-tournament-2022/round-7/OFBhwamI/d7lcMo4O)"
+     }
     ]
    },
    {
@@ -100,6 +114,13 @@
     "tags": [
      "Development",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "r1bq1rk1/bpp2pp1/p1np1n1p/4p3/2B1P2B/2PP1NN1/PP3PPP/R2QK2R b KQ - 1 10",
+      "caption": "Black to move (move 10). Black already spent a move on ...h6; now ...g6 is another pawn move while White's pieces are out. Stockfish prefers ...Na5 (-0.15); after 10...g6 White stands about +1.0. A punished violation: lost time is a lead for the opponent.",
+      "source": "Caruana, Fabiano vs Firouzja, Alireza, Norway Chess, 2024 (https://lichess.org/broadcast/norway-chess-2024-open/round-7/4FLBpAW3/gPXBZQj3)"
+     }
     ]
    },
    {
@@ -136,6 +157,13 @@
      "Development",
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "r1bqkbnr/pp2pppp/2n5/2pp4/8/5NP1/PPPPPPBP/RNBQK2R w KQkq - 2 4",
+      "caption": "White to move (move 4). White has played only Nf3, g3 and Bg2: no fixed pawn set-up yet. Now 4.d4 takes the centre and keeps c4 and castling for later. Stockfish: +0.35, the top choice. Pieces and centre first, pawn structure can wait.",
+      "source": "Harikrishna, Pentala vs Warmerdam, Max, Tata Steel Chess Tournament 2025 Masters, 2025 (https://lichess.org/broadcast/tata-steel-chess-2025-masters/round-4/LatXHomI/6SKhfpLT)"
+     }
     ]
    },
    {
@@ -229,6 +257,13 @@
     "tags": [
      "Attack",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "r1bqk2r/pp2ppbp/2n3p1/2pn4/Q7/2N2NP1/PP1PPPBP/R1B1K2R w KQkq - 4 8",
+      "caption": "White to move (move 8). Black's early ...Nc6 blocked a check, so it is pinned to the king by the queen on a4. 8.Ng5 also unmasks the Bg2. The game went 8...Nb6 9.Bxc6+ bxc6 10.Qxc6+, winning a pawn. Stockfish says equal (-0.11), so the pressure wins material but Black keeps compensation.",
+      "source": "Caruana, Fabiano vs Wei, Yi, FIDE Candidates Tournament 2026, 2026 (https://lichess.org/broadcast/fide-candidates-2026-open/round-3/SDizieNR/8EWUBjpx)"
+     }
     ]
    },
    {
@@ -264,6 +299,18 @@
      "Pawns",
      "Pieces",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "r2qk1r1/1p3p1p/2ppbp2/2b1p3/p1P1P2B/P2Q1N2/1PP2PPP/R4RK1 w q - 0 14",
+      "caption": "White to move (move 14). Black has just pushed ...a4. White answers at once with 14.b4, challenging the pawn and claiming queenside space. Stockfish: +0.39, its first choice. (Black later won the game, but the move itself is the engine's top pick.)",
+      "source": "Wei, Yi vs Sindarov, Javokhir, FIDE Candidates Tournament 2026, 2026 (https://lichess.org/broadcast/fide-candidates-2026-open/round-6/WmbQrSNz/lkyNaDkn)"
+     },
+     {
+      "fen": "rnbq1rk1/1pp2pp1/3p1n1p/p3p3/2P5/P1BP2P1/1P2PPBP/R2QK1NR w KQ - 0 9",
+      "caption": "White to move (move 9). Mirror case: Black has pushed ...a5 and White meets it with 9.b4, grabbing space on the wing. Stockfish: +0.25, its top choice. White went on to win this game.",
+      "source": "Firouzja, Alireza vs Keymer, Vincent, 2026 Norway Chess Open, 2026 (https://lichess.org/broadcast/norway-chess-2026-open/round-5-armageddon/JQI4Qhk5/83EDDlTP)"
+     }
     ]
    },
    {
@@ -361,6 +408,13 @@
      "Development",
      "Tactics",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "rn1qkb1r/pp1bpppp/8/1Bp5/1n2P3/2N2N2/PP1P1PPP/R1BQK2R w KQkq - 5 8",
+      "caption": "White to move (move 8). White trades 8.Bxd7+ Qxd7. The trade has no purpose except to bring Black's queen out, and after 9.Ne5 Qd4 Black hits two pieces with tempo. Stockfish: best was 8.a3 (+0.49); after the trade Black is better (-0.37). A punished violation.",
+      "source": "Keymer, Vincent vs Praggnanandhaa R, 2026 Norway Chess Open, 2026 (https://lichess.org/broadcast/norway-chess-2026-open/round-4-armageddon/xux5E5V6/nxCTIeLm)"
+     }
     ]
    },
    {
@@ -373,6 +427,13 @@
     "reviewed": true,
     "tags": [
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "r2qkb1r/1ppn1ppp/p3bn2/3p2B1/3P4/2N1PN2/PP3PPP/R2QKB1R w KQkq - 1 8",
+      "caption": "White to move (move 8). White does not need a fianchetto or Be2: the bishop belongs on d3, aiming at the kingside and supporting e4. Stockfish: +0.41, just behind Bh4 (+0.42). Ask which square creates real pressure, not which is the habit.",
+      "source": "Sindarov, Javokhir vs Praggnanandhaa R, Tata Steel Chess Masters, 2026 (https://lichess.org/broadcast/tata-steel-chess-2026-masters/round-12/ELcnJ2BR/niWOOj1I)"
+     }
     ]
    },
    {
@@ -412,6 +473,13 @@
     "tags": [
      "Opening systems",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "r1bq1rk1/pp3ppp/2nbp2n/2pp4/3P4/2PBPNB1/PP3PPP/RN1QK2R w KQ - 5 8",
+      "caption": "White to move (move 8). White has played the London set-up: Bf4 (now g3), e3, c3, Bd3, and finishes with Nbd2. The same plan works against many Black set-ups. Stockfish: +0.24, close to its top choice (+0.33). White won this game.",
+      "source": "Caruana, Fabiano vs Van Foreest, Jorden, Tata Steel Chess Tournament 2025 Masters, 2025 (https://lichess.org/broadcast/tata-steel-chess-2025-masters/round-2/LPs7X3dM/HO7lkq69)"
+     }
     ]
    },
    {
@@ -591,6 +659,13 @@
      "King safety",
      "Tactics",
      "Pawns"
+    ],
+    "examples": [
+     {
+      "fen": "r1b1kb1r/pp1n1ppp/1qn1p3/3pP3/3N1P2/2N1B3/PPPQ2PP/R3KB1R b KQkq - 2 9",
+      "caption": "Black to move (move 9). The b2 pawn looks poisoned: Rb1 and Bb5 may trap the queen. Black checks and finds 9...Qxb2 10.Rb1 Qa3 11.Bb5 Nxd4, escaping. Stockfish: taking is best (+0.48; other moves +1.18 or worse). The exception: a poisoned-looking pawn is fine once the lines are checked.",
+      "source": "Vachier-Lagrave, Maxime vs Aronian, Levon, Sinquefield Cup, 2025 (https://lichess.org/broadcast/gct-sinquefield-cup-2025-sinquefield-cup/round-3/tEgitHjc/ZMmneBfO)"
+     }
     ]
    },
    {
@@ -605,6 +680,13 @@
      "Opening systems",
      "Centre",
      "Development"
+    ],
+    "examples": [
+     {
+      "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+      "caption": "White to move (move 4). In game 2 of the 2024 World Championship, White chooses the quiet Italian with 4.d3. Plans are simple: castle, c3 or Nc3, and a slow build-up. Stockfish: +0.18, its top choice. Even at the top level the plan matters more than memorised lines.",
+      "source": "Ding, Liren vs Gukesh D, FIDE World Championship Match 2024, 2024 (https://lichess.org/broadcast/fide-world-championship-2024/game-2/YL0LEwAL/AljZUNDm)"
+     }
     ]
    },
    {
@@ -663,6 +745,13 @@
      "Development",
      "King safety",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "r1bqk2r/ppppbppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 1 5",
+      "caption": "White to move (move 5). Knight on f3, bishop on c4, d3 played: the kingside minor pieces are out. Now 5.O-O brings the king to safety. Stockfish: +0.35, tied for best. Develop first, then castle.",
+      "source": "Gukesh D vs Wei, Yi, Tata Steel Chess Tournament 2025 Masters, 2025 (https://lichess.org/broadcast/tata-steel-chess-2025-masters/round-11/iAu6JSH1/Dfxt7E7j)"
+     }
     ]
    },
    {
@@ -705,6 +794,13 @@
      "Centre",
      "Defence",
      "Pawns"
+    ],
+    "examples": [
+     {
+      "fen": "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R b KQkq - 2 5",
+      "caption": "Black to move (move 5). After 1...c5 Black traded the c-pawn for White's d-pawn, giving an uneven structure. 5...a6 (the Najdorf) is Stockfish's top move (+0.48). Black keeps many plans, such as ...e5 or ...g6, and won this game.",
+      "source": "Esipenko, Andrey vs Caruana, Fabiano, FIDE Candidates Tournament 2026, 2026 (https://lichess.org/broadcast/fide-candidates-2026-open/round-14/oBkeHnpi/gi2VX6NQ)"
+     }
     ]
    },
    {
@@ -761,6 +857,13 @@
      "Centre",
      "Development",
      "King safety"
+    ],
+    "examples": [
+     {
+      "fen": "r1bqk2r/4bppp/p2p1n2/1pn1p3/4P3/P1N3N1/1PP1BPPP/R1BQ1RK1 b kq - 2 11",
+      "caption": "Black to move (move 11). Even in a sharp Sicilian, Black has developed Nf6, Nc5 and Be7, controls the centre with ...e5, and now castles. Stockfish: 11...O-O is tied for best (+0.24). Black went on to win this game.",
+      "source": "Caruana, Fabiano vs Nakamura, Hikaru, Norway Chess, 2024 (https://lichess.org/broadcast/norway-chess-2024-open/round-1/I9TLGEOt/hkSR1sG5)"
+     }
     ]
    },
    {
@@ -796,6 +899,13 @@
      "Development",
      "Attack",
      "Defence"
+    ],
+    "examples": [
+     {
+      "fen": "r2q1rk1/1p2ppbp/p1npbnp1/6B1/4P3/1NN1Q3/PPP1BPPP/2KR3R b - - 9 11",
+      "caption": "Black to move (move 11). White brought the queen out early (Qd3, now Qe3). Black simply developed: ...g6, ...Bg7, ...O-O, ...Nc6, ...Be6, and the queen has lost time. 11...Rc8 is Stockfish's top move (-0.19). Not the ...e6 trick itself, but the same idea.",
+      "source": "Esipenko, Andrey vs Caruana, Fabiano, FIDE Candidates Tournament 2026, 2026 (https://lichess.org/broadcast/fide-candidates-2026-open/round-14/oBkeHnpi/gi2VX6NQ)"
+     }
     ]
    },
    {
@@ -811,6 +921,13 @@
      "Tactics",
      "Pieces",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "rnbqkb1r/pp2pppp/3p1n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R b KQkq - 2 5",
+      "caption": "Black to move (move 5). 5...e5 leaves a hole on d5 that White's knights can use (Bb5+, Nf5). Stockfish gives White +0.64 after it, against +0.48 after 5...a6. A small price Black accepted knowingly, and an exception to the rule of caution. Black won.",
+      "source": "Caruana, Fabiano vs Nakamura, Hikaru, Norway Chess, 2024 (https://lichess.org/broadcast/norway-chess-2024-open/round-1/I9TLGEOt/hkSR1sG5)"
+     }
     ]
    }
   ]
@@ -853,6 +970,13 @@
      "Attack",
      "Defence",
      "Pawns"
+    ],
+    "examples": [
+     {
+      "fen": "r2q1rk1/pp3p2/2p2nn1/3p1bpp/3P4/2P1P1BP/P2NBPP1/R2QK2R b KQ - 1 16",
+      "caption": "Black to move (move 16). ...g5 drove the bishop to g3. Now 16...h4 hits it again, and after Bh2 the bishop sits behind its own pawns on d4 and e3. Stockfish: +0.40, practically the top move (+0.39). Black can then play on the queenside.",
+      "source": "Gukesh D vs Caruana, Fabiano, Tata Steel Chess Tournament 2025 Masters, 2025 (https://lichess.org/broadcast/tata-steel-chess-2025-masters/round-3/rVxHrSCY/QLnlh22p)"
+     }
     ]
    },
    {
@@ -914,6 +1038,13 @@
     "tags": [
      "Pawns",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "1r1q1r1k/p1n1bbpp/5p2/1pp1pP2/3nN1P1/P1B1N3/1P2P1BP/R2Q1RK1 b - - 6 18",
+      "caption": "Black to move (move 18). Black picks one clear aim: the pawn break ...b4, hitting White's a3 pawn and opening the queenside, instead of shuffling pieces. After 18...b4 axb4 cxb4 Black has a passed-looking b-pawn and play there. The engine rates it within 0.25 of its first choice (Nd5).",
+      "source": "Aravindh, Chithambaram VR. vs Niemann, Hans Moke, Tata Steel Chess Masters, 2026 (https://lichess.org/broadcast/tata-steel-chess-2026-masters/round-4/TU7qC17C/Ay87teqm)"
+     }
     ]
    },
    {
@@ -975,6 +1106,13 @@
     "reviewed": true,
     "tags": [
      "Attack"
+    ],
+    "examples": [
+     {
+      "fen": "r4nk1/1qQ1r1p1/5p1p/1p1p4/p2B1P2/P3P1P1/1P5P/2RR2K1 w - - 2 32",
+      "caption": "White to move (move 32) with a small edge (about +1.4) and equal material. No sacrifice is needed. 32.Qxb7 Rxb7 trades queens, removes Black's counterplay and keeps the better position. Calm exchanges like this convert small advantages; the engine agrees it is best.",
+      "source": "Giri, Anish vs Praggnanandhaa R, Tata Steel Chess Tournament 2025 Masters, 2025 (https://lichess.org/broadcast/tata-steel-chess-2025-masters/round-9/y1UCH4bb/Z0Qi1OnD)"
+     }
     ]
    },
    {
@@ -1056,6 +1194,13 @@
      "Defence",
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "1kr4r/1p1bbppp/pq2p3/3pPn2/PP1P4/5N2/3BNPPP/1R1Q1RK1 w - - 3 17",
+      "caption": "White to move (move 17). White has prepared with a4, b4 and Rb1 against Black's queenside, where the king and queen stand. Only then comes the break 17.b5, opening the a- and b-files towards them. Build up first, then open the position; the engine ranks it first (about +0.9).",
+      "source": "Abdusattorov, Nodirbek vs Mendonca, Leon Luke, Tata Steel Chess Tournament 2025 Masters, 2025 (https://lichess.org/broadcast/tata-steel-chess-2025-masters/round-2/LPs7X3dM/bGZYTbtZ)"
+     }
     ]
    },
    {
@@ -1090,6 +1235,13 @@
     "tags": [
      "Defence",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "r1bq1rk1/bpp2ppp/p1np1n2/4p3/P1B1P3/2PP1N2/1P3PPP/RNBQR1K1 w - - 3 9",
+      "caption": "White to move (move 9). Nothing is attacked, but Black's bishop and knight both want g4 (...Bg4 pins the f3-knight). 9.h3 takes that square away before Black can use it. A quiet move that removes the opponent's best idea; the engine ranks it first (about +0.2).",
+      "source": "Jan-Krzysztof Duda vs Fabiano Caruana, Round 10: Jan-Krzysztof Duda - Fabiano Caruana, 2022 (https://lichess.org/broadcast/fide-candidates-tournament-2022/round-10/FWJYzJJJ/CDGcSv2h)"
+     }
     ]
    },
    {
@@ -1104,6 +1256,13 @@
      "Tactics",
      "Pieces",
      "Trades"
+    ],
+    "examples": [
+     {
+      "fen": "r3k2r/1ppb1p2/3p2qp/p3n3/Pn2P3/3B4/2PBNQPP/1R3R1K b kq - 1 22",
+      "caption": "Black to move (move 22). Black is a pawn up; White's compensation is the two bishops. 22...Nbxd3 trades a knight for one of them, and after cxd3 Nxd3 Black also wins a second pawn. Ask what the opponent got in return, then trade that exact asset. It is the engine's first choice (about -1.5 for White).",
+      "source": "Van Foreest, Jorden vs Gukesh, D, Tata Steel Masters 2024, 2024 (https://lichess.org/broadcast/tata-steel-masters-2024/round-6/ubgeWaHz/hRafgim5)"
+     }
     ]
    },
    {
@@ -1118,6 +1277,13 @@
      "Pawns",
      "Pieces",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "r2q1rk1/3nbppp/p2pbn2/1p2p3/4P1P1/1NN1BP2/PPPQ3P/2KR1B1R w - - 0 12",
+      "caption": "White to move (move 12). No piece needs improving more than the pawn on g4: 12.g5 kicks the f6-knight away from its good square and grabs kingside space, so Black's pieces get fewer squares. A pawn move that restricts is a real improving move; it is the engine's first choice (about +0.6).",
+      "source": "Ian Nepomniachtchi vs Alireza Firouzja, Round 4: Ian Nepomniachtchi - Alireza Firouzja, 2022 (https://lichess.org/broadcast/fide-candidates-tournament-2022/round-4/0QuWnLkU/g1rO1xmS)"
+     }
     ]
    },
    {
@@ -1174,6 +1340,13 @@
     "tags": [
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "2r1k2r/1b4pp/p1qp1p2/1p2pP2/2P1P3/1PN1Q2P/P5P1/3R1R1K w k - 0 23",
+      "caption": "White to move (move 23). Read the pawns: no black pawn can ever attack d5 (the c-pawn has gone to b5 and the e-pawn is already past it), and White's e4 pawn supports it. So d5 is a permanent hole and the ideal square for the c3-knight. 23.Nd5 is the engine's clear first choice (about +1.2).",
+      "source": "Praggnanandhaa R vs Carlsen, Magnus, Norway Chess, 2024 (https://lichess.org/broadcast/norway-chess-2024-open/round-3/xmZcMs9U/Rq9e5H7u)"
+     }
     ]
    },
    {
@@ -1188,6 +1361,13 @@
      "Pawns",
      "Pieces",
      "Trades"
+    ],
+    "examples": [
+     {
+      "fen": "r2r2k1/pbqnbppp/4pn2/2pp4/2PP4/2B2NP1/P1QNPPBP/2RR2K1 w - - 0 15",
+      "caption": "White to move (move 15), Gukesh vs Ding. The long diagonal is lined up: the bishop on c3 aims at f6. 15.Qb2 puts the queen behind the bishop on the same diagonal, a battery with a secondary square for the queen. Playable, about 0.1 behind the engine's first choice; mirror of the Qa8 idea.",
+      "source": "Gukesh D vs Ding, Liren, FIDE World Championship Match 2024, 2024 (https://lichess.org/broadcast/fide-world-championship-2024/game-9/HMJKeeue/mp31I4cA)"
+     }
     ]
    },
    {
@@ -1203,6 +1383,13 @@
      "King safety",
      "Pieces",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "r1brn1k1/pp2ppbp/6p1/5q2/3B4/1P2PB2/P2N1PPP/2RQ1RK1 w - - 4 15",
+      "caption": "White to move (move 15). Black wants the break ...e5. 15.Rc5 adds a rook to the bishop on d4 so that e5 stays well covered (engine: equal to its best, about +0.2). In the game Black pushed ...e5 anyway and after 16.Nc4 stood clearly worse (about +0.9). The break fails while you control the square.",
+      "source": "Firouzja, Alireza vs Abasov, Nijat, FIDE Candidates 2024, 2024 (https://lichess.org/broadcast/fide-candidates-2024-open/round-11/46ohJ8Qt/yALfu63F)"
+     }
     ]
    },
    {
@@ -1233,6 +1420,13 @@
      "Attack",
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "r4rk1/b1p1qppp/2p2n2/p3p3/P3P3/1NP2P2/1PQ2P1P/R1B2RK1 w - - 0 16",
+      "caption": "White to move (move 16). Black's a5 pawn has no neighbouring pawn to protect it. No king attack is needed: 16.Nxa5 simply wins it, and the other moves are about equal. Steady pressure on a weak pawn builds the advantage safely. The engine's clear first choice (about +0.8).",
+      "source": "Teimour Radjabov vs Hikaru Nakamura, Round 9: Teimour Radjabov - Hikaru Nakamura, 2022 (https://lichess.org/broadcast/fide-candidates-tournament-2022/round-9/pk9gRSMB/zwRK3Eyj)"
+     }
     ]
    },
    {
@@ -1269,6 +1463,13 @@
      "Defence",
      "Space and plans",
      "Trades"
+    ],
+    "examples": [
+     {
+      "fen": "2r3k1/5pp1/q3p2p/2PnPP2/2R5/6P1/1Q4BP/6K1 w - - 1 32",
+      "caption": "White to move (move 32). White's pawns on c5, e5 and f5 give a clear space edge. 32.Bxd5 exd5 is a simple trade, but it frees Black's cramped position and removes the knight on d5. White keeps the tension with 32.Rc1 instead; the engine prefers it (about +0.6 against +0.2 for the trade).",
+      "source": "Carlsen, Magnus vs Caruana, Fabiano, Norway Chess 2025, 2025 (https://lichess.org/broadcast/norway-chess-2025-open/round-9/Qv9cnRyb/JYYjPPaY)"
+     }
     ]
    },
    {
@@ -1282,6 +1483,13 @@
     "tags": [
      "Pieces",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "7r/1p2rpp1/3k2p1/1Pnp2P1/R6P/3BPP2/1P3K2/3R4 w - - 3 35",
+      "caption": "White to move (move 35). White's pawns on b5, g5 and h4 and the e3-f3 chain give extra room. 35.Rg4 swings the rook from the queenside to the kingside in one move along the free fourth rank, while Black's pieces are short of space. It is the engine's first choice (about +1.4).",
+      "source": "Magnus Carlsen vs Ian Nepomniachtchi, Sinquefield Cup, 2022 (https://lichess.org/broadcast/sinquefield-cup-grand-chess-tour-2022/round-1/w8G7sWaN/l5v1nDkY)"
+     }
     ]
    },
    {
@@ -1337,6 +1545,13 @@
      "Pawns",
      "Pieces",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "r1b2r2/pp5k/2n2qp1/3p1p1p/8/2P3Q1/PP3PPP/RNB1R1K1 w - - 0 18",
+      "caption": "White to move (move 18). This is the colour-complex weakness: Black's only bishop is light-squared, so nothing guards the dark squares around his king. 18.Bg5 hits the queen on f6 from a dark square Black cannot contest and keeps the initiative. It is the engine's first choice (about +1.9).",
+      "source": "Wei, Yi vs Gukesh D, Norway Chess 2025, 2025 (https://lichess.org/broadcast/norway-chess-2025-open/round-5-armageddon/b3lUTDzE/Ns5FeKTD)"
+     }
     ]
    },
    {
@@ -1351,6 +1566,13 @@
      "Attack",
      "Pawns",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "2r1kb1r/pp1bnppp/2q1p3/n2pP3/NP1P4/P4N2/1B3PPP/R2QKB1R w KQk - 7 12",
+      "caption": "White to move (move 12). The chain d4-e5 (with b4 behind) is White's mountain top: everything behind it is White's room, and Black's pieces have few squares. White uses that freedom: 12.Nc5 plants a knight deep in Black's side and the engine rates it first (about +0.5). The game was drawn.",
+      "source": "Caruana, Fabiano vs Praggnanandhaa R, FIDE Candidates 2024, 2024 (https://lichess.org/broadcast/fide-candidates-2024-open/round-7/X9LGGQoT/ChaqV75t)"
+     }
     ]
    }
   ]
@@ -1370,6 +1592,13 @@
     "tags": [
      "King safety",
      "Tactics"
+    ],
+    "examples": [
+     {
+      "fen": "2r1k2r/pp2bppp/2n1p3/2p5/4P3/P1NPB3/1PR1KPPP/R7 b k - 5 17",
+      "caption": "Black to move (move 17). White just played Rc2, putting rook and king on the same knight-check square. Run the list: checks first. 17...Nd4+ forks king and rook and wins the exchange. Looking at checks before quiet moves found it at once.",
+      "source": "Keymer, Vincent vs Praggnanandhaa R, 2026 Norway Chess Open, 2026 (https://lichess.org/broadcast/norway-chess-2026-open/round-4-armageddon/xux5E5V6/nxCTIeLm)"
+     }
     ]
    },
    {
@@ -1400,6 +1629,13 @@
      "Tactics",
      "Pieces",
      "Trades"
+    ],
+    "examples": [
+     {
+      "fen": "2rr2k1/4qpp1/1pp4p/8/1P2n3/1QN1P3/5PPP/R2R2K1 w - - 2 24",
+      "caption": "White to move (move 24). Black's knight has landed on e4, inside White's half. White does not leave it alone: 24.Nxe4 trades it off at once and the position stays level (Stockfish about 0.0). This is the principle applied well.",
+      "source": "Ding Liren vs Gukesh D, FIDE World Championship Match 2024 Game 4 (https://lichess.org/broadcast/fide-world-championship-2024/game-4/9DU8PRwg/5iq4Ivrk)"
+     }
     ]
    },
    {
@@ -1432,6 +1668,13 @@
     "tags": [
      "King safety",
      "Tactics"
+    ],
+    "examples": [
+     {
+      "fen": "r1b2r2/6Bp/p1k5/2p5/P1p3PP/1n3P2/8/3RR1K1 w - - 0 29",
+      "caption": "White to move (move 29). Black grabbed a pawn with 28...dxc4 while his rook on f8 was already attacked by the bishop on g7. 29.Bxf8 wins the exchange (Stockfish about +2.1). Black gave material away by missing a threat; White took the chance.",
+      "source": "Caruana vs Erigaisi, Norway Chess 2025 (https://lichess.org/broadcast/norway-chess-2025-open/round-3/BviKOlVd/EdGZbw91)"
+     }
     ]
    },
    {
@@ -1466,6 +1709,13 @@
      "Attack",
      "Pieces",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "r1bqk2r/2ppnppp/p7/1pb1n3/B2PP3/8/PPP2PPP/RNBQ1RK1 w kq - 0 8",
+      "caption": "White to move (move 8). Black's ...b5 attacks the bishop on a4. Tempting alternatives like 8.dxc5 or 8.f4 allow ...bxa4 and lose a piece (about -2.5). 8.Bb3 deals with the threat first and keeps a small edge (+0.6).",
+      "source": "Carlsen vs Nakamura, Norway Chess 2024 (https://lichess.org/broadcast/norway-chess-2024-open/round-2/sbOHYOVj/3BmLduNX)"
+     }
     ]
    },
    {
@@ -1481,6 +1731,13 @@
      "Tactics",
      "Defence",
      "Pawns"
+    ],
+    "examples": [
+     {
+      "fen": "7k/3b4/Bp2R1pp/p4P2/8/P1N2PP1/1r1b2P1/7K w - - 3 38",
+      "caption": "White to move (move 38). The quiet rook move 38.Rd6 seems to leave the f5 pawn to Black's bishop. If 38...Bxf5? then 39.Nd1! attacks the rook on b2 and the bishop on d2 loses its guard (Stockfish about +3). Rd6 itself is the engine's top choice.",
+      "source": "Fedoseev vs Aravindh, Tata Steel Masters 2026 (https://lichess.org/broadcast/tata-steel-chess-2026-masters/round-13/yuTondoz/9j8aQ18E)"
+     }
     ]
    },
    {
@@ -1493,6 +1750,13 @@
     "reviewed": true,
     "tags": [
      "Tactics"
+    ],
+    "examples": [
+     {
+      "fen": "rn2r1k1/ppbq1ppp/2p3b1/2np4/3P4/1QNBBNP1/PP3P1P/R3R1K1 w - - 0 15",
+      "caption": "White to move (move 15). The opening was normal, then Black played 14...Nxc5, grabbing a pawn. 15.dxc5 wins the knight: after 15...Bxd3 16.Qxb7 White is clearly better (Stockfish +2.2). One tactical oversight decided the game, not opening knowledge.",
+      "source": "Niemann vs Fedoseev, Tata Steel Masters 2026 (https://lichess.org/broadcast/tata-steel-chess-2026-masters/round-1/FRGTkE8Z/nCoDvzh5)"
+     }
     ]
    },
    {
@@ -1530,6 +1794,13 @@
      "Tactics",
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "r4r2/p4kp1/1p1b3p/q1nR4/8/7B/P4PPP/3Q1RK1 w - - 1 24",
+      "caption": "White to move (move 24). After 23...Nc5 Black's bishop on d6 has no defender and the queen is far away on a5. 24.Rxd6 simply takes it (Stockfish about +1.3). Loose pieces that do not protect each other get picked off: a punished violation.",
+      "source": "Praggnanandhaa vs Nepomniachtchi, Candidates 2024 (https://lichess.org/broadcast/fide-candidates-2024-open/round-5/MDiLWQ5M/MI1pR0AA)"
+     }
     ]
    },
    {
@@ -1546,6 +1817,13 @@
      "Tactics",
      "Pawns",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "7k/3b4/Bp1R2pp/p4P2/8/P1N2PP1/1r1b2P1/7K b - - 4 38",
+      "caption": "Black to move (move 38). Ask what 38.Rd6 wants. The f5 pawn looks free, but after 38...Bxf5? 39.Nd1! hits the rook on b2 and the bishop on d2 loses support (White about +3). 38...Bxc3 removes the knight first and keeps the balance (+0.1).",
+      "source": "Fedoseev vs Aravindh, Tata Steel Masters 2026 (https://lichess.org/broadcast/tata-steel-chess-2026-masters/round-13/yuTondoz/9j8aQ18E)"
+     }
     ]
    },
    {
@@ -1560,6 +1838,13 @@
      "Tactics",
      "Pieces",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "3r1r1k/p5pp/q7/1p2NPP1/2p1Q3/P1P4P/1P6/2K1R3 w - - 0 29",
+      "caption": "White to move (move 29). White has space, a pawn chain on f5 and g5 and active pieces, and Black is passive. The tactical blow 29.Nc6 comes naturally: it hits the rook on d8. Stockfish rates it level with 29.g6 (about +1.1).",
+      "source": "Caruana vs Dominguez, Sinquefield Cup 2022 (https://lichess.org/broadcast/sinquefield-cup-grand-chess-tour-2022/round-2/rToKKiRI/BkOm9zwH)"
+     }
     ]
    },
    {
@@ -1595,6 +1880,13 @@
      "Attack",
      "Pieces",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "rn1q1rk1/pp2ppbp/5np1/2p5/2pPP1b1/5NP1/PP1N1PBP/R1BQR1K1 w - - 0 10",
+      "caption": "White to move (move 10). Black has just played ...c5. White answers actively with 10.d5, gaining space in the centre and keeping the initiative instead of a slow move like 10.h3. Stockfish rates 10.d5 best (about +0.5).",
+      "source": "Gukesh vs Ding Liren, FIDE World Championship Match 2024 Game 7 (https://lichess.org/broadcast/fide-world-championship-2024/game-7/Nax0ffrf/NLdsNZ8e)"
+     }
     ]
    },
    {
@@ -1608,6 +1900,13 @@
     "tags": [
      "Development",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "rnbqkb1r/pppp1ppp/8/4p3/3Pn3/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 4",
+      "caption": "White to move (move 4). In this Petroff line 4.Bd3 develops a minor piece and attacks the knight on e4, so Black has to react. Stockfish agrees it is the best move (about +0.4). Forcing development beats a slow waiting move.",
+      "source": "Gukesh vs Abasov, Candidates 2024 (https://lichess.org/broadcast/fide-candidates-2024-open/round-5/MDiLWQ5M/Evh9eivY)"
+     }
     ]
    },
    {
@@ -1621,6 +1920,13 @@
     "tags": [
      "Defence",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "r2q1rk1/1bp1bppp/p7/1p1nN3/3n4/1B1P3P/PPPN1PP1/R1BQR1K1 b - - 0 12",
+      "caption": "Black to move (move 12). Nothing concrete is threatened, so a just-in-case move like 12...h6 only hands White time (about 0.6 worse). Black plays 12...c5, claiming space; Stockfish's top choice, with the position equal (+0.15).",
+      "source": "Erigaisi vs Keymer, Tata Steel Masters 2025 (https://lichess.org/broadcast/tata-steel-chess-2025-masters/round-10/Cxynl5MH/8xBXUSQh)"
+     }
     ]
    },
    {
@@ -1634,6 +1940,13 @@
     "tags": [
      "Development",
      "King safety"
+    ],
+    "examples": [
+     {
+      "fen": "r2qkb1r/1b3ppp/p1nppn2/1p6/4PB2/PNN5/1PPQBPPP/R3K2R w KQkq - 2 12",
+      "caption": "White to move (move 12). Black has pushed ...b5 and kept his king in the centre, yet White castles long: his pieces cover the queenside and the rook joins the centre. Stockfish clearly prefers 12.O-O-O (+1.1) to 12.f3 (+0.5). Long castling worked because the king was safe.",
+      "source": "Vidit vs Firouzja, Candidates 2024 (https://lichess.org/broadcast/fide-candidates-2024-open/round-6/kPqEUBZJ/PbcVSZD2)"
+     }
     ]
    },
    {
@@ -1648,6 +1961,13 @@
      "Centre",
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "r1b2rk1/p4ppp/2pqp3/2pp4/3Pn3/Q1P1P3/PP1N1PPP/RN2K2R b KQ - 5 11",
+      "caption": "Black to move (move 11). Black keeps fighting for the centre with 11...e5, striking at the d4 pawn instead of waiting. Stockfish rates it best and the position stays level (0.0). The centre is still relevant, so a central pawn break is the right idea.",
+      "source": "Ding Liren vs Gukesh, FIDE World Championship Match 2024 Game 6 (https://lichess.org/broadcast/fide-world-championship-2024/game-6/I2LcDwAT/aONfLzUf)"
+     }
     ]
    },
    {
@@ -1662,6 +1982,13 @@
      "Attack",
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "rn1qkb1r/pp3p1p/2p2np1/3p1b2/3P4/2N2N1P/PPQ1PPP1/R1B1KB1R w KQkq - 1 8",
+      "caption": "White to move (move 8). Black's bishop on f5 attacks the queen on c2. Instead of a retreat like 8.Qd1, White answers with 8.Qb3, attacking the b7 pawn at the same time. Stockfish rates it best (about +0.1) and 8.Qd1 clearly worse (-0.3).",
+      "source": "Gukesh vs Ding Liren, FIDE World Championship Match 2024 Game 3 (https://lichess.org/broadcast/fide-world-championship-2024/game-3/RYXkK9po/tEJhDrmj)"
+     }
     ]
    },
    {
@@ -1717,6 +2044,13 @@
      "King safety",
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "3r2k1/3q1ppp/pQb2n2/6B1/4P3/P2p1P2/4N1PP/3R2K1 b - - 0 23",
+      "caption": "Black to move (move 23). The bishop on g5 attacks the knight on f6, which stands in front of the rook on d8. The pawn move 23...h6? allows 24.Bxf6 gxf6 and wrecks the king's cover (White about +1.9). The piece move 23...Ba4 is best (+0.6).",
+      "source": "Sarana vs Mendonca, Tata Steel Masters 2025 (https://lichess.org/broadcast/tata-steel-chess-2025-masters/round-13/jRNO3Xth/ot0WnaGS)"
+     }
     ]
    },
    {
@@ -1731,6 +2065,13 @@
      "Attack",
      "Defence",
      "Pawns"
+    ],
+    "examples": [
+     {
+      "fen": "1r2r1k1/2p2p2/2p3pp/p1q1P2n/P1P3Q1/1P5P/1B3P2/R3R1K1 w - - 0 25",
+      "caption": "White to move (move 25). White's pawn on e5 and queen on g4 hit the knight on h5; Black panicked with the weakening 24...g6?. 25.Ba3! attacks the queen on c5, and the dark squares around the black king are now loose (Stockfish about +3.4).",
+      "source": "Firouzja vs So, Sinquefield Cup 2022 (https://lichess.org/broadcast/sinquefield-cup-grand-chess-tour-2022/round-8/5iaR9Sei/n3sVkiHw)"
+     }
     ]
    },
    {
@@ -1743,6 +2084,13 @@
     "reviewed": true,
     "tags": [
      "General"
+    ],
+    "examples": [
+     {
+      "fen": "r1bqkb1r/pp3p1p/6p1/2ppP3/5P2/2NQB3/PPP3PP/R4RK1 b kq - 1 11",
+      "caption": "Applied well. Black (move 11) plays 11...d4, a pawn push that attacks both the knight on c3 and the bishop on e3. White must react at once (the game went 12.Ne4), so the threat is not simply parried and Black gains space. Engine: best move, about +0.2 for White.",
+      "source": "Sindarov, Javokhir vs Wei, Yi, FIDE World Cup 2025, final game 1 (https://lichess.org/broadcast/fide-world-cup-2025-finals/game-1/ccpVN6xj/dgA9lGPW)"
+     }
     ]
    },
    {
@@ -1756,6 +2104,13 @@
     "tags": [
      "Tactics",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "3r1rk1/6n1/1R1Nq2p/4np2/5Q2/6PP/PP3PK1/3R4 w - - 1 29",
+      "caption": "Punished violation. White to move (29) is equal, with quiet moves like a4 or b3. 29.Nc4? puts a knight where the queen can simply take it; it works only if Black misses ...Qxc4 or ...Ng6. Black did not miss it, and the engine shows about -3.5. Choose moves that survive the best reply.",
+      "source": "Maghsoodloo, Parham vs Gukesh D, 45th FIDE Olympiad Budapest 2024, Open (https://lichess.org/broadcast/45th-chess-olympiad-budapest-2024-open-i/round-8/cAN0gyPi/4xVVeotf)"
+     }
     ]
    },
    {
@@ -1768,6 +2123,13 @@
     "reviewed": true,
     "tags": [
      "Pawns"
+    ],
+    "examples": [
+     {
+      "fen": "r3kb1r/p2p1ppp/nq2pn2/2pP2B1/8/2N2N2/PP3PPP/R2Q1RK1 b kq - 3 11",
+      "caption": "Punished greed. Black (move 11) can win a pawn with 11...Qxb2. But the queen leaves the centre while the king is still on e8 and the rook and bishop are undeveloped. White gets Na4 and Rab1 with tempo, and the engine jumps from about +0.8 to +5.5. A pawn is only worth taking when it is safe; 11...Be7 was better.",
+      "source": "Prohaszka, Peter vs Aoshima, Mirai, 45th FIDE Olympiad Budapest 2024, Open (https://lichess.org/broadcast/45th-chess-olympiad-budapest-2024-open-i/round-4/6wJduA1I/VQWrIkki)"
+     }
     ]
    },
    {
@@ -1821,6 +2183,13 @@
     "tags": [
      "Defence",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "2rq1rk1/1p2ppbp/p2pbnp1/4n1B1/4P3/1NN1Q2P/PPP1BPP1/1K1R3R b - - 0 13",
+      "caption": "Black to move (13). Counting material says 13...Rxc3 is a mistake: a rook for a knight. Counting activity says otherwise. After bxc3 White's rooks are shut in behind their own pawns and a broken queenside, while Black keeps both knights and both bishops on active squares. The engine rates Rxc3 as best, about -0.9 for White.",
+      "source": "Esipenko, Andrey vs Caruana, Fabiano, FIDE Candidates 2026, round 14 (https://lichess.org/broadcast/fide-candidates-2026-open/round-14/oBkeHnpi/gi2VX6NQ)"
+     }
     ]
    }
   ]
@@ -1928,6 +2297,13 @@
      "Tactics",
      "Attack",
      "Pawns"
+    ],
+    "examples": [
+     {
+      "fen": "3r1k2/1pn1rppp/2p5/p7/Pn1pPP1P/1PN2B2/1P1R1KP1/3R4 w - - 0 30",
+      "caption": "Punished violation. White (move 30) pushes 30.e5?, but Black's knight on c7 can hop to e6, right in front of the pawn. The blockade stops the pawn mass and e5 becomes something to defend. The engine puts quiet moves like Rxd4 or Ne2 near -0.5; after e5 Ne6 it is about -1.5. Check the knight's landing square first.",
+      "source": "Bartel, Mateusz vs Sosa, Tomas, 45th FIDE Olympiad Budapest 2024, Open (https://lichess.org/broadcast/45th-chess-olympiad-budapest-2024-open-i/round-3/5tLXKIAf/sBxTa1gc)"
+     }
     ]
    },
    {
@@ -2005,6 +2381,13 @@
     "tags": [
      "Tactics",
      "Attack"
+    ],
+    "examples": [
+     {
+      "fen": "r6r/pb2kp2/4pN1p/np2q1P1/3p2Q1/P7/1PP1B1PP/R4RK1 w - - 0 22",
+      "caption": "White to move (22). Hasty tries such as Qh5 or Qg3 trade queens or get parried, and the engine rates them around -1. White instead plays the calm 22.g6, undermining the king's cover and keeping every piece for the next phase (Bf3, Rae1 follow). It is the only move that keeps an edge, about +1.4.",
+      "source": "Mastrovasilis, Dimitrios vs Banh Gia Huy, 46th FIDE Olympiad Samarkand 2026, Open (https://lichess.org/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-13-37/round-3/3xi4XaHj/3d0U2Wmq)"
+     }
     ]
    },
    {
@@ -2019,6 +2402,13 @@
      "King safety",
      "Tactics",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "8/7k/3r1bp1/1p5p/1P2p3/2N1Qq1P/2P2P2/5KR1 w - - 1 38",
+      "caption": "Punished violation. White (move 38) grabs the pawn with 38.Qxe4?? and forgets the rook on d6, far away on the open d-file, aimed at d1 where the king and rook are stuck on the back rank. Black plays ...Rd1+, the knight must take, and the queen on e4 falls. Safe was 38.Rg3 (engine 0.00).",
+      "source": "Caruana, Fabiano vs Nakamura, Hikaru, Norway Chess 2024 (https://lichess.org/broadcast/norway-chess-2024-open/round-1/I9TLGEOt/hkSR1sG5)"
+     }
     ]
    },
    {
@@ -2055,6 +2445,13 @@
      "King safety",
      "Pieces",
      "Trades"
+    ],
+    "examples": [
+     {
+      "fen": "4r3/2q3kp/p2p2p1/3Bp3/8/1P2Q1PP/P4P2/2B3K1 w - - 6 34",
+      "caption": "Applied well. White (move 34) still has both bishops while Black has no bishop at all, so the dark squares around the Black king (g5, h6, f6) have no defender. 34.Qh6+ steps in, and after ...Kh8 the dark-squared bishop follows with Bg5 (engine +6.4). White did not rush; the dark squares were taken one by one.",
+      "source": "Petkov, Momchil vs Momin, Fayzan, 45th FIDE Olympiad Budapest 2024, Open (https://lichess.org/broadcast/45th-chess-olympiad-budapest-2024-open-i/round-1/XJ8g9CkA/gGtV0S7D)"
+     }
     ]
    },
    {
@@ -2070,6 +2467,13 @@
      "Attack",
      "Pieces",
      "Space and plans"
+    ],
+    "examples": [
+     {
+      "fen": "4r3/p2b1k1p/3P2pB/2p2p2/qp5Q/6P1/1P3P1P/4R1K1 w - - 0 30",
+      "caption": "Applied well. White's bishop on h6 is dark-squared; Black's bishop on d7 is light-squared, so it can never contest the dark squares around the king, and White's bishop acts like an extra attacker. White (move 30) plays 30.Re7+ Kg8 31.Qc4+ Kh8 32.Bg7#. Engine: mate in four, the best move.",
+      "source": "Alekhine, Alexander vs Baljet, Lindenaar, simultaneous display, Bandung, 1933 (pgnmentor.com/players/Alekhine.zip)"
+     }
     ]
    },
    {
@@ -2105,6 +2509,13 @@
      "Attack",
      "Defence",
      "Pawns"
+    ],
+    "examples": [
+     {
+      "fen": "rnbqk2r/ppp2ppp/5n2/3p2B1/1b1P4/2N5/PP2PPPP/R2QKBNR w KQkq - 2 6",
+      "caption": "Applied well. Black's bishop on b4 pins the knight on c3, but it is the only Black piece involved; the rest of the army is still at home. White (move 6) counts attackers, stays calm and simply develops with 6.Nf3. The engine keeps White fractionally ahead (about +0.2). A single pinning piece is not an attack.",
+      "source": "Gukesh D vs Carlsen, Magnus, Norway Chess 2026, Open (https://lichess.org/broadcast/norway-chess-2026-open/round-4/qm5sMu4C/umjqU9Ty)"
+     }
     ]
    },
    {
@@ -2119,6 +2530,13 @@
      "Attack",
      "Pieces",
      "Trades"
+    ],
+    "examples": [
+     {
+      "fen": "7k/p1p1rbp1/2P5/b1qB1p2/2P2P1p/3Q4/P3N1PP/5R1K b - - 3 28",
+      "caption": "Applied well. White's pressure rests on very few pieces: the bishop on d5, backed by the pawn on c6, and the queen. Black (move 28) simply trades the key attacker with 28...Bxd5. After cxd5 the pressure is gone and Black's rook and queen take over the open files; the engine gives 0.00, the best move.",
+      "source": "Avila Pavas, Santiago vs Zilka, Stepan, 45th FIDE Olympiad Budapest 2024, Open (https://lichess.org/broadcast/45th-chess-olympiad-budapest-2024-open-i/round-7/CphdUotb/GdMw0NOa)"
+     }
     ]
    },
    {
@@ -2175,6 +2593,13 @@
      "Defence",
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "2r1rbk1/5p1p/p4p2/1pPqp3/1P1N4/4B2P/1P2QPP1/3R2K1 w - - 0 24",
+      "caption": "White (move 24) is a full exchange down: Black has two rooks against one. But count the pieces that can play. Black's rooks on c8 and e8 and the bishop on f8 are boxed in, while White's queen, rook, knight and bishop all aim at the king. 24.Nf5 keeps the pressure; the engine still gives White about +1.8.",
+      "source": "Nakamura, Hikaru vs Firouzja, Alireza, FIDE Candidates 2022, round 10 (https://lichess.org/broadcast/fide-candidates-tournament-2022/round-10/FWJYzJJJ/p6WTG2T6)"
+     }
     ]
    },
    {
@@ -2188,6 +2613,13 @@
     "tags": [
      "King safety",
      "Attack"
+    ],
+    "examples": [
+     {
+      "fen": "r3b3/pp2kp1p/3Rp2Q/qN3p2/1nB5/P5P1/5P1P/6K1 w - - 0 31",
+      "caption": "Applied well. White (move 31) has rook, queen, bishop and knight all aimed at the Black king on e7. Black's only nearby defender is the bishop on e8, with the queen and rook far away on the a-file. Count: four attackers against about one. Only now does White open the position with 31.Rxe6+! (engine +6.6).",
+      "source": "Kramnik, Vladimir vs Carlsen, Magnus, Sparkassen GM Dortmund, 2009 (pgnmentor.com/players/Carlsen.zip)"
+     }
     ]
    },
    {
@@ -2243,6 +2675,13 @@
      "Tactics",
      "Attack",
      "Pawns"
+    ],
+    "examples": [
+     {
+      "fen": "2bqk2r/b1r1np2/p2p3p/1p1Bp2n/1P2PPpB/3P4/3NN1PP/R2Q1R1K b k f3 0 23",
+      "caption": "Applied well. Black (move 23) is under pressure: the bishop on h4 pins the knight on e7 to the queen. 23...f6 puts a pawn on that line as an umbrella. It is guarded by the knight on h5, and it is safe as a target: after fxe5, ...dxe5. Engine: best move, about equal.",
+      "source": "Rapport, Richard vs Ding, Liren, FIDE Candidates 2022, round 10 (https://lichess.org/broadcast/fide-candidates-tournament-2022/round-10/FWJYzJJJ/MQbOh83j)"
+     }
     ]
    }
   ]
@@ -2368,6 +2807,13 @@
     "tags": [
      "Pawns",
      "Pieces"
+    ],
+    "examples": [
+     {
+      "fen": "3k4/1p4n1/8/3p4/3P2p1/2PB2K1/7P/8 w - - 0 41",
+      "caption": "Applied well, from White's side (move 41). White's bishop is light-squared and all White pawns (c3, d4, h2) stand on dark squares, so the knight cannot attack them. Black's pawns on b7, d5 and g4 all sit on light squares, in the bishop's line of fire. 41.Kxg4 wins one at once (engine about +4).",
+      "source": "Mattaaq, Egon vs Johnson, Nicholas, 46th FIDE Olympiad Samarkand 2026, Open (https://lichess.org/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-88/round-5/JqG93N2H/8gwyOzOl)"
+     }
     ]
    },
    {
@@ -2383,6 +2829,13 @@
      "Tactics",
      "Pieces",
      "Endgame technique"
+    ],
+    "examples": [
+     {
+      "fen": "8/k7/3K4/8/8/1Q6/8/8 w - - 15 95",
+      "caption": "White to move (move 95). The queen on b3 already walls off the b-file, so the Black king is boxed on the a-file. White brings the king up with 95.Kc6 and mate follows next move (96.Qb6# after ...Ka6). Pick moves that shrink the box and always check Black still has a legal move, so you avoid stalemate.",
+      "source": "Fofana, Aguibou vs Chottu, Melanie, 46th FIDE Olympiad Samarkand 2026, Open (https://lichess.org/broadcast/46th-fide-chess-olympiad-samarkand-2026-open-matches-88/round-4/qBGGiwfo/J8EPb9DK)"
+     }
     ]
    },
    {
