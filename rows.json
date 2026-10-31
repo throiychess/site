@@ -1,13 +1,174 @@
 {
-"generated": "2026-10-30T04:11:02Z",
-"start": "2026-08-02",
-"end": "2026-10-30",
+"generated": "2026-10-31T04:06:43Z",
+"start": "2026-08-03",
+"end": "2026-10-31",
 "rows": [
+{
+"kind": "daily",
+"key": "2026-10-26",
+"label": "2026-10-26",
+"value": 2,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-27",
+"label": "2026-10-27",
+"value": 44,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-28",
+"label": "2026-10-28",
+"value": 24,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-29",
+"label": "2026-10-29",
+"value": 5,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-30",
+"label": "2026-10-30",
+"value": 8,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-31",
+"label": "2026-10-31",
+"value": 0,
+"group": ""
+},
+{
+"kind": "page",
+"key": "/",
+"label": "Throiy Chess",
+"value": 34,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/traps/scholars-mate",
+"label": "Scholar's Mate: moves, mate and how to avoid it",
+"value": 8,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/support",
+"label": "Support",
+"value": 7,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/contact",
+"label": "Contact",
+"value": 7,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/shorts",
+"label": "All Shorts",
+"value": 6,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/videos",
+"label": "Videos",
+"value": 5,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/traps/fried-liver-attack",
+"label": "Fried Liver Attack: moves, mate and how to avoid it",
+"value": 3,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/blackburne-shilling-gambit",
+"label": "Blackburne Shilling Gambit: moves, mate and how to avoid it",
+"value": 2,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps",
+"label": "Trap library",
+"value": 2,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/traps/fishing-pole-trap",
+"label": "Fishing Pole Trap: moves, mate and how to avoid it",
+"value": 2,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/improve",
+"label": "Improve your chess: deeper analysis, puzzles and courses",
+"value": 1,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/analyze",
+"label": "Free chess game analyzer: find your biggest mistakes",
+"value": 1,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/free",
+"label": "Free: 10 Opening Traps Cheat Sheet",
+"value": 1,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/traps/stafford-gambit",
+"label": "Stafford Gambit: moves, mate and how to avoid it",
+"value": 1,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/lasker-trap",
+"label": "Lasker Trap: moves, mate and how to avoid it",
+"value": 1,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/legals-mate",
+"label": "Légal's Mate: moves, mate and how to avoid it",
+"value": 1,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/404.html",
+"label": "Page not found",
+"value": 1,
+"group": "Fout (404)"
+},
 {
 "kind": "source",
 "key": "(direct)",
 "label": "Direct of onbekend",
-"value": 35,
+"value": 37,
 "group": "Direct"
 },
 {
@@ -16,6 +177,13 @@
 "label": "urlscan.io",
 "value": 2,
 "group": "Bot of scanner"
+},
+{
+"kind": "source",
+"key": "Google",
+"label": "Google",
+"value": 1,
+"group": "Website"
 },
 {
 "kind": "source",
@@ -32,10 +200,17 @@
 "group": "Video"
 },
 {
+"kind": "source",
+"key": "smartlink",
+"label": "smartlink",
+"value": 1,
+"group": "Website"
+},
+{
 "kind": "country",
 "key": "NL",
 "label": "Netherlands",
-"value": 45,
+"value": 52,
 "group": ""
 },
 {
@@ -81,31 +256,45 @@
 "group": ""
 },
 {
+"kind": "country",
+"key": "BR",
+"label": "Brazil",
+"value": 1,
+"group": ""
+},
+{
+"kind": "country",
+"key": "RU",
+"label": "Russia",
+"value": 1,
+"group": ""
+},
+{
 "kind": "device",
 "key": "phone",
 "label": "Telefoon",
-"value": 13,
+"value": 16,
 "group": ""
 },
 {
 "kind": "device",
 "key": "tablet",
 "label": "Tablet",
-"value": 8,
+"value": 9,
 "group": ""
 },
 {
 "kind": "device",
 "key": "desktop",
 "label": "Computer",
-"value": 54,
+"value": 59,
 "group": ""
 },
 {
 "kind": "browser",
 "key": "Chrome",
 "label": "Chrome",
-"value": 43,
+"value": 49,
 "group": ""
 },
 {
@@ -119,28 +308,28 @@
 "kind": "browser",
 "key": "Safari",
 "label": "Safari",
-"value": 12,
+"value": 15,
 "group": ""
 },
 {
 "kind": "system",
 "key": "Windows",
 "label": "Windows",
-"value": 53,
+"value": 58,
 "group": ""
 },
 {
 "kind": "system",
 "key": "iOS",
 "label": "iOS",
-"value": 12,
+"value": 15,
 "group": ""
 },
 {
 "kind": "system",
 "key": "Linux",
 "label": "Linux",
-"value": 9,
+"value": 10,
 "group": ""
 },
 {
@@ -151,16 +340,23 @@
 "group": ""
 },
 {
+"kind": "campaign",
+"key": "70290",
+"label": "bio",
+"value": 1,
+"group": ""
+},
+{
 "kind": "meta",
 "key": "generated",
-"label": "2026-10-30T04:11:02Z",
+"label": "2026-10-31T04:06:43Z",
 "value": 0,
 "group": ""
 },
 {
 "kind": "meta",
 "key": "start",
-"label": "2026-08-02",
+"label": "2026-08-03",
 "value": 0,
 "group": ""
 }
