@@ -3,7 +3,7 @@
   var $ = function (s) { return document.querySelector(s); };
   var esc = function (t) { return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, detectSessionInUrl: false } });
-  var root = $("#adm"), D = {}, tab = "users", q = "";
+  var root = $("#adm"), D = {}, tab = "users", q = "", T = null;
   function fmt(d) { if (!d) return "-"; var x = new Date(d); return x.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }) + " " + x.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }); }
   function msg(h) { root.innerHTML = "<div class=\"acard\">" + h + "</div>"; }
   function kpi(l, v, s) { return "<div class=\"kpi\"><small>" + l + "</small><b>" + v + "</b>" + (s ? "<span>" + s + "</span>" : "") + "</div>"; }
@@ -23,11 +23,20 @@
     if (tab === "feedback") return table([["When", function (r) { return fmt(r.created_at); }], ["Type", function (r) { return esc(r.kind || r.context || ""); }], ["Rating", function (r) { return r.rating == null ? "-" : r.rating; }], ["Page", function (r) { return esc(r.page || ""); }], ["Message", function (r) { return esc(r.message || ""); }]], rows);
     return table([["When", function (r) { return fmt(r.created_at); }], ["User", function (r) { return esc(r.email || ""); }], ["Player", function (r) { return esc((r.site || "") + " " + (r.username || "")); }], ["Games", function (r) { return r.games; }], ["Accuracy", function (r) { return r.accuracy == null ? "-" : r.accuracy; }], ["Blunders", function (r) { return r.blunders; }], ["Band", function (r) { return esc(r.band || ""); }], ["Top leak", function (r) { return esc(r.top_leak || ""); }]], rows);
   }
+  function traffic() {
+    var h = "<div class=\"acard\"><h3>Website traffic, last 30 days</h3>";
+    if (!T) return h + "<p class=\"mut\">Loading&hellip;</p></div>";
+    if (T.error === "no_token") return h + "<p class=\"mut\">Not connected yet. Add the secret GOATCOUNTER_TOKEN in Supabase (Edge Functions &rarr; Secrets), then reload.</p></div>";
+    if (T.error) return h + "<p class=\"mut\">Could not load traffic (" + esc(T.error) + ").</p></div>";
+    var tot = T.total || {}, pages = ((T.hits || {}).hits || []).filter(function (x) { return !x.event; }).slice(0, 10), ev = ((T.events || {}).hits || []).filter(function (x) { return x.event; }).slice(0, 12), refs = ((T.refs || {}).stats || []).slice(0, 8);
+    var list = function (a, f) { return a.length ? a.map(f).join("") : "<p class=\"mut\">Nothing yet.</p>"; };
+    return h + "<div class=\"kpis\" style=\"grid-template-columns:repeat(3,1fr);margin:0 0 12px\">" + kpi("Visitors", tot.total != null ? tot.total : "-") + kpi("Events", tot.total_events != null ? tot.total_events : "-") + kpi("Top page", pages[0] ? esc(pages[0].path) : "-") + "</div><div class=\"two\" style=\"grid-template-columns:1fr 1fr 1fr\"><div><h3>Top pages</h3>" + list(pages, function (x) { return "<div class=\"lk\"><span>" + esc(x.path) + "</span><b>" + x.count + "</b></div>"; }) + "</div><div><h3>Where they come from</h3>" + list(refs, function (x) { return "<div class=\"lk\"><span>" + esc(x.name || "Direct") + "</span><b>" + x.count + "</b></div>"; }) + "</div><div><h3>Events</h3>" + list(ev, function (x) { return "<div class=\"lk\"><span>" + esc(x.path) + "</span><b>" + x.count + "</b></div>"; }) + "</div></div></div>";
+  }
   function draw() {
     var o = D.o, pl = o.plans || {};
     root.innerHTML = "<div class=\"kpis\">" + kpi("Members", o.users, "+" + o.new7 + " this week") + kpi("Active (7 days)", o.active7) + kpi("Premium", pl.premium || 0, (pl.free || 0) + " free") + kpi("Reports run", o.analyses, "+" + o.analyses7 + " this week") + kpi("Feedback", o.feedback, "+" + o.feedback7 + " this week" + (o.avg_rating ? " &middot; avg " + o.avg_rating : "")) + "</div>" +
       "<div class=\"two\"><div class=\"acard\"><h3>New members, last 30 days</h3>" + chart(o.signups || []) + "</div><div class=\"acard\"><h3>Top leaks found</h3>" + ((o.leaks || []).length ? (o.leaks || []).map(function (l) { return "<div class=\"lk\"><span>" + esc(l.leak) + "</span><b>" + l.n + "</b></div>"; }).join("") : "<p class=\"mut\">No reports yet.</p>") + "</div></div>" +
-      "<div class=\"acard\"><div class=\"bar\"><div class=\"tabs\">" + [["users", "Members"], ["feedback", "Feedback"], ["analyses", "Reports"]].map(function (t) { return "<button type=\"button\" data-t=\"" + t[0] + "\" class=\"" + (tab === t[0] ? "on" : "") + "\">" + t[1] + " (" + (D[t[0]] || []).length + ")</button>"; }).join("") + "</div><input id=\"aq\" type=\"search\" placeholder=\"Search\" value=\"" + esc(q) + "\"><button type=\"button\" id=\"acsv\" class=\"gb\">Export CSV</button><a class=\"gb\" href=\"https://throiychess.goatcounter.com\" target=\"_blank\" rel=\"noopener\">Site analytics &rarr;</a></div><div id=\"abody\">" + body() + "</div></div>";
+      traffic() + "<div class=\"acard\"><div class=\"bar\"><div class=\"tabs\">" + [["users", "Members"], ["feedback", "Feedback"], ["analyses", "Reports"]].map(function (t) { return "<button type=\"button\" data-t=\"" + t[0] + "\" class=\"" + (tab === t[0] ? "on" : "") + "\">" + t[1] + " (" + (D[t[0]] || []).length + ")</button>"; }).join("") + "</div><input id=\"aq\" type=\"search\" placeholder=\"Search\" value=\"" + esc(q) + "\"><button type=\"button\" id=\"acsv\" class=\"gb\">Export CSV</button><a class=\"gb\" href=\"https://throiychess.goatcounter.com\" target=\"_blank\" rel=\"noopener\">GoatCounter &rarr;</a></div><div id=\"abody\">" + body() + "</div></div>";
   }
   root.addEventListener("click", function (e) {
     var t = e.target.closest("[data-t]"), p = e.target.closest(".pl");
@@ -40,6 +49,7 @@
     Promise.all([sb.rpc("admin_overview"), sb.rpc("admin_users", { lim: 500 }), sb.rpc("admin_feedback", { lim: 500 }), sb.rpc("admin_analyses", { lim: 300 })]).then(function (r) {
       if (r[0].error) { msg("<h3>No access</h3><p>This account is not an admin.</p>"); return; }
       D = { o: r[0].data, users: r[1].data || [], feedback: r[2].data || [], analyses: r[3].data || [] }; draw();
+      sb.functions.invoke("goatcounter-stats").then(function (x) { T = x.error ? { error: "unavailable" } : (x.data || { error: "empty" }); draw(); });
     });
   }
   sb.auth.getSession().then(function (s) {
