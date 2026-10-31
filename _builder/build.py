@@ -908,6 +908,7 @@ PR_CSS = """
 .pp h1{font-size:clamp(30px,4.6vw,50px);line-height:1.06;margin:10px 0 12px}
 .pidea{border-left:3px solid var(--gold);padding:4px 0 4px 20px;font-size:21px;line-height:1.5;color:var(--ink);margin:20px 0 26px}
 .pex{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;margin:0 0 16px}
+.xb{align-items:start}.xbl{min-width:0}.xbd svg{display:block;width:100%;height:auto}.xbc{display:flex;gap:6px;margin-top:10px}.xbc button{flex:1;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 0;font-size:18px;cursor:pointer;line-height:1}.xbc button:hover{border-color:var(--gold)}.xbc .eng{flex:2.4;font-size:13px;font-weight:700;letter-spacing:.03em}.xbc .eng.on{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}.xbv{margin-top:10px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;line-height:1.45}.xbv .bar{height:8px;border-radius:4px;background:#111;overflow:hidden;margin-bottom:8px;border:1px solid var(--line)}.xbv .bar i{display:block;height:100%;background:#f4f4f4}.xbv small{color:var(--mute)}.xbm{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}.xbm .mv{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:5px 9px;font-size:14px;cursor:pointer}.xbm .mv i{font-style:normal;color:var(--mute);margin-right:4px}.xbm .mv.pre{color:var(--mute)}.xbm .mv.key{border-color:var(--gold)}.xbm .mv.on{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}.xbm .mv.on i{color:var(--on-gold)}
 .pex .cap{font-size:16.5px;line-height:1.6}.pex .src{font-size:13px;color:var(--mute);margin-top:10px}
 .ptry{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 24px;display:grid;grid-template-columns:44px 1fr;gap:16px;margin:0 0 16px}.ptry p{margin:0;font-size:17px;line-height:1.6}
 .pnav{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:26px 0}
@@ -990,6 +991,28 @@ def board_svg(fen, flip=False):
     return s.replace('">', '">' + bg, 1) + "</svg>"
 
 
+def example_html(q):
+    cap = f'<div class="cap">{e(q["caption"])}</div>' + (f'<div class="src">Source: {e(q["source"])}</div>' if q.get("source") else '')
+    m = q.get("moves")
+    if not m:
+        return f'<div class="pex"><div>{board_svg(q["fen"])}</div><div>{cap}</div></div>'
+    st = m["start"].split(); white = st[1] == "w"; n = int(st[5]); pills = ""
+    for i, s in enumerate(m["sans"]):
+        w = (i % 2 == 0) == white
+        if w: num = f"{n}." ; 
+        else: num = f"{n}..." if i == 0 else ""
+        if not w: n += 1
+        cls = "mv" + (" key" if i == m["at"] else "") + (" pre" if i < m["at"] else "") + (" on" if i + 1 == m["at"] else "")
+        pills += f'<button type="button" class="{cls}" data-i="{i+1}">{(f"<i>{num}</i>" if num else "")}{e(s)}</button>'
+        if w and False: pass
+    data = e(json.dumps({"f": m["f"], "u": m["u"], "at": m["at"]}, separators=(",", ":")))
+    return (f'<div class="pex xb" data-m="{data}"><div class="xbl"><div class="xbd">{board_svg(m["f"][m["at"]])}</div>'
+            f'<div class="xbc"><button type="button" data-a="start" aria-label="Start">&laquo;</button><button type="button" data-a="prev" aria-label="Previous move">&lsaquo;</button><button type="button" data-a="next" aria-label="Next move">&rsaquo;</button><button type="button" data-a="end" aria-label="End">&raquo;</button>'
+            f'<button type="button" class="eng" data-a="eng">Live analysis</button></div><div class="xbv" hidden></div></div>'
+            f'<div><div class="xbm" aria-label="Moves from the game">{pills}</div>{cap}</div></div>')
+
+
+
 def principle_page(group, x):
     flat = [y for g in PRINCIPLES for y in g["items"] if not y.get("draft")]
     ix = [i for i, y in enumerate(flat) if y["slug"] == x["slug"]][0]
@@ -999,7 +1022,7 @@ def principle_page(group, x):
     pv, nx = (flat[ix-1] if ix else None), (flat[ix+1] if ix < len(flat) - 1 else None)
     pn = (f'<a href="/principles/{pv["slug"]}/"><small>&larr; Previous</small>{e(pv["title"])}</a>' if pv else "<span></span>") + (f'<a class="r" href="/principles/{nx["slug"]}/"><small>Next &rarr;</small>{e(nx["title"])}</a>' if nx else "<span></span>")
     t0 = (x.get("tags") or ["General"])[0]
-    exs = "".join(f'<div class="pex"><div>{board_svg(q["fen"])}</div><div><div class="cap">{e(q["caption"])}</div>' + (f'<div class="src">Source: {e(q["source"])}</div>' if q.get("source") else '') + '</div></div>' for q in x.get("examples", []))
+    exs = "".join(example_html(q) for q in x.get("examples", []))
     scen = ""
     if x.get("scenario"):
         sct = x["scenario"]
