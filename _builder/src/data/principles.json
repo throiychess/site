@@ -372,48 +372,48 @@
     ],
     "examples": [
      {
-      "fen": "r1bqk2r/ppp2ppp/2n5/3n4/2BP4/5N2/PP1N1PPP/R2Q1RK1 b kq - 1 10",
-      "caption": "Black to move (move 10). The king is still on e8 and Black can castle. 10...O-O is the strongest move and keeps the position equal. Black played 10...Nf6? instead; after 11.Re1+ the king is stuck in the centre and White is much better.",
-      "source": "",
+      "fen": "r2qk2r/2p1bppp/p1np1n2/1p6/3pP3/1BP3QP/PP3PP1/RNB1R1K1 b kq - 1 12",
+      "caption": "Black to move (move 12). Black has not castled yet, and White has just opened the centre. Black played Kf8, which loses the right to castle and leaves the king stuck in the middle, while simply castling kept the game level. White is now clearly better and attacks the exposed king.",
+      "source": "Mikhail Tal vs Alfredo Olivera, Olympiad, Havana 1966 (https://www.pgnmentor.com/players/Tal.zip)",
       "moves": {
-       "start": "r1bqk2r/pppp1ppp/2n2n2/8/1bBPP3/5N2/PP1B1PPP/RN1QK2R b KQkq - 2 7",
+       "start": "r2qk2r/2p1bppp/p1np1n2/1p2p3/4P1b1/1BP2N1P/PP1P1PP1/RNBQR1K1 b kq - 0 9",
        "sans": [
-        "Bxd2+",
-        "Nbxd2",
-        "d5",
-        "exd5",
-        "Nxd5",
-        "O-O",
-        "Nf6",
-        "Re1+",
+        "Bh5",
+        "d4",
+        "Bxf3",
+        "Qxf3",
+        "exd4",
+        "Qg3",
         "Kf8",
-        "Ne5"
+        "Qd3",
+        "dxc3",
+        "Nxc3"
        ],
        "at": 6,
        "f": [
-        "r1bqk2r/pppp1ppp/2n2n2/8/1bBPP3/5N2/PP1B1PPP/RN1QK2R b KQkq - 0 1",
-        "r1bqk2r/pppp1ppp/2n2n2/8/2BPP3/5N2/PP1b1PPP/RN1QK2R w KQkq - 0 1",
-        "r1bqk2r/pppp1ppp/2n2n2/8/2BPP3/5N2/PP1N1PPP/R2QK2R b KQkq - 0 1",
-        "r1bqk2r/ppp2ppp/2n2n2/3p4/2BPP3/5N2/PP1N1PPP/R2QK2R w KQkq - 0 1",
-        "r1bqk2r/ppp2ppp/2n2n2/3P4/2BP4/5N2/PP1N1PPP/R2QK2R b KQkq - 0 1",
-        "r1bqk2r/ppp2ppp/2n5/3n4/2BP4/5N2/PP1N1PPP/R2QK2R w KQkq - 0 1",
-        "r1bqk2r/ppp2ppp/2n5/3n4/2BP4/5N2/PP1N1PPP/R2Q1RK1 b kq - 0 1",
-        "r1bqk2r/ppp2ppp/2n2n2/8/2BP4/5N2/PP1N1PPP/R2Q1RK1 w kq - 0 1",
-        "r1bqk2r/ppp2ppp/2n2n2/8/2BP4/5N2/PP1N1PPP/R2QR1K1 b kq - 0 1",
-        "r1bq1k1r/ppp2ppp/2n2n2/8/2BP4/5N2/PP1N1PPP/R2QR1K1 w - - 0 1",
-        "r1bq1k1r/ppp2ppp/2n2n2/4N3/2BP4/8/PP1N1PPP/R2QR1K1 b - - 0 1"
+        "r2qk2r/2p1bppp/p1np1n2/1p2p3/4P1b1/1BP2N1P/PP1P1PP1/RNBQR1K1 b kq - 0 9",
+        "r2qk2r/2p1bppp/p1np1n2/1p2p2b/4P3/1BP2N1P/PP1P1PP1/RNBQR1K1 w kq - 1 10",
+        "r2qk2r/2p1bppp/p1np1n2/1p2p2b/3PP3/1BP2N1P/PP3PP1/RNBQR1K1 b kq - 0 10",
+        "r2qk2r/2p1bppp/p1np1n2/1p2p3/3PP3/1BP2b1P/PP3PP1/RNBQR1K1 w kq - 0 11",
+        "r2qk2r/2p1bppp/p1np1n2/1p2p3/3PP3/1BP2Q1P/PP3PP1/RNB1R1K1 b kq - 0 11",
+        "r2qk2r/2p1bppp/p1np1n2/1p6/3pP3/1BP2Q1P/PP3PP1/RNB1R1K1 w kq - 0 12",
+        "r2qk2r/2p1bppp/p1np1n2/1p6/3pP3/1BP3QP/PP3PP1/RNB1R1K1 b kq - 1 12",
+        "r2q1k1r/2p1bppp/p1np1n2/1p6/3pP3/1BP3QP/PP3PP1/RNB1R1K1 w - - 2 13",
+        "r2q1k1r/2p1bppp/p1np1n2/1p6/3pP3/1BPQ3P/PP3PP1/RNB1R1K1 b - - 3 13",
+        "r2q1k1r/2p1bppp/p1np1n2/1p6/4P3/1BpQ3P/PP3PP1/RNB1R1K1 w - - 0 14",
+        "r2q1k1r/2p1bppp/p1np1n2/1p6/4P3/1BNQ3P/PP3PP1/R1B1R1K1 b - - 0 14"
        ],
        "u": [
-        "b4d2",
-        "b1d2",
-        "d7d5",
-        "e4d5",
-        "f6d5",
-        "e1g1",
-        "d5f6",
-        "f1e1",
+        "g4h5",
+        "d2d4",
+        "h5f3",
+        "d1f3",
+        "e5d4",
+        "f3g3",
         "e8f8",
-        "f3e5"
+        "g3d3",
+        "d4c3",
+        "b1c3"
        ]
       }
      }
@@ -561,48 +561,48 @@
     ],
     "examples": [
      {
-      "fen": "r1bqkbnr/pp3ppp/4p3/3pn3/6Q1/2N5/PPP2PPP/R1B1KBNR w KQkq - 0 7",
-      "caption": "White to move (move 7). White's queen came out early with 5.Qxd4, was hit by ...Nc6, went to g4 and was hit again after ...Nxe5, which also won a pawn. White has no minor piece developed and Black's knight is centralised. Black is much better.",
-      "source": "",
+      "fen": "r1bqkbnr/pp1ppppp/2n5/8/3Q4/2N5/PPP1PPPP/R1B1KBNR w KQkq - 1 4",
+      "caption": "White to move (move 4). White has already taken on d4 with the queen and now moves it again with Qh4, while no other piece is developed. Black can bring out pieces with tempo against the exposed queen, so Black gets the better game. Developing the knights and bishops first is the safer way to start.",
+      "source": "Alexander Morozevich vs Garry Kasparov, Fujitsu-Siemens Giants, Frankfurt 2000 (https://www.pgnmentor.com/players/Kasparov.zip)",
       "moves": {
-       "start": "rnbqkbnr/pp3ppp/4p3/2ppP3/8/2N5/PPPP1PPP/R1BQKBNR w KQkq - 0 4",
+       "start": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
        "sans": [
+        "Nc3",
+        "c5",
         "d4",
         "cxd4",
         "Qxd4",
         "Nc6",
-        "Qg4",
-        "Nxe5",
-        "Qf4",
-        "Bd6",
-        "Nge2",
-        "Nd3+"
+        "Qh4",
+        "Nf6",
+        "Nf3",
+        "d5"
        ],
        "at": 6,
        "f": [
-        "rnbqkbnr/pp3ppp/4p3/2ppP3/8/2N5/PPPP1PPP/R1BQKBNR w KQkq - 0 1",
-        "rnbqkbnr/pp3ppp/4p3/2ppP3/3P4/2N5/PPP2PPP/R1BQKBNR b KQkq - 0 1",
-        "rnbqkbnr/pp3ppp/4p3/3pP3/3p4/2N5/PPP2PPP/R1BQKBNR w KQkq - 0 1",
-        "rnbqkbnr/pp3ppp/4p3/3pP3/3Q4/2N5/PPP2PPP/R1B1KBNR b KQkq - 0 1",
-        "r1bqkbnr/pp3ppp/2n1p3/3pP3/3Q4/2N5/PPP2PPP/R1B1KBNR w KQkq - 0 1",
-        "r1bqkbnr/pp3ppp/2n1p3/3pP3/6Q1/2N5/PPP2PPP/R1B1KBNR b KQkq - 0 1",
-        "r1bqkbnr/pp3ppp/4p3/3pn3/6Q1/2N5/PPP2PPP/R1B1KBNR w KQkq - 0 1",
-        "r1bqkbnr/pp3ppp/4p3/3pn3/5Q2/2N5/PPP2PPP/R1B1KBNR b KQkq - 0 1",
-        "r1bqk1nr/pp3ppp/3bp3/3pn3/5Q2/2N5/PPP2PPP/R1B1KBNR w KQkq - 0 1",
-        "r1bqk1nr/pp3ppp/3bp3/3pn3/5Q2/2N5/PPP1NPPP/R1B1KB1R b KQkq - 0 1",
-        "r1bqk1nr/pp3ppp/3bp3/3p4/5Q2/2Nn4/PPP1NPPP/R1B1KB1R w KQkq - 0 1"
+        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1",
+        "rnbqkbnr/pp1ppppp/8/2p5/8/2N5/PPPPPPPP/R1BQKBNR w KQkq - 0 2",
+        "rnbqkbnr/pp1ppppp/8/2p5/3P4/2N5/PPP1PPPP/R1BQKBNR b KQkq - 0 2",
+        "rnbqkbnr/pp1ppppp/8/8/3p4/2N5/PPP1PPPP/R1BQKBNR w KQkq - 0 3",
+        "rnbqkbnr/pp1ppppp/8/8/3Q4/2N5/PPP1PPPP/R1B1KBNR b KQkq - 0 3",
+        "r1bqkbnr/pp1ppppp/2n5/8/3Q4/2N5/PPP1PPPP/R1B1KBNR w KQkq - 1 4",
+        "r1bqkbnr/pp1ppppp/2n5/8/7Q/2N5/PPP1PPPP/R1B1KBNR b KQkq - 2 4",
+        "r1bqkb1r/pp1ppppp/2n2n2/8/7Q/2N5/PPP1PPPP/R1B1KBNR w KQkq - 3 5",
+        "r1bqkb1r/pp1ppppp/2n2n2/8/7Q/2N2N2/PPP1PPPP/R1B1KB1R b KQkq - 4 5",
+        "r1bqkb1r/pp2pppp/2n2n2/3p4/7Q/2N2N2/PPP1PPPP/R1B1KB1R w KQkq - 0 6"
        ],
        "u": [
+        "b1c3",
+        "c7c5",
         "d2d4",
         "c5d4",
         "d1d4",
         "b8c6",
-        "d4g4",
-        "c6e5",
-        "g4f4",
-        "f8d6",
-        "g1e2",
-        "e5d3"
+        "d4h4",
+        "g8f6",
+        "g1f3",
+        "d7d5"
        ]
       }
      }
@@ -947,48 +947,39 @@
     ],
     "examples": [
      {
-      "fen": "r1bqkb1r/pppp1p1p/2n2np1/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 2 5",
-      "caption": "White to move (move 5). White went for a quick attack on f7 with Qh5 and Bc4. Black answered with ...Nc6, ...g6 (hitting the queen) and ...Nf6, blocking the f-file, so White has only a bishop and a queen out. Black is slightly better, even with White's best play.",
-      "source": "",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+      "caption": "Black to move (move 2). Black tries the Latvian Gambit with f5, hoping to confuse White with an early trick. It weakens the king and does not help development, so White simply takes the pawn on e5 and is clearly better. Solid moves like Nc6 or Nf6 give Black a healthy game.",
+      "source": "Rudolf Spielmann vs Aaron Nimzowitsch, Semmering 1926 (https://www.pgnmentor.com/players/Nimzowitsch.zip)",
       "moves": {
-       "start": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+       "start": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
        "sans": [
-        "Qh5",
-        "Nc6",
-        "Bc4",
-        "g6",
-        "Qf3",
-        "Nf6",
-        "c3",
-        "Bg7",
-        "Nh3",
-        "O-O"
+        "e4",
+        "e5",
+        "Nf3",
+        "f5",
+        "Nxe5",
+        "Qf6",
+        "d4"
        ],
-       "at": 6,
+       "at": 3,
        "f": [
-        "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1",
-        "rnbqkbnr/pppp1ppp/8/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 0 1",
-        "r1bqkbnr/pppp1ppp/2n5/4p2Q/4P3/8/PPPP1PPP/RNB1KBNR w KQkq - 0 1",
-        "r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 0 1",
-        "r1bqkbnr/pppp1p1p/2n3p1/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 0 1",
-        "r1bqkbnr/pppp1p1p/2n3p1/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR b KQkq - 0 1",
-        "r1bqkb1r/pppp1p1p/2n2np1/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 0 1",
-        "r1bqkb1r/pppp1p1p/2n2np1/4p3/2B1P3/2P2Q2/PP1P1PPP/RNB1K1NR b KQkq - 0 1",
-        "r1bqk2r/pppp1pbp/2n2np1/4p3/2B1P3/2P2Q2/PP1P1PPP/RNB1K1NR w KQkq - 0 1",
-        "r1bqk2r/pppp1pbp/2n2np1/4p3/2B1P3/2P2Q1N/PP1P1PPP/RNB1K2R b KQkq - 0 1",
-        "r1bq1rk1/pppp1pbp/2n2np1/4p3/2B1P3/2P2Q1N/PP1P1PPP/RNB1K2R w KQ - 0 1"
+        "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1",
+        "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+        "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+        "rnbqkbnr/pppp2pp/8/4pp2/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3",
+        "rnbqkbnr/pppp2pp/8/4Np2/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3",
+        "rnb1kbnr/pppp2pp/5q2/4Np2/4P3/8/PPPP1PPP/RNBQKB1R w KQkq - 1 4",
+        "rnb1kbnr/pppp2pp/5q2/4Np2/3PP3/8/PPP2PPP/RNBQKB1R b KQkq - 0 4"
        ],
        "u": [
-        "d1h5",
-        "b8c6",
-        "f1c4",
-        "g7g6",
-        "h5f3",
-        "g8f6",
-        "c2c3",
-        "f8g7",
-        "g1h3",
-        "e8g8"
+        "e2e4",
+        "e7e5",
+        "g1f3",
+        "f7f5",
+        "f3e5",
+        "d8f6",
+        "d2d4"
        ]
       }
      }
@@ -1010,48 +1001,48 @@
     ],
     "examples": [
      {
-      "fen": "r2qkb1r/ppp2ppp/2n2n2/3ppb2/8/PP4PP/2PPPPB1/RNBQK1NR w KQkq - 1 6",
-      "caption": "White to move (move 6). Four of White's five moves were flank pawn moves (a3, h3, g3, b3). Black meanwhile took the centre with ...d5 and ...e5 and developed both knights and a bishop. Black is clearly better.",
-      "source": "",
+      "fen": "r1bqr1k1/pppp1pbp/2n2np1/4p3/1PP5/P1N1P3/1BQP1PPP/R3KBNR w KQ - 3 8",
+      "caption": "White to move (move 8). White has already pushed the a-pawn and the b-pawn (a3, b4) and now pushes the b-pawn again with b5 to chase the knight. The knight happily goes to a5 and the pawn on b5 becomes a target, while White's king and pieces are still not ready. Black ends up clearly better. A developing move such as Bd3 or Nge2 is a better use of the time.",
+      "source": "Anthony Miles vs Ljubomir Ljubojevic, Linares 1985 (https://www.pgnmentor.com/players/Ljubojevic.zip)",
       "moves": {
-       "start": "rnbqkbnr/ppp2ppp/8/3pp3/8/P6P/1PPPPPP1/RNBQKBNR w KQkq - 0 3",
+       "start": "r1bqkb1r/pppp1p1p/2n2np1/4p3/2P5/2N1P3/PPQP1PPP/R1B1KBNR w KQkq - 0 5",
        "sans": [
-        "g3",
-        "Nc6",
-        "Bg2",
-        "Nf6",
-        "b3",
-        "Bf5",
+        "a3",
+        "Bg7",
+        "b4",
+        "O-O",
         "Bb2",
-        "Bc5",
-        "d3",
-        "d4"
+        "Re8",
+        "b5",
+        "Na5",
+        "Nf3",
+        "c6"
        ],
        "at": 6,
        "f": [
-        "rnbqkbnr/ppp2ppp/8/3pp3/8/P6P/1PPPPPP1/RNBQKBNR w KQkq - 0 1",
-        "rnbqkbnr/ppp2ppp/8/3pp3/8/P5PP/1PPPPP2/RNBQKBNR b KQkq - 0 1",
-        "r1bqkbnr/ppp2ppp/2n5/3pp3/8/P5PP/1PPPPP2/RNBQKBNR w KQkq - 0 1",
-        "r1bqkbnr/ppp2ppp/2n5/3pp3/8/P5PP/1PPPPPB1/RNBQK1NR b KQkq - 0 1",
-        "r1bqkb1r/ppp2ppp/2n2n2/3pp3/8/P5PP/1PPPPPB1/RNBQK1NR w KQkq - 0 1",
-        "r1bqkb1r/ppp2ppp/2n2n2/3pp3/8/PP4PP/2PPPPB1/RNBQK1NR b KQkq - 0 1",
-        "r2qkb1r/ppp2ppp/2n2n2/3ppb2/8/PP4PP/2PPPPB1/RNBQK1NR w KQkq - 0 1",
-        "r2qkb1r/ppp2ppp/2n2n2/3ppb2/8/PP4PP/1BPPPPB1/RN1QK1NR b KQkq - 0 1",
-        "r2qk2r/ppp2ppp/2n2n2/2bppb2/8/PP4PP/1BPPPPB1/RN1QK1NR w KQkq - 0 1",
-        "r2qk2r/ppp2ppp/2n2n2/2bppb2/8/PP1P2PP/1BP1PPB1/RN1QK1NR b KQkq - 0 1",
-        "r2qk2r/ppp2ppp/2n2n2/2b1pb2/3p4/PP1P2PP/1BP1PPB1/RN1QK1NR w KQkq - 0 1"
+        "r1bqkb1r/pppp1p1p/2n2np1/4p3/2P5/2N1P3/PPQP1PPP/R1B1KBNR w KQkq - 0 5",
+        "r1bqkb1r/pppp1p1p/2n2np1/4p3/2P5/P1N1P3/1PQP1PPP/R1B1KBNR b KQkq - 0 5",
+        "r1bqk2r/pppp1pbp/2n2np1/4p3/2P5/P1N1P3/1PQP1PPP/R1B1KBNR w KQkq - 1 6",
+        "r1bqk2r/pppp1pbp/2n2np1/4p3/1PP5/P1N1P3/2QP1PPP/R1B1KBNR b KQkq - 0 6",
+        "r1bq1rk1/pppp1pbp/2n2np1/4p3/1PP5/P1N1P3/2QP1PPP/R1B1KBNR w KQ - 1 7",
+        "r1bq1rk1/pppp1pbp/2n2np1/4p3/1PP5/P1N1P3/1BQP1PPP/R3KBNR b KQ - 2 7",
+        "r1bqr1k1/pppp1pbp/2n2np1/4p3/1PP5/P1N1P3/1BQP1PPP/R3KBNR w KQ - 3 8",
+        "r1bqr1k1/pppp1pbp/2n2np1/1P2p3/2P5/P1N1P3/1BQP1PPP/R3KBNR b KQ - 0 8",
+        "r1bqr1k1/pppp1pbp/5np1/nP2p3/2P5/P1N1P3/1BQP1PPP/R3KBNR w KQ - 1 9",
+        "r1bqr1k1/pppp1pbp/5np1/nP2p3/2P5/P1N1PN2/1BQP1PPP/R3KB1R b KQ - 2 9",
+        "r1bqr1k1/pp1p1pbp/2p2np1/nP2p3/2P5/P1N1PN2/1BQP1PPP/R3KB1R w KQ - 0 10"
        ],
        "u": [
-        "g2g3",
-        "b8c6",
-        "f1g2",
-        "g8f6",
-        "b2b3",
-        "c8f5",
+        "a2a3",
+        "f8g7",
+        "b2b4",
+        "e8g8",
         "c1b2",
-        "f8c5",
-        "d2d3",
-        "d5d4"
+        "f8e8",
+        "b4b5",
+        "c6a5",
+        "g1f3",
+        "c7c6"
        ]
       }
      }
@@ -4587,39 +4578,45 @@
     ],
     "examples": [
      {
-      "fen": "1k6/ppp4Q/3q4/4b1rp/3p2p1/P1P5/1P4PP/4R2K w - - 0 30",
-      "caption": "White to move (move 30). Black's king on b8 has no luft: a7, b7 and c7 are all blocked by its own pawns. White sacrifices the queen with Qh8+; after Bxh8 comes Re8+ Qd8 Rxd8, mate. Make a flight square in time, and check your opponent's back rank too.",
-      "source": "",
+      "fen": "2k3r1/pppnQ1qp/3p4/3P4/2P5/5p1B/PP3PrB/R3R2K w - - 2 29",
+      "caption": "White to move (move 29). Black's king is on c8, boxed in by its own pawns and the knight on d7, with no escape square. White plays Qe8+, and after the rook takes, Rxe8 is checkmate on the back rank. Giving your king an escape square early on avoids this kind of disaster.",
+      "source": "Isaac Kashdan vs Max Euwe, Hastings 1931/32 (https://www.pgnmentor.com/players/Euwe.zip)",
       "moves": {
-       "start": "1k1r4/ppp5/8/2q1b2p/3p2p1/P2Q4/1PPB2PP/4R2K w - - 0 27",
+       "start": "2kr4/pppnbq1p/3p4/3P2r1/2P5/5p1B/PPQ2PPB/R3R1K1 w - - 0 26",
        "sans": [
-        "c3",
-        "Qd6",
-        "Bg5",
+        "Qe4",
+        "Qg7",
+        "Qxe7",
+        "Rxg2+",
+        "Kh1",
         "Rg8",
-        "Qh7",
-        "Rxg5",
-        "Qh8+"
+        "Qe8+",
+        "Rxe8",
+        "Rxe8#"
        ],
        "at": 6,
        "f": [
-        "1k1r4/ppp5/8/2q1b2p/3p2p1/P2Q4/1PPB2PP/4R2K w - - 0 1",
-        "1k1r4/ppp5/8/2q1b2p/3p2p1/P1PQ4/1P1B2PP/4R2K b - - 0 1",
-        "1k1r4/ppp5/3q4/4b2p/3p2p1/P1PQ4/1P1B2PP/4R2K w - - 0 1",
-        "1k1r4/ppp5/3q4/4b1Bp/3p2p1/P1PQ4/1P4PP/4R2K b - - 0 1",
-        "1k4r1/ppp5/3q4/4b1Bp/3p2p1/P1PQ4/1P4PP/4R2K w - - 0 1",
-        "1k4r1/ppp4Q/3q4/4b1Bp/3p2p1/P1P5/1P4PP/4R2K b - - 0 1",
-        "1k6/ppp4Q/3q4/4b1rp/3p2p1/P1P5/1P4PP/4R2K w - - 0 1",
-        "1k5Q/ppp5/3q4/4b1rp/3p2p1/P1P5/1P4PP/4R2K b - - 0 1"
+        "2kr4/pppnbq1p/3p4/3P2r1/2P5/5p1B/PPQ2PPB/R3R1K1 w - - 0 26",
+        "2kr4/pppnbq1p/3p4/3P2r1/2P1Q3/5p1B/PP3PPB/R3R1K1 b - - 1 26",
+        "2kr4/pppnb1qp/3p4/3P2r1/2P1Q3/5p1B/PP3PPB/R3R1K1 w - - 2 27",
+        "2kr4/pppnQ1qp/3p4/3P2r1/2P5/5p1B/PP3PPB/R3R1K1 b - - 0 27",
+        "2kr4/pppnQ1qp/3p4/3P4/2P5/5p1B/PP3PrB/R3R1K1 w - - 0 28",
+        "2kr4/pppnQ1qp/3p4/3P4/2P5/5p1B/PP3PrB/R3R2K b - - 1 28",
+        "2k3r1/pppnQ1qp/3p4/3P4/2P5/5p1B/PP3PrB/R3R2K w - - 2 29",
+        "2k1Q1r1/pppn2qp/3p4/3P4/2P5/5p1B/PP3PrB/R3R2K b - - 3 29",
+        "2k1r3/pppn2qp/3p4/3P4/2P5/5p1B/PP3PrB/R3R2K w - - 0 30",
+        "2k1R3/pppn2qp/3p4/3P4/2P5/5p1B/PP3PrB/R6K b - - 0 30"
        ],
        "u": [
-        "c2c3",
-        "c5d6",
-        "d2g5",
+        "c2e4",
+        "f7g7",
+        "e4e7",
+        "g5g2",
+        "g1h1",
         "d8g8",
-        "d3h7",
-        "g8g5",
-        "h7h8"
+        "e7e8",
+        "g8e8",
+        "e1e8"
        ]
       }
      }
@@ -4905,48 +4902,48 @@
     ],
     "examples": [
      {
-      "fen": "1b1r2k1/pp3pp1/4pn1p/3N4/1P6/4BP1P/P4P2/1BrR2K1 w - - 0 23",
-      "caption": "White to move (move 23). Black's rook has just landed on c1, so White's rook and knight are both under pressure. White finds the in-between move Nxf6+ with check, forces gxf6, and only then plays Rxc1. White is winning, while the next best move leaves White clearly worse.",
-      "source": "",
+      "fen": "2r2bnr/1b3kp1/p3p3/1p6/2qNP2p/1PN1B2Q/P1P3PP/2KR4 b - - 0 17",
+      "caption": "Black to move (move 17). Black's queen is attacked by the pawn on b3, and simply moving it away loses material. Black first plays the in-between check Ba3+, forcing the king to move, and then captures on c3 with the queen. Other moves lose badly, so this extra check is the only way to keep the game balanced.",
+      "source": "Teimour Radjabov vs Anish Giri, Tata Steel Masters, Wijk aan Zee 2015 (https://www.pgnmentor.com/players/Giri.zip)",
       "moves": {
-       "start": "1brr2k1/pp2npp1/4pn1p/8/1PPP4/2N1Bq1P/P4PP1/1BRR2K1 w - - 0 20",
+       "start": "r3kbnr/1b1p1pp1/p3p3/1p3P2/2qNP2p/2N1B2Q/PPP3PP/2KR1R2 b kq - 2 14",
        "sans": [
-        "gxf3",
-        "Rxc4",
-        "d5",
-        "Nexd5",
-        "Nxd5",
-        "Rxc1",
-        "Nxf6+",
-        "gxf6",
-        "Rxc1",
-        "Kg7"
+        "Rc8",
+        "fxe6",
+        "dxe6",
+        "Rxf7",
+        "Kxf7",
+        "b3",
+        "Ba3+",
+        "Kb1",
+        "Qxc3",
+        "Qxe6+"
        ],
        "at": 6,
        "f": [
-        "1brr2k1/pp2npp1/4pn1p/8/1PPP4/2N1Bq1P/P4PP1/1BRR2K1 w - - 0 1",
-        "1brr2k1/pp2npp1/4pn1p/8/1PPP4/2N1BP1P/P4P2/1BRR2K1 b - - 0 1",
-        "1b1r2k1/pp2npp1/4pn1p/8/1PrP4/2N1BP1P/P4P2/1BRR2K1 w - - 0 1",
-        "1b1r2k1/pp2npp1/4pn1p/3P4/1Pr5/2N1BP1P/P4P2/1BRR2K1 b - - 0 1",
-        "1b1r2k1/pp3pp1/4pn1p/3n4/1Pr5/2N1BP1P/P4P2/1BRR2K1 w - - 0 1",
-        "1b1r2k1/pp3pp1/4pn1p/3N4/1Pr5/4BP1P/P4P2/1BRR2K1 b - - 0 1",
-        "1b1r2k1/pp3pp1/4pn1p/3N4/1P6/4BP1P/P4P2/1BrR2K1 w - - 0 1",
-        "1b1r2k1/pp3pp1/4pN1p/8/1P6/4BP1P/P4P2/1BrR2K1 b - - 0 1",
-        "1b1r2k1/pp3p2/4pp1p/8/1P6/4BP1P/P4P2/1BrR2K1 w - - 0 1",
-        "1b1r2k1/pp3p2/4pp1p/8/1P6/4BP1P/P4P2/1BR3K1 b - - 0 1",
-        "1b1r4/pp3pk1/4pp1p/8/1P6/4BP1P/P4P2/1BR3K1 w - - 0 1"
+        "r3kbnr/1b1p1pp1/p3p3/1p3P2/2qNP2p/2N1B2Q/PPP3PP/2KR1R2 b kq - 2 14",
+        "2r1kbnr/1b1p1pp1/p3p3/1p3P2/2qNP2p/2N1B2Q/PPP3PP/2KR1R2 w k - 3 15",
+        "2r1kbnr/1b1p1pp1/p3P3/1p6/2qNP2p/2N1B2Q/PPP3PP/2KR1R2 b k - 0 15",
+        "2r1kbnr/1b3pp1/p3p3/1p6/2qNP2p/2N1B2Q/PPP3PP/2KR1R2 w k - 0 16",
+        "2r1kbnr/1b3Rp1/p3p3/1p6/2qNP2p/2N1B2Q/PPP3PP/2KR4 b k - 0 16",
+        "2r2bnr/1b3kp1/p3p3/1p6/2qNP2p/2N1B2Q/PPP3PP/2KR4 w - - 0 17",
+        "2r2bnr/1b3kp1/p3p3/1p6/2qNP2p/1PN1B2Q/P1P3PP/2KR4 b - - 0 17",
+        "2r3nr/1b3kp1/p3p3/1p6/2qNP2p/bPN1B2Q/P1P3PP/2KR4 w - - 1 18",
+        "2r3nr/1b3kp1/p3p3/1p6/2qNP2p/bPN1B2Q/P1P3PP/1K1R4 b - - 2 18",
+        "2r3nr/1b3kp1/p3p3/1p6/3NP2p/bPq1B2Q/P1P3PP/1K1R4 w - - 0 19",
+        "2r3nr/1b3kp1/p3Q3/1p6/3NP2p/bPq1B3/P1P3PP/1K1R4 b - - 0 19"
        ],
        "u": [
-        "g2f3",
-        "c8c4",
-        "d4d5",
-        "e7d5",
-        "c3d5",
-        "c4c1",
-        "d5f6",
-        "g7f6",
-        "d1c1",
-        "g8g7"
+        "a8c8",
+        "f5e6",
+        "d7e6",
+        "f1f7",
+        "e8f7",
+        "b2b3",
+        "f8a3",
+        "c1b1",
+        "c4c3",
+        "h3e6"
        ]
       }
      }
@@ -5545,48 +5542,48 @@
     ],
     "examples": [
      {
-      "fen": "3r2k1/2n1pp1p/2q1n1pB/2p1P3/8/2PP2PP/5Q2/5RK1 w - - 0 32",
-      "caption": "White to move (move 32). Qxf7+ Kh8 Bg7+ Nxg7 Qf8+ Rxf8 Rxf8# is a forced mate in four, but it gives up the bishop and then the queen. Every Black reply has to be checked before the first move. Calculate each line to the end; if you cannot see the compensation, do not play it.",
-      "source": "",
+      "fen": "r1bn3k/1p2b1qp/p3p1pN/3p4/3P1Q2/2PB4/PP4R1/5R1K w - - 14 32",
+      "caption": "White to move (move 32). White gives up a bishop with Bxg6 to tear open the black king. After the capture White's queen, rooks and knight all point at the king, and every Black defence runs out of moves a few steps later. White is winning, but only because the attack was calculated to the end first.",
+      "source": "Efim Geller vs Pal Benko, Stockholm Interzonal 1962 (https://www.pgnmentor.com/players/Geller.zip)",
       "moves": {
-       "start": "3r2k1/3qpp1p/4n1p1/2pnP3/8/2PP2PP/2QB2B1/5RK1 w - - 1 29",
+       "start": "r1b3k1/1p4qp/p1n1p1p1/3p4/3P2Nb/2PB4/PP4R1/3Q1R1K w - - 8 29",
        "sans": [
-        "Bh6",
-        "Ndc7",
-        "Qf2",
-        "Qe8",
-        "Bc6",
-        "Qxc6",
-        "Qxf7+",
+        "Qd2",
         "Kh8",
-        "Bg7+",
-        "Nxg7"
+        "Nh6",
+        "Nd8",
+        "Qf4",
+        "Be7",
+        "Bxg6",
+        "e5",
+        "Qh2",
+        "hxg6"
        ],
        "at": 6,
        "f": [
-        "3r2k1/3qpp1p/4n1p1/2pnP3/8/2PP2PP/2QB2B1/5RK1 w - - 0 1",
-        "3r2k1/3qpp1p/4n1pB/2pnP3/8/2PP2PP/2Q3B1/5RK1 b - - 0 1",
-        "3r2k1/2nqpp1p/4n1pB/2p1P3/8/2PP2PP/2Q3B1/5RK1 w - - 0 1",
-        "3r2k1/2nqpp1p/4n1pB/2p1P3/8/2PP2PP/5QB1/5RK1 b - - 0 1",
-        "3rq1k1/2n1pp1p/4n1pB/2p1P3/8/2PP2PP/5QB1/5RK1 w - - 0 1",
-        "3rq1k1/2n1pp1p/2B1n1pB/2p1P3/8/2PP2PP/5Q2/5RK1 b - - 0 1",
-        "3r2k1/2n1pp1p/2q1n1pB/2p1P3/8/2PP2PP/5Q2/5RK1 w - - 0 1",
-        "3r2k1/2n1pQ1p/2q1n1pB/2p1P3/8/2PP2PP/8/5RK1 b - - 0 1",
-        "3r3k/2n1pQ1p/2q1n1pB/2p1P3/8/2PP2PP/8/5RK1 w - - 0 1",
-        "3r3k/2n1pQBp/2q1n1p1/2p1P3/8/2PP2PP/8/5RK1 b - - 0 1",
-        "3r3k/2n1pQnp/2q3p1/2p1P3/8/2PP2PP/8/5RK1 w - - 0 1"
+        "r1b3k1/1p4qp/p1n1p1p1/3p4/3P2Nb/2PB4/PP4R1/3Q1R1K w - - 8 29",
+        "r1b3k1/1p4qp/p1n1p1p1/3p4/3P2Nb/2PB4/PP1Q2R1/5R1K b - - 9 29",
+        "r1b4k/1p4qp/p1n1p1p1/3p4/3P2Nb/2PB4/PP1Q2R1/5R1K w - - 10 30",
+        "r1b4k/1p4qp/p1n1p1pN/3p4/3P3b/2PB4/PP1Q2R1/5R1K b - - 11 30",
+        "r1bn3k/1p4qp/p3p1pN/3p4/3P3b/2PB4/PP1Q2R1/5R1K w - - 12 31",
+        "r1bn3k/1p4qp/p3p1pN/3p4/3P1Q1b/2PB4/PP4R1/5R1K b - - 13 31",
+        "r1bn3k/1p2b1qp/p3p1pN/3p4/3P1Q2/2PB4/PP4R1/5R1K w - - 14 32",
+        "r1bn3k/1p2b1qp/p3p1BN/3p4/3P1Q2/2P5/PP4R1/5R1K b - - 0 32",
+        "r1bn3k/1p2b1qp/p5BN/3pp3/3P1Q2/2P5/PP4R1/5R1K w - - 0 33",
+        "r1bn3k/1p2b1qp/p5BN/3pp3/3P4/2P5/PP4RQ/5R1K b - - 1 33",
+        "r1bn3k/1p2b1q1/p5pN/3pp3/3P4/2P5/PP4RQ/5R1K w - - 0 34"
        ],
        "u": [
-        "d2h6",
-        "d5c7",
-        "c2f2",
-        "d7e8",
-        "g2c6",
-        "e8c6",
-        "f2f7",
+        "d1d2",
         "g8h8",
-        "h6g7",
-        "e6g7"
+        "g4h6",
+        "c6d8",
+        "d2f4",
+        "h4e7",
+        "d3g6",
+        "e6e5",
+        "f4h2",
+        "h7g6"
        ]
       }
      }
