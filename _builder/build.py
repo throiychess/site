@@ -908,7 +908,7 @@ def board_svg(fen, flip=False):
             x, y = f * 10 + 5, r * 10 + 8
             col = "#f4f4f4" if ch.isupper() else "#111"
             st = "#111" if ch.isupper() else "#f4f4f4"
-            s += f'<text x="{x}" y="{y}" text-anchor="middle" font-size="9" fill="{col}" stroke="{st}" stroke-width="0.25" style="font-family:\'Segoe UI Symbol\',\'DejaVu Sans\',serif">{G[ch]}</text>'
+            s += f'<text x="{x}" y="{y}" text-anchor="middle" font-size="9" fill="{col}" stroke="{st}" stroke-width="0.5" paint-order="stroke" style="font-family:\'Segoe UI Symbol\',\'DejaVu Sans\',serif">{G[ch]}</text>'
             f += 1
     bg = "".join(f'<rect x="{f*10}" y="{r*10}" width="10" height="10" fill="{"#b58863" if (r+f)%2 else "#f0d9b5"}"/>' for r in range(8) for f in range(8))
     return s.replace('">', '">' + bg, 1) + "</svg>"
