@@ -15,7 +15,24 @@
     ".fbm textarea{width:100%;box-sizing:border-box;min-height:90px;background:#0e0d0b;border:1px solid #2c271d;border-radius:12px;color:#efe8d8;font:inherit;font-size:15px;padding:10px;resize:vertical}.fbm .row{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}" +
     ".fbm .go{background:#e3c073;color:#14110b;border:0;border-radius:10px;padding:10px 18px;font:inherit;font-weight:800;cursor:pointer}.fbm .no{background:none;border:1px solid #2c271d;color:#a59a83;border-radius:10px;padding:10px 14px;font:inherit;cursor:pointer}" +
     ".fbi{background:#17150f;border:1px solid #2c271d;border-radius:14px;padding:16px;margin:22px 0}.fbi b{display:block;margin-bottom:8px}.fbi .fbr{margin:0}.fbi textarea{margin-top:10px}.fbi .small{color:#a59a83;font-size:14px}";
+  css.textContent += ':root[data-theme="light"] .fbb{background:#fffdf8;color:#8a6209;box-shadow:0 6px 18px rgba(60,45,10,.18)}' +
+    ':root[data-theme="light"] .fbm{background:#fffdf8;color:#1f1b12}:root[data-theme="light"] .fbm p,:root[data-theme="light"] .fbi .small{color:#675e4a}' +
+    ':root[data-theme="light"] .fbr button,:root[data-theme="light"] .fbk button{background:#f1ebdd;border-color:#e0d6bf;color:#1f1b12}' +
+    ':root[data-theme="light"] .fbr button.on,:root[data-theme="light"] .fbk button.on{border-color:#8a6209;color:#8a6209}' +
+    ':root[data-theme="light"] .fbm textarea{background:#fff;border-color:#e0d6bf;color:#1f1b12}:root[data-theme="light"] .fbm .go{background:#8a6209;color:#fff}' +
+    ':root[data-theme="light"] .fbm .no{border-color:#e0d6bf;color:#675e4a}' +
+    ".totop{position:fixed;right:14px;bottom:64px;z-index:39;width:44px;height:44px;border-radius:50%;background:var(--panel);color:var(--gold);border:1px solid var(--line3);display:grid;place-items:center;cursor:pointer;padding:0;box-shadow:0 6px 18px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s,transform .2s,visibility .2s}" +
+    ".totop.on{opacity:1;visibility:visible;transform:none}.totop:hover{background:var(--tint)}.totop svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}" +
+    ':root[data-theme="light"] .totop{box-shadow:0 6px 18px rgba(60,45,10,.18)}@media(prefers-reduced-motion:reduce){.totop{transition:none}}';
   document.head.appendChild(css);
+  (function () {
+    var b = document.createElement("button"); b.type = "button"; b.className = "totop"; b.setAttribute("aria-label", "Back to top"); b.title = "Back to top";
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+    b.addEventListener("click", function () { var rm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches; window.scrollTo({ top: 0, behavior: rm ? "auto" : "smooth" }); });
+    var tick = false; function upd() { tick = false; b.classList.toggle("on", (window.scrollY || document.documentElement.scrollTop) > 600); }
+    window.addEventListener("scroll", function () { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true });
+    document.body.appendChild(b); upd();
+  })();
   var RT = [["🙁", "Not good", 1], ["😐", "OK", 2], ["🙂", "Good", 3]];
   var KINDS = [["idea", "Idea"], ["bug", "Problem"], ["question", "Question"], ["praise", "Praise"]];
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
