@@ -16,7 +16,7 @@ async function render(session) {
   try { const c = JSON.parse(localStorage.getItem("tc_ps") || "null"); if (c && c.id === session.user.id) { profile = Object.assign({ socials: {} }, c); window.__profile = profile; drawEarn(); } } catch (e) {}
   show();
   const { data: p } = await sb.from("profiles").select("*").eq("id", session.user.id).maybeSingle(); profile = p || { socials: {} }; window.__plan = profile.plan || "free"; window.__profile = Object.assign(profile, { id: session.user.id });
-  $("#m-name").value = profile.display_name || ""; $("#m-bio").value = profile.bio || ""; $("#m-country").value = profile.country || ""; $("#m-level").value = profile.level || ""; $("#m-fav").value = profile.fav_opening || ""; $("#m-cc").value = profile.chesscom_username || ""; $("#m-li").value = profile.lichess_username || "";
+  $("#m-name").value = profile.display_name || ""; $("#m-bio").value = profile.bio || ""; $("#m-country").value = profile.country || ""; $("#m-level").value = profile.level || ""; setFav(profile.fav_opening); $("#m-cc").value = profile.chesscom_username || ""; $("#m-li").value = profile.lichess_username || "";
   const { data: c } = await sb.rpc("daily_checkin"); const r = Array.isArray(c) ? c[0] : c; if (r) { Object.assign(profile, { points: r.points, streak: r.streak, best_streak: r.best_streak, last_checkin: r.last_checkin }); profile._gained = r.gained || 0; }
   const u = $("#az-user"); if (u && !u.value) { if (profile.chesscom_username) { u.value = profile.chesscom_username; $("#az-site").value = "chesscom"; } else if (profile.lichess_username) { u.value = profile.lichess_username; $("#az-site").value = "lichess"; } }
   quickUsers(); autoAz();
@@ -132,8 +132,8 @@ async function gInit() {
 }
 gInit();
 $("#m-prof").addEventListener("submit", async (e) => { e.preventDefault(); const s = (await sb.auth.getSession()).data.session; if (!s) return;
-  const { error } = await sb.from("profiles").update({ display_name: $("#m-name").value.trim() || null, chesscom_username: $("#m-cc").value.trim() || null, lichess_username: $("#m-li").value.trim() || null, bio: $("#m-bio").value.trim() || null, country: $("#m-country").value.trim() || null, level: $("#m-level").value || null, fav_opening: $("#m-fav").value.trim() || null }).eq("id", s.user.id);
-  if (!error) { Object.assign(profile, { display_name: $("#m-name").value.trim() || null, chesscom_username: $("#m-cc").value.trim() || null, lichess_username: $("#m-li").value.trim() || null, bio: $("#m-bio").value.trim() || null, country: $("#m-country").value.trim() || null, level: $("#m-level").value || null, fav_opening: $("#m-fav").value.trim() || null }); drawHello(); drawProfileExtra(); quickUsers(); }
+  const { error } = await sb.from("profiles").update({ display_name: $("#m-name").value.trim() || null, chesscom_username: $("#m-cc").value.trim() || null, lichess_username: $("#m-li").value.trim() || null, bio: $("#m-bio").value.trim() || null, country: $("#m-country").value.trim() || null, level: $("#m-level").value || null, fav_opening: favVal() || null }).eq("id", s.user.id);
+  if (!error) { Object.assign(profile, { display_name: $("#m-name").value.trim() || null, chesscom_username: $("#m-cc").value.trim() || null, lichess_username: $("#m-li").value.trim() || null, bio: $("#m-bio").value.trim() || null, country: $("#m-country").value.trim() || null, level: $("#m-level").value || null, fav_opening: favVal() || null }); drawHello(); drawProfileExtra(); quickUsers(); }
   $("#m-pmsg").textContent = error ? "Could not save." : "Saved."; });
 $("#m-photo").addEventListener("change", (e) => uploadPhoto(e.target.files[0]));
 document.addEventListener("click", async (e) => {
@@ -148,3 +148,8 @@ document.addEventListener("click", async (e) => {
     const { error } = await sb.functions.invoke("delete-account"); if (error) { $("#m-delmsg").textContent = "Could not delete. Please contact us."; return; } await sb.auth.signOut(); ev("members-account-deleted"); render(null); $("#m-msg").textContent = "Your account has been deleted."; }
 });
 sb.auth.onAuthStateChange((evt, session) => { if (evt === "SIGNED_IN" || evt === "INITIAL_SESSION" || evt === "SIGNED_OUT") setTimeout(() => render(session), 0); });
+
+const FAV_LIST = ["Italian Game","Ruy Lopez","Sicilian Defence","French Defence","Caro-Kann Defence","Scandinavian Defence","Queen's Gambit","London System","King's Indian Defence","English Opening"];
+function setFav(v){ const sel = document.getElementById("m-favsel"), inp = document.getElementById("m-fav"); if (!sel || !inp) return; v = (v || "").trim(); if (!v) { sel.value = ""; inp.hidden = true; inp.value = ""; } else if (FAV_LIST.indexOf(v) >= 0) { sel.value = v; inp.hidden = true; inp.value = ""; } else { sel.value = "__other"; inp.hidden = false; inp.value = v; } }
+function favVal(){ const sel = document.getElementById("m-favsel"), inp = document.getElementById("m-fav"); if (!sel) return ""; return sel.value === "__other" ? inp.value.trim() : sel.value; }
+document.addEventListener("change", function(e){ if (e.target && e.target.id === "m-favsel") { const inp = document.getElementById("m-fav"); inp.hidden = e.target.value !== "__other"; if (!inp.hidden) inp.focus(); } });
