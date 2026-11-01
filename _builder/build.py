@@ -256,7 +256,7 @@ GOOGLE_LOGIN = True  # set True after enabling the Google provider in Supabase
 TURNSTILE_SITEKEY = "0x4AAAAAAFso4wm5naB8oZGB"  # public Cloudflare Turnstile site key (secret lives in Supabase Auth > Attack Protection)
 
 def csp(path=""):
-    conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else []) + (["https://assets.mailerlite.com"] if NEWSLETTER_URL else []) + ["https://api.chess.com", "https://lichess.org", "https://ytxrrmvszifvtdyilezn.supabase.co"] + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
+    conn = ["'self'"] + (["https://api.web3forms.com"] if WEB3FORMS_KEY else []) + ([f"https://{ANALYTICS}.goatcounter.com"] if ANALYTICS else []) + (["https://assets.mailerlite.com"] if NEWSLETTER_URL else []) + ["https://api.chess.com", "https://lichess.org", "https://raw.githubusercontent.com", "https://ytxrrmvszifvtdyilezn.supabase.co"] + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
     scr = ["'self'", "'unsafe-inline'"] + (["https://gc.zgo.at"] if ANALYTICS else []) + (["https://tracker.metricool.com"] if METRICOOL_HASH else [])
     img = "img-src 'self' data: https://ytxrrmvszifvtdyilezn.supabase.co" + (" https://tracker.metricool.com" if METRICOOL_HASH else "")
     hc = path.startswith("/members") and TURNSTILE_SITEKEY
@@ -603,7 +603,7 @@ def trap_page(t):
 <div><div class="note" aria-live="polite"><div class="meta"><span class="label" id="nl"></span><span class="tag" id="nt"></span></div><p id="nx"></p></div>
 <div class="moves" id="moves">{mv_html}</div></div></div>
 <section style="margin-top:56px"><div class="twocol"><div class="prose"><span class="eyebrow">The trap</span><h2>How the {e(t["name"])} works</h2><p>{e(t["intro"])}</p>
-<h2>How not to fall for it</h2><ol class="fix">{fix}</ol></div><aside>{side}</aside></div></section>
+<h2>How not to fall for it</h2><ol class="fix">{fix}</ol></div><aside>{side}<div class="card" style="margin-top:14px"><span class="label">Members</span><h3>Where do you fall for traps?</h3><p>Analyze your own games for free and see which mistakes cost you the most. Members also get a library of chess principles matched to their games.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=trap-page" data-ev="trap-members-cta">Analyze my games free →</a></div></aside></div></section>
 </main>''' + footer() + '<script>const D=' + data + ''';
 const P="/img/pieces/",B=document.getElementById("board");let cur=0;
 const sqs=[];for(let r=7;r>=0;r--)for(let f=0;f<8;f++){const d=document.createElement("div");const n="abcdefgh"[f]+(r+1);d.className="sq "+((r+f)%2?"l":"d");d.dataset.n=n;

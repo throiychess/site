@@ -3,7 +3,7 @@
   var $ = function (s) { return document.querySelector(s); };
   var esc = function (t) { return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, detectSessionInUrl: false } });
-  var root = $("#adm"), D = {}, tab = "users", q = "", T = null;
+  var root = $("#adm"), D = {}, tab = "users", q = "", T = null, S = null;
   function fmt(d) { if (!d) return "-"; var x = new Date(d); return x.toLocaleDateString("en-GB", { day: "2-digit", month: "short" }) + " " + x.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }); }
   function msg(h) { root.innerHTML = "<div class=\"acard\">" + h + "</div>"; }
   function kpi(l, v, s) { return "<div class=\"kpi\"><small>" + l + "</small><b>" + v + "</b>" + (s ? "<span>" + s + "</span>" : "") + "</div>"; }
@@ -23,10 +23,15 @@
     if (tab === "feedback") return table([["When", function (r) { return fmt(r.created_at); }], ["Type", function (r) { return esc(r.kind || r.context || ""); }], ["Rating", function (r) { return r.rating == null ? "-" : r.rating; }], ["Page", function (r) { return esc(r.page || ""); }], ["Message", function (r) { return esc(r.message || ""); }]], rows);
     return table([["When", function (r) { return fmt(r.created_at); }], ["User", function (r) { return esc(r.email || ""); }], ["Player", function (r) { return esc((r.site || "") + " " + (r.username || "")); }], ["Games", function (r) { return r.games; }], ["Accuracy", function (r) { return r.accuracy == null ? "-" : r.accuracy; }], ["Blunders", function (r) { return r.blunders; }], ["Band", function (r) { return esc(r.band || ""); }], ["Top leak", function (r) { return esc(r.top_leak || ""); }]], rows);
   }
+  function statsFile() {
+    if (!S) return "<p class=\"mut\">Nightly stats not available yet.</p></div>";
+    var l = function (a, f) { a = a || []; return a.length ? a.slice(0, 8).map(f).join("") : "<p class=\"mut\">Nothing yet.</p>"; }, row = function (n, c) { return "<div class=\"lk\"><span>" + esc(n) + "</span><b>" + c + "</b></div>"; };
+    return "<p class=\"mut\" style=\"margin:0 0 10px\">Updated " + esc((S.generated || "").slice(0, 16).replace("T", " ")) + " UTC</p><div class=\"two\" style=\"grid-template-columns:repeat(4,1fr)\"><div><h3>Sources</h3>" + l((S.toprefs || {}).stats, function (x) { return row(x.name || "Direct", x.count); }) + "</div><div><h3>Campaigns</h3>" + l((S.campaigns || {}).stats, function (x) { return row(x.name, x.count); }) + "</div><div><h3>Countries</h3>" + l((S.locations || {}).stats, function (x) { return row(x.name || x.id, x.count); }) + "</div><div><h3>Devices</h3>" + l((S.sizes || {}).stats, function (x) { return row(x.name, x.count); }) + "</div></div></div>";
+  }
   function traffic() {
     var h = "<div class=\"acard\"><h3>Website traffic, last 30 days</h3>";
     if (!T) return h + "<p class=\"mut\">Loading&hellip;</p></div>";
-    if (T.error === "no_token") return h + "<p class=\"mut\">Not connected yet. Add the secret GOATCOUNTER_TOKEN in Supabase (Edge Functions &rarr; Secrets), then reload.</p></div>";
+    if (T.error === "no_token" || T.error === "unavailable") return h.replace("Website traffic, last 30 days", "Website traffic (nightly, last 90 days)") + statsFile();
     if (T.error) return h + "<p class=\"mut\">Could not load traffic (" + esc(T.error) + ").</p></div>";
     var tot = T.total || {}, pages = ((T.hits || {}).hits || []).filter(function (x) { return !x.event; }).slice(0, 10), ev = ((T.events || {}).hits || []).filter(function (x) { return x.event; }).slice(0, 12), refs = ((T.refs || {}).stats || []).slice(0, 8);
     var list = function (a, f) { return a.length ? a.map(f).join("") : "<p class=\"mut\">Nothing yet.</p>"; };
@@ -49,7 +54,7 @@
     Promise.all([sb.rpc("admin_overview"), sb.rpc("admin_users", { lim: 500 }), sb.rpc("admin_feedback", { lim: 500 }), sb.rpc("admin_analyses", { lim: 300 })]).then(function (r) {
       if (r[0].error) { msg("<h3>No access</h3><p>This account is not an admin.</p>"); return; }
       D = { o: r[0].data, users: r[1].data || [], feedback: r[2].data || [], analyses: r[3].data || [] }; draw();
-      sb.functions.invoke("goatcounter-stats").then(function (x) { T = x.error ? { error: "unavailable" } : (x.data || { error: "empty" }); draw(); });
+      fetch("https://raw.githubusercontent.com/throiychess/site/stats/goatcounter.json").then(function (r) { return r.json(); }).then(function (x) { S = x; }).catch(function () {}).then(function () { return sb.functions.invoke("goatcounter-stats"); }).then(function (x) { T = x.error ? { error: "unavailable" } : (x.data || { error: "empty" }); draw(); });
     });
   }
   sb.auth.getSession().then(function (s) {
