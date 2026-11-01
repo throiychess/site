@@ -17,6 +17,7 @@ async function render(session) {
   $("#m-name").value = profile.display_name || ""; $("#m-bio").value = profile.bio || ""; $("#m-country").value = profile.country || ""; $("#m-level").value = profile.level || ""; $("#m-fav").value = profile.fav_opening || ""; $("#m-cc").value = profile.chesscom_username || ""; $("#m-li").value = profile.lichess_username || "";
   const { data: c } = await sb.rpc("daily_checkin"); const r = Array.isArray(c) ? c[0] : c; if (r) { Object.assign(profile, { points: r.points, streak: r.streak, best_streak: r.best_streak, last_checkin: r.last_checkin }); profile._gained = r.gained || 0; }
   const u = $("#az-user"); if (u && !u.value) { if (profile.chesscom_username) { u.value = profile.chesscom_username; $("#az-site").value = "chesscom"; } else if (profile.lichess_username) { u.value = profile.lichess_username; $("#az-site").value = "lichess"; } }
+  quickUsers(); autoAz();
   drawHello(); drawSocials(); await drawAnalyses(); drawEarn(); window.dispatchEvent(new Event("m-ready"));
 }
 window.addEventListener("az-saved", () => { drawAnalyses().then(drawEarn); });
@@ -52,9 +53,10 @@ async function uploadPhoto(file) {
   } catch (e) { msg.textContent = "Could not upload the photo."; }
 }
 const VIEWS = ["overview", "analyze", "reports", "training", "library", "puzzles", "earn", "plan", "profile"];
+function autoAz(v) { v = v || location.hash.slice(1); if (v === "analyze" && profile && !window.__azAuto && $("#az-user") && $("#az-user").value) { window.__azAuto = 1; quickUsers(); $("#az-form").requestSubmit(); } }
 function show() { const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "overview";
   document.querySelectorAll(".mview").forEach((s) => { s.hidden = s.dataset.view !== v; });
-  if (v === "analyze" && profile && !window.__azAuto && $("#az-user") && $("#az-user").value) { window.__azAuto = 1; quickUsers(); $("#az-form").requestSubmit(); }
+  autoAz(v);
   document.querySelectorAll(".mnav a").forEach((a) => { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); }); }
 window.addEventListener("hashchange", () => { if (location.hash === "#logout") render(null); else show(); });
 

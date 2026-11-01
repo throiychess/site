@@ -867,7 +867,7 @@ def members_page():
 <div class="mcard" style="margin:0 0 20px;padding-right:110px"><span class="mbadge pro">Premium</span><div class="mico">{_ic("bolt")}</div><h3>Advanced analysis</h3><p>A deeper engine, up to 25 games at once, trends per pattern over time and puzzles made from your mistakes. Opens with the improvement program.</p><p style="margin-top:12px"><a class="btn" href="#plan">See what Premium gives you</a></p></div>
 <form class="az-form" id="az-form"><label class="sr" for="az-site">Site</label><select id="az-site"><option value="chesscom">Chess.com</option><option value="lichess">Lichess</option></select>
 <label class="sr" for="az-user">Username</label><input id="az-user" placeholder="Username" autocomplete="off" required><button class="btn solid" type="submit">Find games</button></form>
-<div id="az-games"></div><div id="az-report"></div>
+<div id="az-quick" style="margin:0 0 6px"></div><div id="az-games"></div><div id="az-report"></div>
 <p class="small" style="margin:24px 0 10px">The analysis runs in your own browser with Stockfish 17.1. Games are loaded from the public Chess.com and Lichess APIs.</p></section>
 <section class="mview" data-view="reports" hidden><h2>My reports</h2><p class="lead">Every report you ran while logged in. Run another one every week or two to see your progress.</p><div id="m-charts"></div><div id="m-share" style="margin:20px 0"></div><div id="m-ins"></div><div id="m-list"><p class="small">Loading…</p></div><p style="margin-top:18px"><a class="btn solid" href="#analyze">Analyze new games</a></p></section>
 <section class="mview" data-view="training" hidden><h2>Training</h2><p class="lead">Your weekly plan, your openings and the principles behind your reports. Courses by rating band follow.</p>
