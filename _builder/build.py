@@ -380,9 +380,9 @@ def footer(band=True, nl=True):
 
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
 SCRIPT = """<script>
-(function(){var h=document.querySelector("header.top .wrap");if(!h)return;var b=document.createElement("button");b.type="button";b.className="themebtn";var L={system:["\u25D0","Theme: automatic (follows your device)"],light:["\u2600","Theme: light"],dark:["\u263E","Theme: dark"]};
+(function(){var h=document.querySelector("header.top .wrap");if(!h)return;var b=document.createElement("button");b.type="button";b.className="themebtn";var L={system:['<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>',"Theme: automatic (follows your device)"],light:['<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',"Theme: light"],dark:['<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',"Theme: dark"]};
 function pref(){try{return localStorage.getItem("tc_theme")||"system"}catch(e){return"system"}}
-function apply(){var p=pref(),l=p==="light"||(p==="system"&&matchMedia("(prefers-color-scheme: light)").matches);if(l)document.documentElement.setAttribute("data-theme","light");else document.documentElement.removeAttribute("data-theme");b.textContent=L[p][0];b.title=L[p][1];b.setAttribute("aria-label",L[p][1]);var m=document.querySelector('meta[name=theme-color]');if(m)m.content=l?"#f7f3ea":"#0e0d0b"}
+function apply(){var p=pref(),l=p==="light"||(p==="system"&&matchMedia("(prefers-color-scheme: light)").matches);if(l)document.documentElement.setAttribute("data-theme","light");else document.documentElement.removeAttribute("data-theme");b.innerHTML=L[p][0];b.title=L[p][1];b.setAttribute("aria-label",L[p][1]);var m=document.querySelector('meta[name=theme-color]');if(m)m.content=l?"#f7f3ea":"#0e0d0b"}
 b.addEventListener("click",function(){var n={system:"light",light:"dark",dark:"system"}[pref()];try{localStorage.setItem("tc_theme",n)}catch(e){}apply()});
 try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",apply)}catch(e){}
 var nav=h.querySelector("nav.links");h.insertBefore(b,nav&&nav.nextSibling);apply()})();
@@ -792,8 +792,8 @@ MEM_CSS = """
 .mview h2{margin:0 0 6px;font-size:clamp(26px,4vw,36px)}.mview>.lead{color:var(--mute);margin:0 0 24px;max-width:620px}
 .mstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 22px}
 .mstat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}.mstat b{display:block;font-size:28px;line-height:1.1}.mstat span{font-size:13.5px;color:var(--mute)}
-.mpromo{background:linear-gradient(135deg,#e9c97f,#d8b25c);color:var(--on-gold);border-radius:18px;padding:24px;margin:0 0 22px}
-.mpromo h3{margin:0 0 6px;font-size:22px;color:var(--on-gold)}.mpromo p{margin:0 0 14px;color:#3b3118}.mpromo .btn{background:var(--on-gold);color:var(--gold);border-color:var(--on-gold)}
+.mpromo{background:linear-gradient(135deg,#e9c97f,#d8b25c);color:#14110b;border-radius:18px;padding:24px;margin:0 0 22px}
+.mpromo h3{margin:0 0 6px;font-size:22px;color:#14110b}.mpromo p{margin:0 0 14px;color:#3b3118}.mpromo .btn{background:#14110b;color:#e3c073;border-color:#14110b}
 .mnext{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin:0 0 22px}
 .mnext p{margin:0;color:var(--mute)}.mnext b{color:var(--ink)}
 .mcourse{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
