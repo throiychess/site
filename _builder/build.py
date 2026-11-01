@@ -311,7 +311,7 @@ def promo_bar(active):
             '<button class="promo-x" type="button" aria-label="Close" onclick="try{sessionStorage.setItem(\'promo\',1)}catch(e){}this.closest(\'.promo\').remove()">&times;</button></div></div>'
             '<script>try{if(sessionStorage.getItem("promo"))document.querySelector(".promo").remove()}catch(e){}</script>')
 NAVG = [("Watch", [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Top games", "/top-games/")]),
-        ("Train", [("Traps", "/traps/"), ("Analyze", "/analyze/")]),
+        ("Train", [("Traps", "/traps/"), ("Analyze", "/analyze/"), ("Opponent", "/opponent/")]),
         ("About", [("About", "/#about"), ("Contact", "/contact/")]), ("Support", "/support/")]
 NAV = [(n, u) for g, x in NAVG for (n, u) in (x if isinstance(x, list) else [(g, x)])]
 _KEY = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg>'
@@ -481,9 +481,16 @@ def short_url(s):
     t = next((t for t in TRAPS if (trap_short(t) or {}).get("id") == s["id"]), None)
     return f"{SITE}/traps/{t['slug']}/" if t else f"{SITE}/shorts/#s-{s['id']}"
 
+def short_cat(s):
+    """Filter category of a Short: top-game, traps (has a trap page) or lessons."""
+    if s.get("topic") == "Top game": return "top-game"
+    return "traps" if any((trap_short(t) or {}).get("id") == s["id"] for t in TRAPS) else "lessons"
+SHORT_CATS = [("", "All"), ("traps", "Opening traps"), ("top-game", "Top games"), ("lessons", "Other lessons")]
+SHORT_FILTER_CSS = ".sfil{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}.sfil a{padding:8px 16px;border-radius:99px;border:1px solid var(--line);color:var(--mute);text-decoration:none;font-size:14.5px;font-weight:600}.sfil a:hover{color:var(--ink)}.sfil a[aria-current=page]{color:var(--on-gold);background:var(--gold);border-color:var(--gold)}.sfil a .n{opacity:.7;margin-left:6px;font-weight:500}"
+
 def short_card(s):
     cr = f'<p class="small credit">{e(s["credit"])}</p>' if s.get("credit") else ""
-    return (f'<article class="short" id="s-{e(s["id"])}"><div class="vid"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
+    return (f'<article class="short" id="s-{e(s["id"])}" data-topic="{short_cat(s)}"><div class="vid"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
             f'<span class="play"></span><small>Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
             f'<span class="label">{e(s.get("topic", ""))}</span><h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p>{cr}{share_bar(short_url(s), s["title"])}</article>')
 
@@ -531,7 +538,7 @@ def home():
     _flat = [y for g in PRINCIPLES for y in g["items"] if not y.get("draft")]
     n_pr = f"{len(_flat) // 10 * 10}+"
     mini = "".join(f'<a class="hs-row" href="/principles/{y["slug"]}/" style="text-decoration:none;color:inherit"><span class="ic">{tic((y.get("tags") or ["General"])[0])}</span><div><b>{e(y["title"])}</b><small>{e(y["level"].capitalize())} &middot; {e(y["phase"].capitalize())}</small></div><span class="n">&rarr;</span></a>' for y in [z for z in _flat if z.get("start")][:3])
-    _P = [("Tactics", "/analyze/", "Analyze my games", "Free. Find the leaks that cost you games."), ("Opening systems", "/principles/", "Principle library", "Guidelines for every phase, with real games."), ("Attack", "/traps/", "Trap library", "Learn the trap, then learn the fix."), ("Pieces", "/shorts/", "Shorts and top games", "One lesson in under a minute."), ("Defence", "/analyze/", "Scout any opponent", "Enter any Chess.com or Lichess name and see where their games go wrong."), ("General", "/free/", "Free cheat sheet", "10 opening traps in one PDF. Free.")]
+    _P = [("Tactics", "/analyze/", "Analyze my games", "Free. Find the leaks that cost you games."), ("Opening systems", "/principles/", "Principle library", "Guidelines for every phase, with real games."), ("Attack", "/traps/", "Trap library", "Learn the trap, then learn the fix."), ("Pieces", "/shorts/", "Shorts and top games", "One lesson in under a minute."), ("Defence", "/opponent/", "Scout any opponent", "Enter any Chess.com or Lichess name and see where their games go wrong."), ("General", "/free/", "Free cheat sheet", "10 opening traps in one PDF. Free.")]
     paths = "".join(f'<a class="path" href="{h}"><span class="ic">{tic(t)}</span><b>{n}</b><span>{d}</span></a>' for t, h, n, d in _P)
     _top = [s for s in SHORTS if s.get("topic") == "Top game"]
     top_cards = (f'<div class="sechead" style="margin-top:28px"><div><span class="eyebrow">Top games</span><h2>The best moments from elite chess.</h2></div><a class="btn" href="/top-games/">All top games →</a></div>'
@@ -583,20 +590,29 @@ def home():
                 [ORG, site_ld] + [v for v in map(video_ld, SHORTS[:4]) if v])
 
 def shorts_pages():
-    n = max(1, math.ceil(len(SHORTS) / PER_PAGE)); out = []
-    for i in range(n):
-        items = SHORTS[i * PER_PAGE:(i + 1) * PER_PAGE]
-        path = "/shorts/" if i == 0 else f"/shorts/page/{i + 1}/"
-        pager = ""
-        if n > 1:
-            pager = '<nav class="pager" aria-label="Pages">' + "".join(
-                f'<span aria-current="page">{k + 1}</span>' if k == i else f'<a href="{"/shorts/" if k == 0 else f"/shorts/page/{k + 1}/"}">{k + 1}</a>' for k in range(n)) + "</nav>"
-        body = header("Shorts") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">All Shorts{f" · page {i + 1}" if i else ""}</span>
+    out = []
+    cats = [(c, l) for c, l in SHORT_CATS if not c or any(short_cat(s) == c for s in SHORTS)]
+    for cat, label in cats:
+        pool = [s for s in SHORTS if not cat or short_cat(s) == cat]
+        base = "/shorts/" if not cat else f"/shorts/{cat}/"
+        n = max(1, math.ceil(len(pool) / PER_PAGE))
+        fil = '<nav class="sfil" aria-label="Filter Shorts">' + "".join(
+            f'<a href="{"/shorts/" if not c else f"/shorts/{c}/"}"{" aria-current=page" if c == cat else ""}>{l}<span class="n">{sum(1 for s in SHORTS if not c or short_cat(s) == c)}</span></a>' for c, l in cats) + '</nav>'
+        for i in range(n):
+            items = pool[i * PER_PAGE:(i + 1) * PER_PAGE]
+            path = base if i == 0 else f"{base}page/{i + 1}/"
+            pager = ""
+            if n > 1:
+                pager = '<nav class="pager" aria-label="Pages">' + "".join(
+                    f'<span aria-current="page">{k + 1}</span>' if k == i else f'<a href="{base if k == 0 else f"{base}page/{k + 1}/"}">{k + 1}</a>' for k in range(n)) + "</nav>"
+            redirect = ('<script>try{var c=new URLSearchParams(location.search).get("cat");if(c&&/^[a-z-]+$/.test(c))location.replace("/shorts/"+c+"/")}catch(e){}</script>' if not cat and i == 0 else "")
+            body = header("Shorts") + f'''<style>{SHORT_FILTER_CSS}</style>{redirect}<main class="wrap"><div class="pagehead"><span class="eyebrow">{"All Shorts" if not cat else label}{f" · page {i + 1}" if i else ""}</span>
 <h1 class="page">Every lesson, in one place.</h1><p>Opening traps, named mates and top-game moments. Press play to watch here, or follow along on YouTube.</p></div>
-<div class="shorts">{"".join(short_card(s) for s in items)}</div>{pager}
+{fil}<div class="shorts">{"".join(short_card(s) for s in items)}</div>{pager}
 <div class="btns" style="justify-content:center;margin:40px 0 56px"><a class="btn solid" href="{LINKS[0][1]}" target="_blank" rel="noopener">Subscribe on YouTube</a></div></main>''' + footer()
-        out.append((path, page(path, f"All Shorts{f' (page {i + 1})' if i else ''} · Throiy Chess", "Every Throiy Chess Short: opening traps, mating patterns and top-game moments, each under a minute.",
-                               body, [v for v in map(video_ld, items) if v])))
+            ttl = ("All Shorts" if not cat else f"{label} Shorts") + (f" (page {i + 1})" if i else "")
+            out.append((path, page(path, f"{ttl} · Throiy Chess", "Every Throiy Chess Short: opening traps, mating patterns and top-game moments, each under a minute." if not cat else f"Throiy Chess Shorts: {label.lower()}, each under a minute.",
+                                   body, [v for v in map(video_ld, items) if v])))
     return out
 
 def trap_page(t):
@@ -710,9 +726,13 @@ def top_games_page():
     cards = f'<div class="shorts">{"".join(short_card(s) for s in top)}</div>' if top else '<div class="supportbar"><p><strong>The first top-game lessons are coming.</strong></p></div>'
     body = header("Top games") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Top games</span>
 <h1 class="page">The best moments from elite chess.</h1><p>One decisive moment from a top-level game, explained in under a minute, with the lesson you can use in your own games.</p></div>
-<div class="breaking"><span class="live">Latest</span><div><h3>Clutch Chess: Champions Showdown · 27–29 October</h3>
-<p>Nakamura, Caruana, Praggnanandhaa and Sindarov play rapid chess. We break down the sharpest moment of each day.</p></div></div>
-<div class="sechead" style="margin-top:32px"><div><span class="eyebrow">All top-game Shorts</span><h2>Learn from the strongest players.</h2></div><a class="btn" href="/shorts/">All Shorts →</a></div>
+<div class="breaking"><span class="live">Latest</span><div><h3>Clutch Chess: Champions Showdown · recap</h3>
+<p>Nakamura, Caruana, Praggnanandhaa and Sindarov played rapid chess on 27–29 October. We broke down the sharpest moment of each day. Watch them below.</p></div></div>
+<div class="breaking nxt"><span class="live nx">Next</span><div><h3>Coming up (planned)</h3>
+<ul class="nxl"><li><b>Esports Nations Cup</b> · 2–8 November</li><li><b>Total Chess World Championship pilot</b> · Budapest, from 10 November</li><li><b>Road to Geneva</b> · Sundays 8, 15 and 22 November</li><li><b>World Championship Gukesh vs Sindarov</b> · Geneva, 24 November to 12 December</li></ul>
+<p class="small">Dates are planned and may change. Follow on <a href="{LINKS[0][1]}" target="_blank" rel="noopener">YouTube</a> to catch each one.</p></div></div>
+<style>.breaking.nxt{{margin-top:14px}}.live.nx{{background:var(--gold);color:var(--on-gold)}}.nxl{{margin:6px 0 10px;padding-left:20px;color:var(--mute)}}.nxl li{{margin:4px 0}}.nxl b{{color:var(--ink)}}</style>
+<div class="sechead" style="margin-top:32px"><div><span class="eyebrow">All top-game Shorts</span><h2>Learn from the strongest players.</h2></div><a class="btn" href="/shorts/top-game/">All Shorts →</a></div>
 {cards}
 <div class="btns" style="justify-content:center;margin:40px 0 56px"><a class="btn solid" href="{LINKS[0][1]}" target="_blank" rel="noopener">Subscribe on YouTube</a><a class="btn" href="/analyze/">Analyze my games free</a></div></main>''' + footer()
     return "/top-games/", page("/top-games/", "Top games · Throiy Chess", "One decisive moment from elite chess games, explained in under a minute, with the lesson for your own games.",
@@ -779,16 +799,35 @@ def _tdata():
         tdata.append({"slug": t["slug"], "name": t["name"], "moves": t["moves"], "side": t["side"], "blunder": max(bl) if bl else None})
     return tdata
 
-def analyze_page():
+UPC_CSS = """.upc{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:34px 0 8px}.upc>div{border:1px solid var(--line);border-radius:16px;padding:24px;background:var(--panel)}
+.upc>div.pr{border-color:var(--gold2)}.upc h2{font-size:22px;margin:6px 0 12px}.upc ul{margin:0 0 18px;padding-left:20px;color:var(--mute)}.upc li{margin:6px 0}.upc .soon{font-size:13px;color:var(--mute);margin:10px 0 0}
+@media(max-width:760px){.upc{grid-template-columns:1fr}}"""
+def upgrade_cta(src):
+    return f'''<section class="upc" aria-label="Upgrade"><div><span class="eyebrow">Want more?</span><h2>Become a member</h2>
+<ul><li>All games of a player, not just 5. Yours or anyone's.</li><li>Saved reports you can open again later.</li><li>Move categories like on Chess.com: great, brilliant, mistake, blunder.</li></ul>
+<a class="btn solid" data-ev="upgrade-member-{src}" href="/members/?utm_source=site&amp;utm_campaign=upgrade-{src}">Become a member</a></div>
+<div class="pr"><span class="eyebrow">Beat your opponent</span><h2>Want the weak points and the training to beat them?</h2>
+<ul><li>Their strong points, and how to counter them.</li><li>A personal improvement plan from your own games.</li><li>The full principle library with real games.</li></ul>
+<a class="btn" data-ev="upgrade-premium-{src}" href="/improve/?utm_source=site&amp;utm_campaign=upgrade-{src}">Member + Premium</a><p class="soon">Premium is coming. Free members get early access to updates.</p></div></section>'''
+
+def _analyze_body(active, eyebrow, h1, intro, src):
     tdata = _tdata()
-    body = header("Analyze") + f'''<style>{AZ_CSS}</style><main class="wrap" style="max-width:900px"><div class="pagehead"><span class="eyebrow">Beta · free</span>
-<h1 class="page">Analyze your games</h1><p>Enter a Chess.com or Lichess username, pick up to 5 games, and see <b>which chess principles</b> cost you the most points, in plain words. Any player works: yours, a friend's, or a grandmaster's.</p></div>
+    return header(active) + f'''<style>{AZ_CSS}{UPC_CSS}</style><main class="wrap" style="max-width:900px"><div class="pagehead"><span class="eyebrow">{eyebrow}</span>
+<h1 class="page">{h1}</h1><p>{intro}</p></div>
 <form class="az-form" id="az-form"><label class="sr" for="az-site">Site</label><select id="az-site"><option value="chesscom">Chess.com</option><option value="lichess">Lichess</option></select>
 <label class="sr" for="az-user">Username</label><input id="az-user" placeholder="Username" autocomplete="off" required><button class="btn solid" type="submit">Find games</button></form>
 <div id="az-quick" style="margin:0 0 6px"></div><div id="az-games"></div><div id="az-report"></div>
+{upgrade_cta(src)}
 <p class="small" style="margin:30px 0 50px">The analysis runs in your own browser with Stockfish 17.1 (GPLv3, <a href="https://github.com/official-stockfish/Stockfish" target="_blank" rel="noopener">source</a>). We don't store your games. Games are loaded from the public Chess.com and Lichess APIs. Throiy Chess is not affiliated with Chess.com or Lichess. A beta: the engine runs at a light depth, so treat single numbers as a guide.</p>
 </main><script type="application/json" id="trap-data">{json.dumps(tdata)}</script>{SB_SCRIPTS}<script type="module" src="/js/analyze.js"></script>''' + footer(band=False)
+
+def analyze_page():
+    body = _analyze_body("Analyze", "Beta · free", "Analyze your games", "Enter a Chess.com or Lichess username, pick up to 5 games, and see <b>which chess principles</b> cost you the most points, in plain words. Any player works: yours, a friend's, or a grandmaster's.", "analyze")
     return "/analyze/", page("/analyze/", "Free chess game analyzer: find your biggest mistakes · Throiy Chess", "Free chess game analyzer for Chess.com and Lichess. Find the mistakes that cost you the most points, see your rating band and get a simple training plan. No sign-up.", body)
+
+def opponent_page():
+    body = _analyze_body("Opponent", "Beta · free", "Analyze your opponent", "Playing someone soon? Enter their Chess.com or Lichess username, pick up to 5 of their games, and see where their games go wrong: the <b>weak points</b> you can aim at.", "opponent")
+    return "/opponent/", page("/opponent/", "Analyze your chess opponent: find their weak points · Throiy Chess", "Scout any Chess.com or Lichess player for free. Pick up to 5 of their games and see the mistakes they repeat, so you know where to aim. No sign-up.", body)
 
 WAITLIST_URL = "https://assets.mailerlite.com/jsonp/2747354/forms/202754728493319697/subscribe"  # MailerLite form -> group "Improvement waitlist" (double opt-in)
 SB_SCRIPTS = '<script src="/js/vendor/supabase-2.117.3.js"></script>'
@@ -1159,7 +1198,7 @@ def build():
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
     try: os.remove(os.path.join(d, "data", "principles.json"))  # member-only: served from Supabase (site_content) behind login
     except OSError: pass
-    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [principles_index()] + [principle_page(g, x) for g, x in _pitems()] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), members_page(), improve_page(), terms()]
+    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [principles_index()] + [principle_page(g, x) for g, x in _pitems()] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), opponent_page(), members_page(), improve_page(), terms()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
