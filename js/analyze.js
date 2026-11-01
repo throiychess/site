@@ -307,3 +307,4 @@ function report(results) {
 
 window.__azP = { P, DRILL }; window.__azBoard = boardSVG;
 if (/[?&]bench=1/.test(location.search)) window.__az = { analyseGame };
+window.__azReady = true; window.dispatchEvent(new Event("az-ready"));
