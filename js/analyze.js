@@ -182,13 +182,19 @@ $("#az-form").addEventListener("submit", async (e) => {
   state = { games: [], user, site }; const out = $("#az-games"); out.innerHTML = '<p class="small">Fetching games…</p>'; $("#az-report").innerHTML = "";
   try { const games = site === "lichess" ? await fetchLichess(user) : await fetchChesscom(user); state.games = games; state.ratings = {}; fetchRatings(site, user).then((r) => { state.ratings = r; }); ev("analyze-fetch-" + site);
     if (!games.length) { out.innerHTML = '<p class="small">No standard games found in the last months.</p>'; return; }
-    out.innerHTML = `<p>Pick up to <strong>${maxGames()} games</strong> to analyze. Tip: your losses teach the most.</p>${isPrem() ? '<p class="small"><label>Depth: <select id="az-depth"><option value="14">Standard (depth 14, fast)</option><option value="18">Deep (depth 18, about 4x slower, finds more)</option><option value="full">Pro engine (full Stockfish, depth 16, desktop only, 79 MB download once)</option></select></label></p>' : '<p class="small">&#128274; Want up to 25 games and deeper engine analysis? <a href="/members/#plan">See Premium</a>.</p>'}<div class="az-list">` +
+    out.innerHTML = `<p>Pick up to <strong>${maxGames()} games</strong> to analyze. Tip: your losses teach the most.</p>${isPrem() ? '<p class="small"><label>Depth: <select id="az-depth"><option value="14">Standard (depth 14, fast)</option><option value="18">Deep (depth 18, about 4x slower, finds more)</option><option value="full">Pro engine (full Stockfish, depth 16, desktop only, 79 MB download once)</option></select></label></p>' : '<p class="small">&#128274; Want up to 25 games and deeper engine analysis? <a href="/members/#plan">See Premium</a>.</p>'}<div class="az-chips" id="az-chips"><button type="button" class="on" data-f="all">All</button><button type="button" data-f="lost">Lost</button><button type="button" data-f="won">Won</button><button type="button" data-f="draw">Draw</button></div><div class="az-list">` +
       games.map((g, i) => { const w = g.white.toLowerCase() === user.toLowerCase(); const opp = w ? g.black : g.white;
-        return `<label class="az-g"><input type="checkbox" value="${i}"><span class="res ${fmtRes(g, user).toLowerCase()}">${fmtRes(g, user)}</span>
+        return `<label class="az-g" data-r="${fmtRes(g, user).toLowerCase()}"><input type="checkbox" value="${i}"><span class="res ${fmtRes(g, user).toLowerCase()}">${fmtRes(g, user)}</span>
           <span>${w ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${esc(g.tc || "")} · ${g.date.toLocaleDateString()}</span></label>`; }).join("") +
-      `</div><button class="btn solid" id="az-go" type="button">Analyze selected games</button><p class="small" id="az-prog" role="status" aria-live="polite"></p>`;
+      `</div><button class="btn" id="az-more" type="button"></button> <button class="btn solid" id="az-go" type="button">Analyze selected games</button><p class="small" id="az-prog" role="status" aria-live="polite"></p>`;
     out.addEventListener("change", (ev2) => { const sel = out.querySelectorAll("input:checked"); if (sel.length > maxGames()) { ev2.target.checked = false; } });
     $("#az-go").addEventListener("click", run);
+    let shown = 8, flt = "all"; const rows = [...out.querySelectorAll(".az-g")], more = $("#az-more"), chips = $("#az-chips");
+    const apply = () => { let hit = 0; rows.forEach((r) => { const ok = flt === "all" || r.dataset.r === flt; if (ok) { hit++; r.style.display = hit <= shown ? "" : "none"; } else r.style.display = "none"; });
+      const left = hit - shown; more.style.display = left > 0 ? "" : "none"; more.textContent = "Show " + Math.min(8, left) + " more (" + left + " left)"; };
+    more.addEventListener("click", () => { shown += 8; apply(); });
+    chips.addEventListener("click", (e2) => { const b = e2.target.closest("button"); if (!b) return; flt = b.dataset.f; shown = 8; [...chips.children].forEach((x) => x.classList.toggle("on", x === b)); apply(); });
+    apply();
   } catch (err) { out.innerHTML = `<p class="small">${esc(err.message || "Could not fetch games.")}</p>`; }
 });
 

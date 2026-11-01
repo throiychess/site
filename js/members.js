@@ -4,6 +4,7 @@ const $ = (s) => document.querySelector(s); const esc = (t) => String(t == null 
 const ev = (n) => { try { if (window.goatcounter && goatcounter.count) goatcounter.count({ path: n, title: n, event: true }); } catch (e) {} };
 const sb = window.__sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, detectSessionInUrl: true, flowType: "pkce" } });
 const SOCIALS = [["youtube", "YouTube", "https://www.youtube.com/@ThroiyChess?sub_confirmation=1"], ["instagram", "Instagram", "https://www.instagram.com/throiychess"], ["tiktok", "TikTok", "https://www.tiktok.com/@throiychess"], ["facebook", "Facebook", "https://www.facebook.com/throiychess"]];
+const avHtml = (pr) => (pr && pr.avatar_url ? `<img class="aimg" alt="" src="${esc(pr.avatar_url)}">` : (AV[pr && pr.avatar] || AV.pawn));
 const AV = { king: "♚︎", queen: "♛︎", rook: "♜︎", bishop: "♝︎", knight: "♞︎", pawn: "♟︎", star: "★", bolt: "✦" };
 const LEVELS = [["Pawn", 0], ["Knight", 100], ["Bishop", 250], ["Rook", 500], ["Queen", 1000], ["King", 2000]];
 let profile = null, A = [];
@@ -13,7 +14,7 @@ async function render(session) {
   $("#m-login").hidden = !!session; $("#m-app").hidden = !session; if (!session) { document.documentElement.removeAttribute("data-in"); return; } document.documentElement.setAttribute("data-in", "1");
   $("#m-email").textContent = session.user.email; show();
   const { data: p } = await sb.from("profiles").select("*").eq("id", session.user.id).maybeSingle(); profile = p || { socials: {} }; window.__plan = profile.plan || "free"; window.__profile = Object.assign(profile, { id: session.user.id });
-  $("#m-name").value = profile.display_name || ""; $("#m-cc").value = profile.chesscom_username || ""; $("#m-li").value = profile.lichess_username || "";
+  $("#m-name").value = profile.display_name || ""; $("#m-bio").value = profile.bio || ""; $("#m-country").value = profile.country || ""; $("#m-level").value = profile.level || ""; $("#m-fav").value = profile.fav_opening || ""; $("#m-cc").value = profile.chesscom_username || ""; $("#m-li").value = profile.lichess_username || "";
   const { data: c } = await sb.rpc("daily_checkin"); const r = Array.isArray(c) ? c[0] : c; if (r) { Object.assign(profile, { points: r.points, streak: r.streak, best_streak: r.best_streak, last_checkin: r.last_checkin }); profile._gained = r.gained || 0; }
   const u = $("#az-user"); if (u && !u.value) { if (profile.chesscom_username) { u.value = profile.chesscom_username; $("#az-site").value = "chesscom"; } else if (profile.lichess_username) { u.value = profile.lichess_username; $("#az-site").value = "lichess"; } }
   drawHello(); drawSocials(); await drawAnalyses(); drawEarn(); window.dispatchEvent(new Event("m-ready"));
@@ -21,11 +22,39 @@ async function render(session) {
 window.addEventListener("az-saved", () => { drawAnalyses().then(drawEarn); });
 function drawHello() {
   $("#m-hello").textContent = profile.display_name ? "Welcome back, " + profile.display_name : "Welcome back";
-  $("#m-ava").textContent = AV[profile.avatar] || AV.pawn; try { localStorage.setItem("tc_av", AV[profile.avatar] || AV.pawn); } catch (e) {}
+  $("#m-ava").innerHTML = avHtml(profile); try { localStorage.setItem("tc_av", profile.avatar_url || AV[profile.avatar] || AV.pawn); } catch (e) {}
+}
+
+function drawProfileExtra() {
+  const checks = [["Name", !!profile.display_name], ["Photo or avatar", !!(profile.avatar_url || profile.avatar)], ["Chess.com or Lichess name", !!(profile.chesscom_username || profile.lichess_username)], ["Level", !!profile.level], ["Favourite opening", !!profile.fav_opening], ["Country", !!profile.country], ["Short bio", !!profile.bio], ["Follow us", followCount() > 0]];
+  const done = checks.filter((c) => c[1]).length, pct = Math.round(done / checks.length * 100), el = $("#m-complete"); if (!el) return;
+  el.innerHTML = `<div class="mlv"><span class="mava big">${avHtml(profile)}</span><div><b>Profile ${pct}% complete</b><div class="mbar"><i style="width:${pct}%"></i></div><span class="small">${done === checks.length ? "All done. Nice." : "Still to add: " + checks.filter((c) => !c[1]).map((c) => c[0]).join(", ")}</span></div></div>`;
+  $("#m-photo-rm").hidden = !profile.avatar_url;
+}
+function quickUsers() {
+  const q = $("#az-quick"); if (!q) return; const b = [];
+  if (profile.chesscom_username) b.push(["chesscom", "Chess.com", profile.chesscom_username]); if (profile.lichess_username) b.push(["lichess", "Lichess", profile.lichess_username]);
+  q.innerHTML = b.length > 1 ? '<span class="small">Load games for:</span> ' + b.map((x) => `<button type="button" class="btn" data-qs="${x[0]}" data-qu="${esc(x[2])}">${x[1]}: ${esc(x[2])}</button>`).join(" ") : "";
+}
+async function uploadPhoto(file) {
+  const msg = $("#m-photomsg"); const s = (await sb.auth.getSession()).data.session; if (!s || !file) return;
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) { msg.textContent = "Use a JPG, PNG or WebP image."; return; }
+  msg.textContent = "Uploading…";
+  try {
+    const bmp = await createImageBitmap(file), side = Math.min(bmp.width, bmp.height), c = document.createElement("canvas"); c.width = c.height = 256;
+    c.getContext("2d").drawImage(bmp, (bmp.width - side) / 2, (bmp.height - side) / 2, side, side, 0, 0, 256, 256);
+    const blob = await new Promise((r) => c.toBlob(r, "image/webp", 0.85)); const path = s.user.id + "/avatar-" + Date.now() + ".webp";
+    const up = await sb.storage.from("avatars").upload(path, blob, { contentType: "image/webp", upsert: false }); if (up.error) throw up.error;
+    const url = SB_URL + "/storage/v1/object/public/avatars/" + path; const old = profile.avatar_url;
+    const { error } = await sb.from("profiles").update({ avatar_url: url }).eq("id", s.user.id); if (error) throw error;
+    profile.avatar_url = url; if (old) { const op = old.split("/avatars/")[1]; if (op) sb.storage.from("avatars").remove([op]); }
+    try { localStorage.setItem("tc_av", url); } catch (e) {} msg.textContent = "Photo saved."; drawEarn(); ev("members-photo");
+  } catch (e) { msg.textContent = "Could not upload the photo."; }
 }
 const VIEWS = ["overview", "analyze", "reports", "training", "library", "puzzles", "earn", "plan", "profile"];
 function show() { const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "overview";
   document.querySelectorAll(".mview").forEach((s) => { s.hidden = s.dataset.view !== v; });
+  if (v === "analyze" && profile && !window.__azAuto && $("#az-user") && $("#az-user").value) { window.__azAuto = 1; quickUsers(); $("#az-form").requestSubmit(); }
   document.querySelectorAll(".mnav a").forEach((a) => { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); }); }
 window.addEventListener("hashchange", () => { if (location.hash === "#logout") render(null); else show(); });
 
@@ -40,11 +69,11 @@ function badgeList() {
 function drawEarn() {
   const pts = totalPoints(); let li = 0; LEVELS.forEach(([, t], i) => { if (pts >= t) li = i; }); const cur = LEVELS[li], nx = LEVELS[li + 1];
   const pct = nx ? Math.round(((pts - cur[1]) / (nx[1] - cur[1])) * 100) : 100;
-  $("#m-level").innerHTML = `<div class="mlv"><span class="mava big">${AV[profile.avatar] || AV.pawn}</span><div><b>${cur[0]}</b><span class="small"> level</span><div class="mbar"><i style="width:${pct}%"></i></div><span class="small">${pts} points${nx ? ` &middot; ${nx[1] - pts} to ${nx[0]}` : " &middot; top level"}</span></div></div>`;
+  $("#m-level").innerHTML = `<div class="mlv"><span class="mava big">${avHtml(profile)}</span><div><b>${cur[0]}</b><span class="small"> level</span><div class="mbar"><i style="width:${pct}%"></i></div><span class="small">${pts} points${nx ? ` &middot; ${nx[1] - pts} to ${nx[0]}` : " &middot; top level"}</span></div></div>`;
   const st = profile.streak || 0; $("#m-streak").innerHTML = `<div class="mlv"><span class="mflame">&#128293;</span><div><b>${st} day${st === 1 ? "" : "s"}</b><span class="small"> streak</span><br><span class="small">${profile._gained ? "+" + profile._gained + " points today. " : ""}Best: ${Math.max(profile.best_streak || 0, st)}. Come back tomorrow to keep it.</span></div></div>`;
   $("#m-av").innerHTML = Object.entries(AV).map(([k, g]) => `<button type="button" class="mavb${profile.avatar === k ? " on" : ""}" data-av="${k}" aria-label="Avatar ${k}" aria-pressed="${profile.avatar === k}">${g}</button>`).join("");
   $("#m-badges").innerHTML = badgeList().map(([t, d, ok]) => `<div class="mbdg${ok ? " on" : ""}"><b>${ok ? "&#9733; " : "&#9734; "}${esc(t)}</b><span class="small">${esc(d)}</span></div>`).join("");
-  $("#m-ava").textContent = AV[profile.avatar] || AV.pawn; drawOverview(A);
+  $("#m-ava").innerHTML = avHtml(profile); drawProfileExtra(); drawOverview(A);
 }
 function drawSocials() {
   const so = profile.socials || {}; const n = followCount();
@@ -99,10 +128,13 @@ async function gInit() {
 }
 gInit();
 $("#m-prof").addEventListener("submit", async (e) => { e.preventDefault(); const s = (await sb.auth.getSession()).data.session; if (!s) return;
-  const { error } = await sb.from("profiles").update({ display_name: $("#m-name").value.trim() || null, chesscom_username: $("#m-cc").value.trim() || null, lichess_username: $("#m-li").value.trim() || null }).eq("id", s.user.id);
-  if (!error) { profile.display_name = $("#m-name").value.trim() || null; drawHello(); }
+  const { error } = await sb.from("profiles").update({ display_name: $("#m-name").value.trim() || null, chesscom_username: $("#m-cc").value.trim() || null, lichess_username: $("#m-li").value.trim() || null, bio: $("#m-bio").value.trim() || null, country: $("#m-country").value.trim() || null, level: $("#m-level").value || null, fav_opening: $("#m-fav").value.trim() || null }).eq("id", s.user.id);
+  if (!error) { Object.assign(profile, { display_name: $("#m-name").value.trim() || null, chesscom_username: $("#m-cc").value.trim() || null, lichess_username: $("#m-li").value.trim() || null, bio: $("#m-bio").value.trim() || null, country: $("#m-country").value.trim() || null, level: $("#m-level").value || null, fav_opening: $("#m-fav").value.trim() || null }); drawHello(); drawProfileExtra(); quickUsers(); }
   $("#m-pmsg").textContent = error ? "Could not save." : "Saved."; });
+$("#m-photo").addEventListener("change", (e) => uploadPhoto(e.target.files[0]));
 document.addEventListener("click", async (e) => {
+  const qb = e.target.closest("[data-qs]"); if (qb) { $("#az-site").value = qb.dataset.qs; $("#az-user").value = qb.dataset.qu; $("#az-form").requestSubmit(); }
+  if (e.target.closest("#m-photo-rm")) { const s2 = (await sb.auth.getSession()).data.session; if (s2 && profile.avatar_url) { const op = profile.avatar_url.split("/avatars/")[1]; const { error } = await sb.from("profiles").update({ avatar_url: null }).eq("id", s2.user.id); if (!error) { if (op) sb.storage.from("avatars").remove([op]); profile.avatar_url = null; try { localStorage.setItem("tc_av", AV[profile.avatar] || AV.pawn); } catch (e2) {} drawEarn(); } } }
   const c = e.target.closest("[data-claim]"), d = e.target.closest("[data-del]"), o = e.target.closest("#m-out"), av = e.target.closest("[data-av]"); const s = (await sb.auth.getSession()).data.session;
   if (c && s) { const so = { ...(profile.socials || {}), [c.dataset.claim]: new Date().toISOString() }; const { error } = await sb.from("profiles").update({ socials: so }).eq("id", s.user.id); if (!error) { profile.socials = so; drawSocials(); drawEarn(); ev("members-follow-" + c.dataset.claim); } }
   if (av && s) { const { error } = await sb.from("profiles").update({ avatar: av.dataset.av }).eq("id", s.user.id); if (!error) { profile.avatar = av.dataset.av; drawEarn(); ev("members-avatar"); } }
