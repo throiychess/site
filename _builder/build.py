@@ -310,7 +310,7 @@ def promo_bar(active):
             '<a data-ev="promo-bar-click" href="/free/?utm_source=site&amp;utm_campaign=promo-bar">Get it free &rarr;</a>'
             '<button class="promo-x" type="button" aria-label="Close" onclick="try{sessionStorage.setItem(\'promo\',1)}catch(e){}this.closest(\'.promo\').remove()">&times;</button></div></div>'
             '<script>try{if(sessionStorage.getItem("promo"))document.querySelector(".promo").remove()}catch(e){}</script>')
-NAVG = [("Watch", [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Top games", "/#top-games")]),
+NAVG = [("Watch", [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Top games", "/top-games/")]),
         ("Train", [("Traps", "/traps/"), ("Analyze", "/analyze/")]),
         ("About", [("About", "/#about"), ("Contact", "/contact/")]), ("Support", "/support/")]
 NAV = [(n, u) for g, x in NAVG for (n, u) in (x if isinstance(x, list) else [(g, x)])]
@@ -534,7 +534,7 @@ def home():
     _P = [("Tactics", "/analyze/", "Analyze my games", "Free. Find the leaks that cost you games."), ("Opening systems", "/principles/", "Principle library", "Guidelines for every phase, with real games."), ("Attack", "/traps/", "Trap library", "Learn the trap, then learn the fix."), ("Pieces", "/shorts/", "Shorts and top games", "One lesson in under a minute."), ("Defence", "/analyze/", "Scout any opponent", "Enter any Chess.com or Lichess name and see where their games go wrong."), ("General", "/free/", "Free cheat sheet", "10 opening traps in one PDF. Free.")]
     paths = "".join(f'<a class="path" href="{h}"><span class="ic">{tic(t)}</span><b>{n}</b><span>{d}</span></a>' for t, h, n, d in _P)
     _top = [s for s in SHORTS if s.get("topic") == "Top game"]
-    top_cards = (f'<div class="sechead" style="margin-top:28px"><div><span class="eyebrow">Top games</span><h2>The best moments from elite chess.</h2></div><a class="btn" href="/shorts/">All Shorts →</a></div>'
+    top_cards = (f'<div class="sechead" style="margin-top:28px"><div><span class="eyebrow">Top games</span><h2>The best moments from elite chess.</h2></div><a class="btn" href="/top-games/">All top games →</a></div>'
                  f'<div class="shorts">{"".join(short_card(s) for s in _top[:4])}</div>') if _top else ""
     body = header() + f'''<main>
 <section class="hslider" aria-roledescription="carousel" aria-label="Highlights"><div class="hs-track" id="hsT">
@@ -704,6 +704,19 @@ def video_card(s):
     return (f'<article class="short" id="v-{e(s["id"])}"><div class="vid wide"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
             f'<span class="play"></span><small>Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
             f'<h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p>{share_bar(SITE + "/videos/#v-" + s["id"], s["title"])}</article>')
+
+def top_games_page():
+    top = [s for s in SHORTS if s.get("topic") == "Top game"]
+    cards = f'<div class="shorts">{"".join(short_card(s) for s in top)}</div>' if top else '<div class="supportbar"><p><strong>The first top-game lessons are coming.</strong></p></div>'
+    body = header("Top games") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Top games</span>
+<h1 class="page">The best moments from elite chess.</h1><p>One decisive moment from a top-level game, explained in under a minute, with the lesson you can use in your own games.</p></div>
+<div class="breaking"><span class="live">Latest</span><div><h3>Clutch Chess: Champions Showdown · 27–29 October</h3>
+<p>Nakamura, Caruana, Praggnanandhaa and Sindarov play rapid chess. We break down the sharpest moment of each day.</p></div></div>
+<div class="sechead" style="margin-top:32px"><div><span class="eyebrow">All top-game Shorts</span><h2>Learn from the strongest players.</h2></div><a class="btn" href="/shorts/">All Shorts →</a></div>
+{cards}
+<div class="btns" style="justify-content:center;margin:40px 0 56px"><a class="btn solid" href="{LINKS[0][1]}" target="_blank" rel="noopener">Subscribe on YouTube</a><a class="btn" href="/analyze/">Analyze my games free</a></div></main>''' + footer()
+    return "/top-games/", page("/top-games/", "Top games · Throiy Chess", "One decisive moment from elite chess games, explained in under a minute, with the lesson for your own games.",
+                               body, [v for v in map(video_ld, top[:10]) if v])
 
 def videos_page():
     if VIDEOS: inner = f'<div class="videos">{"".join(video_card(v) for v in VIDEOS)}</div>'
@@ -1146,7 +1159,7 @@ def build():
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
     try: os.remove(os.path.join(d, "data", "principles.json"))  # member-only: served from Supabase (site_content) behind login
     except OSError: pass
-    pages = [("/", home())] + shorts_pages() + [videos_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [principles_index()] + [principle_page(g, x) for g, x in _pitems()] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), members_page(), improve_page(), terms()]
+    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [principles_index()] + [principle_page(g, x) for g, x in _pitems()] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), members_page(), improve_page(), terms()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
