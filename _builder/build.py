@@ -804,10 +804,10 @@ UPC_CSS = """.upc{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:34p
 @media(max-width:760px){.upc{grid-template-columns:1fr}}"""
 def upgrade_cta(src):
     return f'''<section class="upc" aria-label="Upgrade"><div><span class="eyebrow">Want more?</span><h2>Become a member</h2>
-<ul><li>All games of a player, not just 5. Yours or anyone's.</li><li>Saved reports you can open again later.</li><li>Move categories like on Chess.com: great, brilliant, mistake, blunder.</li></ul>
+<ul><li>Analyze all games of a player, not just 5. Yours or anyone's.</li><li>Every move rated: brilliant, great, best, inaccuracy, mistake or blunder.</li><li>Saved reports you can open again later.</li></ul>
 <a class="btn solid" data-ev="upgrade-member-{src}" href="/members/?utm_source=site&amp;utm_campaign=upgrade-{src}">Become a member</a></div>
 <div class="pr"><span class="eyebrow">Beat your opponent</span><h2>Want the weak points and the training to beat them?</h2>
-<ul><li>Their strong points, and how to counter them.</li><li>A personal improvement plan from your own games.</li><li>The full principle library with real games.</li></ul>
+<ul><li>Their strong points too, and how to counter them.</li><li>A personal improvement plan: what to work on and how.</li><li>The full principle library, with real games.</li></ul>
 <a class="btn" data-ev="upgrade-premium-{src}" href="/improve/?utm_source=site&amp;utm_campaign=upgrade-{src}">Member + Premium</a><p class="soon">Premium is coming. Free members get early access to updates.</p></div></section>'''
 
 def _analyze_body(active, eyebrow, h1, intro, src):
