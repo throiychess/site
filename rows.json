@@ -1,42 +1,49 @@
 {
-"generated": "2026-11-01T04:16:46Z",
-"start": "2026-08-04",
-"end": "2026-11-01",
+"generated": "2026-11-02T04:23:57Z",
+"start": "2026-08-05",
+"end": "2026-11-02",
 "rows": [
 {
 "kind": "source",
 "key": "(direct)",
 "label": "Direct of onbekend",
-"value": 39,
+"value": 46,
 "group": "Direct"
-},
-{
-"kind": "source",
-"key": "urlscan.io",
-"label": "urlscan.io",
-"value": 3,
-"group": "Bot of scanner"
-},
-{
-"kind": "source",
-"key": "YouTube",
-"label": "YouTube",
-"value": 2,
-"group": "Website"
 },
 {
 "kind": "source",
 "key": "site",
 "label": "site",
-"value": 2,
+"value": 5,
 "group": "Website"
+},
+{
+"kind": "source",
+"key": "YouTube",
+"label": "YouTube",
+"value": 4,
+"group": "Website"
+},
+{
+"kind": "source",
+"key": "urlscan.io",
+"label": "urlscan.io",
+"value": 4,
+"group": "Bot of scanner"
 },
 {
 "kind": "source",
 "key": "Google",
 "label": "Google",
-"value": 1,
+"value": 2,
 "group": "Website"
+},
+{
+"kind": "source",
+"key": "www.youtube.com",
+"label": "www.youtube.com",
+"value": 2,
+"group": "Video"
 },
 {
 "kind": "source",
@@ -44,13 +51,6 @@
 "label": "www.facebook.com",
 "value": 1,
 "group": "Social"
-},
-{
-"kind": "source",
-"key": "www.youtube.com",
-"label": "www.youtube.com",
-"value": 1,
-"group": "Video"
 },
 {
 "kind": "source",
@@ -63,21 +63,21 @@
 "kind": "country",
 "key": "NL",
 "label": "Netherlands",
-"value": 52,
+"value": 56,
 "group": ""
 },
 {
 "kind": "country",
 "key": "US",
 "label": "United States",
-"value": 16,
+"value": 19,
 "group": ""
 },
 {
 "kind": "country",
 "key": "BG",
 "label": "Bulgaria",
-"value": 8,
+"value": 18,
 "group": ""
 },
 {
@@ -123,6 +123,13 @@
 "group": ""
 },
 {
+"kind": "country",
+"key": "ZW",
+"label": "Zimbabwe",
+"value": 1,
+"group": ""
+},
+{
 "kind": "device",
 "key": "phone",
 "label": "Telefoon",
@@ -133,21 +140,21 @@
 "kind": "device",
 "key": "tablet",
 "label": "Tablet",
-"value": 10,
+"value": 12,
 "group": ""
 },
 {
 "kind": "device",
 "key": "desktop",
 "label": "Computer",
-"value": 65,
+"value": 81,
 "group": ""
 },
 {
 "kind": "browser",
 "key": "Chrome",
 "label": "Chrome",
-"value": 56,
+"value": 74,
 "group": ""
 },
 {
@@ -168,7 +175,7 @@
 "kind": "system",
 "key": "Windows",
 "label": "Windows",
-"value": 63,
+"value": 79,
 "group": ""
 },
 {
@@ -182,7 +189,7 @@
 "kind": "system",
 "key": "Linux",
 "label": "Linux",
-"value": 12,
+"value": 14,
 "group": ""
 },
 {
@@ -194,6 +201,13 @@
 },
 {
 "kind": "campaign",
+"key": "75274",
+"label": "promo-bar",
+"value": 5,
+"group": ""
+},
+{
+"kind": "campaign",
 "key": "75273",
 "label": "halloween-gambit",
 "value": 2,
@@ -201,8 +215,8 @@
 },
 {
 "kind": "campaign",
-"key": "75274",
-"label": "promo-bar",
+"key": "75469",
+"label": "elephant-trap",
 "value": 2,
 "group": ""
 },
@@ -216,14 +230,14 @@
 {
 "kind": "meta",
 "key": "generated",
-"label": "2026-11-01T04:16:46Z",
+"label": "2026-11-02T04:23:57Z",
 "value": 0,
 "group": ""
 },
 {
 "kind": "meta",
 "key": "start",
-"label": "2026-08-04",
+"label": "2026-08-05",
 "value": 0,
 "group": ""
 }

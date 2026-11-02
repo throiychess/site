@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-01T04:16:46Z",
- "start": "2026-08-04",
- "end": "2026-11-01",
+ "generated": "2026-11-02T04:23:57Z",
+ "start": "2026-08-05",
+ "end": "2026-11-02",
  "hits": {
   "error": 404
  },
@@ -9,42 +9,42 @@
   "stats": [
    {
     "name": "",
-    "count": 39,
+    "count": 46,
     "ref_scheme": "o"
-   },
-   {
-    "id": "urlscan.io",
-    "name": "urlscan.io",
-    "count": 3,
-    "ref_scheme": "h"
-   },
-   {
-    "id": "YouTube",
-    "name": "YouTube",
-    "count": 2,
-    "ref_scheme": "c"
    },
    {
     "id": "site",
     "name": "site",
-    "count": 2,
+    "count": 5,
     "ref_scheme": "c"
+   },
+   {
+    "id": "YouTube",
+    "name": "YouTube",
+    "count": 4,
+    "ref_scheme": "c"
+   },
+   {
+    "id": "urlscan.io",
+    "name": "urlscan.io",
+    "count": 4,
+    "ref_scheme": "h"
    },
    {
     "id": "Google",
     "name": "Google",
-    "count": 1,
+    "count": 2,
     "ref_scheme": "g"
-   },
-   {
-    "id": "www.facebook.com",
-    "name": "www.facebook.com",
-    "count": 1,
-    "ref_scheme": "h"
    },
    {
     "id": "www.youtube.com",
     "name": "www.youtube.com",
+    "count": 2,
+    "ref_scheme": "h"
+   },
+   {
+    "id": "www.facebook.com",
+    "name": "www.facebook.com",
     "count": 1,
     "ref_scheme": "h"
    },
@@ -62,7 +62,7 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 56
+    "count": 74
    },
    {
     "id": "Firefox",
@@ -82,7 +82,7 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 63
+    "count": 79
    },
    {
     "id": "iOS",
@@ -92,7 +92,7 @@
    {
     "id": "Linux",
     "name": "Linux",
-    "count": 12
+    "count": 14
    },
    {
     "id": "Android",
@@ -112,12 +112,12 @@
    {
     "id": "tablet",
     "name": "",
-    "count": 10
+    "count": 12
    },
    {
     "id": "desktop",
     "name": "",
-    "count": 65
+    "count": 81
    },
    {
     "id": "desktophd",
@@ -137,17 +137,17 @@
    {
     "id": "NL",
     "name": "Netherlands",
-    "count": 52
+    "count": 56
    },
    {
     "id": "US",
     "name": "United States",
-    "count": 16
+    "count": 19
    },
    {
     "id": "BG",
     "name": "Bulgaria",
-    "count": 8
+    "count": 18
    },
    {
     "id": "DE",
@@ -178,6 +178,11 @@
     "id": "RU",
     "name": "Russia",
     "count": 1
+   },
+   {
+    "id": "ZW",
+    "name": "Zimbabwe",
+    "count": 1
    }
   ],
   "more": false
@@ -185,13 +190,18 @@
  "campaigns": {
   "stats": [
    {
+    "id": "75274",
+    "name": "promo-bar",
+    "count": 5
+   },
+   {
     "id": "75273",
     "name": "halloween-gambit",
     "count": 2
    },
    {
-    "id": "75274",
-    "name": "promo-bar",
+    "id": "75469",
+    "name": "elephant-trap",
     "count": 2
    },
    {
