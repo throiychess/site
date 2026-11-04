@@ -637,7 +637,7 @@ def guide_html(t):
     if t.get("qa"):
         out += '<h2>Questions and answers</h2>' + "".join(f'<h3>{e(q)}</h3><p>{e(a)}</p>' for q, a in t["qa"])
     out += '<p class="small">Evaluations: Stockfish 17.1, depth 24. +1.0 is about one extra pawn for White.</p>'
-    return f'<section class="guide" style="margin-top:56px"><div class="prose" style="max-width:72ch"><span class="eyebrow">Full guide</span>{out}</div></section>'
+    return f'<div class="guide" style="margin-top:48px"><span class="eyebrow">Full guide</span>{out}</div>'
 
 def trap_page(t):
     b = chess.Board(); plies = [dict(fen=b.board_fen(), san="", fr=None, to=None)]
@@ -668,8 +668,8 @@ def trap_page(t):
 <div><div class="note" aria-live="polite"><div class="meta"><span class="label" id="nl"></span><span class="tag" id="nt"></span></div><p id="nx"></p></div>
 <div class="moves" id="moves">{mv_html}</div></div></div>
 <section style="margin-top:56px"><div class="twocol"><div class="prose"><span class="eyebrow">The trap</span><h2>How the {e(t["name"])} works</h2><p>{e(t["intro"])}</p>
-<h2>How not to fall for it</h2><ol class="fix">{fix}</ol>{related_traps(t)}</div><aside>{side}<div class="card" style="margin-top:14px"><span class="label">Members</span><h3>Where do you fall for traps?</h3><p>Analyze your own games for free and see which mistakes cost you the most. Members also get a library of chess principles matched to their games.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=trap-page" data-ev="trap-members-cta">Analyze my games free →</a></div></aside></div></section>
-{guide_html(t)}</main>''' + footer() + '<script>const D=' + data + ''';
+<h2>How not to fall for it</h2><ol class="fix">{fix}</ol>{related_traps(t)}{guide_html(t)}</div><aside>{side}<div class="card" style="margin-top:14px"><span class="label">Members</span><h3>Where do you fall for traps?</h3><p>Analyze your own games for free and see which mistakes cost you the most. Members also get a library of chess principles matched to their games.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=trap-page" data-ev="trap-members-cta">Analyze my games free →</a></div></aside></div></section>
+</main>''' + footer() + '<script>const D=' + data + ''';
 const P="/img/pieces/",B=document.getElementById("board");let cur=0;
 const sqs=[];for(let r=7;r>=0;r--)for(let f=0;f<8;f++){const d=document.createElement("div");const n="abcdefgh"[f]+(r+1);d.className="sq "+((r+f)%2?"l":"d");d.dataset.n=n;
 if(f===0){const c=document.createElement("span");c.className="co rk";c.textContent=r+1;d.appendChild(c)}
