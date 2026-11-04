@@ -164,7 +164,35 @@ TRAPS = [
                 15: ("EMPTY BACK RANK", "8.Qxc3", "The queen takes back. Nothing guards c1 anymore.", ["!c1"]),
                 16: ("CHECKMATE", "8…Qc1#", "Queen c1. Checkmate on the back rank.", ["c1", "!e1"])},
          fix=["After the queen takes b2, play Nc3, not Bc3.",
-              "Keep your back rank covered when the enemy queen is close to it."]),
+              "Keep your back rank covered when the enemy queen is close to it."],
+         # Guide below the board. Every number: Stockfish 17.1, depth 24, checked 4 Nov 2026 (+1.00 = about one extra pawn for White).
+         title="Englund Gambit: the trap, the refutation and how to beat it",
+         desc="How to beat the Englund Gambit (1.d4 e5): take the pawn, develop, and never play Bc3 after Qxb2. The trap move by move, plus the mistakes to avoid.",
+         guide=[
+             dict(h="What is the Englund Gambit?", p=[
+                 "The Englund Gambit starts 1.d4 e5. Black offers the e-pawn on the very first move. After 2.dxe5 Black usually plays 2…Nc6 and 3…Qe7 to win the pawn back on e5, and hopes White walks into a queen trap on b2.",
+                 "It is named after the Swedish player Fritz Englund and is also known as the Charlick Gambit (ECO code A40)."]),
+             dict(h="Is the Englund Gambit good?", p=[
+                 "Not for Black. After 2.dxe5 White is about a pawn up (+1.4), and Black gets very little for it. All of Black's main tries keep White clearly better: 2…Nc6 +1.3, 2…d6 +1.4, 2…f6 +1.6.",
+                 "Black's real hope is the trap. That makes it a surprise weapon for fast games against someone who doesn't know it, not a sound opening."]),
+             dict(h="How to beat the Englund Gambit", ol=[
+                 "Take the pawn: 2.dxe5. It is the best move (+1.4). Declining with 2.Nc3 or 2.e3 gives away most of your edge (about +0.2).",
+                 "Defend e5 with your knight: 3.Nf3.",
+                 "After 3…Qe7, just develop: 4.Bf4, 4.Bg5 or 4.Nc3 all keep about +1.6.",
+                 "After 4.Bf4 Qb4+, block with 5.Bd2 (+1.8).",
+                 "If the queen grabs 5…Qxb2, play 6.Nc3! (+2.2). After 6…Bb4 7.Rb1 Qa3 White stays clearly better (+2.2)."]),
+             dict(h="Common mistakes against the Englund Gambit", ul=[
+                 "6.Bc3?? after 5…Qxb2: it attacks the queen but leaves c1 empty. 6…Bb4! wins material (about −4.6), and the natural 7.Qd2 even runs into 7…Bxc3 8.Qxc3 Qc1# (see the board above).",
+                 "5.c3? or 5.Nbd2? against 4…Qb4+: the queen simply takes your bishop on f4, and Black is better (about −3.7).",
+                 "6.e3? or 6.e4? after 5…Qxb2: the queen takes the rook on a1 (−3.3 and −2.5).",
+                 "4.e4 against 3…Qe7: not a blunder, but it lets Black back into the game (+0.9 instead of +1.6)."]),
+         ],
+         qa=[
+             ("Should White accept the Englund Gambit?", "Yes. 2.dxe5 is the strongest reply and leaves White about a pawn up. Just remember the one trap on b2."),
+             ("What is the Englund Gambit trap?", "After 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2, the natural 6.Bc3?? runs into 6…Bb4!. White loses material whatever happens, and the natural 7.Qd2 allows 7…Bxc3 8.Qxc3 Qc1#."),
+             ("What is the refutation of the Englund Gambit?", "There is no forced win, but simple play is enough: 2.dxe5, 3.Nf3, develop, block a check with Bd2 and answer …Qxb2 with Nc3. White stays clearly better."),
+             ("Is the Englund Gambit good for Black?", "No. With normal play White keeps an extra pawn. It only works as a surprise in fast games."),
+         ]),
     dict(slug="elephant-trap", name="Elephant Trap", opening="Queen's Gambit Declined", side="Black sets it",
          hook="The d5 pawn looks free. Grab it and you lose a whole piece.", mate=False,
          simple="A pawn looks free because the knight defending it seems stuck. It isn't. If White grabs the pawn, Black gives the queen, wins it straight back with check and ends up a whole piece ahead. Count the pieces before you grab.",

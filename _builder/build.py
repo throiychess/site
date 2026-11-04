@@ -626,6 +626,19 @@ def related_traps(t, n=3):
     li = "".join(f'<li><a href="/traps/{x["slug"]}/">{e(x["name"])}</a> <span class="small">· {e(x["opening"])}</span></li>' for x in rest[:n])
     return f'<h2>Related traps</h2><ul class="related">{li}</ul><p><a href="/traps/">All {len(TRAPS)} traps in the library →</a></p>'
 
+def guide_html(t):
+    """Optional long guide below the board (traps.py: guide=[{h, p|ol|ul}], qa=[(q, a)]). Visible Q&A, no FAQ schema (Google dropped FAQ rich results)."""
+    if not t.get("guide"): return ""
+    out = ""
+    for g in t["guide"]:
+        out += f'<h2>{e(g["h"])}</h2>' + "".join(f"<p>{e(x)}</p>" for x in g.get("p", []))
+        if g.get("ol"): out += '<ol class="fix">' + "".join(f"<li><span>{e(x)}</span></li>" for x in g["ol"]) + "</ol>"
+        if g.get("ul"): out += '<ul class="related">' + "".join(f"<li>{e(x)}</li>" for x in g["ul"]) + "</ul>"
+    if t.get("qa"):
+        out += '<h2>Questions and answers</h2>' + "".join(f'<h3>{e(q)}</h3><p>{e(a)}</p>' for q, a in t["qa"])
+    out += '<p class="small">Evaluations: Stockfish 17.1, depth 24. +1.0 is about one extra pawn for White.</p>'
+    return f'<section class="guide" style="margin-top:56px"><div class="prose" style="max-width:72ch"><span class="eyebrow">Full guide</span>{out}</div></section>'
+
 def trap_page(t):
     b = chess.Board(); plies = [dict(fen=b.board_fen(), san="", fr=None, to=None)]
     for san in t["moves"].split():
@@ -656,7 +669,7 @@ def trap_page(t):
 <div class="moves" id="moves">{mv_html}</div></div></div>
 <section style="margin-top:56px"><div class="twocol"><div class="prose"><span class="eyebrow">The trap</span><h2>How the {e(t["name"])} works</h2><p>{e(t["intro"])}</p>
 <h2>How not to fall for it</h2><ol class="fix">{fix}</ol>{related_traps(t)}</div><aside>{side}<div class="card" style="margin-top:14px"><span class="label">Members</span><h3>Where do you fall for traps?</h3><p>Analyze your own games for free and see which mistakes cost you the most. Members also get a library of chess principles matched to their games.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=trap-page" data-ev="trap-members-cta">Analyze my games free →</a></div></aside></div></section>
-</main>''' + footer() + '<script>const D=' + data + ''';
+{guide_html(t)}</main>''' + footer() + '<script>const D=' + data + ''';
 const P="/img/pieces/",B=document.getElementById("board");let cur=0;
 const sqs=[];for(let r=7;r>=0;r--)for(let f=0;f<8;f++){const d=document.createElement("div");const n="abcdefgh"[f]+(r+1);d.className="sq "+((r+f)%2?"l":"d");d.dataset.n=n;
 if(f===0){const c=document.createElement("span");c.className="co rk";c.textContent=r+1;d.appendChild(c)}
@@ -681,7 +694,8 @@ show(0);</script>'''
     crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Trap library", "item": SITE + "/traps/"},
         {"@type": "ListItem", "position": 2, "name": t["name"], "item": SITE + path}]}
-    return path, page(path, f'{t["name"]}: moves, {"mate" if t.get("mate", True) else "the trick"} and how to avoid it · Throiy Chess', t["hook"] + " Step through every move on the board.", body,
+    ttl = t.get("title") or f'{t["name"]}: moves, {"mate" if t.get("mate", True) else "the trick"} and how to avoid it'
+    return path, page(path, f'{ttl} · Throiy Chess', t.get("desc") or (t["hook"] + " Step through every move on the board."), body,
                       [art, crumbs] + ([video_ld(sh)] if sh and video_ld(sh) else []), og_image=trap_img(t) or "/img/og.jpg", ogtype="article")
 
 def contact():
