@@ -4,7 +4,7 @@
 
 Add content in the data section: SHORTS (every YouTube Short), TRAPS (playable trap pages).
 Settings: WEB3FORMS_KEY (contact form), ANALYTICS (GoatCounter code), DONATE_URL."""
-import os, sys, json, shutil, html, math, datetime
+import os, sys, json, shutil, html, math, datetime, hashlib
 sys.path.insert(0, "/home/claude/ext/python-chess")  # local; in GitHub Actions chess comes from pip
 import chess
 
@@ -245,6 +245,7 @@ footer a{color:var(--mute)}
 .fix{display:grid;gap:14px;padding:0;margin:0;list-style:none;counter-reset:f}
 .fix li{display:grid;grid-template-columns:28px 1fr;gap:12px;max-width:70ch}
 .fix li::before{counter-increment:f;content:counter(f);font-weight:900;color:var(--gold);font-size:20px;line-height:1.4}
+.related{display:grid;gap:8px;padding-left:20px;margin:0 0 12px}.related a{font-weight:700}
 .hint{color:var(--mute);font-size:14px;margin-top:10px}
 .twocol{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:44px;align-items:start}
 .twocol>*{min-width:0}
@@ -518,7 +519,9 @@ def traps_index():
     body = header("Traps") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Trap library</span>
 <h1 class="page">Learn the trap. Then the fix.</h1><p>{len(TRAPS)} opening traps, each explained in plain words first, then move by move on the board.</p></div>
 <div class="grid">{"".join(trap_card(t) for t in TRAPS)}</div><div style="height:56px"></div></main>''' + footer()
-    return "/traps/", page("/traps/", "Trap library · Throiy Chess", f"{len(TRAPS)} chess opening traps explained in plain words, with the fix for each.", body)
+    il = {"@context": "https://schema.org", "@type": "ItemList", "name": "Chess opening traps", "itemListElement": [
+        {"@type": "ListItem", "position": i, "url": f'{SITE}/traps/{t["slug"]}/', "name": t["name"]} for i, t in enumerate(TRAPS, 1)]}
+    return "/traps/", page("/traps/", "Chess opening traps: library with the fix for each · Throiy Chess", f"{len(TRAPS)} chess opening traps explained in plain words, with the fix for each.", body, [il])
 
 SLIDER_JS = '''<script>(function(){var t=document.getElementById("hsT"),d=[].slice.call(document.querySelectorAll(".hs-dots button")),i=0,stop=matchMedia("(prefers-reduced-motion:reduce)").matches;
 function go(n){i=(n+d.length)%d.length;t.scrollTo({left:i*t.clientWidth,behavior:"smooth"})}
@@ -615,6 +618,14 @@ def shorts_pages():
                                    body, [v for v in map(video_ld, items) if v])))
     return out
 
+def related_traps(t, n=3):
+    """Internal links: other traps from the same opening family or the same side first, then the rest in library order."""
+    fam = lambda x: x["opening"].split()[0]
+    rest = [x for x in TRAPS if x["slug"] != t["slug"]]
+    rest.sort(key=lambda x: (fam(x) != fam(t), x["side"] != t["side"]))
+    li = "".join(f'<li><a href="/traps/{x["slug"]}/">{e(x["name"])}</a> <span class="small">· {e(x["opening"])}</span></li>' for x in rest[:n])
+    return f'<h2>Related traps</h2><ul class="related">{li}</ul><p><a href="/traps/">All {len(TRAPS)} traps in the library →</a></p>'
+
 def trap_page(t):
     b = chess.Board(); plies = [dict(fen=b.board_fen(), san="", fr=None, to=None)]
     for san in t["moves"].split():
@@ -644,7 +655,7 @@ def trap_page(t):
 <div><div class="note" aria-live="polite"><div class="meta"><span class="label" id="nl"></span><span class="tag" id="nt"></span></div><p id="nx"></p></div>
 <div class="moves" id="moves">{mv_html}</div></div></div>
 <section style="margin-top:56px"><div class="twocol"><div class="prose"><span class="eyebrow">The trap</span><h2>How the {e(t["name"])} works</h2><p>{e(t["intro"])}</p>
-<h2>How not to fall for it</h2><ol class="fix">{fix}</ol></div><aside>{side}<div class="card" style="margin-top:14px"><span class="label">Members</span><h3>Where do you fall for traps?</h3><p>Analyze your own games for free and see which mistakes cost you the most. Members also get a library of chess principles matched to their games.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=trap-page" data-ev="trap-members-cta">Analyze my games free →</a></div></aside></div></section>
+<h2>How not to fall for it</h2><ol class="fix">{fix}</ol>{related_traps(t)}</div><aside>{side}<div class="card" style="margin-top:14px"><span class="label">Members</span><h3>Where do you fall for traps?</h3><p>Analyze your own games for free and see which mistakes cost you the most. Members also get a library of chess principles matched to their games.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=trap-page" data-ev="trap-members-cta">Analyze my games free →</a></div></aside></div></section>
 </main>''' + footer() + '<script>const D=' + data + ''';
 const P="/img/pieces/",B=document.getElementById("board");let cur=0;
 const sqs=[];for(let r=7;r>=0;r--)for(let f=0;f<8;f++){const d=document.createElement("div");const n="abcdefgh"[f]+(r+1);d.className="sq "+((r+f)%2?"l":"d");d.dataset.n=n;
@@ -665,11 +676,12 @@ show(0);</script>'''
     art = {"@context": "https://schema.org", "@type": "Article", "headline": f'{t["name"]}: how it works and how to avoid it',
            "description": t["hook"], "about": [t["opening"], "chess opening trap"], "author": {"@type": "Organization", "name": NAME, "url": SITE},
            "publisher": {"@type": "Organization", "name": NAME, "logo": {"@type": "ImageObject", "url": SITE + "/img/logo.png"}},
-           "mainEntityOfPage": SITE + path, "image": SITE + (trap_img(t) or "/img/og.jpg")}
+           "mainEntityOfPage": SITE + path, "image": SITE + (trap_img(t) or "/img/og.jpg"), "inLanguage": "en"}
+    if sh and sh.get("date"): art["datePublished"] = sh["date"][:10]
     crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Trap library", "item": SITE + "/traps/"},
         {"@type": "ListItem", "position": 2, "name": t["name"], "item": SITE + path}]}
-    return path, page(path, f'{t["name"]}: moves, mate and how to avoid it · Throiy Chess', t["hook"] + " Step through every move on the board.", body,
+    return path, page(path, f'{t["name"]}: moves, {"mate" if t.get("mate", True) else "the trick"} and how to avoid it · Throiy Chess', t["hook"] + " Step through every move on the board.", body,
                       [art, crumbs] + ([video_ld(sh)] if sh and video_ld(sh) else []), og_image=trap_img(t) or "/img/og.jpg", ogtype="article")
 
 def contact():
@@ -1204,9 +1216,20 @@ def build():
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
     open(os.path.join(d, "404.html"), "w").write(notfound())
     today = datetime.date.today().isoformat()
-    open(os.path.join(d, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + "".join(f"<url><loc>{SITE}{p}</loc><lastmod>{today}</lastmod></url>\n" for p, _ in pages if p not in ("/members/", "/admin/") and not p.startswith("/principles/")) + "</urlset>\n")
-    open(os.path.join(d, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /m/\nDisallow: /members/\n\nSitemap: {SITE}/sitemap.xml\n")
+    # lastmod = the day the page content really changed (hash kept in _builder/lastmod.json, committed by the bot),
+    # so Google can trust it. A build without changes keeps the old date.
+    lm_file = os.path.join(ROOT, "lastmod.json")
+    try: lm = json.load(open(lm_file))
+    except (OSError, ValueError): lm = {}
+    smap = []
+    for p, htm in pages:
+        if p in ("/members/", "/admin/") or "noindex" in htm[:6000]: continue
+        hsh = hashlib.sha1(htm.encode("utf8")).hexdigest()[:16]
+        if lm.get(p, {}).get("h") != hsh: lm[p] = {"h": hsh, "d": today}
+        smap.append(f"<url><loc>{SITE}{p}</loc><lastmod>{lm[p]['d']}</lastmod></url>\n")
+    json.dump(lm, open(lm_file, "w"), indent=0, sort_keys=True)
+    open(os.path.join(d, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join(smap) + "</urlset>\n")
+    open(os.path.join(d, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /m/\nDisallow: /members/\nDisallow: /admin/\nDisallow: /_builder/\nDisallow: /_stats/\n\nSitemap: {SITE}/sitemap.xml\n")
     open(os.path.join(d, "llms.txt"), "w").write(llms_txt())
     open(os.path.join(d, "CNAME"), "w").write(DOMAIN + "\n"); open(os.path.join(d, ".nojekyll"), "w").write("")
     print("built", len(pages), "pages")
