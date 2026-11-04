@@ -2,5 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /m/
 Disallow: /members/
+Disallow: /admin/
+Disallow: /_builder/
+Disallow: /_stats/
 
 Sitemap: https://throiychess.com/sitemap.xml
