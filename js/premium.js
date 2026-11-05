@@ -23,7 +23,7 @@
     var sb = window.__sb; prof = window.__profile; if (!sb || !prof) return;
     sb.from("analyses").select("id,created_at,accuracy,avg_loss,blunders,games,band,top_leak,report").order("created_at", { ascending: false }).limit(30).then(function (r) {
       rows = r.data || []; buildPuz(); drawGoal(); drawIns(); drawPlan(); drawPuz(); drawShare(); drawOpen();
-      if (LIB.length) drawPrinc(); else window.__sb.from("site_content").select("data").eq("key", "principles").maybeSingle().then(function (r) { LIB = (r && r.data && r.data.data) || []; drawPrinc(); }).catch(function () { drawPrinc(); });
+      if (LIB.length) route(); else window.__sb.from("site_content").select("data").eq("key", "principles").maybeSingle().then(function (r) { LIB = (r && r.data && r.data.data) || []; route(); }).catch(function () { drawPrinc(); });
     });
   }
   window.addEventListener("m-ready", load); window.addEventListener("az-saved", function () { setTimeout(load, 600); });
@@ -123,7 +123,7 @@
   function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ""; }
   function pcard(x) {
     var m = MARK[x.slug] || "", t0 = (x.tags || ["General"])[0];
-    return "<div class=\"prow\"><div class=\"pic\">" + tic(t0) + "</div><div><a class=\"pt\" href=\"/principles/" + esc(x.slug) + "/\">" + esc(x.title) + "</a><p>" + esc(x.text) + "</p><div class=\"ppills\"><span class=\"pill lv-" + esc(x.level) + "\">" + esc(cap(x.level)) + "</span><span class=\"pill\">" + esc(cap(x.phase)) + "</span></div></div>" +
+    return "<div class=\"prow\"><div class=\"pic\">" + tic(t0) + "</div><div><a class=\"pt\" href=\"#library/" + esc(x.slug) + "\">" + esc(x.title) + "</a><p>" + esc(x.text) + "</p><div class=\"ppills\"><span class=\"pill lv-" + esc(x.level) + "\">" + esc(cap(x.level)) + "</span><span class=\"pill\">" + esc(cap(x.phase)) + "</span></div></div>" +
       "<div class=\"pact\"><button type=\"button\" class=\"pbtn sv" + (m.indexOf("s") >= 0 ? " on" : "") + "\" data-mk=\"s:" + esc(x.slug) + "\" title=\"Save for later\" aria-label=\"Save for later\">" + SVG_SV + "</button><button type=\"button\" class=\"pbtn ln" + (m.indexOf("l") >= 0 ? " on" : "") + "\" data-mk=\"l:" + esc(x.slug) + "\" title=\"Mark as learned\" aria-label=\"Mark as learned\">" + SVG_LN + "</button></div></div>";
   }
   function selected(items) {
@@ -177,6 +177,37 @@
     $("#lib-ph").onchange = function (ev) { PF.ph = ev.target.value; PF.pg = 0; drawList(); };
     box.querySelectorAll("[data-tag]").forEach(function (b) { b.onclick = function () { PF.tag = b.getAttribute("data-tag"); PF.pg = 0; drawList(); }; });
     drawList(); progress();
+  }
+
+  // ---------- one principle (members only; the data comes from Supabase behind login) ----------
+  var DET = false;
+  function route() { var h = location.hash; if (h.indexOf("#library/") === 0) detail(decodeURIComponent(h.slice(9))); else if (DET || !$("#lib-list")) { DET = false; drawPrinc(); } }
+  window.addEventListener("hashchange", function () { if (LIB.length && location.hash.indexOf("#library") === 0) route(); });
+  function exHtml(q) {
+    var m = q.moves || { f: [q.fen], u: [], sans: [], at: 0, start: q.fen }, d = { f: m.f, u: m.u, at: m.at, s: m.sans, start: m.start };
+    return "<div class=\"pex xb\" data-m=\"" + esc(JSON.stringify(d)) + "\"><div class=\"xbl\"><div class=\"xbd\"></div><div class=\"xbc\"><button type=\"button\" data-a=\"start\" aria-label=\"Start\">&laquo;</button><button type=\"button\" data-a=\"prev\" aria-label=\"Previous move\">&lsaquo;</button><button type=\"button\" data-a=\"next\" aria-label=\"Next move\">&rsaquo;</button><button type=\"button\" data-a=\"end\" aria-label=\"End\">&raquo;</button><button type=\"button\" class=\"eng\" data-a=\"eng\">Live analysis</button></div><div class=\"xbv\" hidden></div><p class=\"xbh\">Tip: use the arrow keys. Click a piece and a square to try your own moves.</p></div>" +
+      "<div><div class=\"xbm\" aria-label=\"Moves from the game\"></div><button type=\"button\" class=\"xbr\" data-a=\"reset\" hidden>&larr; Back to the game</button><div class=\"cap\">" + esc(q.caption || "") + "</div>" + (q.source ? "<div class=\"src\">Source: " + esc(q.source) + "</div>" : "") + "</div></div>";
+  }
+  function detail(slug) {
+    var box = $("#m-princ"); if (!box) return; var items = allItems(), ix = -1;
+    items.forEach(function (y, i) { if (y.slug === slug) ix = i; });
+    if (ix < 0) { DET = false; drawPrinc(); return; }
+    DET = true; var x = items[ix], mine = x.tags || [], t0 = mine[0] || "General", mk = MARK[x.slug] || "";
+    var rel = items.filter(function (y) { return y.slug !== x.slug && (y.tags || []).some(function (t) { return mine.indexOf(t) >= 0; }); }).slice(0, 5);
+    var exs = (x.examples || []).map(exHtml).join("");
+    var sc = x.scenario ? "<div class=\"ptry\"><div class=\"pic\">" + tic("Psychology") + "</div><div><div class=\"ph2\" style=\"margin:0 0 6px\">Try this</div><p>" + esc(String(x.scenario).replace(/^Try this:\s*/, "")) + "</p></div></div>" : "";
+    var pv = items[ix - 1], nx = items[ix + 1];
+    box.innerHTML = "<p class=\"small\"><a href=\"#library\">&larr; All principles</a></p>" +
+      "<span class=\"eyebrow\">" + esc(x._g || "") + "</span><h3 style=\"font-size:clamp(26px,4vw,40px);line-height:1.1;margin:8px 0 10px\">" + esc(x.title) + "</h3>" +
+      "<div class=\"ppills\"><span class=\"pill lv-" + esc(x.level) + "\">" + esc(cap(x.level)) + "</span><span class=\"pill\">" + esc(cap(x.phase)) + "</span></div>" +
+      "<div class=\"pidea\">" + esc(x.text) + "</div>" + (exs || sc ? exs + sc : "<p class=\"small\">Worked examples are being added.</p>") +
+      "<div class=\"pact\" style=\"margin:14px 0\"><button type=\"button\" class=\"pbtn sv" + (mk.indexOf("s") >= 0 ? " on" : "") + "\" data-mk=\"s:" + esc(x.slug) + "\" aria-label=\"Save for later\">" + SVG_SV + "</button><button type=\"button\" class=\"pbtn ln" + (mk.indexOf("l") >= 0 ? " on" : "") + "\" data-mk=\"l:" + esc(x.slug) + "\" aria-label=\"Mark as learned\">" + SVG_LN + "</button></div>" +
+      "<div class=\"pnav\">" + (pv ? "<a href=\"#library/" + esc(pv.slug) + "\"><small>&larr; Previous</small>" + esc(pv.title) + "</a>" : "<span></span>") + (nx ? "<a class=\"r\" href=\"#library/" + esc(nx.slug) + "\"><small>Next &rarr;</small>" + esc(nx.title) + "</a>" : "<span></span>") + "</div>" +
+      (rel.length ? "<h4 style=\"margin:22px 0 8px\">Related principles</h4>" + rel.map(pcard).join("") : "") +
+      "<p class=\"small\">Principles are guidelines, not laws. Distilled by Throiy Chess.</p>";
+    box.onclick = function (ev) { var t = ev.target.closest && ev.target.closest("[data-mk]"); if (!t) return; var p = t.getAttribute("data-mk").split(":"), c = MARK[p[1]] || ""; MARK[p[1]] = c.indexOf(p[0]) >= 0 ? c.replace(p[0], "") : c + p[0]; saveMarks(); t.classList.toggle("on", MARK[p[1]].indexOf(p[0]) >= 0); };
+    if (window.tcBoards) window.tcBoards(box);
+    var top = box.getBoundingClientRect().top + scrollY - 90; if (top < scrollY) scrollTo(0, top);
   }
 
   // ---------- share card ----------

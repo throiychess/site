@@ -56,7 +56,7 @@ async function uploadPhoto(file) {
 }
 const VIEWS = ["overview", "analyze", "reports", "training", "library", "puzzles", "earn", "plan", "profile"];
 function autoAz(v) { if (!window.__azReady) { window.addEventListener("az-ready", () => autoAz(), { once: true }); return; } v = v || location.hash.slice(1); if (v === "analyze" && profile && !window.__azAuto && $("#az-user") && $("#az-user").value) { window.__azAuto = 1; quickUsers(); $("#az-form").requestSubmit(); } }
-function show() { const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "overview";
+function show() { const h = location.hash.slice(1).split("/")[0], v = VIEWS.includes(h) ? h : "overview";
   document.querySelectorAll(".mview").forEach((s) => { s.hidden = s.dataset.view !== v; });
   autoAz(v);
   document.querySelectorAll(".mnav a").forEach((a) => { if (a.dataset.v === v) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); }); }
