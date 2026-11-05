@@ -626,18 +626,46 @@ def related_traps(t, n=3):
     li = "".join(f'<li><a href="/traps/{x["slug"]}/">{e(x["name"])}</a> <span class="small">· {e(x["opening"])}</span></li>' for x in rest[:n])
     return f'<h2>Related traps</h2><ul class="related">{li}</ul><p><a href="/traps/">All {len(TRAPS)} traps in the library →</a></p>'
 
+def guide_board(moves, arrows=(), rings=()):
+    """Static board for the guide, same pieces as the trap player. arrows: "g:e2e4" (green, good move) / "r:..." (red, threat). rings: "e1" / "!e1"."""
+    b = chess.Board()
+    for san in moves.split(): b.push_san(san)
+    sq = lambda n: ((ord(n[0]) - 97) * 100 + 50, (8 - int(n[1])) * 100 + 50)
+    out = "".join(f'<rect x="{f*100}" y="{r*100}" width="100" height="100" style="fill:var({"--sq-d" if (r+f)%2 else "--sq-l"})"/>' for r in range(8) for f in range(8))
+    for i in range(8):
+        out += (f'<text x="6" y="{i*100+26}" font-size="26" font-weight="700" style="fill:var({"--sq-l" if i%2 else "--sq-d"})">{8-i}</text>'
+                f'<text x="{i*100+92}" y="794" font-size="26" font-weight="700" text-anchor="end" style="fill:var({"--sq-d" if i%2 else "--sq-l"})">{"abcdefgh"[i]}</text>')
+    for s_, pc in b.piece_map().items():
+        x, y = chess.square_file(s_) * 100, (7 - chess.square_rank(s_)) * 100
+        out += f'<image href="/img/pieces/{"w" if pc.color else "b"}{pc.symbol().lower()}.png" x="{x+4}" y="{y+4}" width="92" height="92"/>'
+    for rg in rings:
+        x, y = sq(rg.lstrip("!")); out += f'<circle cx="{x}" cy="{y}" r="44" fill="none" stroke="{"#d64541" if rg.startswith("!") else "#fff"}" stroke-width="8"/>'
+    for a in arrows:
+        c, m = a.split(":"); (x1, y1), (x2, y2) = sq(m[:2]), sq(m[2:])
+        assert b.piece_at(chess.parse_square(m[:2])), (moves, a)  # an arrow always starts at a piece
+        d = math.hypot(x2 - x1, y2 - y1); ux, uy = (x2 - x1) / d, (y2 - y1) / d
+        col = "#2e9c4a" if c == "g" else "#d64541"
+        ex, ey = x2 - ux * 40, y2 - uy * 40; px, py = -uy, ux
+        out += (f'<line x1="{x1+ux*18:.0f}" y1="{y1+uy*18:.0f}" x2="{ex:.0f}" y2="{ey:.0f}" stroke="{col}" stroke-width="22" stroke-linecap="round" opacity=".88"/>'
+                f'<polygon points="{x2-ux*4:.0f},{y2-uy*4:.0f} {ex+px*36:.0f},{ey+py*36:.0f} {ex-px*36:.0f},{ey-py*36:.0f}" fill="{col}" opacity=".88"/>')
+    return f'<svg class="gboard" viewBox="0 0 800 800" role="img" aria-label="Chess board">{out}</svg>'
+
+GUIDE_CSS = (".gstep{display:grid;grid-template-columns:minmax(180px,260px) 1fr;gap:20px;align-items:start;margin:28px 0}"
+             ".gstep h3{margin:0 0 8px}.gstep p{margin:0 0 10px}.gboard{width:100%;height:auto;border-radius:6px;display:block}"
+             ".glegend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--mute)}.glegend b{display:inline-block;width:22px;height:6px;border-radius:3px;vertical-align:middle;margin-right:6px}"
+             "@media(max-width:640px){.gstep{grid-template-columns:1fr}.gboard{max-width:340px}}")
+
 def guide_html(t):
-    """Optional long guide below the board (traps.py: guide=[{h, p|ol|ul}], qa=[(q, a)]). Visible Q&A, no FAQ schema (Google dropped FAQ rich results)."""
+    """Optional step-by-step guide below the board (traps.py: guide=[{h, p, board}], qa=[(q, a)]). Plain words, boards with arrows. Visible Q&A, no FAQ schema."""
     if not t.get("guide"): return ""
-    out = ""
+    out = '<p class="glegend"><span><b style="background:#2e9c4a"></b>a good move for you</span><span><b style="background:#d64541"></b>a threat to watch</span></p>'
     for g in t["guide"]:
-        out += f'<h2>{e(g["h"])}</h2>' + "".join(f"<p>{e(x)}</p>" for x in g.get("p", []))
-        if g.get("ol"): out += '<ol class="fix">' + "".join(f"<li><span>{e(x)}</span></li>" for x in g["ol"]) + "</ol>"
-        if g.get("ul"): out += '<ul class="related">' + "".join(f"<li>{e(x)}</li>" for x in g["ul"]) + "</ul>"
+        bd = guide_board(g["board"]["moves"], g["board"].get("arrows", ()), g["board"].get("rings", ())) if g.get("board") else ""
+        out += f'<div class="gstep">{bd}<div><h3>{e(g["h"])}</h3>' + "".join(f"<p>{e(x)}</p>" for x in g.get("p", [])) + "</div></div>"
     if t.get("qa"):
         out += '<h2>Questions and answers</h2>' + "".join(f'<h3>{e(q)}</h3><p>{e(a)}</p>' for q, a in t["qa"])
-    out += '<p class="small">Evaluations: Stockfish 17.1, depth 24. +1.0 is about one extra pawn for White.</p>'
-    return f'<div class="guide" style="margin-top:48px"><span class="eyebrow">Full guide</span>{out}</div>'
+    out += '<p class="small">Every line on this page is checked with a chess engine.</p>'
+    return f'<div class="guide" style="margin-top:48px"><style>{GUIDE_CSS}</style><span class="eyebrow">Step by step</span><h2>How to beat the {e(t["name"])}</h2>{out}</div>'
 
 def trap_page(t):
     b = chess.Board(); plies = [dict(fen=b.board_fen(), san="", fr=None, to=None)]

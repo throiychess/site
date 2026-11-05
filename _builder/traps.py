@@ -151,8 +151,9 @@ TRAPS = [
     dict(slug="englund-gambit", name="Englund Gambit", opening="Englund Gambit", side="Black sets it",
          hook="Black gives a pawn on move one. Chase the queen the wrong way and it's mate on your back rank.",
          simple="Black throws away a pawn on move one and brings the queen out early. If White chases the queen the wrong way, the row behind White's king is left empty, and the queen gives checkmate there. Develop your knight instead and keep that row covered.",
-         intro="After 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 the natural 6.Bc3?? loses to 6…Bb4! 7.Qd2 Bxc3 8.Qxc3 Qc1#. "
-               "6.Nc3! keeps the back rank covered and is clearly better for White.",
+         intro="Black gives up a pawn and brings the queen out early to win it back. The queen then grabs the pawn on b2. "
+               "If White chases it with the bishop on c3, Black pins that bishop and a few moves later the queen gives checkmate on c1. "
+               "Moving the knight to c3 instead keeps everything safe. The full guide below shows it step by step.",
          moves="d4 e5 dxe5 Nc6 Nf3 Qe7 Bf4 Qb4+ Bd2 Qxb2 Bc3 Bb4 Qd2 Bxc3 Qxc3 Qc1#",
          notes={0: ("START", "", "A trap against 1.d4. Step through the moves."),
                 2: ("THE GAMBIT", "1…e5", "Black gives away a pawn on move one.", ["e5"]),
@@ -165,33 +166,37 @@ TRAPS = [
                 16: ("CHECKMATE", "8…Qc1#", "Queen c1. Checkmate on the back rank.", ["c1", "!e1"])},
          fix=["After the queen takes b2, play Nc3, not Bc3.",
               "Keep your back rank covered when the enemy queen is close to it."],
-         # Guide below the board. Every number: Stockfish 17.1, depth 24, checked 4 Nov 2026 (+1.00 = about one extra pawn for White).
+         # Guide below the board: plain words, a board with arrows per step (g = good move, r = threat). Lines checked with Stockfish 17.1 (4 Nov 2026).
          title="Englund Gambit: the trap, the refutation and how to beat it",
-         desc="How to beat the Englund Gambit (1.d4 e5): take the pawn, develop, and never play Bc3 after Qxb2. The trap move by move, plus the mistakes to avoid.",
+         desc="How to beat the Englund Gambit, step by step on the board: take the pawn, bring your pieces out, and never attack the queen with your bishop on c3.",
          guide=[
-             dict(h="What is the Englund Gambit?", p=[
-                 "The Englund Gambit starts 1.d4 e5. Black offers the e-pawn on the very first move. After 2.dxe5 Black usually plays 2…Nc6 and 3…Qe7 to win the pawn back on e5, and hopes White walks into a queen trap on b2.",
-                 "It is named after the Swedish player Fritz Englund and is also known as the Charlick Gambit (ECO code A40)."]),
-             dict(h="Is the Englund Gambit good?", p=[
-                 "Not for Black. After 2.dxe5 White is about a pawn up (+1.4), and Black gets very little for it. All of Black's main tries keep White clearly better: 2…Nc6 +1.3, 2…d6 +1.4, 2…f6 +1.6.",
-                 "Black's real hope is the trap. That makes it a surprise weapon for fast games against someone who doesn't know it, not a sound opening."]),
-             dict(h="How to beat the Englund Gambit", ol=[
-                 "Take the pawn: 2.dxe5. It is the best move (+1.4). Declining with 2.Nc3 or 2.e3 gives away most of your edge (about +0.2).",
-                 "Defend e5 with your knight: 3.Nf3.",
-                 "After 3…Qe7, just develop: 4.Bf4, 4.Bg5 or 4.Nc3 all keep about +1.6.",
-                 "After 4.Bf4 Qb4+, block with 5.Bd2 (+1.8).",
-                 "If the queen grabs 5…Qxb2, play 6.Nc3! (+2.2). After 6…Bb4 7.Rb1 Qa3 White stays clearly better (+2.2)."]),
-             dict(h="Common mistakes against the Englund Gambit", ul=[
-                 "6.Bc3?? after 5…Qxb2: it attacks the queen but leaves c1 empty. 6…Bb4! wins material (about −4.6), and the natural 7.Qd2 even runs into 7…Bxc3 8.Qxc3 Qc1# (see the board above).",
-                 "5.c3? or 5.Nbd2? against 4…Qb4+: the queen simply takes your bishop on f4, and Black is better (about −3.7).",
-                 "6.e3? or 6.e4? after 5…Qxb2: the queen takes the rook on a1 (−3.3 and −2.5).",
-                 "4.e4 against 3…Qe7: not a blunder, but it lets Black back into the game (+0.9 instead of +1.6)."]),
+             dict(h="Black gives away a pawn", board=dict(moves="d4 e5", arrows=["g:d4e5"]), p=[
+                 "White moves the queen's pawn two squares. Black puts a pawn right next to it, where White can simply take it. That is the Englund Gambit: a free pawn on the very first move.",
+                 "It is named after the Swedish player Fritz Englund."]),
+             dict(h="Step 1: take the pawn", board=dict(moves="d4 e5 dxe5 Nc6", arrows=["r:c6e5", "g:g1f3"]), p=[
+                 "Yes, take it. That is the best move. Black's knight now attacks your pawn.",
+                 "Protect it by bringing your knight out (green arrow). Your pawn is safe and your knight is in the game."]),
+             dict(h="Step 2: the queen comes out", board=dict(moves="d4 e5 dxe5 Nc6 Nf3 Qe7", arrows=["r:e7e5", "g:c1f4"]), p=[
+                 "Black's queen joins the attack on your pawn. No need to worry. Keep bringing pieces out.",
+                 "Your bishop goes to f4 and protects the pawn a second time."]),
+             dict(h="Step 3: check! Block with the bishop", board=dict(moves="d4 e5 dxe5 Nc6 Nf3 Qe7 Bf4 Qb4+", arrows=["r:b4e1", "r:b4f4", "r:b4b2", "g:f4d2"]), p=[
+                 "The queen gives check, and at the same time it attacks your bishop and the pawn on b2.",
+                 "Block the check with the bishop: back to d2 (green arrow). Now the check is gone and your bishop is safe.",
+                 "Careful: if you block with a pawn or with your other knight, the queen just takes your bishop on f4."]),
+             dict(h="Step 4: the queen grabs a pawn", board=dict(moves="d4 e5 dxe5 Nc6 Nf3 Qe7 Bf4 Qb4+ Bd2 Qxb2", arrows=["r:b2a1", "g:b1c3"]), p=[
+                 "The queen takes the pawn on b2 and attacks your rook in the corner.",
+                 "Play your knight to c3 (green arrow). Now your queen protects the rook, your back row is covered, and Black's queen is far from home. You are a pawn up and doing great."]),
+             dict(h="The trap: don't chase the queen with your bishop", board=dict(moves="d4 e5 dxe5 Nc6 Nf3 Qe7 Bf4 Qb4+ Bd2 Qxb2 Bc3 Bb4", arrows=["r:b4c3", "r:b2c3"]), p=[
+                 "Attacking the queen with the bishop on c3 looks smart. It is the mistake Black is waiting for.",
+                 "Black's bishop comes to b4. Now your bishop is pinned: it can't move, because your king stands right behind it. Two black pieces attack it and you can't hold everything together. You lose material, and it can get even worse."]),
+             dict(h="How the trap ends", board=dict(moves="d4 e5 dxe5 Nc6 Nf3 Qe7 Bf4 Qb4+ Bd2 Qxb2 Bc3 Bb4 Qd2 Bxc3 Qxc3 Qc1#", arrows=["r:c1e1"], rings=["!e1"]), p=[
+                 "If White protects the bishop with the queen, Black takes on c3, White takes back, and the black queen jumps to c1. Checkmate: nothing guards White's back row.",
+                 "The lesson: when the enemy queen is on your side of the board, keep your back row covered. The knight on c3 does exactly that."]),
          ],
          qa=[
-             ("Should White accept the Englund Gambit?", "Yes. 2.dxe5 is the strongest reply and leaves White about a pawn up. Just remember the one trap on b2."),
-             ("What is the Englund Gambit trap?", "After 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2, the natural 6.Bc3?? runs into 6…Bb4!. White loses material whatever happens, and the natural 7.Qd2 allows 7…Bxc3 8.Qxc3 Qc1#."),
-             ("What is the refutation of the Englund Gambit?", "There is no forced win, but simple play is enough: 2.dxe5, 3.Nf3, develop, block a check with Bd2 and answer …Qxb2 with Nc3. White stays clearly better."),
-             ("Is the Englund Gambit good for Black?", "No. With normal play White keeps an extra pawn. It only works as a surprise in fast games."),
+             ("Should I take the pawn?", "Yes. Taking the pawn is the best answer. Then defend it with your pieces and remember the one trap."),
+             ("What is the one thing to remember?", "When Black's queen takes the pawn on b2, move your knight to c3. Never attack the queen with your bishop on c3."),
+             ("Is the Englund Gambit a good opening for Black?", "Not really. If White plays normal moves, White simply stays a pawn up. It only works as a surprise against someone who doesn't know the trap."),
          ]),
     dict(slug="elephant-trap", name="Elephant Trap", opening="Queen's Gambit Declined", side="Black sets it",
          hook="The d5 pawn looks free. Grab it and you lose a whole piece.", mate=False,
