@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-04T04:20:56Z",
- "start": "2026-08-07",
- "end": "2026-11-04",
+ "generated": "2026-11-05T04:21:34Z",
+ "start": "2026-08-08",
+ "end": "2026-11-05",
  "hits": {
   "error": 404
  },
@@ -9,25 +9,25 @@
   "stats": [
    {
     "name": "",
-    "count": 53,
+    "count": 54,
     "ref_scheme": "o"
    },
    {
     "id": "site",
     "name": "site",
-    "count": 9,
+    "count": 10,
     "ref_scheme": "c"
    },
    {
     "id": "YouTube",
     "name": "YouTube",
-    "count": 7,
+    "count": 8,
     "ref_scheme": "c"
    },
    {
     "id": "urlscan.io",
     "name": "urlscan.io",
-    "count": 6,
+    "count": 7,
     "ref_scheme": "h"
    },
    {
@@ -62,7 +62,7 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 89
+    "count": 93
    },
    {
     "id": "Firefox",
@@ -82,7 +82,7 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 93
+    "count": 96
    },
    {
     "id": "iOS",
@@ -92,7 +92,7 @@
    {
     "id": "Linux",
     "name": "Linux",
-    "count": 15
+    "count": 16
    },
    {
     "id": "Android",
@@ -117,7 +117,7 @@
    {
     "id": "desktop",
     "name": "",
-    "count": 90
+    "count": 94
    },
    {
     "id": "desktophd",
@@ -142,12 +142,12 @@
    {
     "id": "BG",
     "name": "Bulgaria",
-    "count": 27
+    "count": 30
    },
    {
     "id": "US",
     "name": "United States",
-    "count": 24
+    "count": 25
    },
    {
     "id": "CA",
@@ -192,7 +192,7 @@
    {
     "id": "75274",
     "name": "promo-bar",
-    "count": 9
+    "count": 10
    },
    {
     "id": "75273",
@@ -222,6 +222,11 @@
    {
     "id": "75936",
     "name": "h3-immortal-game",
+    "count": 1
+   },
+   {
+    "id": "76148",
+    "name": "puzzle-1",
     "count": 1
    }
   ],
