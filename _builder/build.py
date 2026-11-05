@@ -538,10 +538,10 @@ def home():
         cards += (f'<a class="card soon" href="{href}" target="_blank" rel="noopener"><div class="meta"><span class="label">{e(o)}</span></div>'
                   f'<h3>{e(n)}</h3><p>{e(h)}</p><span class="go">Watch the Short →</span></a>')
     latest = "".join(short_card(s) for s in SHORTS[:4])
-    _flat = [y for g in PRINCIPLES for y in g["items"] if not y.get("draft")]
-    n_pr = f"{len(_flat) // 10 * 10}+"
-    mini = "".join(f'<a class="hs-row" href="/principles/{y["slug"]}/" style="text-decoration:none;color:inherit"><span class="ic">{tic((y.get("tags") or ["General"])[0])}</span><div><b>{e(y["title"])}</b><small>{e(y["level"].capitalize())} &middot; {e(y["phase"].capitalize())}</small></div><span class="n">&rarr;</span></a>' for y in [z for z in _flat if z.get("start")][:3])
-    _P = [("Tactics", "/analyze/", "Analyze my games", "Free. Find the leaks that cost you games."), ("Opening systems", "/principles/", "Principle library", "Guidelines for every phase, with real games."), ("Attack", "/traps/", "Trap library", "Learn the trap, then learn the fix."), ("Pieces", "/shorts/", "Shorts and top games", "One lesson in under a minute."), ("Defence", "/opponent/", "Scout any opponent", "Enter any Chess.com or Lichess name and see where their games go wrong."), ("General", "/free/", "Free cheat sheet", "10 opening traps in one PDF. Free.")]
+    mini = "".join(f'<div class="hs-row"><span class="ic">{tic(t)}</span><div><b>{b}</b><small>{sm}</small></div></div>' for t, b, sm in [
+        ("Tactics", "Picked for your games", "Based on the mistakes in your own reports"), ("Opening systems", "A real game for every principle", "Playable board with live analysis"),
+        ("Defence", "Save and mark as learned", "Track what you already know")])
+    _P = [("Tactics", "/analyze/", "Analyze my games", "Free. Find the leaks that cost you games."), ("Opening systems", "/members/#library", "Principle library", "Members: principles matched to your own games."), ("Attack", "/traps/", "Trap library", "Learn the trap, then learn the fix."), ("Pieces", "/shorts/", "Shorts and top games", "One lesson in under a minute."), ("Defence", "/opponent/", "Scout any opponent", "Enter any Chess.com or Lichess name and see where their games go wrong."), ("General", "/free/", "Free cheat sheet", "10 opening traps in one PDF. Free.")]
     paths = "".join(f'<a class="path" href="{h}"><span class="ic">{tic(t)}</span><b>{n}</b><span>{d}</span></a>' for t, h, n, d in _P)
     _top = [s for s in SHORTS if s.get("topic") == "Top game"]
     top_cards = (f'<div class="sechead" style="margin-top:28px"><div><span class="eyebrow">Top games</span><h2>The best moments from elite chess.</h2></div><a class="btn" href="/top-games/">All top games →</a></div>'
@@ -556,11 +556,11 @@ def home():
 <div class="hs-row"><span class="ic">{tic("Defence")}</span><div><b>Pieces left hanging</b><small>Check what is attacked before you move</small></div><span class="n">11</span></div>
 <div class="hs-row"><span class="ic">{tic("Tactics")}</span><div><b>Missed tactics</b><small>A fork and a pin you could have played</small></div><span class="n">7</span></div>
 <div class="hs-row"><span class="ic">{tic("King safety")}</span><div><b>King safety</b><small>Castle early, keep the pawns in front</small></div><span class="n">5</span></div></div></div></article>
-<article class="hs" aria-roledescription="slide" aria-label="2 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Principle library</span>
-<h2 class="big">{n_pr} chess principles, <em>each with a real game.</em></h2>
-<p class="lead">Browse by topic and level. Every principle has a playable board with live analysis. Members get a selection matched to their own games.</p>
-<div class="btns"><a class="btn solid" href="/principles/">Browse the principles</a><a class="btn in-only" href="/members/#library">Open my library</a></div></div>
-<div class="hs-card"><span class="hd">Start here</span>{mini}</div></div></article>
+<article class="hs" aria-roledescription="slide" aria-label="2 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Principle library · Members</span>
+<h2 class="big">150+ chess principles, <em>matched to your games.</em></h2>
+<p class="lead">Analyze your games and the library picks the principles that fix your mistakes. Each one comes with a playable example from a real game.</p>
+<div class="btns"><a class="btn solid out-only" href="/members/?utm_source=home">Join free</a><a class="btn solid in-only" href="/members/#library">Open my library</a></div></div>
+<div class="hs-card"><span class="hd">Members only</span>{mini}</div></div></article>
 <article class="hs" aria-roledescription="slide" aria-label="3 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Lessons &amp; games</span>
 <h2 class="big">Stop falling for <em>chess traps.</em></h2>
 <p class="lead">Opening traps, mating patterns and the best moments from top games. Each one explained in under a minute.</p>
@@ -1032,7 +1032,7 @@ def members_page():
 <div class="pf-f"><label for="m-li">Lichess username</label><input id="m-li" placeholder="Username" maxlength="40"></div></div></fieldset>
 <div class="pf-save"><button class="btn solid" type="submit">Save profile</button><span class="small" id="m-pmsg"></span></div></form>
 <div class="mfoot">Your data is stored in the EU and visible only to you and us. <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a><p style="margin:14px 0 0"><button class="btn" type="button" id="m-del">Delete my account and all my data</button> <span class="small" id="m-delmsg"></span></p></div></section>
-</div></div></main>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}{('<script src="https://accounts.google.com/gsi/client" async defer></script><script>window.G_ID="794037102761-cb6a8qinqp5n98ptggid81ep1ji2b0q9.apps.googleusercontent.com"</script>') if GOOGLE_LOGIN else ''}<script type="application/json" id="trap-data">{json.dumps(_tdata())}</script><script src="/js/members.js"></script><script src="/js/premium.js" defer></script><script type="module" src="/js/analyze.js"></script>''' + footer(band=False, nl=False)
+</div></div></main><script src="/js/principles.js" defer></script>{SB_SCRIPTS}{('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script><script>window.TS_KEY="' + TURNSTILE_SITEKEY + '"</script>') if TURNSTILE_SITEKEY else ''}{('<script src="https://accounts.google.com/gsi/client" async defer></script><script>window.G_ID="794037102761-cb6a8qinqp5n98ptggid81ep1ji2b0q9.apps.googleusercontent.com"</script>') if GOOGLE_LOGIN else ''}<script type="application/json" id="trap-data">{json.dumps(_tdata())}</script><script src="/js/members.js"></script><script src="/js/premium.js" defer></script><script type="module" src="/js/analyze.js"></script>''' + footer(band=False, nl=False)
     return "/members/", page("/members/", "Members · Throiy Chess", "Log in to save your analysis reports and track your progress.", body)
 
 def improve_page():
@@ -1070,7 +1070,9 @@ def notfound():
 <p>The page you were looking for doesn't exist (anymore).</p><div class="btns"><a class="btn solid" href="/">Back to the homepage</a><a class="btn" href="/shorts/">All Shorts</a></div></div></main>''' + footer()
     return page("/404.html", "Page not found · Throiy Chess", "Page not found.", body)
 
-PRINCIPLES = json.load(open(os.path.join(ROOT, "src", "data", "principles.json")))
+# Principles are members-only: the source lives in Supabase (site_content), not in this public repo. No public pages are built.
+_PJ = os.path.join(ROOT, "src", "data", "principles.json")
+PRINCIPLES = json.load(open(_PJ)) if os.path.exists(_PJ) else []
 def _pitems():
     return [(g["group"], x) for g in PRINCIPLES for x in g["items"] if not x.get("draft")]
 
@@ -1252,7 +1254,7 @@ def build():
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
     try: os.remove(os.path.join(d, "data", "principles.json"))  # member-only: served from Supabase (site_content) behind login
     except OSError: pass
-    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [principles_index()] + [principle_page(g, x) for g, x in _pitems()] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), opponent_page(), members_page(), improve_page(), terms()]
+    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), opponent_page(), members_page(), improve_page(), terms()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)

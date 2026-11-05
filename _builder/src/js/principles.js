@@ -10,7 +10,7 @@
   }
   var run = null;
   document.addEventListener("click", function (ev) {
-    var t = ev.target.closest && ev.target.closest("[data-mk]"); if (!t) return;
+    var t = ev.target.closest && ev.target.closest("[data-mk]"); if (!t || t.closest("#m-princ")) return;
     var p = t.getAttribute("data-mk").split(":"), c = MARK[p[1]] || "";
     MARK[p[1]] = c.indexOf(p[0]) >= 0 ? c.replace(p[0], "") : c + p[0]; save(); paint(); if (run) run(true);
   });
@@ -35,7 +35,8 @@
   }
   function nice(fen, uci) { var b = parseFen(fen), p = b[uci.slice(0, 2)] || "", t = b[uci.slice(2, 4)], P = p.toUpperCase(); return (P === "P" ? "" : P) + uci.slice(0, 2) + (t ? "x" : "-") + uci.slice(2, 4) + (uci[4] ? "=" + uci[4].toUpperCase() : ""); }
   var BOXES = [], ACTIVE = null;
-  [].forEach.call(document.querySelectorAll(".xb"), function (box) {
+  function initBoards(root) { [].forEach.call(root.querySelectorAll(".xb"), function (box) {
+    if (box.__tc) return; box.__tc = 1;
     var m = JSON.parse(box.getAttribute("data-m")), bd = box.querySelector(".xbd"), mvbox = box.querySelector(".xbm"), out = box.querySelector(".xbv"), eb = box.querySelector(".eng"), rs = box.querySelector(".xbr");
     var S = { f: m.f.slice(), u: m.u.slice(), s: m.s.slice(), cur: m.at, div: 99 }, on = false, tok = 0, sel = null, legal = [], sqs = {}, bar, barn, fillEl;
     var st = m.start.split(" "), startWhite = st[1] === "w", startNo = +st[5] || 1;
@@ -87,8 +88,10 @@
     });
     box.addEventListener("mouseenter", function () { ACTIVE = api; });
     draw();
-  });
+  }); }
+  window.tcBoards = initBoards; initBoards(document);
   document.addEventListener("keydown", function (e) {
+    BOXES = BOXES.filter(function (b) { return b.box.isConnected; }); if (ACTIVE && !ACTIVE.box.isConnected) ACTIVE = null;
     if (!BOXES.length || e.target.closest("input,textarea,select") || e.altKey || e.ctrlKey || e.metaKey) return;
     var k = e.key; if (k !== "ArrowLeft" && k !== "ArrowRight" && k !== "Home" && k !== "End") return;
     var a = ACTIVE || BOXES.slice().sort(function (x, y) { var c = function (b) { var r = b.box.getBoundingClientRect(); return Math.abs(r.top + r.height / 2 - innerHeight / 2); }; return c(x) - c(y); })[0];
