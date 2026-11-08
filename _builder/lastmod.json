@@ -1,11 +1,11 @@
 {
 "/": {
 "d": "2026-11-08",
-"h": "bc47bdb63d8f26f8"
+"h": "8c783f997ba2796f"
 },
 "/analyze/": {
 "d": "2026-11-08",
-"h": "e0d1d6c562924201"
+"h": "b9354ce6174056ac"
 },
 "/contact/": {
 "d": "2026-11-07",
@@ -21,7 +21,7 @@
 },
 "/opponent/": {
 "d": "2026-11-08",
-"h": "9c2ec870fd29ea11"
+"h": "a8c0351c73a56184"
 },
 "/privacy/": {
 "d": "2026-11-08",
@@ -61,59 +61,75 @@
 },
 "/traps/": {
 "d": "2026-11-08",
-"h": "5f0f97f98b1d18df"
+"h": "2e52f0f4cf5cdd23"
 },
 "/traps/blackburne-shilling-gambit/": {
 "d": "2026-11-08",
-"h": "4f093cdbd881e1dc"
+"h": "fbaa59020971959d"
+},
+"/traps/damiano-defence/": {
+"d": "2026-11-08",
+"h": "2d2641167e535b81"
 },
 "/traps/elephant-trap/": {
 "d": "2026-11-08",
-"h": "3d7e8d86027eb7f6"
+"h": "68356eae00853696"
 },
 "/traps/englund-gambit/": {
 "d": "2026-11-08",
-"h": "1a8975d98b9eb5d7"
+"h": "7ced2fb5a77a1b99"
 },
 "/traps/fishing-pole-trap/": {
 "d": "2026-11-08",
-"h": "d554f05fd3415c0c"
+"h": "a88ae61e363bf5dc"
 },
 "/traps/fried-liver-attack/": {
 "d": "2026-11-08",
-"h": "23d8f2d8563f3281"
+"h": "1b11e6cfdef02448"
 },
 "/traps/froms-gambit/": {
 "d": "2026-11-08",
-"h": "c732825481f4aa60"
+"h": "337a766ad9e118d9"
 },
 "/traps/halloween-gambit/": {
 "d": "2026-11-08",
-"h": "2bebd0c0a391ebb3"
+"h": "9aa655a0579965e7"
+},
+"/traps/kieninger-trap/": {
+"d": "2026-11-08",
+"h": "7e93d6179d81956b"
 },
 "/traps/lasker-trap/": {
 "d": "2026-11-08",
-"h": "c04ab51f2fd9f0d5"
+"h": "8f9531b4079d67dc"
 },
 "/traps/legals-mate/": {
 "d": "2026-11-08",
-"h": "c3b15d118c79013a"
+"h": "1d7cb608cbb20d82"
+},
+"/traps/mortimer-trap/": {
+"d": "2026-11-08",
+"h": "fcff7a16baeda2cf"
+},
+"/traps/noahs-ark-trap/": {
+"d": "2026-11-08",
+"h": "6e2fb832d322a133"
 },
 "/traps/petrov-trap/": {
 "d": "2026-11-08",
-"h": "084e0a10f39e926f"
+"h": "14c65f16a384a2b4"
 },
 "/traps/scholars-mate/": {
 "d": "2026-11-08",
-"h": "c47604ff8bf0af97"
+"h": "4f165cdbaa4a4208"
 },
 "/traps/siberian-trap/": {
 "d": "2026-11-08",
-"h": "ffdf52cb58be76a9"
+"h": "ed69ecac4304a2ea"
 },
 "/traps/stafford-gambit/": {
 "d": "2026-11-08",
-"h": "5b8b6fe52351eaa4"
+"h": "76436810e3495577"
 },
 "/videos/": {
 "d": "2026-11-07",
