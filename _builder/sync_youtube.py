@@ -25,6 +25,10 @@ p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "youtube.json")
 old = open(p).read() if os.path.exists(p) else ""
 prev = {v["id"]: v.get("kind") for v in (json.loads(old) if old else [])}
 for v in out: v["kind"] = prev.get(v["id"]) or kind(v["id"]) or "short"
+# the feed only lists the newest 15 videos: keep every older one, so trap pages never lose their Short
+_seen = {v["id"] for v in out}
+out += [v for v in (json.loads(old) if old else []) if v["id"] not in _seen]
+out.sort(key=lambda v: v.get("date") or "", reverse=True)
 new = json.dumps(out, ensure_ascii=False, indent=1)
 if new != old: open(p, "w").write(new); print("updated", len(out))
 else: print("no change")
