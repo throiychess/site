@@ -92,7 +92,7 @@ TRAPS = [
                 11: ("QUEEN LOST", "6.Nxe7", "Black has to block the check, and White wins the queen.", ["e7"])},
          fix=["Play 3…d6 first. Kick the knight, then take on e4.",
               "Copying your opponent is not a plan. Check what their pieces can do."]),
-    dict(slug="blackburne-shilling-gambit", name="Blackburne Shilling Gambit", opening="Italian Game", side="Black sets it",
+    dict(slug="blackburne-shilling-gambit", name="Blackburne Shilling Gambit", opening="Italian Game", side="Black sets it", short="8AeTu3IDA3Y",
          hook="Black hangs a pawn on purpose. Grab it, get greedy, and it's mate on move seven.",
          simple="Black leaves a pawn hanging on purpose. If White grabs it and then goes for even more, Black's queen crashes in and a knight gives checkmate. Don't take the pawn: castle, or take Black's knight.",
          intro="After 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! the e5 pawn is loose. 4.Nxe5? Qg5! hits the knight and g2, and after the greedy 5.Nxf7?? "
@@ -127,7 +127,7 @@ TRAPS = [
          fix=["Don't play Bg5. Develop with Be2 and castle.",
               "Before you grab a queen, check every check.",
               "f2 is weak in the opening. Watch out for bishops aiming at it."]),
-    dict(slug="halloween-gambit", name="Halloween Gambit", opening="Four Knights Game", side="White sets it",
+    dict(slug="halloween-gambit", name="Halloween Gambit", opening="Four Knights Game", side="White sets it", short="4ropXpWeCaI",
          hook="White gives away a knight on move four. Scary? Not if you know the one safe square.", mate=False,
          simple="White gives away a whole knight to chase Black's knights with pawns. One knight ends up with only one safe square: all the way back home. Every other square gets it captured. Then don't sit and wait: strike back in the center, give a pawn back and get your pieces out. You stay a piece up.",
          intro="After 1.e4 e5 2.Nf3 Nc6 3.Nc3 Nf6 White plays 4.Nxe5!?, a knight for a pawn. After 4…Nxe5 5.d4 Ng6 6.e5 the knight on f6 is attacked: "
@@ -148,7 +148,7 @@ TRAPS = [
          fix=["When the knight on f6 is attacked by the pawn, go back to g8. Every other square loses the knight.",
               "Then strike back with …d5. Give a pawn back and develop fast.",
               "Against any gambit: don't hold on to everything. Your extra piece wins in the end."]),
-    dict(slug="englund-gambit", name="Englund Gambit", opening="Englund Gambit", side="Black sets it",
+    dict(slug="englund-gambit", name="Englund Gambit", opening="Englund Gambit", side="Black sets it", short="dt8ljwSUCOM",
          hook="Black gives a pawn on move one. Chase the queen the wrong way and it's mate on your back rank.",
          simple="Black throws away a pawn on move one and brings the queen out early. If White chases the queen the wrong way, the row behind White's king is left empty, and the queen gives checkmate there. Develop your knight instead and keep that row covered.",
          intro="Black gives up a pawn and brings the queen out early to win it back. The queen then grabs the pawn on b2. "
@@ -198,7 +198,7 @@ TRAPS = [
              ("What is the one thing to remember?", "When Black's queen takes the pawn on b2, move your knight to c3. Never attack the queen with your bishop on c3."),
              ("Is the Englund Gambit a good opening for Black?", "Not really. If White plays normal moves, White simply stays a pawn up. It only works as a surprise against someone who doesn't know the trap."),
          ]),
-    dict(slug="elephant-trap", name="Elephant Trap", opening="Queen's Gambit Declined", side="Black sets it",
+    dict(slug="elephant-trap", name="Elephant Trap", opening="Queen's Gambit Declined", side="Black sets it", short="jpo4V2DAxo8",
          hook="The d5 pawn looks free. Grab it and you lose a whole piece.", mate=False,
          simple="A pawn looks free because the knight defending it seems stuck. It isn't. If White grabs the pawn, Black gives the queen, wins it straight back with check and ends up a whole piece ahead. Count the pieces before you grab.",
          intro="After 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7 5.cxd5 exd5 the pawn on d5 looks loose because the knight on f6 is pinned. "
@@ -250,6 +250,25 @@ TRAPS = [
                 20: ("CHECKMATE", "10…Qh2#", "Queen h2. Checkmate.", ["h2", "!g1"])},
          fix=["Don't play h3. Nb5 (attacking the queen) or Rd1 keeps a good game.",
               "When two pieces aim at the square next to your king, keep its defender in place."]),
+    dict(slug="froms-gambit", name="From's Gambit", opening="Bird's Opening", side="Black sets it",
+         hook="Black gives away two pawns. Grab them carelessly and it's mate on move six.",
+         simple="White opens with the f-pawn and Black gives away two pawns. With the f-pawn gone, the road from h4 to White's king is open. If White ignores it, the black queen checks on h4 and it's checkmate two moves later. Bring your knight to f3 first: it guards h4.",
+         intro="After 1.f4 e5 2.fxe5 d6 3.exd6 Bxd6 the bishop aims at g3 and the queen can check on h4. "
+               "The natural 4.Nc3?? allows 4…Qh4+ 5.g3 Qxg3+ 6.hxg3 Bxg3#. 4.Nf3! guards h4 and White keeps a good game.",
+         moves="f4 e5 fxe5 d6 exd6 Bxd6 Nc3 Qh4+ g3 Qxg3+ hxg3 Bxg3#",
+         notes={0: ("START", "", "A gambit from 1862. Step through the moves."),
+                1: ("BIRD'S OPENING", "1.f4", "White opens with the f-pawn. That also opens the road from h4 to the king.", ["f4"]),
+                2: ("THE GAMBIT", "1…e5!?", "From's Gambit. Black offers a pawn.", ["e5"]),
+                4: ("SECOND PAWN", "2…d6", "Black gives a second pawn to open lines.", ["d6"]),
+                6: ("THE AIM", "3…Bxd6", "The bishop aims at g3, and the queen can come to h4.", ["d6", "!g3"]),
+                7: ("THE BLUNDER", "4.Nc3??", "A natural move, but nothing guards h4.", ["c3", "!h4"]),
+                8: ("CHECK", "4…Qh4+", "Queen h4, check. White has only one move.", ["h4", "!e1"]),
+                9: ("FORCED", "5.g3", "White has to block with the pawn.", ["g3"]),
+                10: ("QUEEN TAKES", "5…Qxg3+", "The queen takes on g3, check.", ["g3", "!e1"]),
+                11: ("FORCED", "6.hxg3", "The pawn has to take the queen."),
+                12: ("CHECKMATE", "6…Bxg3#", "Bishop takes g3. Checkmate on move six.", ["g3", "!e1"])},
+         fix=["Play 4.Nf3 first. The knight guards h4 and White keeps a good game.",
+              "After you push your f-pawn, watch the road from h4 to your king."]),
 ]
 
 # ---------------------------------------------------------------------------------------------
@@ -445,6 +464,23 @@ GUIDES = {
         ],
         qa=[("How do I avoid the Siberian Trap?", "When the queen and knight both aim at h2, don't kick the knight with the h-pawn. Attack the queen with your knight on b5 or bring a rook to d1 instead."),
             ("What is the lesson?", "When two enemy pieces aim at the square next to your king, keep the defender of that square where it is.")]),
+    "froms-gambit": dict(
+        title="From's Gambit: the Bird's Opening trap and how to avoid it",
+        desc="How From's Gambit works against the Bird's Opening, step by step on the board: the queen check on h4 and the knight move that stops it.",
+        guide=[
+            dict(h="Two pawns, one open road", board=dict(moves="f4 e5 fxe5 d6 exd6 Bxd6", arrows=["r:d8h4", "r:d6g3"]), p=[
+                "You took two pawns and Black took one back. But your f-pawn is gone, so the queen can check on h4, and the bishop aims at g3."]),
+            dict(h="The fix: knight to f3", board=dict(moves="f4 e5 fxe5 d6 exd6 Bxd6", arrows=["g:g1f3"]), p=[
+                "Bring your knight to f3. It guards h4, so the queen check is gone. You stay a pawn up with a good game."]),
+            dict(h="The mistake: ignoring h4", board=dict(moves="f4 e5 fxe5 d6 exd6 Bxd6 Nc3 Qh4+", rings=["!e1"]), p=[
+                "After knight c3 the queen checks on h4, and only the g-pawn can block.",
+                "Pawn moves like d4 or e4 don't help either: the same queen check wins material."]),
+            dict(h="How it ends", board=dict(moves="f4 e5 fxe5 d6 exd6 Bxd6 Nc3 Qh4+ g3 Qxg3+ hxg3 Bxg3#", rings=["!e1"]), p=[
+                "The queen takes on g3, the pawn has to take back, and the bishop takes on g3. Checkmate on move six."]),
+        ],
+        qa=[("How do I avoid the From's Gambit trap?", "Play your knight to f3 on move four. It guards h4."),
+            ("Who was Martin From?", "A Danish chess player (1828-1895). He played this gambit in Copenhagen in 1862, and it is named after him."),
+            ("What is the lesson?", "After you push your f-pawn, watch the road from h4 to your king.")]),
 }
 for _t in TRAPS:
     if _t["slug"] in GUIDES: _t.update(GUIDES[_t["slug"]])
