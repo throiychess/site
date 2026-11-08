@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-07T04:14:49Z",
- "start": "2026-08-10",
- "end": "2026-11-07",
+ "generated": "2026-11-08T04:18:26Z",
+ "start": "2026-08-11",
+ "end": "2026-11-08",
  "hits": {
   "error": 404
  },
@@ -9,25 +9,25 @@
   "stats": [
    {
     "name": "",
-    "count": 57,
+    "count": 58,
     "ref_scheme": "o"
    },
    {
     "id": "site",
     "name": "site",
-    "count": 11,
+    "count": 15,
     "ref_scheme": "c"
    },
    {
     "id": "YouTube",
     "name": "YouTube",
-    "count": 10,
+    "count": 14,
     "ref_scheme": "c"
    },
    {
     "id": "urlscan.io",
     "name": "urlscan.io",
-    "count": 8,
+    "count": 9,
     "ref_scheme": "h"
    },
    {
@@ -62,7 +62,7 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 100
+    "count": 110
    },
    {
     "id": "Firefox",
@@ -82,7 +82,7 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 102
+    "count": 112
    },
    {
     "id": "Linux",
@@ -117,7 +117,7 @@
    {
     "id": "desktop",
     "name": "",
-    "count": 98
+    "count": 108
    },
    {
     "id": "desktophd",
@@ -142,7 +142,7 @@
    {
     "id": "BG",
     "name": "Bulgaria",
-    "count": 34
+    "count": 39
    },
    {
     "id": "US",
@@ -160,6 +160,16 @@
     "count": 5
    },
    {
+    "id": "HN",
+    "name": "Honduras",
+    "count": 3
+   },
+   {
+    "id": "BR",
+    "name": "Brazil",
+    "count": 2
+   },
+   {
     "id": "FR",
     "name": "France",
     "count": 2
@@ -170,8 +180,8 @@
     "count": 2
    },
    {
-    "id": "BR",
-    "name": "Brazil",
+    "id": "MX",
+    "name": "Mexico",
     "count": 1
    },
    {
@@ -192,7 +202,7 @@
    {
     "id": "75274",
     "name": "promo-bar",
-    "count": 11
+    "count": 15
    },
    {
     "id": "75273",
@@ -207,6 +217,16 @@
    {
     "id": "75700",
     "name": "blackburne-shilling",
+    "count": 2
+   },
+   {
+    "id": "76965",
+    "name": "fishing-pole",
+    "count": 2
+   },
+   {
+    "id": "77015",
+    "name": "h1-legals-trap",
     "count": 2
    },
    {
