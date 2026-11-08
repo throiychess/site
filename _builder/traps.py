@@ -269,6 +269,72 @@ TRAPS = [
                 12: ("CHECKMATE", "6…Bxg3#", "Bishop takes g3. Checkmate on move six.", ["g3", "!e1"])},
          fix=["Play 4.Nf3 first. The knight guards h4 and White keeps a good game.",
               "After you push your f-pawn, watch the road from h4 to your king."]),
+    dict(slug="kieninger-trap", name="Kieninger Trap", opening="Budapest Gambit", side="Black sets it",
+         hook="Kick the bishop and grab it? Knight d3 is checkmate.",
+         simple="Black gives a bishop check and puts the queen on the same line as White's king. If White kicks the bishop and then takes it, a knight jumps to d3 with checkmate. White's e-pawn can't take the knight, because the queen pins it to the king. Take the knight on e5 or play e3 first, and don't grab the bishop.",
+         intro="In the Budapest Gambit (1.d4 Nf6 2.c4 e5 3.dxe5 Ng4) after 4.Nf3 Nc6 5.Bf4 Bb4+ 6.Nbd2 Qe7 7.a3 Black ignores the attack on the bishop: 7…Ngxe5! "
+               "Now 8.axb4?? Nd3# is mate, because the e2-pawn is pinned by the queen. 8.Nxe5 or 8.e3 keeps a good game.",
+         moves="d4 Nf6 c4 e5 dxe5 Ng4 Nf3 Nc6 Bf4 Bb4+ Nbd2 Qe7 a3 Ngxe5 axb4 Nd3#",
+         notes={0: ("START", "", "A mating trap in the Budapest Gambit. Step through the moves."),
+                4: ("THE GAMBIT", "2…e5", "The Budapest Gambit. Black offers a pawn.", ["e5"]),
+                10: ("CHECK", "5…Bb4+", "Bishop b4, check.", ["b4", "!e1"]),
+                12: ("THE QUEEN", "6…Qe7", "The queen comes to e7, on the same line as White's king.", ["e7", "!e1"]),
+                13: ("THE KICK", "7.a3", "White kicks the bishop.", ["a3", "!b4"]),
+                14: ("THE BAIT", "7…Ngxe5!", "Black ignores it and takes on e5. The bishop is left hanging.", ["e5", "!b4"]),
+                15: ("THE BLUNDER", "8.axb4??", "White grabs the free bishop.", ["b4"]),
+                16: ("CHECKMATE", "8…Nd3#", "Knight d3. The e-pawn can't take: the queen pins it to the king. Checkmate.", ["d3", "!e1", "!e2"])},
+         fix=["Take the knight on e5 or play e3 first. After e3 your bishop on f1 covers d3.",
+              "Don't grab the bishop on b4 while a black knight can jump to d3."]),
+    dict(slug="noahs-ark-trap", name="Noah's Ark Trap", opening="Ruy Lopez", side="Black sets it", mate=False,
+         hook="Win the pawn back with your queen and your bishop gets trapped.",
+         simple="Black's pawns chase White's bishop back to b3. Then Black trades on d4. If White takes back with the queen, Black pushes the c-pawn twice: first the queen has to move, then the bishop on b3 has no square left. White gets at most two pawns for it. Don't take back with the queen.",
+         intro="In the Ruy Lopez after 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.d4 b5 6.Bb3 Nxd4 7.Nxd4 exd4 the natural 8.Qxd4?? runs into 8…c5! "
+               "9.Qd5 Be6 10.Qc6+ Bd7 11.Qd5 c4, and the bishop on b3 is trapped. 8.c3 or 8.Bd5 keeps a level game.",
+         moves="e4 e5 Nf3 Nc6 Bb5 a6 Ba4 d6 d4 b5 Bb3 Nxd4 Nxd4 exd4 Qxd4 c5 Qd5 Be6 Qc6+ Bd7 Qd5 c4",
+         notes={0: ("START", "", "An old trap in the Ruy Lopez. Step through the moves."),
+                5: ("THE RUY LOPEZ", "3.Bb5", "White's bishop goes to b5.", ["b5"]),
+                10: ("THE CHASE", "5…b5", "Black's pawns chase the bishop: first a6, then b5.", ["b5", "a6"]),
+                11: ("BACK TO B3", "6.Bb3", "The bishop goes back to b3.", ["b3"]),
+                14: ("THE TRADE", "7…exd4", "Black trades knights and takes the d-pawn.", ["d4"]),
+                15: ("THE MISTAKE", "8.Qxd4??", "White takes back with the queen.", ["d4"]),
+                16: ("THE KICK", "8…c5!", "Pawn c5. The queen has to move.", ["c5", "!d4"]),
+                19: ("CHECK", "10.Qc6+", "White tries a check.", ["c6"]),
+                20: ("BLOCK", "10…Bd7", "Black blocks and kicks the queen again.", ["d7"]),
+                22: ("TRAPPED", "11…c4", "Pawn c4. The bishop on b3 has no square left.", ["c4", "!b3"])},
+         fix=["Don't take back on d4 with the queen. Play c3, or put the bishop on d5.",
+              "A bishop with no escape square is a target. Give it a way out before the pawns arrive."]),
+    dict(slug="damiano-defence", name="Damiano Defence", opening="Damiano Defence", side="White punishes it", mate=False,
+         hook="A free knight on move three. Take it and your king gets dragged into the open.",
+         simple="Black defends the e5 pawn with the f-pawn. White takes it anyway with the knight. If Black takes the knight, the queen checks: Black either loses the rook in the corner or the king gets dragged into the open. Don't take: bring the queen to e7 and win the pawn back. Better still, defend e5 with your knight from the start.",
+         intro="After 1.e4 e5 2.Nf3 f6? 3.Nxe5! fxe5?? 4.Qh5+ Black is in trouble: 4…g6 5.Qxe5+ wins the rook on h8, and 4…Ke7 5.Qxe5+ Kf7 6.Bc4+ d5 7.Bxd5+ drags the king into the open. "
+               "3…Qe7 is the best defence, and 2…Nc6 avoids it all.",
+         moves="e4 e5 Nf3 f6 Nxe5 fxe5 Qh5+ Ke7 Qxe5+ Kf7 Bc4+ d5 Bxd5+ Kg6",
+         notes={0: ("START", "", "A defence that a chess book from 1512 already warned against. Step through the moves."),
+                4: ("THE MISTAKE", "2…f6?", "Black defends e5 with the f-pawn. It opens the line to the king.", ["f6"]),
+                5: ("THE SACRIFICE", "3.Nxe5!", "White takes anyway.", ["e5"]),
+                6: ("THE GREED", "3…fxe5??", "Black takes the free knight."),
+                7: ("CHECK", "4.Qh5+", "Queen h5, check.", ["h5", "!e8"]),
+                8: ("KING MOVES", "4…Ke7", "Blocking with g6 loses the rook: queen takes e5 with check, then takes h8.", ["e7"]),
+                14: ("DRAGGED OUT", "7…Kg6", "The king is dragged into the open, and White's attack keeps going.", ["!g6"])},
+         fix=["Don't take the knight. Play 3…Qe7 and win the pawn back.",
+              "Even better: never play 2…f6. Defend e5 with your knight (2…Nc6)."]),
+    dict(slug="mortimer-trap", name="Mortimer Trap", opening="Ruy Lopez", side="Black sets it", mate=False,
+         hook="The e5 pawn looks free. Grab it and a queen check wins your knight.",
+         simple="Black's knight steps back from c6, so the pawn on e5 looks free. If White grabs it, a pawn kicks the bishop and then the queen checks on a5, attacking the king and the knight at once. White loses the knight. Don't grab the pawn: just keep developing.",
+         intro="In the Ruy Lopez after 1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Black plays the odd-looking 4…Ne7. 5.Nxe5? c6! attacks the bishop, "
+               "and after 6.Bc4 Qa5+ (a fork of king and knight) 7.Nc3 Qxe5 Black wins a piece. 5.Nc3 or 5.Bc4 keeps a normal game.",
+         moves="e4 e5 Nf3 Nc6 Bb5 Nf6 d3 Ne7 Nxe5 c6 Bc4 Qa5+ Nc3 Qxe5",
+         notes={0: ("START", "", "A quiet-looking trap in the Ruy Lopez. Step through the moves."),
+                6: ("THE ATTACK", "3…Nf6", "Black's knight attacks the e4 pawn.", ["f6", "!e4"]),
+                7: ("QUIET", "4.d3", "White protects e4.", ["d3"]),
+                8: ("THE BAIT", "4…Ne7!?", "The knight steps back. Now nothing defends e5.", ["e7", "!e5"]),
+                9: ("THE GREED", "5.Nxe5?", "White grabs the pawn.", ["e5"]),
+                10: ("THE KICK", "5…c6!", "The pawn attacks the bishop.", ["c6", "!b5"]),
+                11: ("RETREAT", "6.Bc4", "The bishop runs.", ["c4"]),
+                12: ("THE FORK", "6…Qa5+", "Queen a5, check. It also attacks the knight on e5.", ["a5", "!e1", "!e5"]),
+                14: ("PIECE UP", "7…Qxe5", "Black wins the knight.", ["e5"])},
+         fix=["Don't take on e5. Keep developing: knight to c3 or bishop to c4 is fine.",
+              "Before you grab a pawn, check if one queen check can hit your king and the grabbing piece together."]),
 ]
 
 # ---------------------------------------------------------------------------------------------
@@ -481,6 +547,71 @@ GUIDES = {
         qa=[("How do I avoid the From's Gambit trap?", "Play your knight to f3 on move four. It guards h4."),
             ("Who was Martin From?", "A Danish chess player (1828-1895). He played this gambit in Copenhagen in 1862, and it is named after him."),
             ("What is the lesson?", "After you push your f-pawn, watch the road from h4 to your king.")]),
+    "kieninger-trap": dict(
+        title="Kieninger Trap: the Budapest Gambit mate and how to avoid it",
+        desc="How the Kieninger Trap works in the Budapest Gambit, step by step on the board: the free bishop, the knight mate on d3 and the moves that keep you safe.",
+        guide=[
+            dict(h="Check, then the queen", board=dict(moves="d4 Nf6 c4 e5 dxe5 Ng4 Nf3 Nc6 Bf4 Bb4+ Nbd2 Qe7", arrows=["r:g4e5", "r:c6e5"]), p=[
+                "Black's bishop checked on b4 and the queen came to e7, on the same line as your king. Both knights attack your pawn on e5."]),
+            dict(h="The fix: take the knight or play e3", board=dict(moves="d4 Nf6 c4 e5 dxe5 Ng4 Nf3 Nc6 Bf4 Bb4+ Nbd2 Qe7 a3 Ngxe5", arrows=["g:f3e5", "g:e2e3"]), p=[
+                "After your pawn move to a3, Black ignores the bishop and takes on e5. Take that knight with your knight, or play e3 so your bishop on f1 covers d3."]),
+            dict(h="The mistake: grabbing the bishop", board=dict(moves="d4 Nf6 c4 e5 dxe5 Ng4 Nf3 Nc6 Bf4 Bb4+ Nbd2 Qe7 a3 Ngxe5 axb4 Nd3#", rings=["!e1", "!e2"]), p=[
+                "If you take the bishop, the knight jumps to d3. It's check, and your e-pawn can't take it: the queen on e7 pins it to your king. Checkmate."]),
+            dict(h="Same idea after the knight trade", board=dict(moves="d4 Nf6 c4 e5 dxe5 Ng4 Nf3 Nc6 Bf4 Bb4+ Nbd2 Qe7 a3 Ngxe5 Nxe5 Nxe5", arrows=["r:e5d3", "g:e2e3"]), p=[
+                "After the knights trade, the bishop on b4 still looks free. It isn't: taking it allows the same mate on d3. Play e3 first."]),
+        ],
+        qa=[("How do I avoid the Kieninger Trap?", "Don't take the bishop on b4 while a black knight can jump to d3. Take the knight on e5 or play e3 first, so your bishop covers d3."),
+            ("Why can't the e-pawn take the knight?", "Because the black queen on e7 pins it to your king. Moving the pawn would open the line to your king."),
+            ("What is the lesson?", "Before you grab a free piece, look at every check your opponent has.")]),
+    "noahs-ark-trap": dict(
+        title="Noah's Ark Trap: the Ruy Lopez bishop trap and how to avoid it",
+        desc="How Noah's Ark Trap works in the Ruy Lopez, step by step on the board: the pawns that trap the bishop on b3 and the moves to play instead.",
+        guide=[
+            dict(h="Pawns chase your bishop", board=dict(moves="e4 e5 Nf3 Nc6 Bb5 a6 Ba4 d6 d4 b5 Bb3", rings=["b3"]), p=[
+                "Black's pawns pushed your bishop back to b3. Keep an eye on it: it is running out of squares."]),
+            dict(h="The fix: don't take with the queen", board=dict(moves="e4 e5 Nf3 Nc6 Bb5 a6 Ba4 d6 d4 b5 Bb3 Nxd4 Nxd4 exd4", arrows=["g:c2c3", "g:b3d5"]), p=[
+                "After the knight trade, Black's pawn sits on d4. Don't take it with your queen. Play c3, or move the bishop to d5, where it is active and safe."]),
+            dict(h="The mistake: queen takes", board=dict(moves="e4 e5 Nf3 Nc6 Bb5 a6 Ba4 d6 d4 b5 Bb3 Nxd4 Nxd4 exd4 Qxd4 c5", arrows=["r:c5d4"]), p=[
+                "Take with the queen and the c-pawn kicks it away. Black wins time for the next pawn move."]),
+            dict(h="The bishop is trapped", board=dict(moves="e4 e5 Nf3 Nc6 Bb5 a6 Ba4 d6 d4 b5 Bb3 Nxd4 Nxd4 exd4 Qxd4 c5 Qd5 Be6 Qc6+ Bd7 Qd5 c4", rings=["!b3"]), p=[
+                "After a few queen moves the pawn goes to c4. Your bishop on b3 has no safe square. The best you get is two pawns for it."]),
+        ],
+        qa=[("How do I avoid Noah's Ark Trap?", "After Black takes on d4, don't take back with your queen. Play c3 or bishop d5 instead."),
+            ("What is the lesson?", "A bishop with no escape square is a target.")]),
+    "damiano-defence": dict(
+        title="Damiano Defence: why 2...f6 loses and what to play instead",
+        desc="How White punishes the Damiano Defence, step by step on the board: the knight sacrifice on e5, the queen check and the moves Black should play.",
+        guide=[
+            dict(h="Defend e5 with your knight", board=dict(moves="e4 e5 Nf3", arrows=["r:f3e5", "g:b8c6"]), p=[
+                "White's knight attacks your pawn on e5. Defend it with your knight. That is the best move."]),
+            dict(h="The mistake: pawn to f6", board=dict(moves="e4 e5 Nf3 f6 Nxe5", arrows=["r:d1h5"]), p=[
+                "Defending with the f-pawn looks safe, but it opens the line from h5 to your king. White simply takes on e5."]),
+            dict(h="The fix: don't take, queen to e7", board=dict(moves="e4 e5 Nf3 f6 Nxe5", arrows=["g:d8e7"]), p=[
+                "Don't take the knight. Bring your queen to e7: it attacks the knight and wins your pawn back. White stays better, but you are still in the game."]),
+            dict(h="If you take: the queen check", board=dict(moves="e4 e5 Nf3 f6 Nxe5 fxe5 Qh5+", rings=["!e8"]), p=[
+                "Take the knight and the queen checks on h5. Block with g6, and the queen takes e5 with check and then the rook in the corner.",
+                "Move the king instead, and it gets dragged into the open."]),
+        ],
+        qa=[("Why is 2...f6 bad?", "It opens the line from h5 to your king and takes the best square from your knight. After 3.Nxe5 Black is already in trouble."),
+            ("Why is it called the Damiano Defence?", "It is named after a chess book from 1512 that already warned against it."),
+            ("What should Black play instead?", "Defend e5 with the knight: 2...Nc6.")]),
+    "mortimer-trap": dict(
+        title="Mortimer Trap: the Ruy Lopez knight trap and how to avoid it",
+        desc="How the Mortimer Trap works in the Ruy Lopez, step by step on the board: the free pawn on e5, the queen fork on a5 and the moves to play instead.",
+        guide=[
+            dict(h="The pawn looks free", board=dict(moves="e4 e5 Nf3 Nc6 Bb5 Nf6 d3 Ne7", rings=["!e5"]), p=[
+                "Black's knight went back to e7, so nothing defends the pawn on e5 anymore. That's the bait."]),
+            dict(h="The fix: keep developing", board=dict(moves="e4 e5 Nf3 Nc6 Bb5 Nf6 d3 Ne7", arrows=["g:b1c3", "g:b5c4"]), p=[
+                "Don't take the pawn. Bring your other knight to c3 or your bishop to c4 and play a normal game."]),
+            dict(h="The mistake: grabbing e5", board=dict(moves="e4 e5 Nf3 Nc6 Bb5 Nf6 d3 Ne7 Nxe5 c6", arrows=["r:c6b5", "r:d8a5"]), p=[
+                "Take the pawn and the c-pawn kicks your bishop. The queen is ready to check on a5."]),
+            dict(h="The fork", board=dict(moves="e4 e5 Nf3 Nc6 Bb5 Nf6 d3 Ne7 Nxe5 c6 Bc4 Qa5+", arrows=["r:a5e1", "r:a5e5"]), p=[
+                "After the bishop moves, the queen checks on a5 and attacks your knight at the same time. You block the check, and the queen takes the knight.",
+                "Taking on f7 with the knight instead gets you only two pawns for it."]),
+        ],
+        qa=[("How do I avoid the Mortimer Trap?", "Don't take the pawn on e5 after the knight goes back to e7. Develop with knight c3 or bishop c4."),
+            ("Why does the knight go back to e7?", "It sets the trap: e5 is left without a defender, and the way is clear for the pawn to c6 and the queen check on a5."),
+            ("What is the lesson?", "Before you grab a pawn, check whether one queen move can attack your king and the grabbing piece together.")]),
 }
 for _t in TRAPS:
     if _t["slug"] in GUIDES: _t.update(GUIDES[_t["slug"]])
