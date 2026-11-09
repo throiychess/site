@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-08T04:18:26Z",
- "start": "2026-08-11",
- "end": "2026-11-08",
+ "generated": "2026-11-09T04:26:55Z",
+ "start": "2026-08-12",
+ "end": "2026-11-09",
  "hits": {
   "error": 404
  },
@@ -9,19 +9,19 @@
   "stats": [
    {
     "name": "",
-    "count": 58,
+    "count": 60,
     "ref_scheme": "o"
    },
    {
     "id": "site",
     "name": "site",
-    "count": 15,
+    "count": 17,
     "ref_scheme": "c"
    },
    {
     "id": "YouTube",
     "name": "YouTube",
-    "count": 14,
+    "count": 16,
     "ref_scheme": "c"
    },
    {
@@ -62,7 +62,7 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 110
+    "count": 116
    },
    {
     "id": "Firefox",
@@ -82,7 +82,7 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 112
+    "count": 118
    },
    {
     "id": "Linux",
@@ -117,7 +117,7 @@
    {
     "id": "desktop",
     "name": "",
-    "count": 108
+    "count": 114
    },
    {
     "id": "desktophd",
@@ -160,19 +160,24 @@
     "count": 5
    },
    {
-    "id": "HN",
-    "name": "Honduras",
+    "id": "BR",
+    "name": "Brazil",
     "count": 3
    },
    {
-    "id": "BR",
-    "name": "Brazil",
-    "count": 2
+    "id": "ES",
+    "name": "Spain",
+    "count": 3
    },
    {
     "id": "FR",
     "name": "France",
-    "count": 2
+    "count": 3
+   },
+   {
+    "id": "HN",
+    "name": "Honduras",
+    "count": 3
    },
    {
     "id": "IN",
@@ -190,6 +195,11 @@
     "count": 1
    },
    {
+    "id": "TW",
+    "name": "Taiwan",
+    "count": 1
+   },
+   {
     "id": "ZW",
     "name": "Zimbabwe",
     "count": 1
@@ -202,7 +212,7 @@
    {
     "id": "75274",
     "name": "promo-bar",
-    "count": 15
+    "count": 17
    },
    {
     "id": "75273",
@@ -227,6 +237,11 @@
    {
     "id": "77015",
     "name": "h1-legals-trap",
+    "count": 2
+   },
+   {
+    "id": "77200",
+    "name": "lasker-trap",
     "count": 2
    },
    {
