@@ -1,142 +1,166 @@
 {
 "/": {
 "d": "2026-11-10",
-"h": "d1758847bb9e5d3f"
+"h": "6646fa1b0e267b92"
 },
 "/analyze/": {
 "d": "2026-11-10",
-"h": "9ba56e76b404f943"
+"h": "a4ab5864b89e7980"
 },
 "/contact/": {
-"d": "2026-11-07",
-"h": "dc9fd497c139cb34"
+"d": "2026-11-10",
+"h": "ea6f365398d2b45e"
 },
 "/free/": {
-"d": "2026-11-07",
-"h": "f94476ee38286ad4"
+"d": "2026-11-10",
+"h": "2d9120091bc9cc90"
 },
 "/improve/": {
-"d": "2026-11-07",
-"h": "cd95acdc52f5ef89"
+"d": "2026-11-10",
+"h": "b1c6ea60f4a5648a"
 },
 "/opponent/": {
 "d": "2026-11-10",
-"h": "fed7fff777a772c0"
+"h": "85fc3d1f81e22c53"
+},
+"/patterns/": {
+"d": "2026-11-10",
+"h": "0c9ac020047f124f"
+},
+"/patterns/anastasias-mate/": {
+"d": "2026-11-10",
+"h": "4ade9c362ba89bf9"
+},
+"/patterns/bodens-mate/": {
+"d": "2026-11-10",
+"h": "d698019e82adb8ba"
+},
+"/patterns/stalemate-trick/": {
+"d": "2026-11-10",
+"h": "a072286fcc564104"
+},
+"/patterns/windmill/": {
+"d": "2026-11-10",
+"h": "8ddabfa1a786142a"
+},
+"/patterns/zwischenzug/": {
+"d": "2026-11-10",
+"h": "700f1ea2d3332d92"
 },
 "/privacy/": {
 "d": "2026-11-10",
-"h": "a526886809545088"
+"h": "cc99894449f66f0d"
 },
 "/shorts/": {
-"d": "2026-11-09",
-"h": "e21b67f4f4a428b2"
+"d": "2026-11-10",
+"h": "75629ddfa2fc303a"
 },
 "/shorts/lessons/": {
-"d": "2026-11-09",
-"h": "4099e654d2d077db"
+"d": "2026-11-10",
+"h": "b0d1dd54e53c47f2"
 },
 "/shorts/page/2/": {
-"d": "2026-11-09",
-"h": "76c0504fba475e5e"
+"d": "2026-11-10",
+"h": "36e778e3f3874c66"
 },
 "/shorts/top-game/": {
-"d": "2026-11-09",
-"h": "f7a0b72d9f36b5f6"
+"d": "2026-11-10",
+"h": "dde464bbd262442e"
 },
 "/shorts/traps/": {
-"d": "2026-11-09",
-"h": "2b6b6eda01947c75"
+"d": "2026-11-10",
+"h": "0095bf5e22ffaba3"
 },
 "/support/": {
-"d": "2026-11-07",
-"h": "6d42851a8c3822d8"
+"d": "2026-11-10",
+"h": "72e4792e4ecd01f1"
 },
 "/terms/": {
 "d": "2026-11-10",
-"h": "8276ed93e61a8b6a"
+"h": "10c621ea641a763c"
 },
 "/top-games/": {
-"d": "2026-11-07",
-"h": "b004d2c6663a91b3"
+"d": "2026-11-10",
+"h": "b3a2fbb2d34d73a1"
 },
 "/traps/": {
 "d": "2026-11-10",
-"h": "bd14a95380350d56"
+"h": "1971a9cb4026ccfe"
 },
 "/traps/blackburne-shilling-gambit/": {
 "d": "2026-11-10",
-"h": "fa4f8aa4cae92ed6"
+"h": "7c18577cf768675d"
 },
 "/traps/damiano-defence/": {
 "d": "2026-11-10",
-"h": "e68a39c80bdcb313"
+"h": "eec0ee622fc79155"
 },
 "/traps/elephant-trap/": {
 "d": "2026-11-10",
-"h": "534616479423599c"
+"h": "b0bdf0b979ff8db3"
 },
 "/traps/englund-gambit/": {
 "d": "2026-11-10",
-"h": "677dc0c6f13c3e0c"
+"h": "ee474825829b1042"
 },
 "/traps/fishing-pole-trap/": {
 "d": "2026-11-10",
-"h": "819bb78927a4cf83"
+"h": "8684ffdea9dded17"
 },
 "/traps/fried-liver-attack/": {
 "d": "2026-11-10",
-"h": "32a8a2e7ba8d4809"
+"h": "30e2ce423383545d"
 },
 "/traps/froms-gambit/": {
 "d": "2026-11-10",
-"h": "e4a03c16fdc8c300"
+"h": "5417d6b65c9e1754"
 },
 "/traps/halloween-gambit/": {
 "d": "2026-11-10",
-"h": "1d15348109f45b62"
+"h": "d5bb310fde822977"
 },
 "/traps/kieninger-trap/": {
 "d": "2026-11-10",
-"h": "933db33ccb492bed"
+"h": "a132b307efe990cb"
 },
 "/traps/lasker-trap/": {
 "d": "2026-11-10",
-"h": "f6ec5edf2e8df4c7"
+"h": "4ec44904fe30c0b9"
 },
 "/traps/legals-mate/": {
 "d": "2026-11-10",
-"h": "edfa564747627a0e"
+"h": "6fd78229f88b2ad5"
 },
 "/traps/london-system-trap/": {
 "d": "2026-11-10",
-"h": "cb44f6a09bdcb601"
+"h": "ffbe9b351da71f09"
 },
 "/traps/mortimer-trap/": {
 "d": "2026-11-10",
-"h": "51d05cb83acc779f"
+"h": "5bd27a1a34064700"
 },
 "/traps/noahs-ark-trap/": {
 "d": "2026-11-10",
-"h": "171eb8b1954840bf"
+"h": "ca050e75d51d6498"
 },
 "/traps/petrov-trap/": {
 "d": "2026-11-10",
-"h": "fad8a5533403f05c"
+"h": "ac891472fc33d38e"
 },
 "/traps/scholars-mate/": {
 "d": "2026-11-10",
-"h": "6d35ffce3758312a"
+"h": "e9655394d328c423"
 },
 "/traps/siberian-trap/": {
 "d": "2026-11-10",
-"h": "edc617830fcccd55"
+"h": "7b4f1482ca9ed6ac"
 },
 "/traps/stafford-gambit/": {
 "d": "2026-11-10",
-"h": "a4d72d8cecf98d48"
+"h": "f0579e864b6cd1d7"
 },
 "/videos/": {
-"d": "2026-11-07",
-"h": "aa18fc0f1e6cf7d4"
+"d": "2026-11-10",
+"h": "61f17d4da1d21809"
 }
 }

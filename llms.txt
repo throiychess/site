@@ -22,6 +22,13 @@
 - [Mortimer Trap](https://throiychess.com/traps/mortimer-trap/): The e5 pawn looks free. Grab it and a queen check wins your knight. Opening: Ruy Lopez. Moves: e4 e5 Nf3 Nc6 Bb5 Nf6 d3 Ne7 Nxe5 c6 Bc4 Qa5+ Nc3 Qxe5
 - [London System Trap](https://throiychess.com/traps/london-system-trap/): The b2 pawn looks free. Grab it and White's knight takes on d5 with a double threat. Opening: London System. Moves: d4 d5 Bf4 c5 e3 Qb6 Nc3 Qxb2 Nxd5 Bf5 Rb1 Qxa2 Bb5+ Kd8 dxc5
 
+## Pattern lessons
+- [The Windmill](https://throiychess.com/patterns/windmill/): One rook gives check six times, then takes the queen.
+- [Anastasia's Mate](https://throiychess.com/patterns/anastasias-mate/): A knight, a rook and one queen sacrifice: mate on the edge.
+- [Boden's Mate](https://throiychess.com/patterns/bodens-mate/): Two bishops on crossing diagonals mate a king that hides behind its own pieces.
+- [The Stalemate Trick](https://throiychess.com/patterns/stalemate-trick/): A queen down, and still a draw. The corner and the rook pawn do the work.
+- [Zwischenzug](https://throiychess.com/patterns/zwischenzug/): Don't recapture on autopilot: a bigger threat first.
+
 ## Videos
 - [All Shorts](https://throiychess.com/shorts/)
 - [How to stop the Danish Gambit](https://www.youtube.com/shorts/wmwopIdUqQk): This is the Danish Gambit. White gives two pawns for two fast bishops, aimed at f7 and g7.
