@@ -161,3 +161,4 @@ for _t in PATTERNS:
     _t.setdefault("title", f'{_t["name"]}: how it works, step by step on the board')
     _t.setdefault("desc", _t["hook"] + " Step through every move on the board, with the plain-words explanation and how to use it.")
 # rebuild trigger
+# rebuild trigger 2
