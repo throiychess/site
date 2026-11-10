@@ -392,7 +392,7 @@ def newsletter():
 def footer(band=True, nl=True):
     ext = " ".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LINKS)
     return ((newsletter() if nl else "") + (support_bar() if band else "") + f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Chess lessons, traps and tools</span>'
-            f'<nav aria-label="Footer">{ext}<a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav></div></footer>')
+            f'<nav aria-label="Footer">{ext}<a href="/traps/">Traps</a><a href="/patterns/">Patterns</a><a href="/shorts/">Shorts</a><a href="/analyze/">Analyze</a><a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav></div></footer>')
 
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
 SCRIPT = """<script>
@@ -518,10 +518,19 @@ def trap_card(t):
     return (f'<a class="card" href="/traps/{t["slug"]}/">{pic}<div class="meta"><span class="label">{e(t["opening"])}</span></div>'
             f'<h3>{e(t["name"])}</h3><p>{e(t["hook"])}</p><span class="go">Play through the trap →</span></a>')
 
+def traps_extras():
+    lv = next((v for v in VIDEOS if "10 Opening Traps" in v.get("title", "")), None)
+    lv_url = f"https://www.youtube.com/watch?v={lv['id']}" if lv else LINKS[0][1]
+    return (f'''<div class="sechead" style="margin-top:44px"><div><span class="eyebrow">Also in the library</span><h2>Mating patterns and tactics.</h2></div><a class="btn" href="/patterns/">All patterns →</a></div>
+<p>Windmill, Anastasia's Mate, Boden's Mate and more: the patterns behind the traps, each explained move by move.</p>
+<div class="sechead" style="margin-top:36px"><div><span class="eyebrow">Coming next</span><h2>More traps are on the way.</h2></div></div>
+<p>Rubinstein, Cambridge Springs and Magnus Smith are next. Join the weekly e-mail below to get each new trap as it goes live.</p>
+<div class="btns" style="margin-top:18px"><a class="btn solid" href="{lv_url}" target="_blank" rel="noopener">Watch: 10 Opening Traps</a><a class="btn" href="/shorts/">All Shorts</a><a class="btn" href="/analyze/">Analyze my games free</a></div>''')
+
 def traps_index():
     body = header("Traps") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Trap library</span>
 <h1 class="page">Learn the trap. Then the fix.</h1><p>{len(TRAPS)} opening traps, each explained in plain words first, then move by move on the board.</p></div>
-<div class="grid">{"".join(trap_card(t) for t in TRAPS)}</div><div style="height:56px"></div></main>''' + footer()
+<div class="grid">{"".join(trap_card(t) for t in TRAPS)}</div>{traps_extras()}<div style="height:56px"></div></main>''' + footer()
     il = {"@context": "https://schema.org", "@type": "ItemList", "name": "Chess opening traps", "itemListElement": [
         {"@type": "ListItem", "position": i, "url": f'{SITE}/traps/{t["slug"]}/', "name": t["name"]} for i, t in enumerate(TRAPS, 1)]}
     return "/traps/", page("/traps/", "Chess opening traps: library with the fix for each · Throiy Chess", f"{len(TRAPS)} chess opening traps explained in plain words, with the fix for each.", body, [il])
