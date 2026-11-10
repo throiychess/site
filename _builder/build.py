@@ -67,6 +67,7 @@ VIDEOS = [s for s in SHORTS if s.get("kind") == "video" or s["id"] in LONG_IDS]
 SHORTS = [s for s in SHORTS if s not in VIDEOS]
 
 from traps import TRAPS  # the trap library lives in _builder/traps.py (one entry per trap page)
+from patterns import PATTERNS  # named mating patterns and tactics (_builder/patterns.py, /patterns/<slug>/)
 # library cards for lessons that have a Short but no playable page yet: (name, opening, text, short id or None)
 OTHER = []  # extra cards for traps that have no page yet: (name, opening, hook, short id)
 
@@ -313,7 +314,7 @@ def promo_bar(active):
             '<button class="promo-x" type="button" aria-label="Close" onclick="try{sessionStorage.setItem(\'promo\',1)}catch(e){}this.closest(\'.promo\').remove()">&times;</button></div></div>'
             '<script>try{if(sessionStorage.getItem("promo"))document.querySelector(".promo").remove()}catch(e){}</script>')
 NAVG = [("Watch", [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Top games", "/top-games/")]),
-        ("Train", [("Traps", "/traps/"), ("Analyze", "/analyze/"), ("Opponent", "/opponent/")]),
+        ("Train", [("Traps", "/traps/"), ("Patterns", "/patterns/"), ("Analyze", "/analyze/"), ("Opponent", "/opponent/")]),
         ("About", [("About", "/#about"), ("Contact", "/contact/")]), ("Support", "/support/")]
 NAV = [(n, u) for g, x in NAVG for (n, u) in (x if isinstance(x, list) else [(g, x)])]
 _KEY = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg>'
@@ -480,14 +481,15 @@ def trap_short(t):
     return next((s for s in SHORTS if s["id"] == t.get("short")), None) or next((s for s in SHORTS if _nm(t["name"]) in _nm(s["title"])), None)
 
 def short_url(s):
-    t = next((t for t in TRAPS if (trap_short(t) or {}).get("id") == s["id"]), None)
-    return f"{SITE}/traps/{t['slug']}/" if t else f"{SITE}/shorts/#s-{s['id']}"
+    t = next((t for t in TRAPS + PATTERNS if (trap_short(t) or {}).get("id") == s["id"]), None)
+    return f"{SITE}/{'patterns' if t in PATTERNS else 'traps'}/{t['slug']}/" if t else f"{SITE}/shorts/#s-{s['id']}"
 
 def short_cat(s):
     """Filter category of a Short: top-game, traps (has a trap page) or lessons."""
     if s.get("topic") == "Top game": return "top-game"
+    if any((trap_short(t) or {}).get("id") == s["id"] for t in PATTERNS): return "patterns"
     return "traps" if any((trap_short(t) or {}).get("id") == s["id"] for t in TRAPS) else "lessons"
-SHORT_CATS = [("", "All"), ("traps", "Opening traps"), ("top-game", "Top games"), ("lessons", "Other lessons")]
+SHORT_CATS = [("", "All"), ("traps", "Opening traps"), ("patterns", "Patterns"), ("top-game", "Top games"), ("lessons", "Other lessons")]
 SHORT_FILTER_CSS = ".sfil{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}.sfil a{padding:8px 16px;border-radius:99px;border:1px solid var(--line);color:var(--mute);text-decoration:none;font-size:14.5px;font-weight:600}.sfil a:hover{color:var(--ink)}.sfil a[aria-current=page]{color:var(--on-gold);background:var(--gold);border-color:var(--gold)}.sfil a .n{opacity:.7;margin-left:6px;font-weight:500}"
 
 def short_card(s):
@@ -627,9 +629,26 @@ def related_traps(t, n=3):
     li = "".join(f'<li><a href="/traps/{x["slug"]}/">{e(x["name"])}</a> <span class="small">· {e(x["opening"])}</span></li>' for x in rest[:n])
     return f'<h2>Related traps</h2><ul class="related">{li}</ul><p><a href="/traps/">All {len(TRAPS)} traps in the library →</a></p>'
 
-def guide_board(moves, arrows=(), rings=(), flip=False):
+def related_patterns(t, n=4):
+    rest = [x for x in PATTERNS if x["slug"] != t["slug"]][:n]
+    li = "".join(f'<li><a href="/patterns/{x["slug"]}/">{e(x["name"])}</a> <span class="small">· {e(x["opening"])}</span></li>' for x in rest)
+    return f'<h2>More patterns</h2><ul class="related">{li}</ul><p><a href="/patterns/">All {len(PATTERNS)} patterns in the library →</a></p>'
+
+def pattern_card(t):
+    return (f'<a class="card" href="/patterns/{t["slug"]}/"><div class="meta"><span class="label">{e(t["opening"])}</span></div>'
+            f'<h3>{e(t["name"])}</h3><p>{e(t["hook"])}</p><span class="go">Step through it →</span></a>')
+
+def patterns_index():
+    body = header("Patterns") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Pattern library</span>
+<h1 class="page">Learn the pattern. Spot it in your games.</h1><p>{len(PATTERNS)} named mates and tactics, each explained in plain words first, then move by move on the board.</p></div>
+<div class="grid">{"".join(pattern_card(t) for t in PATTERNS)}</div><div style="height:56px"></div></main>''' + footer()
+    il = {"@context": "https://schema.org", "@type": "ItemList", "name": "Chess mating patterns and tactics", "itemListElement": [
+        {"@type": "ListItem", "position": i, "url": f'{SITE}/patterns/{t["slug"]}/', "name": t["name"]} for i, t in enumerate(PATTERNS, 1)]}
+    return "/patterns/", page("/patterns/", "Chess mating patterns and tactics: step by step · Throiy Chess", f"{len(PATTERNS)} named chess mates and tactics explained in plain words, then move by move on the board.", body, [il])
+
+def guide_board(moves, arrows=(), rings=(), flip=False, fen=None):
     """Static board for the guide, same pieces as the trap player. arrows: "g:e2e4" (green, good move) / "r:..." (red, threat). rings: "e1" / "!e1"."""
-    b = chess.Board()
+    b = chess.Board(fen) if fen else chess.Board()
     for san in moves.split(): b.push_san(san)
     fx = (lambda c: 7 - c) if flip else (lambda c: c)
     sq = lambda n: (fx(ord(n[0]) - 97) * 100 + 50, fx(8 - int(n[1])) * 100 + 50)
@@ -666,15 +685,16 @@ def guide_html(t):
     out = ('<p class="glegend"><span><b style="background:#2e9c4a"></b>a good move for you</span><span><b style="background:#d64541"></b>a threat to watch</span>'
            + ('<span><b style="background:#d9a93d"></b>a pin</span>' if pin else '') + '</p>')
     for g in t["guide"]:
-        bd = guide_board(g["board"]["moves"], g["board"].get("arrows", ()), g["board"].get("rings", ()), flip=t["side"].startswith("White")) if g.get("board") else ""
+        bd = guide_board(g["board"]["moves"], g["board"].get("arrows", ()), g["board"].get("rings", ()), flip=t.get("flip", t["side"].startswith("White")), fen=g["board"].get("fen")) if g.get("board") else ""
         out += f'<div class="gstep">{bd}<div><h3>{e(g["h"])}</h3>' + "".join(f"<p>{e(x)}</p>" for x in g.get("p", [])) + "</div></div>"
     if t.get("qa"):
         out += '<h2>Questions and answers</h2>' + "".join(f'<h3>{e(q)}</h3><p>{e(a)}</p>' for q, a in t["qa"])
     out += '<p class="small">Every line on this page is checked with a chess engine.</p>'
-    return f'<div class="guide" style="margin-top:48px"><style>{GUIDE_CSS}</style><span class="eyebrow">Step by step</span><h2>How to beat the {e(t["name"])}</h2>{out}</div>'
+    return f'<div class="guide" style="margin-top:48px"><style>{GUIDE_CSS}</style><span class="eyebrow">Step by step</span><h2>{("How " + e(t["name"]) + " works") if t in PATTERNS else ("How to beat the " + e(t["name"]))}</h2>{out}</div>'
 
-def trap_page(t):
-    b = chess.Board(); plies = [dict(fen=b.board_fen(), san="", fr=None, to=None)]
+def trap_page(t, kind="traps"):
+    pat = kind == "patterns"; LIB = "Pattern library" if pat else "Trap library"
+    b = chess.Board(t["fen"]) if t.get("fen") else chess.Board(); plies = [dict(fen=b.board_fen(), san="", fr=None, to=None)]
     for san in t["moves"].split():
         mv = b.parse_san(san); b.push(mv)
         plies.append(dict(fen=b.board_fen(), san=san, fr=chess.square_name(mv.from_square), to=chess.square_name(mv.to_square)))
@@ -690,19 +710,19 @@ def trap_page(t):
     side = (short_card(sh) if sh else
             f'<div class="card"><span class="label">Watch</span><h3>The {e(t["name"])} as a Short</h3><p>All lessons are on YouTube, TikTok and Instagram.</p>'
             f'<a class="go" href="{LINKS[0][1]}/shorts" target="_blank" rel="noopener">Watch on YouTube →</a></div>')
-    path = f'/traps/{t["slug"]}/'
-    body = header("Traps") + f'''<main class="wrap"><div class="crumb"><a href="/traps/">Trap library</a> / {e(t["name"])}</div>
+    path = f'/{kind}/{t["slug"]}/'
+    body = header("Patterns" if pat else "Traps") + f'''<main class="wrap"><div class="crumb"><a href="/{kind}/">{LIB}</a> / {e(t["name"])}</div>
 <div class="pagehead" style="padding-top:18px"><span class="eyebrow">{e(t["opening"])} · {e(t["side"])}</span><h1 class="page">{e(t["name"])}</h1><p>{e(t["hook"])}</p></div>
 {f'<div class="simple"><span class="eyebrow">In plain words</span><p>{e(t["simple"])}</p></div>' if t.get("simple") else ""}
-{share_bar(SITE + f'/traps/{t["slug"]}/', t["name"] + ": " + t["hook"])}
+{share_bar(SITE + path, t["name"] + ": " + t["hook"])}
 <div class="player"><div><div class="board" id="board" role="img" aria-label="Chess board showing the {e(t["name"])}"></div>
 <div class="ctrl"><button type="button" id="first" aria-label="Start position">⏮</button><button type="button" id="prev" aria-label="Previous move">◀</button>
 <button type="button" id="next" aria-label="Next move">▶</button><button type="button" id="last" aria-label="Final position">⏭</button></div>
 <p class="hint">Tip: use the arrow keys.</p></div>
 <div><div class="note" aria-live="polite"><div class="meta"><span class="label" id="nl"></span><span class="tag" id="nt"></span></div><p id="nx"></p></div>
 <div class="moves" id="moves">{mv_html}</div></div></div>
-<section style="margin-top:56px"><div class="twocol"><div class="prose"><span class="eyebrow">The trap</span><h2>How the {e(t["name"])} works</h2><p>{e(t["intro"])}</p>
-<h2>How not to fall for it</h2><ol class="fix">{fix}</ol>{related_traps(t)}{guide_html(t)}</div><aside>{side}<div class="card" style="margin-top:14px"><span class="label">Members</span><h3>Where do you fall for traps?</h3><p>Analyze your own games for free and see which mistakes cost you the most. Members also get a library of chess principles matched to their games.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=trap-page" data-ev="trap-members-cta">Analyze my games free →</a></div></aside></div></section>
+<section style="margin-top:56px"><div class="twocol"><div class="prose"><span class="eyebrow">{"The pattern" if pat else "The trap"}</span><h2>How {e(t["name"])} works</h2><p>{e(t["intro"])}</p>
+<h2>{"How to use it, and how to stop it" if pat else "How not to fall for it"}</h2><ol class="fix">{fix}</ol>{related_patterns(t) if pat else related_traps(t)}{guide_html(t)}</div><aside>{side}<div class="card" style="margin-top:14px"><span class="label">Members</span><h3>Where do you fall for traps?</h3><p>Analyze your own games for free and see which mistakes cost you the most. Members also get a library of chess principles matched to their games.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=trap-page" data-ev="trap-members-cta">Analyze my games free →</a></div></aside></div></section>
 </main>''' + footer() + '<script>const D=' + data + ''';
 const P="/img/pieces/",B=document.getElementById("board");let cur=0;
 const sqs=[];for(let r=7;r>=0;r--)for(let f=0;f<8;f++){const d=document.createElement("div");const n="abcdefgh"[f]+(r+1);d.className="sq "+((r+f)%2?"l":"d");d.dataset.n=n;
@@ -721,12 +741,12 @@ document.getElementById("moves").onclick=e=>{const b=e.target.closest("button");
 document.addEventListener("keydown",e=>{if(e.target.closest("input,textarea"))return;if(e.key==="ArrowRight")show(cur+1);if(e.key==="ArrowLeft")show(cur-1)});
 show(0);</script>'''
     art = {"@context": "https://schema.org", "@type": "Article", "headline": f'{t["name"]}: how it works and how to avoid it',
-           "description": t["hook"], "about": [t["opening"], "chess opening trap"], "author": {"@type": "Organization", "name": NAME, "url": SITE},
+           "description": t["hook"], "about": [t["opening"], "chess tactics" if pat else "chess opening trap"], "author": {"@type": "Organization", "name": NAME, "url": SITE},
            "publisher": {"@type": "Organization", "name": NAME, "logo": {"@type": "ImageObject", "url": SITE + "/img/logo.png"}},
            "mainEntityOfPage": SITE + path, "image": SITE + (trap_img(t) or "/img/og.jpg"), "inLanguage": "en"}
     if sh and sh.get("date"): art["datePublished"] = sh["date"][:10]
     crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Trap library", "item": SITE + "/traps/"},
+        {"@type": "ListItem", "position": 1, "name": LIB, "item": SITE + f"/{kind}/"},
         {"@type": "ListItem", "position": 2, "name": t["name"], "item": SITE + path}]}
     ttl = t.get("title") or f'{t["name"]}: moves, {"mate" if t.get("mate", True) else "the trick"} and how to avoid it'
     return path, page(path, f'{ttl} · Throiy Chess', t.get("desc") or (t["hook"] + " Step through every move on the board."), body,
@@ -1249,6 +1269,7 @@ def llms_txt():
              "how to avoid them, named mating patterns, and key moments from recent top-level games.", "",
              "## Trap lessons"]
     lines += [f"- [{t['name']}]({SITE}/traps/{t['slug']}/): {t['hook']} Opening: {t['opening']}. Moves: {t['moves']}" for t in TRAPS]
+    lines += ["", "## Pattern lessons"] + [f"- [{t['name']}]({SITE}/patterns/{t['slug']}/): {t['hook']}" for t in PATTERNS]
     lines += ["", "## Videos", f"- [All Shorts]({SITE}/shorts/)"] + [f"- [{s['title']}](https://www.youtube.com/shorts/{s['id']}): {s.get('desc', '')}" for s in SHORTS]
     lines += [f"- [{v['title']}](https://www.youtube.com/watch?v={v['id']}): {v.get('desc', '')}" for v in VIDEOS]
     lines += ["", "## Channels"] + [f"- [{n}]({u})" for n, u in LINKS] + ["", "## Optional", f"- [Support]({SITE}/support/)", f"- [Contact]({SITE}/contact/)", f"- [Privacy]({SITE}/privacy/)"]
@@ -1260,7 +1281,7 @@ def build():
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
     try: os.remove(os.path.join(d, "data", "principles.json"))  # member-only: served from Supabase (site_content) behind login
     except OSError: pass
-    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index()] + [trap_page(t) for t in TRAPS] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), opponent_page(), members_page(), improve_page(), terms()]
+    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index(), patterns_index()] + [trap_page(t) for t in TRAPS] + [trap_page(t, "patterns") for t in PATTERNS] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), opponent_page(), members_page(), improve_page(), terms()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
