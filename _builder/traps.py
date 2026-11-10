@@ -335,6 +335,23 @@ TRAPS = [
                 14: ("PIECE UP", "7…Qxe5", "Black wins the knight.", ["e5"])},
          fix=["Don't take on e5. Keep developing: knight to c3 or bishop to c4 is fine.",
               "Before you grab a pawn, check if one queen check can hit your king and the grabbing piece together."]),
+    dict(slug="london-system-trap", name="London System Trap", opening="London System", side="White sets it", mate=False,
+         hook="The b2 pawn looks free. Grab it and White's knight takes on d5 with a double threat.",
+         simple="In the London System the pawn on b2 is no longer protected by the bishop, so Black's queen goes after it. White simply develops the knight. If the queen takes b2, the knight takes the pawn on d5: it attacks the queen and c7, and a rook is coming to b1. Don't grab: develop with knight f6.",
+         intro="After 1.d4 d5 2.Bf4 c5 3.e3 Qb6 4.Nc3 Qxb2? 5.Nxd5! the queen is in trouble: 5…Bf5 6.Rb1 Qxa2 7.Bb5+ Kd8 8.dxc5 wins for White, 5…Qxa1 6.Qxa1 and 5…Qb4+ 6.Nxb4 lose at once. "
+               "4…Nf6 keeps Black in the game.",
+         moves="d4 d5 Bf4 c5 e3 Qb6 Nc3 Qxb2 Nxd5 Bf5 Rb1 Qxa2 Bb5+ Kd8 dxc5",
+         notes={0: ("START", "", "A trap in the most popular club opening. Step through the moves."),
+                3: ("THE BISHOP", "2.Bf4", "White develops the bishop in front of the pawns. The b2 pawn is now unprotected.", ["f4", "!b2"]),
+                6: ("THE TARGET", "3…Qb6", "The queen attacks b2.", ["b6", "!b2"]),
+                7: ("QUIET", "4.Nc3", "White just develops and ignores the pawn.", ["c3"]),
+                8: ("THE GREED", "4…Qxb2?", "Black takes the free pawn.", ["b2"]),
+                9: ("THE BLOW", "5.Nxd5!", "The knight attacks the queen and c7, and the rook is coming to b1.", ["d5", "!b6", "!c7"]),
+                11: ("THE RETREAT", "6.Rb1", "The queen has to take on a2 to stay alive.", ["b1"]),
+                13: ("CHECK", "7.Bb5+", "Check, and the d-pawn is next.", ["b5", "!e8"]),
+                15: ("CRUSHED", "8.dxc5", "White is far ahead.", ["c5"])},
+         fix=["Don't take on b2. Play 4…Nf6 and keep developing.",
+              "Before your queen takes a pawn, ask where she goes when the pieces come at her."]),
 ]
 
 # ---------------------------------------------------------------------------------------------
@@ -612,6 +629,22 @@ GUIDES = {
         qa=[("How do I avoid the Mortimer Trap?", "Don't take the pawn on e5 after the knight goes back to e7. Develop with knight c3 or bishop c4."),
             ("Why does the knight go back to e7?", "It sets the trap: e5 is left without a defender, and the way is clear for the pawn to c6 and the queen check on a5."),
             ("What is the lesson?", "Before you grab a pawn, check whether one queen move can attack your king and the grabbing piece together.")]),
+    "london-system-trap": dict(
+        title="London System Trap: why the b2 pawn is poisoned and what to play instead",
+        desc="How the London System trap works, step by step on the board: the queen grabs b2, the knight takes on d5 and the moves Black should play instead.",
+        guide=[
+            dict(h="The pawn on b2 looks free", board=dict(moves="d4 d5 Bf4 c5 e3 Qb6 Nc3", rings=["!b2"]), p=[
+                "After Bf4 nothing protects the b2 pawn, and your queen attacks it. That's the bait."]),
+            dict(h="The fix: just develop", board=dict(moves="d4 d5 Bf4 c5 e3 Qb6 Nc3", arrows=["g:g8f6"]), p=[
+                "Don't take. Play knight f6 and keep developing. Your queen can come back later."]),
+            dict(h="The mistake: queen takes b2", board=dict(moves="d4 d5 Bf4 c5 e3 Qb6 Nc3 Qxb2 Nxd5", arrows=["r:d5b6", "r:d5c7", "r:a1b1"]), p=[
+                "After the knight takes on d5 your queen is attacked, c7 is attacked and a rook is coming to b1."]),
+            dict(h="Other tries lose fast", board=dict(moves="d4 d5 Bf4 c5 e3 Qb6 Nc3 Qxb2 Nxd5 Bf5 Rb1 Qxa2 Bb5+ Kd8 dxc5", rings=["!d8"]), p=[
+                "Bishop f5 gets you a few more moves, but Bb5+ and dxc5 break your position. Queen takes a1 loses the queen for a rook, and Qb4+ loses it to the knight."]),
+        ],
+        qa=[("How do I avoid the London System trap?", "Don't take the pawn on b2 with your queen. Play 4...Nf6 and develop."),
+            ("Why is it called the London System?", "It became famous at the London 1922 tournament, where it appeared seven times (Capablanca, Alekhine and Rubinstein all played it)."),
+            ("What is the lesson?", "Before your queen takes a pawn, ask where she goes when the pieces come at her.")]),
 }
 for _t in TRAPS:
     if _t["slug"] in GUIDES: _t.update(GUIDES[_t["slug"]])
