@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-11T04:22:52Z",
- "start": "2026-08-14",
- "end": "2026-11-11",
+ "generated": "2026-11-12T04:23:32Z",
+ "start": "2026-08-15",
+ "end": "2026-11-12",
  "hits": {
   "error": 404
  },
@@ -9,19 +9,19 @@
   "stats": [
    {
     "name": "",
-    "count": 64,
+    "count": 80,
     "ref_scheme": "o"
    },
    {
     "id": "site",
     "name": "site",
-    "count": 21,
+    "count": 24,
     "ref_scheme": "c"
    },
    {
     "id": "YouTube",
     "name": "YouTube",
-    "count": 20,
+    "count": 22,
     "ref_scheme": "c"
    },
    {
@@ -33,7 +33,7 @@
    {
     "id": "Google",
     "name": "Google",
-    "count": 2,
+    "count": 3,
     "ref_scheme": "g"
    },
    {
@@ -62,7 +62,7 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 129
+    "count": 149
    },
    {
     "id": "Firefox",
@@ -82,7 +82,7 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 130
+    "count": 137
    },
    {
     "id": "Linux",
@@ -93,6 +93,11 @@
     "id": "iOS",
     "name": "iOS",
     "count": 17
+   },
+   {
+    "id": "macOS",
+    "name": "macOS",
+    "count": 13
    },
    {
     "id": "Android",
@@ -112,12 +117,12 @@
    {
     "id": "tablet",
     "name": "",
-    "count": 21
+    "count": 36
    },
    {
     "id": "desktop",
     "name": "",
-    "count": 127
+    "count": 132
    },
    {
     "id": "desktophd",
@@ -147,22 +152,32 @@
    {
     "id": "US",
     "name": "United States",
-    "count": 29
+    "count": 31
    },
    {
     "id": "CA",
     "name": "Canada",
-    "count": 9
+    "count": 17
    },
    {
     "id": "BR",
     "name": "Brazil",
-    "count": 7
+    "count": 8
+   },
+   {
+    "id": "GB",
+    "name": "United Kingdom",
+    "count": 6
    },
    {
     "id": "DE",
     "name": "Germany",
     "count": 5
+   },
+   {
+    "id": "RU",
+    "name": "Russia",
+    "count": 4
    },
    {
     "id": "ES",
@@ -185,18 +200,13 @@
     "count": 3
    },
    {
-    "id": "GB",
-    "name": "United Kingdom",
+    "id": "EC",
+    "name": "Ecuador",
     "count": 1
    },
    {
     "id": "MX",
     "name": "Mexico",
-    "count": 1
-   },
-   {
-    "id": "RU",
-    "name": "Russia",
     "count": 1
    },
    {
@@ -222,7 +232,7 @@
    {
     "id": "75274",
     "name": "promo-bar",
-    "count": 21
+    "count": 24
    },
    {
     "id": "75273",
@@ -262,6 +272,11 @@
    {
     "id": "77642",
     "name": "siberian-trap",
+    "count": 2
+   },
+   {
+    "id": "77903",
+    "name": "puzzle-2",
     "count": 2
    },
    {

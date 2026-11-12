@@ -1,27 +1,27 @@
 {
-"generated": "2026-11-11T04:22:52Z",
-"start": "2026-08-14",
-"end": "2026-11-11",
+"generated": "2026-11-12T04:23:32Z",
+"start": "2026-08-15",
+"end": "2026-11-12",
 "rows": [
 {
 "kind": "source",
 "key": "(direct)",
 "label": "Direct of onbekend",
-"value": 64,
+"value": 80,
 "group": "Direct"
 },
 {
 "kind": "source",
 "key": "site",
 "label": "site",
-"value": 21,
+"value": 24,
 "group": "Website"
 },
 {
 "kind": "source",
 "key": "YouTube",
 "label": "YouTube",
-"value": 20,
+"value": 22,
 "group": "Website"
 },
 {
@@ -35,7 +35,7 @@
 "kind": "source",
 "key": "Google",
 "label": "Google",
-"value": 2,
+"value": 3,
 "group": "Website"
 },
 {
@@ -77,21 +77,28 @@
 "kind": "country",
 "key": "US",
 "label": "United States",
-"value": 29,
+"value": 31,
 "group": ""
 },
 {
 "kind": "country",
 "key": "CA",
 "label": "Canada",
-"value": 9,
+"value": 17,
 "group": ""
 },
 {
 "kind": "country",
 "key": "BR",
 "label": "Brazil",
-"value": 7,
+"value": 8,
+"group": ""
+},
+{
+"kind": "country",
+"key": "GB",
+"label": "United Kingdom",
+"value": 6,
 "group": ""
 },
 {
@@ -99,6 +106,13 @@
 "key": "DE",
 "label": "Germany",
 "value": 5,
+"group": ""
+},
+{
+"kind": "country",
+"key": "RU",
+"label": "Russia",
+"value": 4,
 "group": ""
 },
 {
@@ -131,8 +145,8 @@
 },
 {
 "kind": "country",
-"key": "GB",
-"label": "United Kingdom",
+"key": "EC",
+"label": "Ecuador",
 "value": 1,
 "group": ""
 },
@@ -140,13 +154,6 @@
 "kind": "country",
 "key": "MX",
 "label": "Mexico",
-"value": 1,
-"group": ""
-},
-{
-"kind": "country",
-"key": "RU",
-"label": "Russia",
 "value": 1,
 "group": ""
 },
@@ -182,21 +189,21 @@
 "kind": "device",
 "key": "tablet",
 "label": "Tablet",
-"value": 21,
+"value": 36,
 "group": ""
 },
 {
 "kind": "device",
 "key": "desktop",
 "label": "Computer",
-"value": 127,
+"value": 132,
 "group": ""
 },
 {
 "kind": "browser",
 "key": "Chrome",
 "label": "Chrome",
-"value": 129,
+"value": 149,
 "group": ""
 },
 {
@@ -217,7 +224,7 @@
 "kind": "system",
 "key": "Windows",
 "label": "Windows",
-"value": 130,
+"value": 137,
 "group": ""
 },
 {
@@ -236,6 +243,13 @@
 },
 {
 "kind": "system",
+"key": "macOS",
+"label": "macOS",
+"value": 13,
+"group": ""
+},
+{
+"kind": "system",
 "key": "Android",
 "label": "Android",
 "value": 1,
@@ -245,7 +259,7 @@
 "kind": "campaign",
 "key": "75274",
 "label": "promo-bar",
-"value": 21,
+"value": 24,
 "group": ""
 },
 {
@@ -306,6 +320,13 @@
 },
 {
 "kind": "campaign",
+"key": "77903",
+"label": "puzzle-2",
+"value": 2,
+"group": ""
+},
+{
+"kind": "campaign",
 "key": "60576",
 "label": "bio",
 "value": 1,
@@ -349,14 +370,14 @@
 {
 "kind": "meta",
 "key": "generated",
-"label": "2026-11-11T04:22:52Z",
+"label": "2026-11-12T04:23:32Z",
 "value": 0,
 "group": ""
 },
 {
 "kind": "meta",
 "key": "start",
-"label": "2026-08-14",
+"label": "2026-08-15",
 "value": 0,
 "group": ""
 }
