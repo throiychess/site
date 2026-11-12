@@ -74,7 +74,7 @@ PATTERNS = [
     dict(slug="bodens-mate", name="Boden's Mate", label="Mating pattern", side="Black wins", flip=True, mate=True,
          hook="Two bishops on crossing diagonals mate a king that hides behind its own pieces.",
          simple="The king has castled long, but its own pieces fill the squares around it. One bishop gives check from a3, and the other bishop on f5 covers the squares behind. Nothing can block the check and the king cannot step away.",
-         intro="Schulder–Boden, London 1853. White's king is on c1 with its own rook on d1 and knight on d2 next to it. After 14.Bxd5? Qxc3+! 15.bxc3 Ba3# the bishop on a3 gives check, "
+         intro="Schulder–Boden, a game printed in 1853. White's king is on c1 with its own rook on d1 and knight on d2 next to it. After 14.Bxd5? Qxc3+! 15.bxc3 Ba3# the bishop on a3 gives check, "
                "the bishop on f5 covers b1 and c2, and White's own pieces take the rest of the squares.",
          moves=BODEN_GAME,
          notes={0: ("START", "", "The game that made this mate famous. Step through the moves."),
@@ -93,7 +93,7 @@ PATTERNS = [
              dict(h="Bishop gives mate", board=dict(moves=BODEN_GAME, rings=["!c1"]), p=[
                  "15…Ba3 is checkmate. The two bishops work on crossing diagonals, one giving the check and the other taking away b1 and c2."]),
          ],
-         qa=[("Why is it called Boden's Mate?", "It is named after Samuel Boden (1826–1882), who played it against Schulder in London in 1853. The game made the pattern famous, but it had appeared before."),
+         qa=[("Why is it called Boden's Mate?", "It is named after Samuel Boden (1826–1882), who played it against Schulder in a game printed in 1853. The place and exact date of that game are not certain. The game made the pattern famous."),
              ("Could White have avoided it?", "Yes. After 13…d5, moves like 14.Nb3 or 14.Rde1 only lose a piece, not the game. The real mistake was castling long on move 13: 13.Bd5 was better."),
              ("What is the lesson?", "A king hemmed in by its own pieces can be mated by two bishops. Count the flight squares before you castle long.")]),
     dict(slug="stalemate-trick", name="The Stalemate Trick", label="Endgame · saving a lost game", side="Black saves it", flip=False, mate=False, fen=STALE_FEN,
