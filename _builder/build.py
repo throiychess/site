@@ -308,13 +308,13 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             + '<script>(function(){try{var p=localStorage.getItem("tc_theme")||"system",l=p==="light"||(p==="system"&&matchMedia("(prefers-color-scheme: light)").matches);if(l)document.documentElement.setAttribute("data-theme","light")}catch(e){}})()</script>' + f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}<script src="/js/fb.js" defer></script></body></html>')
 
 def promo_bar(active):
-    if active == "Free": return ""
-    return ('<div class="promo"><div class="wrap"><span>Free: 10 Opening Traps cheat sheet + quiz, made for your phone.</span>'
-            '<a data-ev="promo-bar-click" href="/free/?utm_source=site&amp;utm_campaign=promo-bar">Get it free &rarr;</a>'
+    if active in ("Free", "Daily Trap"): return ""
+    return ('<div class="promo"><div class="wrap"><span>New: the Daily Trap. One position a day. Can you survive it?</span>'
+            '<a data-ev="promo-bar-click" href="/today/?utm_source=site&amp;utm_campaign=promo-bar">Play today&#39;s trap &rarr;</a>'
             '<button class="promo-x" type="button" aria-label="Close" onclick="try{sessionStorage.setItem(\'promo\',1)}catch(e){}this.closest(\'.promo\').remove()">&times;</button></div></div>'
             '<script>try{if(sessionStorage.getItem("promo"))document.querySelector(".promo").remove()}catch(e){}</script>')
 NAVG = [("Watch", [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Top games", "/top-games/")]),
-        ("Train", [("Traps", "/traps/"), ("Patterns", "/patterns/"), ("Analyze", "/analyze/"), ("Opponent", "/opponent/")]),
+        ("Train", [("Daily Trap", "/today/"), ("Traps", "/traps/"), ("Patterns", "/patterns/"), ("Analyze", "/analyze/"), ("Opponent", "/opponent/")]),
         ("About", [("About", "/#about"), ("Contact", "/contact/")]), ("Support", "/support/")]
 NAV = [(n, u) for g, x in NAVG for (n, u) in (x if isinstance(x, list) else [(g, x)])]
 _KEY = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg>'
@@ -563,7 +563,7 @@ def home():
 <article class="hs bgimg" style="--hsimg:url(/img/hero/analyze.jpg)" aria-roledescription="slide" aria-label="1 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Free for every player<i class="blk" aria-hidden="true"></i></span>
 <h1>Find out <em>why you lose</em> games.</h1>
 <p class="lead">Enter your Chess.com or Lichess name. Your games are analyzed in your own browser and you see the three leaks that cost you the most.</p>
-<div class="btns"><a class="btn solid" href="/analyze/">Analyze my games free</a><a class="btn out-only" href="/members/?utm_source=home">Join free</a><a class="btn in-only" href="/members/">Open my dashboard</a></div></div>
+<div class="btns"><a class="btn solid" href="/analyze/">Analyze my games free</a><a class="btn" href="/today/?utm_source=site&amp;utm_campaign=home-hero" data-ev="home-daily">Play today&#39;s trap</a><a class="btn out-only" href="/members/?utm_source=home">Join free</a><a class="btn in-only" href="/members/">Open my dashboard</a></div></div>
 <div class="hs-card"><span class="hd">Example report</span>
 <div class="hs-row"><span class="ic">{tic("Defence")}</span><div><b>Pieces left hanging</b><small>Check what is attacked before you move</small></div><span class="n">11</span></div>
 <div class="hs-row"><span class="ic">{tic("Tactics")}</span><div><b>Missed tactics</b><small>A fork and a pin you could have played</small></div><span class="n">7</span></div>
@@ -724,6 +724,7 @@ def trap_page(t, kind="traps"):
 <div class="pagehead" style="padding-top:18px"><span class="eyebrow">{e(t["opening"])} · {e(t["side"])}</span><h1 class="page">{e(t["name"])}</h1><p>{e(t["hook"])}</p></div>
 {f'<div class="simple"><span class="eyebrow">In plain words</span><p>{e(t["simple"])}</p></div>' if t.get("simple") else ""}
 {share_bar(SITE + path, t["name"] + ": " + t["hook"])}
+{f'<p style="margin:0 0 26px"><a class="btn solid" href="/today/?t={t["slug"]}" data-ev="trap-play">Can you survive it? Play this trap &rarr;</a></p>' if t["slug"] in DAILY_SLUGS else ""}
 <div class="player"><div><div class="board" id="board" role="img" aria-label="Chess board showing the {e(t["name"])}"></div>
 <div class="ctrl"><button type="button" id="first" aria-label="Start position">⏮</button><button type="button" id="prev" aria-label="Previous move">◀</button>
 <button type="button" id="next" aria-label="Next move">▶</button><button type="button" id="last" aria-label="Final position">⏭</button></div>
@@ -760,6 +761,38 @@ show(0);</script>'''
     ttl = t.get("title") or f'{t["name"]}: moves, {"mate" if t.get("mate", True) else "the trick"} and how to avoid it'
     return path, page(path, f'{ttl} · Throiy Chess', t.get("desc") or (t["hook"] + " Step through every move on the board."), body,
                       [art, crumbs] + ([video_ld(sh)] if sh and video_ld(sh) else []), og_image=trap_img(t) or "/img/og.jpg", ogtype="article")
+
+DAILY = json.load(open(os.path.join(ROOT, "daily_data.json"), encoding="utf8"))  # made by Studio tools/gen_daily.py: every legal move checked with Stockfish 17.1
+DAILY_SLUGS = [x["slug"] for x in DAILY]
+for _x in DAILY:  # the Short that belongs to the trap (same lookup as the trap pages)
+    _s = trap_short([t for t in TRAPS if t["slug"] == _x["slug"]][0]); _x["short"] = _s["id"] if _s else ""
+DAILY_START = "2026-11-14"   # Daily Trap #1 (the visitor's local date)
+DAILY_SCHEDULE = {}          # optional: "YYYY-MM-DD": "slug" so the Daily Trap matches that day's Short; other days rotate through DAILY_ORDER
+DAILY_ORDER = ["lasker-trap", "elephant-trap", "legals-mate", "englund-gambit", "fried-liver-attack", "stafford-gambit", "scholars-mate", "siberian-trap", "fishing-pole-trap",
+               "blackburne-shilling-gambit", "petrov-trap", "noahs-ark-trap", "froms-gambit", "kieninger-trap", "damiano-defence", "mortimer-trap", "london-system-trap"]
+assert sorted(DAILY_ORDER) == sorted(DAILY_SLUGS) and all(v in DAILY_SLUGS for v in DAILY_SCHEDULE.values())
+DT_CSS = (".dt [hidden]{display:none!important}.dt{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:36px;align-items:start;margin-bottom:56px}.dt .board{cursor:pointer;touch-action:manipulation}"
+          ".dt .sq.sel{box-shadow:inset 0 0 0 4px var(--gold)}.dt .sq.tg::after{content:\"\";position:absolute;left:50%;top:50%;width:30%;height:30%;margin:-15% 0 0 -15%;border-radius:50%;background:rgba(20,18,15,.38);z-index:2}"
+          ".dt .sq.tg:has(img)::after{width:86%;height:86%;margin:-43% 0 0 -43%;background:none;border:4px solid rgba(20,18,15,.45);box-sizing:border-box}"
+          ".dtmsg{background:var(--panel);border-top:4px solid var(--gold);padding:18px 20px;display:grid;gap:6px;font-size:17px}.dtmsg b{font-size:20px}.dtmsg span{color:var(--mute)}"
+          ".dtmsg.good{border-color:#2e9c4a}.dtmsg.bad{border-color:var(--red)}.dttry{display:flex;align-items:center;gap:8px;margin:14px 0;color:var(--mute);font-size:14px;font-weight:600}"
+          ".dttry i{width:26px;height:6px;border-radius:3px;background:var(--line)}.dttry i.u{background:var(--gold)}.dttry span{margin-left:6px}"
+          ".dtstat{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:22px 0 6px;text-align:center}.dtstat div{background:var(--panel);padding:14px 4px}.dtstat b{display:block;font-size:26px;color:var(--gold)}"
+          ".dtstat span{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}.dt .btns{margin:18px 0 6px}.dtnext{color:var(--mute)}.dt h2{margin:22px 0 10px;font-size:24px}"
+          "@media(max-width:860px){.dt{grid-template-columns:1fr;gap:18px}.dthead{padding-block:22px 14px!important}.dthead h1{font-size:30px}.dthead p{font-size:17px}}")
+def today_page():
+    path = "/today/"
+    cfg = json.dumps(dict(start=DAILY_START, order=DAILY_ORDER, schedule=DAILY_SCHEDULE), separators=(",", ":"))
+    body = header("Daily Trap") + f'''<style>{DT_CSS}</style><main class="wrap"><div class="pagehead dthead" style="padding-top:26px"><span class="eyebrow" id="dte">Daily Trap</span><h1 class="page" id="dth">Can you survive today&#39;s trap?</h1><p id="dtp">One position a day. One tempting move walks into a trap. Find a safe move.</p></div>
+<div class="dt" id="dt"><div><div class="board" id="dtb" role="application" aria-label="Chess board: tap a piece, then tap a square"></div><div class="dttry" id="dtt"></div></div>
+<div><div class="dtmsg" id="dtm" aria-live="polite"><b>Loading the board…</b></div><p style="margin:14px 0 0"><button type="button" class="btn solid" id="dta" hidden>Try again</button></p><div id="dtr" hidden></div>
+<noscript><p>The Daily Trap needs JavaScript. You can also <a href="/traps/">step through every trap</a>.</p></noscript></div></div>
+<section class="prose" style="max-width:720px;margin-bottom:56px"><h2>How the Daily Trap works</h2><p>Every day you get one position from a real opening trap. You play the side that is about to fall for it. Make a move on the board: if it is safe, you survive. If you take the bait, you see how the trap plays out, and you can try again. Three tries a day.</p>
+<p>Play every day to build your streak. Your streak is saved in this browser. Every move on this page is checked with a chess engine.</p><p>Want more? <a href="/traps/">Browse all {len(TRAPS)} traps</a> or <a href="/analyze/">analyze your own games for free</a>.</p></section>
+</main>''' + footer() + f'<script>window.DT={cfg}</script><script src="/js/daily.js" defer></script>'
+    ld = {"@context": "https://schema.org", "@type": "WebApplication", "name": "Daily Trap", "url": SITE + path, "applicationCategory": "GameApplication", "operatingSystem": "Any",
+          "description": "One chess opening trap a day, playable in your browser. Find the safe move and keep your streak.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}
+    return path, page(path, "Daily Trap: can you survive today&#39;s chess trap? · Throiy Chess".replace("&#39;", "'"), "One chess opening trap a day. Play the position, find the safe move and build your streak. Free, in your browser, no account needed.", body, [ld])
 
 def contact():
     active = bool(WEB3FORMS_KEY)
@@ -1290,10 +1323,11 @@ def build():
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
     try: os.remove(os.path.join(d, "data", "principles.json"))  # member-only: served from Supabase (site_content) behind login
     except OSError: pass
-    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index(), patterns_index()] + [trap_page(t) for t in TRAPS] + [trap_page(t, "patterns") for t in PATTERNS] + [admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), opponent_page(), members_page(), improve_page(), terms()]
+    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index(), patterns_index()] + [trap_page(t) for t in TRAPS] + [trap_page(t, "patterns") for t in PATTERNS] + [today_page(), admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), opponent_page(), members_page(), improve_page(), terms()]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
+    json.dump(DAILY, open(os.path.join(d, "js", "daily-data.json"), "w", encoding="utf8"), ensure_ascii=False, separators=(",", ":"))
     open(os.path.join(d, "404.html"), "w").write(notfound())
     today = datetime.date.today().isoformat()
     # lastmod = the day the page content really changed (hash kept in _builder/lastmod.json, committed by the bot),
