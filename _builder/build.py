@@ -767,7 +767,7 @@ DAILY_SLUGS = [x["slug"] for x in DAILY]
 for _x in DAILY:  # the Short that belongs to the trap (same lookup as the trap pages)
     _s = trap_short([t for t in TRAPS if t["slug"] == _x["slug"]][0]); _x["short"] = _s["id"] if _s else ""
 DAILY_START = "2026-11-14"   # Daily Trap #1 (the visitor's local date)
-DAILY_SCHEDULE = {}          # optional: "YYYY-MM-DD": "slug" so the Daily Trap matches that day's Short; other days rotate through DAILY_ORDER
+DAILY_SCHEDULE = {"2026-11-14": "damiano-defence", "2026-11-15": "kieninger-trap", "2026-11-16": "mortimer-trap", "2026-11-17": "froms-gambit"}  # optional: "YYYY-MM-DD": "slug" so the Daily Trap matches that day's Short; other days rotate through DAILY_ORDER
 DAILY_ORDER = ["lasker-trap", "elephant-trap", "legals-mate", "englund-gambit", "fried-liver-attack", "stafford-gambit", "scholars-mate", "siberian-trap", "fishing-pole-trap",
                "blackburne-shilling-gambit", "petrov-trap", "noahs-ark-trap", "froms-gambit", "kieninger-trap", "damiano-defence", "mortimer-trap", "london-system-trap"]
 assert sorted(DAILY_ORDER) == sorted(DAILY_SLUGS) and all(v in DAILY_SLUGS for v in DAILY_SCHEDULE.values())
@@ -788,7 +788,7 @@ def today_page():
 <div><div class="dtmsg" id="dtm" aria-live="polite"><b>Loading the board…</b></div><p style="margin:14px 0 0"><button type="button" class="btn solid" id="dta" hidden>Try again</button></p><div id="dtr" hidden></div>
 <noscript><p>The Daily Trap needs JavaScript. You can also <a href="/traps/">step through every trap</a>.</p></noscript></div></div>
 <section class="prose" style="max-width:720px;margin-bottom:56px"><h2>How the Daily Trap works</h2><p>Every day you get one position from a real opening trap. You play the side that is about to fall for it. Make a move on the board: if it is safe, you survive. If you take the bait, you see how the trap plays out, and you can try again. Three tries a day.</p>
-<p>Play every day to build your streak. Your streak is saved in this browser. Every move on this page is checked with a chess engine.</p><p>Want more? <a href="/traps/">Browse all {len(TRAPS)} traps</a> or <a href="/analyze/">analyze your own games for free</a>.</p></section>
+<p>Play every day to build your streak. Your streak is saved in this browser. Every move on this page is checked with a chess engine.</p><p>Want more? <a href="/traps/">Step through every trap in the library</a> or <a href="/analyze/">analyze your own games for free</a>.</p></section>
 </main>''' + footer() + f'<script>window.DT={cfg}</script><script src="/js/daily.js" defer></script>'
     ld = {"@context": "https://schema.org", "@type": "WebApplication", "name": "Daily Trap", "url": SITE + path, "applicationCategory": "GameApplication", "operatingSystem": "Any",
           "description": "One chess opening trap a day, playable in your browser. Find the safe move and keep your streak.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}
