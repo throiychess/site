@@ -82,7 +82,7 @@
     var r = (s.res && s.res[N]) || { t: tries, w: win ? 1 : 0 };
     if (!win) draw(P.fen, P.last);
     var head = win ? "You survived the " + esc(P.name) + "." : "The " + esc(P.name) + " got you this time.";
-    var sub = win ? (mv && mv.s !== P.best ? (mv.v === "ok" ? "Your move " + esc(mv.s) + " holds, but " + esc(P.best) + " is stronger." : "Your move " + esc(mv.s) + " works. The engine's first choice is " + esc(P.best) + ".") : "You found the best move: " + esc(P.best) + ".")
+    var sub = win ? (mv && mv.s !== P.best ? (mv.v === "ok" ? "Your move " + esc(mv.s) + " holds, but " + esc(P.best) + " is stronger." : "Your move " + esc(mv.s) + " works. A better move is " + esc(P.best) + ".") : "You found the best move: " + esc(P.best) + ".")
       : "A safe move was " + esc(P.best) + ".";
     msg(win ? "good" : "bad", head, sub);
     var fx = P.fix.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
