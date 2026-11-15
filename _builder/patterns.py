@@ -17,6 +17,7 @@ PATTERNS = [
          intro="Torre–Lasker, Moscow 1925. After 25.Bf6! Black cannot take the bishop, because the g-pawn is pinned by the rook on g3. So Black takes the queen on h5 instead: 25…Qxh5 26.Rxg7+ Kh8 27.Rxf7+ Kg8 28.Rg7+ Kh8 29.Rxb7+ Kg8 30.Rg7+ Kh8 31.Rg5+ Kh7 32.Rxh5. "
                "Six checks, and the last move takes the queen.",
          moves=WINDMILL_GAME,
+         skip=(48, "Skip to the windmill", "Want to understand the build-up? Press play from move 1."),
          notes={0: ("START", "", "The most famous windmill in chess history. Step through the whole game."),
                 48: ("BEFORE THE STORM", "24…Qb5", "Black's queen attacks White's queen on h5. White has a rook on g3 and a bishop on g5, both aimed at the king.", ["g3", "!g7", "!f7", "!b7"]),
                 49: ("THE KEY MOVE", "25.Bf6!", "The bishop attacks g7 and h8. Taking it with the g-pawn is impossible: that pawn is pinned by the rook.", ["f6", "!g7"]),
