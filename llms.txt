@@ -31,6 +31,7 @@
 
 ## Videos
 - [All Shorts](https://throiychess.com/shorts/)
+- [Free bishop? It's mate. The Kieninger Trap](https://www.youtube.com/shorts/ECXaYL0a6FY): This is the Kieninger Trap, from the Budapest Gambit. Black's bishop checks on b4 and the queen comes to e7. White kicks the bishop with a3, Black ignores it and takes on e5. Pawn takes the bishop? Knight to d3 is checkm
 - [Free knight? Don't take it! Damiano Defence](https://www.youtube.com/shorts/EvhcLKVqBUM): A free knight on move three? Don't take it. This is the Damiano Defence: Black protects e5 with the f-pawn, it looks safe, and White takes on e5 anyway.
 - [Queen sacrifice, two bishops mate](https://www.youtube.com/shorts/em4FqD3FM5E): Free pawn? Then the queen goes. This is Boden's Mate: two bishops on crossing diagonals, a king boxed in by its own pieces.
 - [Noah's Ark Trap: the bishop is caught](https://www.youtube.com/shorts/tiKSZvR-LlE): This is the Noah's Ark Trap in the Ruy Lopez. Black's pawns chase the bishop with a6 and b5. When White takes back on d4 with the queen, pawn to c5 hits the queen, then c4 traps the bishop on b3. At best, White gets two 
