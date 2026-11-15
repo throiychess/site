@@ -251,11 +251,11 @@ function extras(L) {
 async function saveReport() {
   const box = $("#az-save"); if (!box) return; const L = window.__azLast; const sbc = window.supabase ? (window.__sb = window.__sb || window.supabase.createClient("https://ytxrrmvszifvtdyilezn.supabase.co", "sb_publishable_nARSIxN5aKJghUK745Frdw_QbXhdf29", { auth: { persistSession: true, detectSessionInUrl: false } })) : null; if (!sbc) return;
   const { data } = await sbc.auth.getSession();
-  if (!data.session) { box.innerHTML = `<p class="small">&#128190; <a href="/members/?utm_source=analyze">Log in</a> (free, no password) to save this report and track your progress over time.</p>`; return; }
-  const rep = { ...extras(L), depth: DEPTH, cats: L.cnt, moments: SHOWN.map((m) => ({ n: m.moveNo, c: m.color, san: m.san, best: m.best, cat: m.cat, loss: Math.round(m.loss), fen: m.fen })) };
+  if (!data.session) { box.innerHTML = `<p class="small">&#128190; <a href="/members/?utm_source=analyze">Log in</a> (free, no password) to save this ${OPP ? "scouting report and open it again before your game" : "report and track your progress over time"}.</p>`; return; }
+  const rep = { ...extras(L), ...(OPP ? { kind: "opponent" } : {}), depth: DEPTH, cats: L.cnt, moments: SHOWN.map((m) => ({ n: m.moveNo, c: m.color, san: m.san, best: m.best, cat: m.cat, loss: Math.round(m.loss), fen: m.fen })) };
   const { error } = await sbc.from("analyses").insert({ site: state.site, username: state.user.slice(0, 40), games: L.results.length, accuracy: +L.acc.toFixed(1), avg_loss: +(L.lossNow / 100).toFixed(3), blunders: L.nB, mistakes: L.nM, inaccuracies: L.nI,
-    band: bandName(L.bNow), top_leak: L.order[0] ? P[L.order[0]].t : null, report: rep });
-  box.innerHTML = error ? `<p class="small">${/limit/i.test(error.message || "") ? "You reached the limit of saved reports. Delete older ones on your members page." : "Could not save this report."}</p>` : `<p class="small">&#10003; Saved to your <a href="/members/#reports">reports</a>.</p>`; if (!error) { ev("analyze-report-saved"); window.dispatchEvent(new Event("az-saved")); }
+    band: bandName(L.bNow), top_leak: L.order[0] ? (OPP ? AIM : P)[L.order[0]].t : null, report: rep });
+  box.innerHTML = error ? `<p class="small">${/limit/i.test(error.message || "") ? "You reached the limit of saved reports. Delete older ones on your members page." : "Could not save this report."}</p>` : `<p class="small">&#10003; Saved to your <a href="/members/#reports">reports</a>${OPP ? ", under Scouted opponents" : ""}.</p>`; if (!error) { ev(OPP ? "opponent-report-saved" : "analyze-report-saved"); window.dispatchEvent(new Event("az-saved")); }
 }
 function ratingsLine(cur, latest) {
   const R = state.ratings || {}, parts = [["Rapid", R.rapid], ["Blitz", R.blitz], ["Daily", R.daily], [R.puzzlesBest ? "Puzzles (best)" : "Puzzles", R.puzzles]].filter((x) => x[1]);
@@ -309,14 +309,16 @@ function oppReport(results) {
     return `<a href="${esc(safeUrl(r.g.url))}" target="_blank" rel="noopener"><span class="res ${outc(r).toLowerCase()}">${outc(r)}</span><span>${r.side === "w" ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${r.acc.toFixed(0)}% accuracy${tp ? ` · costliest move: ${tp.moveNo}${tp.color === "w" ? "." : "…"}${esc(tp.san)}` : " · no big mistakes"}</span></a>`; }).join("") + `</div>`;
   if (order.length) d += `<h4>All their weak points</h4><div class="az-bars">` + order.map((c) => `<div class="az-bar"><span>${AIM[c].t}</span><i style="width:${(100 * cnt[c]) / max}%"></i><b>${cnt[c]}</b></div>`).join("") + `</div>`;
   if (DEPTH > 14) d += `<p class="small">Analyzed in extra depth (${DEPTH}). The rating guide was made with the standard setting, so treat that comparison as approximate.</p>`;
+  h += `<div class="az-save" id="az-save"></div>`;
   h += `<details class="az-det"><summary>All the numbers</summary>${d}</details>`;
   h += `<div class="az-cta"><h3>Next step</h3><p>Now your own games: find the one habit that costs you the most.</p><a class="btn solid" data-ev="opponent-cta-analyze" href="/analyze/?utm_source=opponent&amp;utm_campaign=opponent">Analyze my games free</a>
     <div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
   h += '<div id="az-fb"></div>';
-  $("#az-report").innerHTML = h; try { if (window.tcFeedback) window.tcFeedback.inline($("#az-fb"), "opponent-report", "Was this report useful?", { games: n, depth: DEPTH, prem: isPrem() }); } catch (e) {} $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("opponent-report");
+  window.__azLast = { acc, lossNow, nB, nM, nI, bNow, order, cnt, results, SHOWN };
+  $("#az-report").innerHTML = h; saveReport(); try { if (window.tcFeedback) window.tcFeedback.inline($("#az-fb"), "opponent-report", "Was this report useful?", { games: n, depth: DEPTH, prem: isPrem() }); } catch (e) {} $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("opponent-report");
 }
 function report(results) {
-  if (OPP) return oppReport(results); // a scouting report is not saved: it must not mix with your own progress
+  if (OPP) return oppReport(results); // saved with report.kind = "opponent", so it never mixes with your own progress
   const all = results.flatMap((r, ri) => r.moments.map((m) => ({ ...m, r, ri }))); const cnt = {}; for (const m of all) cnt[m.cat] = (cnt[m.cat] || 0) + 1;
   const order = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]); const max = Math.max(1, ...Object.values(cnt));
   const late = all.filter((m) => m.clock !== null && m.clock < 30).length;

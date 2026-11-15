@@ -22,7 +22,7 @@
   function load() {
     var sb = window.__sb; prof = window.__profile; if (!sb || !prof) return;
     sb.from("analyses").select("id,created_at,accuracy,avg_loss,blunders,games,band,top_leak,report").order("created_at", { ascending: false }).limit(30).then(function (r) {
-      rows = r.data || []; buildPuz(); drawGoal(); drawIns(); drawPlan(); drawPuz(); drawShare(); drawOpen();
+      rows = (r.data || []).filter(function (x) { return !(x.report && x.report.kind === "opponent"); }); buildPuz(); drawGoal(); drawIns(); drawPlan(); drawPuz(); drawShare(); drawOpen();
       if (LIB.length) route(); else window.__sb.from("site_content").select("data").eq("key", "principles").maybeSingle().then(function (r) { LIB = (r && r.data && r.data.data) || []; route(); }).catch(function () { drawPrinc(); });
     });
   }
