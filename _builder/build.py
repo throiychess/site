@@ -285,7 +285,31 @@ def csp(path=""):
             f"script-src {' '.join(scr)}; connect-src {' '.join(conn)}; frame-src https://www.youtube-nocookie.com https://ko-fi.com{' https://challenges.cloudflare.com' if hc else ''}{' https://accounts.google.com' if gg else ''}; "
             "form-action 'self' https://api.web3forms.com" + (" https://assets.mailerlite.com" if NEWSLETTER_URL else "") + "; base-uri 'self'; object-src 'none'")
 
+HEADCTA = {  # path: (short intro or None, (button label, href, event) or None). The first screen of every page: one short line and one big button.
+    "/analyze/": ("Enter a username. See which habits cost the most points.", None),
+    "/opponent/": ("Enter any username. See where their games go wrong.", None),
+    "/improve/": ("Deeper analysis of all your games, and training built from your own mistakes.", ("Join the waitlist", "#wl-email", "head-improve")),
+    "/support/": ("Everything here is free. A small tip keeps new lessons coming.", ("Leave a tip", DONATE_URL, "head-support")),
+    "/top-games/": ("One decisive moment per game, in under a minute.", ("Watch the Top games Shorts", "/shorts/top-game/", "head-topgames")),
+    "/videos/": ("Longer lessons: several traps in one video.", ("Watch the 10 traps", "#v-SU-9w7C9I3g", "head-videos")),
+    "/patterns/": ("5 mates and tactics, step by step.", ("Start with the Windmill", "/patterns/windmill/", "head-patterns")),
+    "/traps/": ("Plain words first, then move by move.", None),
+    "/shorts/": ("Every lesson in under a minute.", None),
+}
+def _headcta(path, body):
+    import re as _re
+    cfg = HEADCTA.get(path)
+    if cfg is None and path.count("/") == 3 and (path.startswith("/traps/") or path.startswith("/patterns/")) and 'id="board"' in body:
+        cfg = (None, ("Step through the moves", "#board", "head-board"))
+    if cfg is None: return body
+    intro, btn = cfg
+    m = _re.search(r'(<div class="pagehead[^>]*>.*?<h1 class="page"[^>]*>.*?</h1>)(\s*<p[^>]*>.*?</p>)?\s*(</div>)', body, _re.S)
+    if not m: return body
+    p_html = f"<p>{intro}</p>" if intro else (m.group(2) or "")
+    cta = (f'<p class="headcta"><a class="btn solid big" data-ev="{btn[2]}" href="{btn[1]}"{" target=_blank rel=noopener" if btn[1].startswith("http") else ""}>{btn[0]} &darr;</a></p>' if btn else "")
+    return body[:m.start()] + m.group(1) + p_html + cta + m.group(3) + body[m.end():]
 def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="website", noindex=False):
+    body = _headcta(path, body)
     if path not in ("/today/", "/members/", "/admin/", "/privacy/", "/terms/", "/404.html") and 'class="dband"' not in body and "<footer>" in body:
         body = body.replace("<footer>", daily_band("foot") + "<footer>", 1)
     url = SITE + path
@@ -331,6 +355,7 @@ nav.links{overflow:visible!important;-webkit-mask-image:none!important;mask-imag
 .burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:9px 12px;font:inherit;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
 nav.links a.cta2{border:2px solid var(--gold);color:var(--gold)!important;border-radius:99px;padding:6px 16px!important;font-weight:800}nav.links a.cta2:hover{background:var(--gold);color:var(--on-gold)!important}
 .dband{display:flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:16px 20px;margin:22px 0;text-decoration:none;color:var(--ink)}.dband:hover{border-color:var(--gold)}.dbi{font-size:34px;line-height:1;color:var(--gold)}.dbt{display:grid;gap:2px;flex:1}.dbt b{font-size:19px}.dbt small{color:var(--mute);font-size:14px}.dbg{font-weight:800;color:var(--on-gold);background:var(--gold);border-radius:99px;padding:9px 18px;white-space:nowrap}
+.headcta{margin:20px 0 0}.btn.big{font-size:18px;padding:16px 30px}@media(max-width:860px){.btn.big{display:block;text-align:center;width:100%}}
 nav.links a.cta{background:var(--gold);color:var(--on-gold);border-radius:99px;padding:8px 18px!important;font-weight:800}nav.links a.cta:hover{filter:brightness(1.08);color:var(--on-gold)}
 .acct{display:flex;align-items:center;margin-left:4px}
 nav.links a.login{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line3);border-radius:99px;padding:6px 14px 6px 10px!important;color:var(--gold)}
