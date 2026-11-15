@@ -286,6 +286,8 @@ def csp(path=""):
             "form-action 'self' https://api.web3forms.com" + (" https://assets.mailerlite.com" if NEWSLETTER_URL else "") + "; base-uri 'self'; object-src 'none'")
 
 def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="website", noindex=False):
+    if path not in ("/today/", "/members/", "/admin/", "/privacy/", "/terms/", "/404.html") and 'class="dband"' not in body and "<footer>" in body:
+        body = body.replace("<footer>", daily_band("foot") + "<footer>", 1)
     url = SITE + path
     ld = "".join(f'<script type="application/ld+json">{json.dumps(j, ensure_ascii=False)}</script>' for j in (jsonld or []))
     gc = (f'<script data-goatcounter="https://{ANALYTICS}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>' if ANALYTICS else "")
@@ -502,7 +504,7 @@ SHORT_FILTER_CSS = ".sfil{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}.s
 def short_card(s):
     cr = f'<p class="small credit">{e(s["credit"])}</p>' if s.get("credit") else ""
     return (f'<article class="short" id="s-{e(s["id"])}" data-topic="{short_cat(s)}"><div class="vid"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
-            f'<span class="play"></span><small>Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
+            f'<span class="play"></span><small class="sr">Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
             f'<span class="label">{e(s.get("topic", ""))}</span><h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p>{cr}{share_bar(short_url(s), s["title"])}</article>')
 
 def video_ld(s):
@@ -632,7 +634,7 @@ def shorts_pages():
             redirect = ('<script>try{var c=new URLSearchParams(location.search).get("cat");if(c&&/^[a-z-]+$/.test(c))location.replace("/shorts/"+c+"/")}catch(e){}</script>' if not cat and i == 0 else "")
             body = header("Shorts") + f'''<style>{SHORT_FILTER_CSS}</style>{redirect}<main class="wrap"><div class="pagehead"><span class="eyebrow">{"All Shorts" if not cat else label}{f" · page {i + 1}" if i else ""}</span>
 <h1 class="page">Every lesson, in one place.</h1><p>Opening traps, named mates and top-game moments. Press play to watch here, or follow along on YouTube.</p></div>
-{fil}{daily_band('shorts')}<div class="shorts">{"".join(short_card(s) for s in items)}</div>{pager}
+{fil}{daily_band('shorts')}<p class="small" style="margin:0 0 16px">Videos play from YouTube. Nothing loads from YouTube until you press play.</p><div class="shorts">{"".join(short_card(s) for s in items)}</div>{pager}
 <div class="btns" style="justify-content:center;margin:40px 0 56px"><a class="btn solid" href="{LINKS[0][1]}" target="_blank" rel="noopener">Subscribe on YouTube</a></div></main>''' + footer()
             ttl = ("All Shorts" if not cat else f"{label} Shorts") + (f" (page {i + 1})" if i else "")
             out.append((path, page(path, f"{ttl} · Throiy Chess", "Every Throiy Chess Short: opening traps, mating patterns and top-game moments, each under a minute." if not cat else f"Throiy Chess Shorts: {label.lower()}, each under a minute.",
@@ -804,9 +806,9 @@ def today_page():
 <noscript><p>The Daily needs JavaScript. You can also <a href="/traps/">step through every trap</a>.</p></noscript></div></div>
 <p class="dtlinks">A new trap or puzzle every day. Your streak is saved in this browser. <a href="/traps/">All traps</a> &middot; <a href="/analyze/">Analyze my games free</a></p>
 </main>''' + footer() + f'<script>window.DT={cfg}</script><script src="/js/daily.js" defer></script>'
-    ld = {"@context": "https://schema.org", "@type": "WebApplication", "name": "Daily Trap", "url": SITE + path, "applicationCategory": "GameApplication", "operatingSystem": "Any",
+    ld = {"@context": "https://schema.org", "@type": "WebApplication", "name": "Daily Chess Trap or Puzzle", "url": SITE + path, "applicationCategory": "GameApplication", "operatingSystem": "Any",
           "description": "One chess opening trap a day, playable in your browser. Find the safe move and keep your streak.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}
-    return path, page(path, "Daily Trap: can you survive today&#39;s chess trap? · Throiy Chess".replace("&#39;", "'"), "One chess opening trap a day. Play the position, find the safe move and build your streak. Free, in your browser, no account needed.", body, [ld])
+    return path, page(path, "Daily Chess Trap or Puzzle: can you solve it? · Throiy Chess", "A new chess opening trap or puzzle every day. Find the move, keep your 3 hearts and build your streak. Free, in your browser, no account needed.", body, [ld])
 
 def contact():
     active = bool(WEB3FORMS_KEY)
@@ -854,7 +856,7 @@ def privacy():
 
 def video_card(s):
     return (f'<article class="short" id="v-{e(s["id"])}"><div class="vid wide"><button type="button" data-yt="{e(s["id"])}" data-title="{e(s["title"])}" aria-label="Play: {e(s["title"])}"{thumb_style(s)}>'
-            f'<span class="play"></span><small>Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
+            f'<span class="play"></span><small class="sr">Plays from YouTube. Pressing play loads YouTube.</small></button></div>'
             f'<h3>{e(s["title"])}</h3><p>{e(s.get("desc", ""))}</p>{share_bar(SITE + "/videos/#v-" + s["id"], s["title"])}</article>')
 
 def top_games_page():
@@ -1138,6 +1140,7 @@ def improve_page():
 def terms():
     body = header() + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Terms</span><h1 class="page">Terms of use</h1><p>Short and plain. By using {DOMAIN} you agree to these terms.</p></div>
 <div class="prose" style="padding-bottom:64px">
+<h2>Sources</h2><p>Daily Puzzles come from the Lichess puzzle database, which is public domain (CC0). Chess pieces, traps and explanations on this site are our own work.</p>
 <h2>What this is</h2><p>Throiy Chess offers free chess lessons and tools. The site and the analyzer are in beta and provided as they are, without guarantees.</p>
 <h2>The analyzer and reports</h2><p>Reports come from a chess engine at a light depth and are a guide, not advice you must follow. Rating bands and accuracy are our own estimates from our own sample of games. They are not an official rating and not comparable with the numbers on Chess.com or Lichess. Throiy Chess is not affiliated with Chess.com or Lichess. Use the analyzer only on games you may analyze; we do not store the games you load.</p>
 <h2>Your account</h2><p>An account is optional and free. You are responsible for the e-mail address you sign in with. We set limits on how many reports you can save to keep the service fast for everyone. You can delete your account and all saved data yourself on your members page at any time. We may remove accounts that abuse the service.</p>
