@@ -277,17 +277,17 @@ function report(results) {
   const rank = SHOWN.map((m, i) => i).sort((x, y) => SHOWN[y].loss - SHOWN[x].loss), first3 = rank.slice(0, 3), rest = rank.slice(3);
   let h = `<h2>Your report</h2><p class="az-lead">We looked at ${plural(n, "game")} by <b>${esc(state.user)}</b>. ${all.length ? `We found <b>${all.length}</b> moves that made your position clearly worse. Here is what to fix first.` : "No big mistakes found."}</p>`;
   if (top) {
-    h += `<div class="az-top"><span class="eyebrow">Fix this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p><p class="small">This happened ${plural(cnt[top], "time")} in ${plural(n, "game")}.</p></div>`;
+    h += `<div class="az-top"><span class="eyebrow">Fix this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p><p class="small">This happened ${plural(cnt[top], "time")} in ${plural(n, "game")}.</p><p><b>Do this:</b> ${DRILL[top][0]}</p><p class="small"><a href="#az-board">See the moves below →</a></p></div>`;
     if (nTop) h += `<p class="az-what">Avoiding just ${nTop === 1 ? "your biggest mistake" : "your biggest mistake in each game"} would lift your accuracy from <b>${acc.toFixed(0)}%</b> to <b>${accFix.toFixed(0)}%</b>${bFix > bNow ? `, and you would play like a player rated about <b>${bandName(bFix)}</b> (today: ${bandName(bNow)})` : ""}.</p>`;
     if (worst) h += `<p>Most of your costly moves came in the <b>${PHN[worst].toLowerCase()}</b>.</p>`;
   } else h += `<div class="az-top"><h3>Clean games!</h3><p>Try a few of your losses to find what to train.</p></div>`;
   for (const r of results) if (r.trap) h += `<div class="az-trap">${r.trap.fell ? "🪤 You fell for the" : "🎯 You set the"} <a href="/traps/${r.trap.t.slug}/?utm_source=analyze&amp;utm_campaign=${r.trap.t.slug}">${esc(r.trap.t.name)}</a>${r.trap.fell ? ". Here's how to avoid it next time." : ". Nice!"}</div>`;
   if (first3.length) {
-    h += `<h3>See it on the board</h3><p class="small">Your ${first3.length === 1 ? "costliest move" : first3.length + " costliest moves"}. Gold squares: the move you played. Green: the better move.</p>`;
+    h += `<h3 id="az-board">See it on the board</h3><p class="small">Your ${first3.length === 1 ? "costliest move" : first3.length + " costliest moves"}. Gold squares: the move you played. Green: the better move.</p>`;
     h += first3.map((i) => momentHtml(SHOWN[i], i)).join("");
     if (rest.length) h += `<details class="az-det"><summary>Show ${rest.length} more moment${rest.length === 1 ? "" : "s"}</summary>${rest.map((i) => momentHtml(SHOWN[i], i)).join("")}</details>`;
   }
-  if (top) h += `<h3>Your plan for the next 5 games</h3><div class="az-plan"><p><b>Habit:</b> ${DRILL[top][0]}</p><p><b>Practice:</b> ${DRILL[top][1]}</p></div><p class="small">Then analyze 5 new games here and see what changed.</p>`;
+  if (top) { const nx = order[1] && cnt[order[1]] ? order[1] : null; h += `<h3>What next?</h3><ol class="az-next"><li>${DRILL[top][1]}</li><li>Come back and analyze 5 new games here. We show you what changed.</li>${nx ? `<li>Then work on your next habit: <b>${P[nx].t}</b>.</li>` : ""}</ol>`; }
   h += `<div class="az-save" id="az-save"></div>`;
   let d = `<p class="small"><b>Big mistake:</b> a move that loses a piece or more. <b>Mistake:</b> a move that loses a pawn or two. <b>Small slip:</b> a smaller loss. <b>Accuracy:</b> how close your moves were to the best ones (100% would be perfect). It is our own estimate, so compare moves, not percentages with Chess.com or Lichess.</p>`;
   d += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy</span></div><div><b>${nB}</b><span>Big mistakes</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Small slips</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div>`;
