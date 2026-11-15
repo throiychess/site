@@ -772,8 +772,8 @@ DAILY_ORDER = ["lasker-trap", "elephant-trap", "legals-mate", "englund-gambit", 
                "blackburne-shilling-gambit", "petrov-trap", "noahs-ark-trap", "froms-gambit", "kieninger-trap", "damiano-defence", "mortimer-trap", "london-system-trap"]
 DAILY_PUZZLES = json.load(open(os.path.join(ROOT, "daily_puzzles.json"), encoding="utf8"))  # Lichess puzzle database (CC0): engine-verified by Lichess, popular, rating 600-1400; mate puzzles also proven by exhaustive search (v=1)
 PUZZLE_FROM = "2026-11-18"   # first Daily Puzzle; from here every other day is a puzzle (a trap in DAILY_SCHEDULE always wins)
-PUZZLE_ORDER = ["YrZ9M", "4pxqH", "GVxOu", "c1xdE", "0pT9G", "iUvHT", "eduvV", "PEWkx", "hx0KO", "gHHWW", "eB61N", "1JCfN", "jK1TX", "UPukV", "UNSBm", "6KQc6", "F66eR", "mVkhu", "eFpx0", "D8OlZ", "LG0CP", "2nVzC", "0rEgR", "Yj9Pf", "DVKQQ", "HMT0w", "hHu8X", "8tsRc", "gFPBY", "hksyn", "zdLfl", "5vufz", "1hdGX", "opqCA", "NCuv9", "ERLUW", "k8mNM", "VQjbl", "1EuFZ", "aLYe4", "1bFfc", "9eTlj", "yahGO", "HtVx3", "1IMtz", "gaSFs", "PK7pD", "UXwVb", "WWHPN", "5OQHU", "gHNv7", "8lIjd", "Ipsq8", "S8s0R", "y8tie", "7zB3C", "7BTD7", "gw4Qd", "s8t0J", "mHmwr", "D43K4", "OhCXJ", "cCqjC", "hFajt", "nW80j", "f74n3", "7aunY", "xVo5K", "0U4gN", "7LpUU", "l1XFv", "0CWTj", "bDBvr", "9kjoP", "Dl1ZB", "DA0gO", "iXPra", "KWqF1", "GKCw0", "e04Cb", "8Mezm", "tNkqf", "BcFbG", "9BGdr", "asicy", "knhsK", "ZtKFS", "zNtps", "SHZxp", "bvnrl", "fg8bE", "Glpr4", "Llpip", "jVXPQ", "0MwUh", "pOXPS", "AQAfT", "v0ccb", "5EWJj", "aaxIH", "gMDPf", "m9rrq", "eehvu", "iYQa4", "nM486", "aih1X", "B2oaW", "cPitf", "XO0jw", "1SRTe", "9KFFQ", "ZXnIO", "d3CfM", "Pqh6U", "Tu0fj", "N3QIq", "dAtOY", "3naVc", "08rjs", "Rocfv", "6bMdO", "9fzBi", "viNGa", "4ZLlq", "sT4vh", "bIIJN", "c6Gko", "QEanl", "PQVuv", "pxLuK", "cnA1K", "M8HqG", "YnFTj", "yifBp", "GEstF", "waY9P", "N0kbV", "XNq04", "CbLvr", "JUaP9", "KDAZF", "UkTMD", "wtqUn", "qsJeH", "XiFoh", "9JT7B", "BEb1Y", "hUL3N", "JkUFH", "D4sh8", "LU6Uv", "Ib3t7", "DD1GU", "KX5AP", "Ihq3d", "1kwiX", "oxjga", "XumSZ", "bKudZ", "kPo2a", "fyEWA", "jFDn5", "Ds2J1", "CA1J9", "kJYQO", "7RG65", "rVOfr", "g2spf", "r076D", "ivm77", "PrPiY", "gMWqC", "Qxqiy", "AmID9", "OsHuq", "MkLoD", "YXO4g", "gYcwF", "E923B", "9ACzi", "wxBgO", "4BVi3", "zsgK5", "nLOIh", "c0kf7", "ma8wf", "irLMF", "W9L6d", "sVkAX", "OSOYQ", "HnyBQ", "rYgrJ", "ucpEG", "KvFGu", "hlQ9I"]
-assert all(i in {x["id"] for x in DAILY_PUZZLES} for i in PUZZLE_ORDER) and len(set(PUZZLE_ORDER)) == len(PUZZLE_ORDER)
+assert len({x["id"] for x in DAILY_PUZZLES}) == len(DAILY_PUZZLES)
+PZ_CHUNK = 100
 assert sorted(DAILY_ORDER) == sorted(DAILY_SLUGS) and all(v in DAILY_SLUGS for v in DAILY_SCHEDULE.values())
 DT_CSS = (".dt [hidden]{display:none!important}.dt{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:36px;align-items:start;margin-bottom:56px}.dt .board{cursor:pointer;touch-action:manipulation}"
           ".dt .sq.sel{box-shadow:inset 0 0 0 4px var(--gold)}.dt .sq.tg::after{content:\"\";position:absolute;left:50%;top:50%;width:30%;height:30%;margin:-15% 0 0 -15%;border-radius:50%;background:rgba(20,18,15,.38);z-index:2}"
@@ -786,7 +786,7 @@ DT_CSS = (".dt [hidden]{display:none!important}.dt{display:grid;grid-template-co
           "@media(max-width:860px){.dt{grid-template-columns:1fr;gap:18px}.dthead{padding-block:22px 14px!important}.dthead h1{font-size:30px}.dthead p{font-size:17px}}")
 def today_page():
     path = "/today/"
-    cfg = json.dumps(dict(start=DAILY_START, order=DAILY_ORDER, schedule=DAILY_SCHEDULE, pz=dict(frm=PUZZLE_FROM, order=PUZZLE_ORDER)), separators=(",", ":"))
+    cfg = json.dumps(dict(start=DAILY_START, order=DAILY_ORDER, schedule=DAILY_SCHEDULE, pz=dict(frm=PUZZLE_FROM, n=len(DAILY_PUZZLES), c=PZ_CHUNK)), separators=(",", ":"))
     body = header("Daily Trap") + f'''<style>{DT_CSS}</style><main class="wrap"><div class="pagehead dthead" style="padding-top:26px"><span class="eyebrow" id="dte">Daily Trap</span><h1 class="page" id="dth">Can you survive today&#39;s trap?</h1><p id="dtp">One position a day. One tempting move walks into a trap. Find a safe move.</p></div>
 <div class="dt" id="dt"><div><div class="board" id="dtb" role="application" aria-label="Chess board: tap a piece, then tap a square"></div><div class="dttry" id="dtt"></div></div>
 <div><div class="dtmsg" id="dtm" aria-live="polite"><b>Loading the board…</b></div><p style="margin:14px 0 0"><button type="button" class="btn solid" id="dta" hidden>Try again</button></p><div id="dtr" hidden></div>
@@ -1332,7 +1332,11 @@ def build():
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
     json.dump(DAILY, open(os.path.join(d, "js", "daily-data.json"), "w", encoding="utf8"), ensure_ascii=False, separators=(",", ":"))
-    json.dump(DAILY_PUZZLES, open(os.path.join(d, "js", "daily-puzzles.json"), "w", encoding="utf8"), ensure_ascii=False, separators=(",", ":"))
+    os.makedirs(os.path.join(d, "js", "dp"), exist_ok=True); pz_idx = {}
+    for k in range(0, len(DAILY_PUZZLES), PZ_CHUNK):
+        part = DAILY_PUZZLES[k:k + PZ_CHUNK]; json.dump(part, open(os.path.join(d, "js", "dp", "%d.json" % (k // PZ_CHUNK)), "w", encoding="utf8"), ensure_ascii=False, separators=(",", ":"))
+        for x in part: pz_idx[x["id"]] = k // PZ_CHUNK
+    json.dump(pz_idx, open(os.path.join(d, "js", "dp", "index.json"), "w"), separators=(",", ":"))
     open(os.path.join(d, "404.html"), "w").write(notfound())
     today = datetime.date.today().isoformat()
     # lastmod = the day the page content really changed (hash kept in _builder/lastmod.json, committed by the bot),
