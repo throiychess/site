@@ -66,8 +66,9 @@ function followCount() { const so = (profile && profile.socials) || {}; return S
 function totalPoints() { return (profile.points || 0) + A.length * 20 + followCount() * 10; }
 function badgeList() {
   const n = A.length, f = followCount(), st = Math.max(profile.streak || 0, profile.best_streak || 0), chron = A.slice().reverse();
-  const improved = chron.length >= 2 && Number(chron[chron.length - 1].avg_loss) < Number(chron[0].avg_loss);
-  return [["First report", "Save your first report", n >= 1, "chart"], ["Regular", "Save 5 reports", n >= 5, "chart"], ["Dedicated", "Save 10 reports", n >= 10, "chart"], ["Improver", "Lower your pawns lost per move between two reports", improved, "bolt"],
+  const bpg = (a) => Number(a.blunders) / Math.max(1, Number(a.games));
+  const improved = chron.length >= 2 && bpg(chron[chron.length - 1]) < bpg(chron[0]);
+  return [["First report", "Save your first report", n >= 1, "chart"], ["Regular", "Save 5 reports", n >= 5, "chart"], ["Dedicated", "Save 10 reports", n >= 10, "chart"], ["Improver", "Make fewer big mistakes per game between two reports", improved, "bolt"],
     ["Supporter", "Follow Throiy Chess on all four", f === 4, "star"], ["3-day streak", "Visit 3 days in a row", st >= 3, "flame"], ["Week streak", "Visit 7 days in a row", st >= 7, "flame"], ["Month streak", "Visit 30 days in a row", st >= 30, "flame"]];
 }
 function drawEarn() {
@@ -100,15 +101,15 @@ ${n > 1 ? `<polyline points="${pts}"/>` : ""}${dots}</svg></div>`;
 function drawOverview(data) {
   const n = data.length, last = data[0], first = data[n - 1];
   const stat = (b, s) => `<div class="mstat"><b>${b}</b><span>${s}</span></div>`;
-  $("#m-stats").innerHTML = (n ? stat(n, "saved report" + (n > 1 ? "s" : "")) + stat(Number(last.accuracy).toFixed(0) + "%", "accuracy, latest") + stat(Number(last.avg_loss).toFixed(2), "pawns lost per move" + (n > 1 ? " (" + (last.avg_loss - first.avg_loss <= 0 ? "" : "+") + (last.avg_loss - first.avg_loss).toFixed(2) + " since first)" : "")) + (last.band ? stat(esc(last.band), "your play looks like") : "") : stat("0", "saved reports yet")) + stat("&#128293; " + (profile.streak || 0), "day streak") + stat(totalPoints(), "points");
-  $("#m-next").innerHTML = n ? `<p><b>Next step:</b> run a fresh report with your newest games and see if your pawns lost per move went down.</p><a class="btn solid" href="#analyze">Analyze new games</a>` : `<p><b>Next step:</b> analyze your last 5 games. It takes a minute and your report is saved here.</p><a class="btn solid" href="#analyze">Analyze my games</a>`;
+  $("#m-stats").innerHTML = (n ? stat(n, "saved report" + (n > 1 ? "s" : "")) + stat(Number(last.accuracy).toFixed(0) + "%", "accuracy, latest") + stat((Number(last.blunders) / Math.max(1, Number(last.games))).toFixed(1), "big mistakes per game" + (n > 1 ? " (" + (Number(last.blunders) / Math.max(1, Number(last.games)) - Number(first.blunders) / Math.max(1, Number(first.games)) <= 0 ? "" : "+") + (Number(last.blunders) / Math.max(1, Number(last.games)) - Number(first.blunders) / Math.max(1, Number(first.games))).toFixed(1) + " since first)" : "")) + (last.band ? stat(esc(last.band), "your play looks like") : "") : stat("0", "saved reports yet")) + stat("&#128293; " + (profile.streak || 0), "day streak") + stat(totalPoints(), "points");
+  $("#m-next").innerHTML = n ? `<p><b>Next step:</b> run a fresh report with your newest games and see if you made fewer big mistakes.</p><a class="btn solid" href="#analyze">Analyze new games</a>` : `<p><b>Next step:</b> analyze your last 5 games. It takes a minute and your report is saved here.</p><a class="btn solid" href="#analyze">Analyze my games</a>`;
 }
 async function drawAnalyses() {
   const { data, error } = await sb.from("analyses").select("id,created_at,site,username,games,accuracy,avg_loss,band,top_leak").order("created_at", { ascending: false }).limit(30);
   if (!error) { A = data; drawOverview(data); }
   const box = $("#m-list"), ch = $("#m-charts"); if (error) { box.innerHTML = `<p class="small">Could not load your analyses.</p>`; return; }
   if (!data.length) { ch.innerHTML = ""; box.innerHTML = `<p>No saved reports yet. <a href="#analyze">Analyze your games</a> while you are logged in and your report is saved here.</p>`; return; }
-  ch.innerHTML = `<div class="mcharts">${chart(data, "avg_loss", "Pawns lost per move", true, 2, "")}${chart(data, "accuracy", "Accuracy", false, 0, "%")}</div>` + (data.length < 2 ? `<p class="small">One report so far. Run another one after a few more games and your progress shows as a line.</p>` : "");
+  ch.innerHTML = `<div class="mcharts">${chart(data.map((a) => ({ ...a, bpg: Number(a.blunders) / Math.max(1, Number(a.games)) })), "bpg", "Big mistakes per game", true, 1, "")}${chart(data, "accuracy", "Accuracy", false, 0, "%")}</div>` + (data.length < 2 ? `<p class="small">One report so far. Run another one after a few more games and your progress shows as a line.</p>` : "");
   box.innerHTML = `<div class="az-gm">` + data.map((a) => `<div class="m-row"><span class="small">${new Date(a.created_at).toLocaleDateString()}</span><span><b>${esc(a.username)}</b> <span class="small">${a.site === "chesscom" ? "Chess.com" : "Lichess"} &middot; ${a.games} game${a.games > 1 ? "s" : ""}</span></span><span class="small">${Number(a.accuracy).toFixed(0)}% accuracy &middot; ${Number(a.avg_loss).toFixed(2)} pawns/move${a.band ? " &middot; looks like " + esc(a.band) : ""}</span><button class="btn" type="button" data-del="${a.id}">Delete</button></div>`).join("") + `</div>`;
 }
 let hcId = null, hcTok = null;
