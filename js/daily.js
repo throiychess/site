@@ -232,7 +232,6 @@
       + '<div class="btns">' + (practice ? "" : '<button type="button" class="btn solid" id="dtsh">Share my result</button>') + '<a class="btn' + (practice ? " solid" : "") + '" href="/traps/" data-ev="daily-puzzle-traps">Step through the traps</a></div>'
       + '<p class="small" id="dtshm" role="status" aria-live="polite"></p>'
       + (practice ? '<p><a class="go" href="/today/">Play today\'s Daily &rarr;</a></p>' : '<p class="dtnext">A new one every day. <span id="dtcd"></span></p>')
-      + '<p class="small">Puzzle ' + esc(p.id) + ' from the Lichess puzzle database (CC0).</p>'
       + '<div class="card" style="margin-top:18px"><span class="label">Your own games</span><h3>Where do your games go wrong?</h3><p>Enter your Chess.com or Lichess name and see your biggest leaks. Free, runs in your browser.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=daily" data-ev="daily-analyze">Analyze my games free &rarr;</a></div>';
     $("dtr").hidden = false;
     var b = $("dtsh"); if (b) b.onclick = function () {

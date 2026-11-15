@@ -1,51 +1,51 @@
 {
 "/": {
 "d": "2026-11-15",
-"h": "2aab09987a3e8753"
+"h": "d8fdc0e111eaea18"
 },
 "/analyze/": {
 "d": "2026-11-15",
-"h": "08209dd01ed08b50"
+"h": "952d8eb8d0e703fd"
 },
 "/contact/": {
 "d": "2026-11-15",
-"h": "20ae9f1d015f65fe"
+"h": "f4616862fcdba411"
 },
 "/free/": {
 "d": "2026-11-15",
-"h": "e8210051bd377721"
+"h": "8010dd14bae643c3"
 },
 "/improve/": {
 "d": "2026-11-15",
-"h": "4c7875e6a7385089"
+"h": "f1a6876531f7000c"
 },
 "/opponent/": {
 "d": "2026-11-15",
-"h": "de46017e3d9efb46"
+"h": "e5ce0a731fa98109"
 },
 "/patterns/": {
 "d": "2026-11-15",
-"h": "48dbf424f1828778"
+"h": "5499818739acfe10"
 },
 "/patterns/anastasias-mate/": {
 "d": "2026-11-15",
-"h": "7d63db7340fe9573"
+"h": "654143f1aad7ea2e"
 },
 "/patterns/bodens-mate/": {
 "d": "2026-11-15",
-"h": "495bfacd30d6fa62"
+"h": "18451ac6f64947df"
 },
 "/patterns/stalemate-trick/": {
 "d": "2026-11-15",
-"h": "773d9eaf0614c9f9"
+"h": "1153c0b18232f6f8"
 },
 "/patterns/windmill/": {
 "d": "2026-11-15",
-"h": "0d1d6ac055e5f2d8"
+"h": "e86d6553b743a124"
 },
 "/patterns/zwischenzug/": {
 "d": "2026-11-15",
-"h": "87a9c282c6913f66"
+"h": "c337ef970fe16a4e"
 },
 "/privacy/": {
 "d": "2026-11-15",
@@ -53,47 +53,47 @@
 },
 "/shorts/": {
 "d": "2026-11-15",
-"h": "b254132e02a173cb"
+"h": "257cb8da6da82e8d"
 },
 "/shorts/lessons/": {
 "d": "2026-11-15",
-"h": "eda4e0ea6d06261f"
+"h": "12fb7fad86f3a36f"
 },
 "/shorts/page/2/": {
 "d": "2026-11-15",
-"h": "e2f9b1f1d4074db3"
+"h": "cf92fd4dbcfae0fa"
 },
 "/shorts/page/3/": {
 "d": "2026-11-15",
-"h": "29ff26ee4b6ba1cd"
+"h": "c625821801f8721e"
 },
 "/shorts/top-game/": {
 "d": "2026-11-15",
-"h": "3f3c415acd1fac0e"
+"h": "61f035c616317e68"
 },
 "/shorts/traps/": {
 "d": "2026-11-15",
-"h": "42d81d8fb45d4229"
+"h": "0f696e08037a3fea"
 },
 "/shorts/traps/page/2/": {
 "d": "2026-11-15",
-"h": "88b099ad29a2d181"
+"h": "c1ff51ec729c613a"
 },
 "/support/": {
 "d": "2026-11-15",
-"h": "8eeeda8fe454327c"
+"h": "1d289038e6a7c8fe"
 },
 "/terms/": {
 "d": "2026-11-15",
-"h": "814e44ee433d1b00"
+"h": "99f151f249fcdac2"
 },
 "/today/": {
 "d": "2026-11-15",
-"h": "ccd80f2714d32638"
+"h": "7c28fe10daca1e30"
 },
 "/top-games/": {
 "d": "2026-11-15",
-"h": "bb9a9b04eb643e8d"
+"h": "02bb46e67d2d99dc"
 },
 "/traps/": {
 "d": "2026-11-15",
@@ -101,78 +101,78 @@
 },
 "/traps/blackburne-shilling-gambit/": {
 "d": "2026-11-15",
-"h": "7177bcb4bf2060da"
+"h": "d57c0d1c9a2c8eba"
 },
 "/traps/damiano-defence/": {
 "d": "2026-11-15",
-"h": "0e0fc34d54bdcf8b"
+"h": "3fe039399c8858f4"
 },
 "/traps/elephant-trap/": {
 "d": "2026-11-15",
-"h": "43db11040d19fca3"
+"h": "148cfe8fa8350bde"
 },
 "/traps/englund-gambit/": {
 "d": "2026-11-15",
-"h": "891f7dae5988620f"
+"h": "037eb2a37117b16a"
 },
 "/traps/fishing-pole-trap/": {
 "d": "2026-11-15",
-"h": "aae3e1681f1c8c17"
+"h": "b426dc47ba9bb686"
 },
 "/traps/fried-liver-attack/": {
 "d": "2026-11-15",
-"h": "5fecbc57ecad4601"
+"h": "f9c5fad412285b33"
 },
 "/traps/froms-gambit/": {
 "d": "2026-11-15",
-"h": "1dc745bd76cc0291"
+"h": "dbb18364ae959942"
 },
 "/traps/halloween-gambit/": {
 "d": "2026-11-15",
-"h": "dc616fb9e665e551"
+"h": "853897e4f37501f4"
 },
 "/traps/kieninger-trap/": {
 "d": "2026-11-15",
-"h": "02633e36110779f0"
+"h": "fcf3a993ab0091ae"
 },
 "/traps/lasker-trap/": {
 "d": "2026-11-15",
-"h": "527bc118b3cd21d1"
+"h": "e7b25b89c6222212"
 },
 "/traps/legals-mate/": {
 "d": "2026-11-15",
-"h": "433218ee47df2e87"
+"h": "785173fd2911a32b"
 },
 "/traps/london-system-trap/": {
 "d": "2026-11-15",
-"h": "f0329f4689c96c10"
+"h": "1768aa8c81b30871"
 },
 "/traps/mortimer-trap/": {
 "d": "2026-11-15",
-"h": "415bf2e939d3b8dd"
+"h": "3fb44bb8a791e1eb"
 },
 "/traps/noahs-ark-trap/": {
 "d": "2026-11-15",
-"h": "bc3a0acfc42029d7"
+"h": "304b572bfe6dec7c"
 },
 "/traps/petrov-trap/": {
 "d": "2026-11-15",
-"h": "7b32f56726342476"
+"h": "35461a04767e31e8"
 },
 "/traps/scholars-mate/": {
 "d": "2026-11-15",
-"h": "641ca255e96bff90"
+"h": "a37ffc05be4806ad"
 },
 "/traps/siberian-trap/": {
 "d": "2026-11-15",
-"h": "723ddfec54d89384"
+"h": "39e67b2e0f40e894"
 },
 "/traps/stafford-gambit/": {
 "d": "2026-11-15",
-"h": "8b81f58e43d3117f"
+"h": "99b6babd48a8398d"
 },
 "/videos/": {
 "d": "2026-11-15",
-"h": "2f1c8feb3f76d239"
+"h": "7941eeb8e7aaa74e"
 }
 }
