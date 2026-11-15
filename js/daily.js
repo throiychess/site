@@ -9,7 +9,7 @@
   function load() { try { return JSON.parse(localStorage.getItem("tc_daily")) || {}; } catch (e) { return {}; } }
   function save(s) { try { localStorage.setItem("tc_daily", JSON.stringify(s)); } catch (e) {} }
   var q = new URLSearchParams(location.search), N = dayNum(), P, practice = false, tries = 0, lost = 0, done = false, sel = null, busy = false, cur, lastMv = "";
-  var B = $("dtb"), sqs = {};
+  var B = $("dtb"), sqs = {}, PZ = null;
 
   function buildBoard(flip) {
     B.innerHTML = ""; sqs = {};
@@ -31,14 +31,17 @@
     });
   }
   function mine(n) { var c = cur[n]; return c && ((c === c.toUpperCase()) === (P.victim === "w")); }
-  function movesFrom(n) { return P.moves.filter(function (m) { return m.u.slice(0, 2) === n; }); }
+  function movesFrom(n) {
+    if (PZ) return PZ.g.moves({ square: n, verbose: true }).map(function (m) { return { u: m.from + m.to + (m.promotion || "") }; });
+    return P.moves.filter(function (m) { return m.u.slice(0, 2) === n; });
+  }
   function clearSel() { Object.keys(sqs).forEach(function (n) { sqs[n].classList.remove("sel", "tg"); }); sel = null; }
 
   B.addEventListener("click", function (e) {
     if (done || busy) return; var d = e.target.closest(".sq"); if (!d) return; var n = d.dataset.n;
     if (sel && d.classList.contains("tg")) {
-      var c = P.moves.filter(function (m) { return m.u.slice(0, 2) === sel && m.u.slice(2, 4) === n; });
-      var mv = c.filter(function (m) { return m.u.length === 4 || m.u[4] === "q"; })[0] || c[0]; clearSel(); if (mv) play(mv); return;
+      var c = movesFrom(sel).filter(function (m) { return m.u.slice(2, 4) === n; });
+      var mv = c.filter(function (m) { return m.u.length === 4 || m.u[4] === "q"; })[0] || c[0]; clearSel(); if (mv) { if (PZ) pzPlay(mv.u); else play(mv); } return;
     }
     clearSel();
     if (mine(n) && movesFrom(n).length) { sel = n; d.classList.add("sel"); movesFrom(n).forEach(function (m) { sqs[m.u.slice(2, 4)].classList.add("tg"); }); }
@@ -105,7 +108,96 @@
     try { $("dtr").scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
   }
 
-  fetch("/js/daily-data.json").then(function (r) { return r.json(); }).then(function (all) {
+  /* ---------- Daily Puzzle (Lichess puzzle database, CC0). Needs /js/chess.js for legal moves. ---------- */
+  var LESSON = {
+    mateIn2: "Checkmate in two: find a move that leaves the king no way out, whatever it answers. Before you move, list every check you have.",
+    backRankMate: "The king on the back rank is boxed in by its own pawns. One rook or queen check can end the game. Check your own back rank too.",
+    fork: "A fork is one piece attacking two things at once. Your opponent can only save one.",
+    pin: "A pin freezes a piece, because moving it would expose something more valuable behind it. Look for pieces that cannot move.",
+    hangingPiece: "A hanging piece has no protection. Before every move, ask yourself: what is not defended?",
+    discoveredAttack: "Move one piece and the piece behind it suddenly attacks. You make two threats with one move.",
+    trappedPiece: "A trapped piece has no safe square left. Attack it and it cannot escape.",
+    skewer: "A skewer attacks a valuable piece. When it moves away, you win the piece behind it.",
+    opening: "Early in the game, tactics decide a lot. Look for checks, captures and threats before your opponent has finished developing."
+  };
+  function fb(f) { return f.split(" ")[0]; }
+  function daysBetween(a, b) { var x = a.split("-"), y = b.split("-"); return Math.round((new Date(+y[0], y[1] - 1, +y[2]) - new Date(+x[0], x[1] - 1, +x[2])) / 864e5); }
+  function pzMates(g, u) { var t = new PZ.C(g.fen()); try { t.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] || "q" }); } catch (e) { return false; } return t.isCheckmate(); }
+  function startPuzzle(p, Chess) {
+    P = { victim: p.side, slug: "pz-" + p.id }; PZ = { p: p, C: Chess, g: new Chess(p.fen), step: 0, last: p.last };
+    var side = p.side === "w" ? "White" : "Black", mate = p.theme === "mateIn2" ? " Find checkmate in 2." : "";
+    $("dte").textContent = practice ? "Practice puzzle" : "Daily Puzzle #" + N;
+    $("dth").textContent = practice ? "Can you solve this puzzle?" : "Can you solve today's puzzle?";
+    $("dtp").innerHTML = "You play <b>" + side + "</b>. Your opponent just played <b>" + esc(p.lastsan) + "</b>." + mate + (mate ? "" : " Find the best move.") + " You have 3 hearts: every wrong move costs one.";
+    buildBoard(p.side === "b"); draw(fb(p.fen), p.last); pips(); msg("", "Your move.", "Tap a piece, then tap where it goes.");
+  }
+  function pzWrong() {
+    lost++; pips(); var G = PZ.g;
+    if (lost >= 3) { setTimeout(function () { pzFinish(false); }, 500); return; }
+    msg("bad", "Not that one. You lose a heart.", "Look for a stronger move. Checks and captures first.");
+    setTimeout(function () { draw(fb(G.fen()), PZ.last); busy = false; }, 800);
+  }
+  function pzPlay(u) {
+    busy = true; if (!PZ.started) { PZ.started = 1; ev("daily-puzzle-start" + (practice ? "-practice" : "")); }
+    var G = PZ.g, p = PZ.p, u4 = u.slice(0, 4), ok;
+    if (PZ.step === 0) ok = p.ok1[u] !== undefined || p.ok1[u4] !== undefined || pzMates(G, u); else ok = u4 === p.line[2] || pzMates(G, u);
+    if (!ok) { var T = new PZ.C(G.fen()); try { T.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] || "q" }); draw(fb(T.fen()), u4); } catch (e) {} pzWrong(); return; }
+    var rep = PZ.step === 0 ? (p.ok1[u] !== undefined ? p.ok1[u] : p.ok1[u4]) : null;
+    G.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] || "q" }); PZ.last = u4; draw(fb(G.fen()), u4);
+    if (G.isCheckmate() || PZ.step === 1 || !rep) { setTimeout(function () { pzFinish(true); }, 500); return; }
+    msg("good", "Good move.", "Your opponent answers. Now find the next move.");
+    setTimeout(function () { G.move({ from: rep.slice(0, 2), to: rep.slice(2, 4), promotion: rep[4] || "q" }); PZ.last = rep.slice(0, 4); draw(fb(G.fen()), PZ.last); PZ.step = 1; busy = false; msg("", "Your move.", "Find the next move."); }, 750);
+  }
+  function pzFinish(win) {
+    done = true; busy = false; tries = win ? lost + 1 : 3; var s = load();
+    if (!practice) {
+      s.res = s.res || {};
+      if (!s.res[N]) {
+        s.streak = (s.last === N - 1 ? (s.streak || 0) + 1 : 1); s.last = N; s.best = Math.max(s.best || 0, s.streak);
+        s.res[N] = { t: tries, w: win ? 1 : 0, s: P.slug, k: "p" }; var ks = Object.keys(s.res); if (ks.length > 60) delete s.res[ks[0]];
+        save(s); ev(win ? "daily-puzzle-win-" + tries : "daily-puzzle-fail");
+      }
+    } else ev(win ? "daily-puzzle-practice-win" : "daily-puzzle-practice-fail");
+    pzResult(win, s);
+  }
+  function pzResult(win, s) {
+    var p = PZ.p, r = (s.res && s.res[N]) || { t: tries, w: win ? 1 : 0 };
+    if (!win) draw(fb(p.fen), p.last);
+    var line = p.sans.join(", ");
+    msg(win ? "good" : "bad", win ? "Solved!" : "Not this time.", (win ? "The main line is " : "The solution was ") + esc(line) + ".");
+    var st = practice ? "" : '<div class="dtstat"><div><b>#' + N + '</b><span>Daily Puzzle</span></div><div><b>' + (r.w ? (4 - r.t) + "/3" : "0/3") + '</b><span>hearts left</span></div><div><b>' + (s.streak || 1) + '</b><span>day streak</span></div><div><b>' + (s.best || 1) + '</b><span>best streak</span></div></div>';
+    $("dtr").innerHTML = st + '<h2>What to remember</h2><ol class="fix"><li><span>' + esc(LESSON[p.theme] || LESSON.opening) + '</span></li></ol>'
+      + '<div class="btns">' + (practice ? "" : '<button type="button" class="btn solid" id="dtsh">Share my result</button>') + '<a class="btn' + (practice ? " solid" : "") + '" href="/traps/" data-ev="daily-puzzle-traps">Step through the traps</a></div>'
+      + '<p class="small" id="dtshm" role="status" aria-live="polite"></p>'
+      + (practice ? '<p><a class="go" href="/today/">Play today\'s Daily &rarr;</a></p>' : '<p class="dtnext">A new one every day. <span id="dtcd"></span></p>')
+      + '<p class="small">Puzzle ' + esc(p.id) + ' from the Lichess puzzle database (CC0).</p>'
+      + '<div class="card" style="margin-top:18px"><span class="label">Your own games</span><h3>Where do your games go wrong?</h3><p>Enter your Chess.com or Lichess name and see your biggest leaks. Free, runs in your browser.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=daily" data-ev="daily-analyze">Analyze my games free &rarr;</a></div>';
+    $("dtr").hidden = false;
+    var b = $("dtsh"); if (b) b.onclick = function () {
+      var t = "ThroiyChess Daily Puzzle #" + N + "\n" + (r.w ? "Solved " + hearts(4 - r.t) : "Not this time " + hearts(0)) + " \u00b7 \uD83D\uDD25 " + (s.streak || 1) + "-day streak\nCan you solve it?", u = "https://throiychess.com/today/";
+      ev("daily-puzzle-share");
+      if (navigator.share && matchMedia("(pointer:coarse)").matches) { navigator.share({ text: t, url: u }).catch(function () {}); return; }
+      (navigator.clipboard ? navigator.clipboard.writeText(t + "\n" + u) : Promise.reject()).then(function () { $("dtshm").textContent = "Copied. Paste it in a chat or a story."; }).catch(function () { prompt("Copy your result:", t + " " + u); });
+    };
+    var cd = $("dtcd"); if (cd) { var n = new Date(), m = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1), mins = Math.round((m - n) / 6e4); cd.textContent = "Next one in " + Math.floor(mins / 60) + " h " + (mins % 60) + " min."; }
+    try { $("dtr").scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+  }
+  function runPuzzle(pid) {
+    Promise.all([fetch("/js/daily-puzzles.json").then(function (r) { return r.json(); }), import("/js/chess.js")]).then(function (a) {
+      var all = a[0], p = all.filter(function (x) { return x.id === pid; })[0]; if (!p) throw 0;
+      startPuzzle(p, a[1].Chess); $("dta").onclick = null;
+      var s = load();
+      if (!practice && s.res && s.res[N] && s.res[N].k === "p") { done = true; tries = s.res[N].t; lost = s.res[N].w ? tries - 1 : 3; pips(); pzResult(!!s.res[N].w, s); if (s.res[N].w) msg("good", "You already solved today's puzzle.", "Come back tomorrow for the next one."); }
+      root.classList.add("ready");
+    }).catch(function () { msg("bad", "The puzzle did not load.", "Check your connection and reload the page."); });
+  }
+  (function () {
+    var pp = q.get("p"), tq = q.get("t"), today = iso(new Date());
+    if (pp && /^[A-Za-z0-9]{3,8}$/.test(pp)) { practice = true; runPuzzle(pp); window.__pz = 1; return; }
+    if (!tq && C.pz && !C.schedule[today]) { var d = daysBetween(C.pz.frm, today); if (d >= 0 && d % 2 === 0) { var o = C.pz.order; window.__pz = 1; runPuzzle(o[(d / 2) % o.length]); } }
+  })();
+
+  if (!window.__pz) fetch("/js/daily-data.json").then(function (r) { return r.json(); }).then(function (all) {
     var by = {}; all.forEach(function (x) { by[x.slug] = x; });
     var t = q.get("t"), L = C.order.length, slug;
     if (t && by[t]) { practice = true; slug = t; } else slug = C.schedule[iso(new Date())] || C.order[(((N - 1) % L) + L) % L];
