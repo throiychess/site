@@ -8,7 +8,7 @@
   function dayNum() { var s = C.start.split("-"), a = new Date(+s[0], s[1] - 1, +s[2]), n = new Date(); n = new Date(n.getFullYear(), n.getMonth(), n.getDate()); return Math.round((n - a) / 864e5) + 1; }
   function load() { try { return JSON.parse(localStorage.getItem("tc_daily")) || {}; } catch (e) { return {}; } }
   function save(s) { try { localStorage.setItem("tc_daily", JSON.stringify(s)); } catch (e) {} }
-  var q = new URLSearchParams(location.search), N = dayNum(), P, practice = false, tries = 0, done = false, sel = null, busy = false, cur, lastMv = "";
+  var q = new URLSearchParams(location.search), N = dayNum(), P, practice = false, tries = 0, lost = 0, done = false, sel = null, busy = false, cur, lastMv = "";
   var B = $("dtb"), sqs = {};
 
   function buildBoard(flip) {
@@ -46,7 +46,8 @@
 
   function msg(kind, head, text) { var m = $("dtm"); m.className = "dtmsg " + kind; m.innerHTML = "<b>" + head + "</b>" + (text ? "<span>" + text + "</span>" : ""); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-  function pips() { var h = ""; for (var i = 1; i <= 3; i++) h += '<i class="' + (i <= tries ? "u" : "") + '"></i>'; $("dtt").innerHTML = h + "<span>Try " + Math.min(tries + 1, 3) + " of 3</span>"; }
+  function pips() { var h = ""; for (var i = 1; i <= 3; i++) h += '<b class="' + (i <= lost ? "u" : "") + '" aria-hidden="true">&#9829;</b>'; var left = 3 - lost; $("dtt").setAttribute("aria-label", left + " of 3 hearts left"); $("dtt").innerHTML = h + "<span>" + (left === 1 ? "Last heart" : left + " hearts left") + "</span>"; }
+  function hearts(n) { var h = ""; for (var i = 0; i < 3; i++) h += i < n ? "\u2764\uFE0F" : "\uD83D\uDDA4"; return h; }
   function again() { busy = false; draw(P.fen, P.last); pips(); msg("", "Your move.", "Tap a piece, then tap where it goes."); $("dta").hidden = true; }
 
   function play(mv) {
@@ -54,14 +55,14 @@
     if (mv.v === "good" || mv.v === "ok") {
       setTimeout(function () { finish(true, mv); }, 500);
     } else if (mv.v === "bait") {
-      msg("bad", "You took the bait.", "Watch what happens.");
+      lost = tries; pips(); msg("bad", "You took the bait. You lose a heart.", "Watch what happens.");
       var i = 1; (function step() { if (i < P.line.length) { draw(P.line[i].f, P.line[i].u); i++; setTimeout(step, 950); } else setTimeout(function () { miss("That is the " + esc(P.name) + ".", P.mate ? "It ends in checkmate." : "It costs you material."); }, 500); })();
     } else {
-      setTimeout(function () { if (mv.rf) draw(mv.rf, mv.ru); miss("Not the trap, but there is a much better move.", mv.rs ? "Your opponent answers " + esc(mv.rs) + "." : ""); }, 650);
+      lost = tries; pips(); setTimeout(function () { if (mv.rf) draw(mv.rf, mv.ru); miss("Not the trap, but there is a much better move.", mv.rs ? "Your opponent answers " + esc(mv.rs) + "." : ""); }, 650);
     }
   }
   function miss(head, text) {
-    if (tries >= 3) { finish(false); return; }
+    if (lost >= 3) { finish(false); return; }
     msg("bad", head, text); busy = true; $("dta").hidden = false;
   }
   function finish(win, mv) {
@@ -85,7 +86,7 @@
       : "A safe move was " + esc(P.best) + ".";
     msg(win ? "good" : "bad", head, sub);
     var fx = P.fix.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
-    var st = practice ? "" : '<div class="dtstat"><div><b>#' + N + '</b><span>Daily Trap</span></div><div><b>' + (r.w ? r.t + "/3" : "X/3") + '</b><span>tries</span></div><div><b>' + (s.streak || 1) + '</b><span>day streak</span></div><div><b>' + (s.best || 1) + '</b><span>best streak</span></div></div>';
+    var st = practice ? "" : '<div class="dtstat"><div><b>#' + N + '</b><span>Daily Trap</span></div><div><b>' + (r.w ? (4 - r.t) + "/3" : "0/3") + '</b><span>hearts left</span></div><div><b>' + (s.streak || 1) + '</b><span>day streak</span></div><div><b>' + (s.best || 1) + '</b><span>best streak</span></div></div>';
     var sh = P.short ? '<button type="button" class="btn" data-yt="' + esc(P.short) + '" data-title="' + esc(P.name) + '">Watch the 1-minute lesson</button>' : "";
     $("dtr").innerHTML = st + '<h2>How not to fall for it</h2><ol class="fix">' + fx.replace(/<li>/g, "<li><span>").replace(/<\/li>/g, "</span></li>") + "</ol>"
       + '<div class="btns">' + (practice ? "" : '<button type="button" class="btn solid" id="dtsh">Share my result</button>')
@@ -95,7 +96,7 @@
       + '<div class="card" style="margin-top:18px"><span class="label">Your own games</span><h3>Which traps do you fall for?</h3><p>Enter your Chess.com or Lichess name and see where your games go wrong. Free, runs in your browser.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=daily" data-ev="daily-analyze">Analyze my games free &rarr;</a></div>';
     $("dtr").hidden = false;
     var b = $("dtsh"); if (b) b.onclick = function () {
-      var t = "ThroiyChess Daily Trap #" + N + "\n" + (r.w ? "✅ Survived in " + r.t + "/3" : "❌ It got me") + " · 🔥 " + (s.streak || 1) + "-day streak\nCan you survive it?", u = "https://throiychess.com/today/";
+      var t = "ThroiyChess Daily Trap #" + N + "\n" + (r.w ? "Survived " + hearts(4 - r.t) : "It got me " + hearts(0)) + " · 🔥 " + (s.streak || 1) + "-day streak\nCan you survive it?", u = "https://throiychess.com/today/";
       ev("daily-share");
       if (navigator.share && matchMedia("(pointer:coarse)").matches) { navigator.share({ text: t, url: u }).catch(function () {}); return; }
       (navigator.clipboard ? navigator.clipboard.writeText(t + "\n" + u) : Promise.reject()).then(function () { $("dtshm").textContent = "Copied. Paste it in a chat or a story."; }).catch(function () { prompt("Copy your result:", t + " " + u); });
@@ -112,11 +113,11 @@
     var side = P.victim === "w" ? "White" : "Black";
     $("dte").textContent = (practice ? "Practice" : "Daily Trap #" + N) + " · " + P.opening;
     $("dth").textContent = practice ? "Can you survive this trap?" : "Can you survive today's trap?";
-    $("dtp").innerHTML = "You play <b>" + side + "</b>." + (P.lastsan ? " Your opponent just played <b>" + esc(P.lastsan) + "</b>." : "") + " One tempting move walks into a trap. Find a safe move. You get 3 tries.";
+    $("dtp").innerHTML = "You play <b>" + side + "</b>." + (P.lastsan ? " Your opponent just played <b>" + esc(P.lastsan) + "</b>." : "") + " One tempting move walks into a trap. Find a safe move. You have 3 hearts: every wrong move costs one.";
     buildBoard(P.victim === "b"); draw(P.fen, P.last); pips(); msg("", "Your move.", "Tap a piece, then tap where it goes.");
     $("dta").onclick = again;
     var s = load();
-    if (!practice && s.res && s.res[N]) { done = true; tries = s.res[N].t; pips(); result(!!s.res[N].w, null, s); if (s.res[N].w) msg("good", "You already survived today's trap.", "Come back tomorrow for the next one."); }
+    if (!practice && s.res && s.res[N]) { done = true; tries = s.res[N].t; lost = s.res[N].w ? tries - 1 : 3; pips(); result(!!s.res[N].w, null, s); if (s.res[N].w) msg("good", "You already survived today's trap.", "Come back tomorrow for the next one."); }
     root.classList.add("ready");
   }).catch(function () { msg("bad", "The trap did not load.", "Check your connection and reload the page."); });
 })();
