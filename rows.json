@@ -1,27 +1,27 @@
 {
-"generated": "2026-11-14T04:18:09Z",
-"start": "2026-08-17",
-"end": "2026-11-14",
+"generated": "2026-11-15T04:20:26Z",
+"start": "2026-08-18",
+"end": "2026-11-15",
 "rows": [
 {
 "kind": "source",
 "key": "(direct)",
 "label": "Direct of onbekend",
-"value": 84,
+"value": 92,
 "group": "Direct"
+},
+{
+"kind": "source",
+"key": "YouTube",
+"label": "YouTube",
+"value": 30,
+"group": "Website"
 },
 {
 "kind": "source",
 "key": "site",
 "label": "site",
 "value": 28,
-"group": "Website"
-},
-{
-"kind": "source",
-"key": "YouTube",
-"label": "YouTube",
-"value": 26,
 "group": "Website"
 },
 {
@@ -40,6 +40,13 @@
 },
 {
 "kind": "source",
+"key": "www.facebook.com",
+"label": "www.facebook.com",
+"value": 2,
+"group": "Social"
+},
+{
+"kind": "source",
 "key": "www.youtube.com",
 "label": "www.youtube.com",
 "value": 2,
@@ -53,17 +60,10 @@
 "group": "Website"
 },
 {
-"kind": "source",
-"key": "www.facebook.com",
-"label": "www.facebook.com",
-"value": 1,
-"group": "Social"
-},
-{
 "kind": "country",
 "key": "NL",
 "label": "Netherlands",
-"value": 59,
+"value": 67,
 "group": ""
 },
 {
@@ -77,7 +77,7 @@
 "kind": "country",
 "key": "US",
 "label": "United States",
-"value": 34,
+"value": 36,
 "group": ""
 },
 {
@@ -103,16 +103,16 @@
 },
 {
 "kind": "country",
-"key": "DE",
-"label": "Germany",
-"value": 5,
+"key": "IN",
+"label": "India",
+"value": 6,
 "group": ""
 },
 {
 "kind": "country",
-"key": "IN",
-"label": "India",
-"value": 4,
+"key": "DE",
+"label": "Germany",
+"value": 5,
 "group": ""
 },
 {
@@ -173,8 +173,22 @@
 },
 {
 "kind": "country",
+"key": "IE",
+"label": "Ireland",
+"value": 1,
+"group": ""
+},
+{
+"kind": "country",
 "key": "MX",
 "label": "Mexico",
+"value": 1,
+"group": ""
+},
+{
+"kind": "country",
+"key": "PL",
+"label": "Poland",
 "value": 1,
 "group": ""
 },
@@ -196,7 +210,7 @@
 "kind": "device",
 "key": "phone",
 "label": "Telefoon",
-"value": 20,
+"value": 29,
 "group": ""
 },
 {
@@ -210,14 +224,28 @@
 "kind": "device",
 "key": "desktop",
 "label": "Computer",
-"value": 142,
+"value": 146,
+"group": ""
+},
+{
+"kind": "device",
+"key": "desktophd",
+"label": "Computer (groot scherm)",
+"value": 1,
 "group": ""
 },
 {
 "kind": "browser",
 "key": "Chrome",
 "label": "Chrome",
-"value": 159,
+"value": 164,
+"group": ""
+},
+{
+"kind": "browser",
+"key": "Safari",
+"label": "Safari",
+"value": 28,
 "group": ""
 },
 {
@@ -228,24 +256,17 @@
 "group": ""
 },
 {
-"kind": "browser",
-"key": "Safari",
-"label": "Safari",
-"value": 19,
-"group": ""
-},
-{
 "kind": "system",
 "key": "Windows",
 "label": "Windows",
-"value": 147,
+"value": 152,
 "group": ""
 },
 {
 "kind": "system",
 "key": "iOS",
 "label": "iOS",
-"value": 19,
+"value": 28,
 "group": ""
 },
 {
@@ -274,6 +295,13 @@
 "key": "75274",
 "label": "promo-bar",
 "value": 28,
+"group": ""
+},
+{
+"kind": "campaign",
+"key": "79205",
+"label": "damiano-defence",
+"value": 4,
 "group": ""
 },
 {
@@ -398,14 +426,14 @@
 {
 "kind": "meta",
 "key": "generated",
-"label": "2026-11-14T04:18:09Z",
+"label": "2026-11-15T04:20:26Z",
 "value": 0,
 "group": ""
 },
 {
 "kind": "meta",
 "key": "start",
-"label": "2026-08-17",
+"label": "2026-08-18",
 "value": 0,
 "group": ""
 }

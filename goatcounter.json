@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-14T04:18:09Z",
- "start": "2026-08-17",
- "end": "2026-11-14",
+ "generated": "2026-11-15T04:20:26Z",
+ "start": "2026-08-18",
+ "end": "2026-11-15",
  "hits": {
   "error": 404
  },
@@ -9,19 +9,19 @@
   "stats": [
    {
     "name": "",
-    "count": 84,
+    "count": 92,
     "ref_scheme": "o"
+   },
+   {
+    "id": "YouTube",
+    "name": "YouTube",
+    "count": 30,
+    "ref_scheme": "c"
    },
    {
     "id": "site",
     "name": "site",
     "count": 28,
-    "ref_scheme": "c"
-   },
-   {
-    "id": "YouTube",
-    "name": "YouTube",
-    "count": 26,
     "ref_scheme": "c"
    },
    {
@@ -37,6 +37,12 @@
     "ref_scheme": "g"
    },
    {
+    "id": "www.facebook.com",
+    "name": "www.facebook.com",
+    "count": 2,
+    "ref_scheme": "h"
+   },
+   {
     "id": "www.youtube.com",
     "name": "www.youtube.com",
     "count": 2,
@@ -47,12 +53,6 @@
     "name": "smartlink",
     "count": 2,
     "ref_scheme": "c"
-   },
-   {
-    "id": "www.facebook.com",
-    "name": "www.facebook.com",
-    "count": 1,
-    "ref_scheme": "h"
    }
   ],
   "more": false
@@ -62,17 +62,17 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 159
+    "count": 164
+   },
+   {
+    "id": "Safari",
+    "name": "Safari",
+    "count": 28
    },
    {
     "id": "Firefox",
     "name": "Firefox",
     "count": 20
-   },
-   {
-    "id": "Safari",
-    "name": "Safari",
-    "count": 19
    }
   ],
   "more": false
@@ -82,12 +82,12 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 147
+    "count": 152
    },
    {
     "id": "iOS",
     "name": "iOS",
-    "count": 19
+    "count": 28
    },
    {
     "id": "Linux",
@@ -112,7 +112,7 @@
    {
     "id": "phone",
     "name": "",
-    "count": 20
+    "count": 29
    },
    {
     "id": "tablet",
@@ -122,12 +122,12 @@
    {
     "id": "desktop",
     "name": "",
-    "count": 142
+    "count": 146
    },
    {
     "id": "desktophd",
     "name": "",
-    "count": 0
+    "count": 1
    },
    {
     "id": "unknown",
@@ -142,7 +142,7 @@
    {
     "id": "NL",
     "name": "Netherlands",
-    "count": 59
+    "count": 67
    },
    {
     "id": "BG",
@@ -152,7 +152,7 @@
    {
     "id": "US",
     "name": "United States",
-    "count": 34
+    "count": 36
    },
    {
     "id": "CA",
@@ -170,14 +170,14 @@
     "count": 6
    },
    {
+    "id": "IN",
+    "name": "India",
+    "count": 6
+   },
+   {
     "id": "DE",
     "name": "Germany",
     "count": 5
-   },
-   {
-    "id": "IN",
-    "name": "India",
-    "count": 4
    },
    {
     "id": "RU",
@@ -220,8 +220,18 @@
     "count": 1
    },
    {
+    "id": "IE",
+    "name": "Ireland",
+    "count": 1
+   },
+   {
     "id": "MX",
     "name": "Mexico",
+    "count": 1
+   },
+   {
+    "id": "PL",
+    "name": "Poland",
     "count": 1
    },
    {
@@ -243,6 +253,11 @@
     "id": "75274",
     "name": "promo-bar",
     "count": 28
+   },
+   {
+    "id": "79205",
+    "name": "damiano-defence",
+    "count": 4
    },
    {
     "id": "75273",
