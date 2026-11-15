@@ -308,13 +308,13 @@ def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="w
             + '<script>(function(){try{var p=localStorage.getItem("tc_theme")||"system",l=p==="light"||(p==="system"&&matchMedia("(prefers-color-scheme: light)").matches);if(l)document.documentElement.setAttribute("data-theme","light")}catch(e){}})()</script>' + f'<style>{CSS}</style>{ld}{gc}</head><body>{body}{SCRIPT}<script src="/js/fb.js" defer></script></body></html>')
 
 def promo_bar(active):
-    if active in ("Free", "Daily Trap"): return ""
-    return ('<div class="promo"><div class="wrap"><span>New: the Daily Trap. One position a day. Can you survive it?</span>'
-            '<a data-ev="promo-bar-click" href="/today/?utm_source=site&amp;utm_campaign=promo-bar">Play today&#39;s trap &rarr;</a>'
+    if active in ("Free", "Daily"): return ""
+    return ('<div class="promo"><div class="wrap"><span>New every day: a Daily Trap or Puzzle. 3 hearts. Can you solve it?</span>'
+            '<a data-ev="promo-bar-click" href="/today/?utm_source=site&amp;utm_campaign=promo-bar">Play today &rarr;</a>'
             '<button class="promo-x" type="button" aria-label="Close" onclick="try{sessionStorage.setItem(\'promo\',1)}catch(e){}this.closest(\'.promo\').remove()">&times;</button></div></div>'
             '<script>try{if(sessionStorage.getItem("promo"))document.querySelector(".promo").remove()}catch(e){}</script>')
 NAVG = [("Watch", [("Shorts", "/shorts/"), ("Videos", "/videos/"), ("Top games", "/top-games/")]),
-        ("Train", [("Daily Trap", "/today/"), ("Traps", "/traps/"), ("Patterns", "/patterns/"), ("Analyze", "/analyze/"), ("Opponent", "/opponent/")]),
+        ("Train", [("Daily", "/today/"), ("Traps", "/traps/"), ("Patterns", "/patterns/"), ("Analyze", "/analyze/"), ("Opponent", "/opponent/")]),
         ("About", [("About", "/#about"), ("Contact", "/contact/")]), ("Support", "/support/")]
 NAV = [(n, u) for g, x in NAVG for (n, u) in (x if isinstance(x, list) else [(g, x)])]
 _KEY = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/></svg>'
@@ -327,6 +327,8 @@ nav.links{overflow:visible!important;-webkit-mask-image:none!important;mask-imag
 .dd:hover .ddm,.dd:focus-within .ddm,.dd.open .ddm{display:block}
 .ddm a{display:block;padding:10px 12px!important;border-radius:9px;white-space:nowrap}.ddm a:hover{background:var(--tint)}
 .burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:9px 12px;font:inherit;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+nav.links a.cta2{border:2px solid var(--gold);color:var(--gold)!important;border-radius:99px;padding:6px 16px!important;font-weight:800}nav.links a.cta2:hover{background:var(--gold);color:var(--on-gold)!important}
+.dband{display:flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:16px 20px;margin:22px 0;text-decoration:none;color:var(--ink)}.dband:hover{border-color:var(--gold)}.dbi{font-size:34px;line-height:1;color:var(--gold)}.dbt{display:grid;gap:2px;flex:1}.dbt b{font-size:19px}.dbt small{color:var(--mute);font-size:14px}.dbg{font-weight:800;color:var(--on-gold);background:var(--gold);border-radius:99px;padding:9px 18px;white-space:nowrap}
 nav.links a.cta{background:var(--gold);color:var(--on-gold);border-radius:99px;padding:8px 18px!important;font-weight:800}nav.links a.cta:hover{filter:brightness(1.08);color:var(--on-gold)}
 .acct{display:flex;align-items:center;margin-left:4px}
 nav.links a.login{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line3);border-radius:99px;padding:6px 14px 6px 10px!important;color:var(--gold)}
@@ -340,7 +342,7 @@ nav.links.open{display:flex!important}
 .ddb{pointer-events:none;font-size:11.5px;color:#7d745f;padding:12px 0 2px;text-align:left}.ddb::after{display:none}
 .ddm{display:block;position:static;background:none;border:0;box-shadow:none;padding:0;min-width:0}
 .ddm a,nav.links>a{padding:11px 4px!important;font-size:15px!important}
-nav.links a.cta{order:-2;text-align:center;margin:6px 0 4px;padding:13px 18px!important;font-size:15px!important}
+nav.links a.cta{order:-2;text-align:center;margin:6px 0 4px;padding:13px 18px!important;font-size:15px!important}nav.links a.cta2{order:-3;text-align:center;margin:6px 0 4px;padding:12px 18px!important;font-size:15px!important}.dband{flex-wrap:wrap;padding:14px}.dbg{width:100%;text-align:center}
 .acct{order:-1;margin:0 0 4px;display:block}nav.links a.login{width:100%;justify-content:center;padding:11px!important}
 .acct-in .ddb{display:none}.acct-in .ddm{position:static;display:block;border-top:1px solid var(--line);border-radius:0;padding-top:8px;background:none;border-left:0;border-right:0;border-bottom:0;margin-top:0}.acct-in .ddm::before,.acct-in .ddm::after{display:none}.acct-in .ddm a{color:var(--mute)}.acct-in .avab{display:none}
 .acct-in{width:100%}}
@@ -363,6 +365,7 @@ def _nav_html(active):
             out.append(f'<div class="dd{cur}"><button type="button" class="ddb" aria-haspopup="true" aria-expanded="false">{g}</button><div class="ddm">' + "".join(_nl(n, u, active) for n, u in x) + '</div></div>')
         else:
             out.append(_nl(g, x, active))
+    out.append(f'<a class="cta2" data-ev="nav-daily" href="/today/"{" aria-current=page" if active == "Daily" else ""}>Play today</a>')
     out.append(f'<a class="cta" href="/improve/"{" aria-current=page" if active == "Improve" else ""}>Improve</a>')
     out.append('<div class="acct"><a class="login acct-out" href="/members/">' + _KEY + 'Log in</a>'
                '<div class="dd acct-in"><button type="button" class="avab" aria-haspopup="true" aria-expanded="false" aria-label="Your account">&#9823;&#xFE0E;</button><div class="ddm">'
@@ -372,6 +375,10 @@ def header(active=""):
     return promo_bar(active) + NAV_CSS + ('<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="Throiy Chess home"><img src="/img/logo-small.png" width="96" height="161" alt="">'
             '<span>THROIY<b>CHESS</b></span></a><button class="burger" type="button" aria-controls="mainnav" aria-expanded="false">Menu</button><nav class="links" id="mainnav" aria-label="Main">'
             + _nav_html(active) + '</nav></div></header>') + NAV_JS
+
+def daily_band(src):
+    return (f'<div class="wrap"><a class="dband" href="/today/?utm_source=site&amp;utm_campaign={src}" data-ev="band-{src}"><span class="dbi" aria-hidden="true">&#9822;</span>'
+            '<span class="dbt"><b>Today\'s Daily</b><small>One position. 3 hearts. Can you solve it?</small></span><span class="dbg">Play now &rarr;</span></a></div>')
 
 def support_bar():
     return ('<div class="wrap"><div class="supportbar"><p><strong>Enjoying the lessons?</strong> They stay free. A small tip keeps new lessons coming.</p>'
@@ -392,7 +399,7 @@ def newsletter():
 def footer(band=True, nl=True):
     ext = " ".join(f'<a href="{u}" target="_blank" rel="noopener">{n}</a>' for n, u in LINKS)
     return ((newsletter() if nl else "") + (support_bar() if band else "") + f'<footer><div class="wrap"><span>© {datetime.date.today().year} Throiy Chess · Chess lessons, traps and tools</span>'
-            f'<nav aria-label="Footer">{ext}<a href="/traps/">Traps</a><a href="/patterns/">Patterns</a><a href="/shorts/">Shorts</a><a href="/analyze/">Analyze</a><a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav></div></footer>')
+            f'<nav aria-label="Footer">{ext}<a href="/today/">Daily</a><a href="/traps/">Traps</a><a href="/patterns/">Patterns</a><a href="/shorts/">Shorts</a><a href="/analyze/">Analyze</a><a href="/support/">Support</a><a href="/contact/">Contact</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></nav></div></footer>')
 
 # click-to-load YouTube (no request to YouTube until the visitor presses play)
 SCRIPT = """<script>
@@ -530,6 +537,7 @@ def traps_extras():
 def traps_index():
     body = header("Traps") + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Trap library</span>
 <h1 class="page">Learn the trap. Then the fix.</h1><p>{len(TRAPS)} opening traps, each explained in plain words first, then move by move on the board.</p></div>
+{daily_band('traps')}
 <div class="grid">{"".join(trap_card(t) for t in TRAPS)}</div>{traps_extras()}<div style="height:56px"></div></main>''' + footer()
     il = {"@context": "https://schema.org", "@type": "ItemList", "name": "Chess opening traps", "itemListElement": [
         {"@type": "ListItem", "position": i, "url": f'{SITE}/traps/{t["slug"]}/', "name": t["name"]} for i, t in enumerate(TRAPS, 1)]}
@@ -563,7 +571,7 @@ def home():
 <article class="hs bgimg" style="--hsimg:url(/img/hero/analyze.jpg)" aria-roledescription="slide" aria-label="1 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Free for every player<i class="blk" aria-hidden="true"></i></span>
 <h1>Find out <em>why you lose</em> games.</h1>
 <p class="lead">Enter your Chess.com or Lichess name. Your games are analyzed in your own browser and you see the three leaks that cost you the most.</p>
-<div class="btns"><a class="btn solid" href="/analyze/">Analyze my games free</a><a class="btn" href="/today/?utm_source=site&amp;utm_campaign=home-hero" data-ev="home-daily">Play today&#39;s trap</a><a class="btn out-only" href="/members/?utm_source=home">Join free</a><a class="btn in-only" href="/members/">Open my dashboard</a></div></div>
+<div class="btns"><a class="btn solid" href="/analyze/">Analyze my games free</a><a class="btn" href="/today/?utm_source=site&amp;utm_campaign=home-hero" data-ev="home-daily">Play today&#39;s Daily</a><a class="btn out-only" href="/members/?utm_source=home">Join free</a><a class="btn in-only" href="/members/">Open my dashboard</a></div></div>
 <div class="hs-card"><span class="hd">Example report</span>
 <div class="hs-row"><span class="ic">{tic("Defence")}</span><div><b>Pieces left hanging</b><small>Check what is attacked before you move</small></div><span class="n">11</span></div>
 <div class="hs-row"><span class="ic">{tic("Tactics")}</span><div><b>Missed tactics</b><small>A fork and a pin you could have played</small></div><span class="n">7</span></div>
@@ -580,6 +588,7 @@ def home():
 <div class="ticks"><img src="/img/fishing-pole-board.jpg" width="720" height="720" alt="Final position of the Fishing Pole Trap: Black's queen mates on h1"><i class="t1"></i><i class="t2"></i></div></div></article>
 </div><button type="button" class="hs-arr l" id="hsL" aria-label="Previous slide"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="hs-arr r" id="hsR" aria-label="Next slide"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><div class="hs-dots"><button type="button" class="on" aria-label="Slide 1"></button><button type="button" aria-label="Slide 2"></button><button type="button" aria-label="Slide 3"></button></div></section>
 {SLIDER_JS}
+{daily_band('home')}
 <div class="mq" aria-hidden="true"><div class="mq-in"><span>Traps</span><span>Analyze your games</span><span>Scout any opponent</span><span>Free cheat sheet</span><span>Principle library</span><span>Puzzles</span><span>Chess history</span><span>Free to start</span><span>Runs in your browser</span><span>Nothing to install</span><span>Traps</span><span>Analyze your games</span><span>Scout any opponent</span><span>Free cheat sheet</span><span>Principle library</span><span>Puzzles</span><span>Chess history</span><span>Free to start</span><span>Runs in your browser</span><span>Nothing to install</span></div></div>
 <div class="wrap paths">{paths}</div>
 <section id="shorts"><div class="wrap"><div class="sechead"><div><span class="eyebrow">Latest Shorts</span><h2>One lesson a day, under a minute.</h2></div>
@@ -623,7 +632,7 @@ def shorts_pages():
             redirect = ('<script>try{var c=new URLSearchParams(location.search).get("cat");if(c&&/^[a-z-]+$/.test(c))location.replace("/shorts/"+c+"/")}catch(e){}</script>' if not cat and i == 0 else "")
             body = header("Shorts") + f'''<style>{SHORT_FILTER_CSS}</style>{redirect}<main class="wrap"><div class="pagehead"><span class="eyebrow">{"All Shorts" if not cat else label}{f" · page {i + 1}" if i else ""}</span>
 <h1 class="page">Every lesson, in one place.</h1><p>Opening traps, named mates and top-game moments. Press play to watch here, or follow along on YouTube.</p></div>
-{fil}<div class="shorts">{"".join(short_card(s) for s in items)}</div>{pager}
+{fil}{daily_band('shorts')}<div class="shorts">{"".join(short_card(s) for s in items)}</div>{pager}
 <div class="btns" style="justify-content:center;margin:40px 0 56px"><a class="btn solid" href="{LINKS[0][1]}" target="_blank" rel="noopener">Subscribe on YouTube</a></div></main>''' + footer()
             ttl = ("All Shorts" if not cat else f"{label} Shorts") + (f" (page {i + 1})" if i else "")
             out.append((path, page(path, f"{ttl} · Throiy Chess", "Every Throiy Chess Short: opening traps, mating patterns and top-game moments, each under a minute." if not cat else f"Throiy Chess Shorts: {label.lower()}, each under a minute.",
@@ -775,9 +784,11 @@ PUZZLE_FROM = "2026-11-18"   # first Daily Puzzle; from here every other day is 
 assert len({x["id"] for x in DAILY_PUZZLES}) == len(DAILY_PUZZLES)
 PZ_CHUNK = 100
 assert sorted(DAILY_ORDER) == sorted(DAILY_SLUGS) and all(v in DAILY_SLUGS for v in DAILY_SCHEDULE.values())
-DT_CSS = (".dt [hidden]{display:none!important}.dt{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:36px;align-items:start;margin-bottom:56px}.dt .board{cursor:pointer;touch-action:manipulation}"
+DT_CSS = (".dt [hidden]{display:none!important}.dt{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:36px;align-items:start;margin-bottom:56px}.dt .board{cursor:pointer;touch-action:none}"
           ".dt .sq.sel{box-shadow:inset 0 0 0 4px var(--gold)}.dt .sq.tg::after{content:\"\";position:absolute;left:50%;top:50%;width:30%;height:30%;margin:-15% 0 0 -15%;border-radius:50%;background:rgba(20,18,15,.38);z-index:2}"
           ".dt .sq.tg:has(img)::after{width:86%;height:86%;margin:-43% 0 0 -43%;background:none;border:4px solid rgba(20,18,15,.45);box-sizing:border-box}"
+          ".dtgoal{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;background:var(--panel);border-left:5px solid var(--gold);padding:10px 14px;margin-bottom:10px;font-size:15px;font-weight:600}.dtgoal strong{font-size:20px;color:var(--gold)}.dtgoal .pr{margin-left:auto;color:var(--mute);font-weight:700}.dtgoal .sd{width:15px;height:15px;border-radius:50%;border:2px solid var(--mute);display:inline-block;margin-right:-6px}.dtgoal .sd.w{background:#f4efe3}.dtgoal .sd.b{background:#14120f}"
+          ".dtbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.dthint{font:inherit;font-weight:700;font-size:14px;color:var(--ink);background:none;border:1px solid var(--line3,var(--line));border-radius:99px;padding:9px 16px;cursor:pointer}.dthint:disabled{opacity:.45;cursor:default}.dt .sq.hint{box-shadow:inset 0 0 0 4px #3b9eff;background-image:linear-gradient(rgba(59,158,255,.28),rgba(59,158,255,.28))}.dt .sq.dsrc img{opacity:.35}.dtghost{position:fixed;pointer-events:none;z-index:60;transform:translate(-50%,-50%);filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}.dtlinks{max-width:720px;margin:0 0 56px;color:var(--mute)}"
           ".dtmsg{background:var(--panel);border-top:4px solid var(--gold);padding:18px 20px;display:grid;gap:6px;font-size:17px}.dtmsg b{font-size:20px}.dtmsg span{color:var(--mute)}"
           ".dtmsg.good{border-color:#2e9c4a}.dtmsg.bad{border-color:var(--red)}.dttry{display:flex;align-items:center;gap:8px;margin:14px 0;color:var(--mute);font-size:14px;font-weight:600}"
           ".dttry b{font-size:30px;line-height:1;color:var(--red);font-weight:400}.dttry b.u{color:var(--line)}.dttry span{margin-left:6px}"
@@ -787,12 +798,11 @@ DT_CSS = (".dt [hidden]{display:none!important}.dt{display:grid;grid-template-co
 def today_page():
     path = "/today/"
     cfg = json.dumps(dict(start=DAILY_START, order=DAILY_ORDER, schedule=DAILY_SCHEDULE, pz=dict(frm=PUZZLE_FROM, n=len(DAILY_PUZZLES), c=PZ_CHUNK)), separators=(",", ":"))
-    body = header("Daily Trap") + f'''<style>{DT_CSS}</style><main class="wrap"><div class="pagehead dthead" style="padding-top:26px"><span class="eyebrow" id="dte">Daily Trap</span><h1 class="page" id="dth">Can you survive today&#39;s trap?</h1><p id="dtp">One position a day. One tempting move walks into a trap. Find a safe move.</p></div>
-<div class="dt" id="dt"><div><div class="board" id="dtb" role="application" aria-label="Chess board: tap a piece, then tap a square"></div><div class="dttry" id="dtt"></div></div>
+    body = header("Daily") + f'''<style>{DT_CSS}</style><main class="wrap"><div class="pagehead dthead" style="padding-top:26px"><span class="eyebrow" id="dte">Daily</span><h1 class="page" id="dth">Today&#39;s chess challenge</h1><p id="dtp">One position a day. 3 hearts. Can you solve it?</p></div>
+<div class="dt" id="dt"><div><div class="dtgoal" id="dtg" aria-live="polite"></div><div class="board" id="dtb" role="application" aria-label="Chess board: tap or drag a piece"></div><div class="dtbar"><div class="dttry" id="dtt"></div><button type="button" class="dthint" id="dthint" hidden>Hint</button></div></div>
 <div><div class="dtmsg" id="dtm" aria-live="polite"><b>Loading the board…</b></div><p style="margin:14px 0 0"><button type="button" class="btn solid" id="dta" hidden>Try again</button></p><div id="dtr" hidden></div>
-<noscript><p>The Daily Trap needs JavaScript. You can also <a href="/traps/">step through every trap</a>.</p></noscript></div></div>
-<section class="prose" style="max-width:720px;margin-bottom:56px"><h2>How the Daily Trap works</h2><p>Every day you get one position from a real opening trap. You play the side that is about to fall for it. Make a move on the board: if it is safe, you survive. If you take the bait, you see how the trap plays out, and you can try again. You have three hearts: every wrong move costs one, and you start again with three hearts every day.</p>
-<p>Some days it is a Daily Puzzle instead: find the best move, or checkmate. The hearts and the streak work the same way.</p><p>Play every day to build your streak. Your streak is saved in this browser. Every position and every answer on this page has been checked.</p><p>Want more? <a href="/traps/">Step through every trap in the library</a> or <a href="/analyze/">analyze your own games for free</a>.</p></section>
+<noscript><p>The Daily needs JavaScript. You can also <a href="/traps/">step through every trap</a>.</p></noscript></div></div>
+<p class="dtlinks">A new trap or puzzle every day. Your streak is saved in this browser. <a href="/traps/">All traps</a> &middot; <a href="/analyze/">Analyze my games free</a></p>
 </main>''' + footer() + f'<script>window.DT={cfg}</script><script src="/js/daily.js" defer></script>'
     ld = {"@context": "https://schema.org", "@type": "WebApplication", "name": "Daily Trap", "url": SITE + path, "applicationCategory": "GameApplication", "operatingSystem": "Any",
           "description": "One chess opening trap a day, playable in your browser. Find the safe move and keep your streak.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}}
