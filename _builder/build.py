@@ -597,21 +597,21 @@ def home():
 <section class="hslider" aria-roledescription="carousel" aria-label="Highlights"><div class="hs-track" id="hsT">
 <article class="hs bgimg" style="--hsimg:url(/img/hero/analyze.jpg)" aria-roledescription="slide" aria-label="1 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Free for every player<i class="blk" aria-hidden="true"></i></span>
 <h1>Find out <em>why you lose</em> games.</h1>
-<p class="lead">Enter your Chess.com or Lichess name. Your games are analyzed in your own browser and you see the three leaks that cost you the most.</p>
-<div class="btns"><a class="btn solid" href="/analyze/">Analyze my games free</a><a class="btn" href="/today/?utm_source=site&amp;utm_campaign=home-hero" data-ev="home-daily">Play today&#39;s Daily</a><a class="btn out-only" href="/members/?utm_source=home">Join free</a><a class="btn in-only" href="/members/">Open my dashboard</a></div></div>
+<p class="lead">Enter your Chess.com or Lichess name. See the three leaks that cost you the most.</p>
+<div class="btns"><a class="btn solid" href="/analyze/">Analyze my games free</a></div></div>
 <div class="hs-card"><span class="hd">Example report</span>
 <div class="hs-row"><span class="ic">{tic("Defence")}</span><div><b>Pieces left hanging</b><small>Check what is attacked before you move</small></div><span class="n">11</span></div>
 <div class="hs-row"><span class="ic">{tic("Tactics")}</span><div><b>Missed tactics</b><small>A fork and a pin you could have played</small></div><span class="n">7</span></div>
 <div class="hs-row"><span class="ic">{tic("King safety")}</span><div><b>King safety</b><small>Castle early, keep the pawns in front</small></div><span class="n">5</span></div></div></div></article>
 <article class="hs" aria-roledescription="slide" aria-label="2 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Principle library · Members</span>
 <h2 class="big">150+ chess principles, <em>matched to your games.</em></h2>
-<p class="lead">Analyze your games and the library picks the principles that fix your mistakes. Each one comes with a playable example from a real game.</p>
+<p class="lead">The library picks the principles that fix your mistakes.</p>
 <div class="btns"><a class="btn solid out-only" href="/members/?utm_source=home">Join free</a><a class="btn solid in-only" href="/members/#library">Open my library</a></div></div>
 <div class="hs-card"><span class="hd">Members only</span>{mini}</div></div></article>
 <article class="hs" aria-roledescription="slide" aria-label="3 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Lessons &amp; games</span>
 <h2 class="big">Stop falling for <em>chess traps.</em></h2>
-<p class="lead">Opening traps, mating patterns and the best moments from top games. Each one explained in under a minute.</p>
-<div class="btns"><a class="btn solid" href="/shorts/">Watch the Shorts</a><a class="btn" href="#traps">Browse the traps</a></div></div>
+<p class="lead">Opening traps and mating patterns, each explained in under a minute.</p>
+<div class="btns"><a class="btn solid" href="/shorts/">Watch the Shorts</a></div></div>
 <div class="ticks"><img src="/img/fishing-pole-board.jpg" width="720" height="720" alt="Final position of the Fishing Pole Trap: Black's queen mates on h1"><i class="t1"></i><i class="t2"></i></div></div></article>
 </div><button type="button" class="hs-arr l" id="hsL" aria-label="Previous slide"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="hs-arr r" id="hsR" aria-label="Next slide"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><div class="hs-dots"><button type="button" class="on" aria-label="Slide 1"></button><button type="button" aria-label="Slide 2"></button><button type="button" aria-label="Slide 3"></button></div></section>
 {SLIDER_JS}
@@ -981,7 +981,7 @@ def _analyze_body(active, eyebrow, h1, intro, src):
 <label class="sr" for="az-user">Username</label><input id="az-user" placeholder="Username" autocomplete="off" required><button class="btn solid" type="submit">Find games</button></form>
 <div id="az-quick" style="margin:0 0 6px"></div><div id="az-games"></div><div id="az-report"></div>
 {upgrade_cta(src)}
-<p class="small" style="margin:30px 0 50px">The analysis runs in your own browser with Stockfish 17.1 (GPLv3, <a href="https://github.com/official-stockfish/Stockfish" target="_blank" rel="noopener">source</a>). We don't store your games. Games are loaded from the public Chess.com and Lichess APIs. Throiy Chess is not affiliated with Chess.com or Lichess. A beta: the engine runs at a light depth, so treat single numbers as a guide.</p>
+<p class="small" style="margin:30px 0 50px">Your games stay in your browser. <a href="/terms/#sources">Sources and notes</a></p>
 </main><script type="application/json" id="trap-data">{json.dumps(tdata)}</script>{SB_SCRIPTS}<script type="module" src="/js/analyze.js"></script>''' + footer(band=False)
 
 def analyze_page():
@@ -1165,7 +1165,7 @@ def improve_page():
 def terms():
     body = header() + f'''<main class="wrap"><div class="pagehead"><span class="eyebrow">Terms</span><h1 class="page">Terms of use</h1><p>Short and plain. By using {DOMAIN} you agree to these terms.</p></div>
 <div class="prose" style="padding-bottom:64px">
-<h2>Sources</h2><p>Daily Puzzles come from the Lichess puzzle database, which is public domain (CC0). Chess pieces, traps and explanations on this site are our own work.</p>
+<h2 id="sources">Sources</h2><p>Daily Puzzles come from the Lichess puzzle database, which is public domain (CC0). Chess pieces, traps and explanations on this site are our own work.</p><p>The analysis runs in your own browser with Stockfish 17.1 (GPLv3, <a href="https://github.com/official-stockfish/Stockfish" target="_blank" rel="noopener">source</a>). We don't store your games. Games are loaded from the public Chess.com and Lichess APIs. Throiy Chess is not affiliated with Chess.com or Lichess. The analyzer is a beta that runs at a light depth, so treat single numbers as a guide.</p>
 <h2>What this is</h2><p>Throiy Chess offers free chess lessons and tools. The site and the analyzer are in beta and provided as they are, without guarantees.</p>
 <h2>The analyzer and reports</h2><p>Reports come from a chess engine at a light depth and are a guide, not advice you must follow. Rating bands and accuracy are our own estimates from our own sample of games. They are not an official rating and not comparable with the numbers on Chess.com or Lichess. Throiy Chess is not affiliated with Chess.com or Lichess. Use the analyzer only on games you may analyze; we do not store the games you load.</p>
 <h2>Your account</h2><p>An account is optional and free. You are responsible for the e-mail address you sign in with. We set limits on how many reports you can save to keep the service fast for everyone. You can delete your account and all saved data yourself on your members page at any time. We may remove accounts that abuse the service.</p>
