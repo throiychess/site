@@ -598,7 +598,7 @@ def home():
 <article class="hs bgimg" style="--hsimg:url(/img/hero/analyze.jpg)" aria-roledescription="slide" aria-label="1 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Free for every player<i class="blk" aria-hidden="true"></i></span>
 <h1>Find out <em>why you lose</em> games.</h1>
 <p class="lead">Enter your Chess.com or Lichess name. See the three leaks that cost you the most.</p>
-<div class="btns"><a class="btn solid" href="/analyze/">Analyze my games free</a></div></div>
+<div class="btns"><a class="btn solid" href="/analyze/">Analyze my games free</a><a class="btn" href="/today/?utm_source=site&amp;utm_campaign=home-hero" data-ev="home-daily">Play today&#39;s Daily</a></div></div>
 <div class="hs-card"><span class="hd">Example report</span>
 <div class="hs-row"><span class="ic">{tic("Defence")}</span><div><b>Pieces left hanging</b><small>Check what is attacked before you move</small></div><span class="n">11</span></div>
 <div class="hs-row"><span class="ic">{tic("Tactics")}</span><div><b>Missed tactics</b><small>A fork and a pin you could have played</small></div><span class="n">7</span></div>
@@ -606,12 +606,12 @@ def home():
 <article class="hs" aria-roledescription="slide" aria-label="2 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Principle library · Members</span>
 <h2 class="big">150+ chess principles, <em>matched to your games.</em></h2>
 <p class="lead">The library picks the principles that fix your mistakes.</p>
-<div class="btns"><a class="btn solid out-only" href="/members/?utm_source=home">Join free</a><a class="btn solid in-only" href="/members/#library">Open my library</a></div></div>
+<div class="btns"><a class="btn solid out-only" href="/members/?utm_source=home">Join free</a><a class="btn solid in-only" href="/members/#library">Open my library</a><a class="btn" href="/analyze/">Try the analyzer</a></div></div>
 <div class="hs-card"><span class="hd">Members only</span>{mini}</div></div></article>
 <article class="hs" aria-roledescription="slide" aria-label="3 of 3"><div class="wrap hs-in"><div class="copy"><span class="eyebrow">Lessons &amp; games</span>
 <h2 class="big">Stop falling for <em>chess traps.</em></h2>
 <p class="lead">Opening traps and mating patterns, each explained in under a minute.</p>
-<div class="btns"><a class="btn solid" href="/shorts/">Watch the Shorts</a></div></div>
+<div class="btns"><a class="btn solid" href="/today/?utm_source=site&amp;utm_campaign=home-hero" data-ev="home-daily-3">Play today&#39;s Daily</a><a class="btn" href="/shorts/">Watch the Shorts</a></div></div>
 <div class="ticks"><img src="/img/fishing-pole-board.jpg" width="720" height="720" alt="Final position of the Fishing Pole Trap: Black's queen mates on h1"><i class="t1"></i><i class="t2"></i></div></div></article>
 </div><button type="button" class="hs-arr l" id="hsL" aria-label="Previous slide"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="hs-arr r" id="hsR" aria-label="Next slide"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button><div class="hs-dots"><button type="button" class="on" aria-label="Slide 1"></button><button type="button" aria-label="Slide 2"></button><button type="button" aria-label="Slide 3"></button></div></section>
 {SLIDER_JS}
@@ -756,6 +756,7 @@ def trap_page(t, kind="traps"):
             f'<div class="card"><span class="label">Watch</span><h3>The {e(t["name"])} as a Short</h3><p>All lessons are on YouTube, TikTok and Instagram.</p>'
             f'<a class="go" href="{LINKS[0][1]}/shorts" target="_blank" rel="noopener">Watch on YouTube →</a></div>')
     path = f'/{kind}/{t["slug"]}/'
+    skip_html = (f'<p style="margin:12px 0 0"><button type="button" class="btn solid" id="skip" data-p="{t["skip"][0]}" data-ev="pattern-skip">{e(t["skip"][1])} &rarr;</button></p><p class="hint" style="margin-top:6px">{e(t["skip"][2])}</p>') if t.get("skip") else ""
     body = header("Patterns" if pat else "Traps") + f'''<main class="wrap"><div class="crumb"><a href="/{kind}/">{LIB}</a> / {e(t["name"])}</div>
 <div class="pagehead" style="padding-top:18px"><span class="eyebrow">{e(t["opening"])} · {e(t["side"])}</span><h1 class="page">{e(t["name"])}</h1><p>{e(t["hook"])}</p></div>
 {f'<div class="simple"><span class="eyebrow">In plain words</span><p>{e(t["simple"])}</p></div>' if t.get("simple") else ""}
@@ -764,7 +765,7 @@ def trap_page(t, kind="traps"):
 <div class="player"><div><div class="board" id="board" role="img" aria-label="Chess board showing the {e(t["name"])}"></div>
 <div class="ctrl"><button type="button" id="first" aria-label="Start position">⏮</button><button type="button" id="prev" aria-label="Previous move">◀</button>
 <button type="button" id="next" aria-label="Next move">▶</button><button type="button" id="last" aria-label="Final position">⏭</button></div>
-<p class="hint">Tip: use the arrow keys.</p></div>
+{skip_html}<p class="hint">Tip: use the arrow keys.</p></div>
 <div><div class="note" aria-live="polite"><div class="meta"><span class="label" id="nl"></span><span class="tag" id="nt"></span></div><p id="nx"></p></div>
 <div class="moves" id="moves">{mv_html}</div></div></div>
 <section style="margin-top:56px"><div class="twocol"><div class="prose"><span class="eyebrow">{"The pattern" if pat else "The trap"}</span><h2>How {e(t["name"])} works</h2><p>{e(t["intro"])}</p>
@@ -783,6 +784,7 @@ document.getElementById("nl").textContent=n.label;const t=document.getElementByI
 document.querySelectorAll("#moves button").forEach(b=>b.classList.toggle("on",+b.dataset.p===cur))}
 document.getElementById("first").onclick=()=>show(0);document.getElementById("prev").onclick=()=>show(cur-1);
 document.getElementById("next").onclick=()=>show(cur+1);document.getElementById("last").onclick=()=>show(D.plies.length-1);
+const sk=document.getElementById("skip");if(sk)sk.onclick=()=>show(+sk.dataset.p);
 document.getElementById("moves").onclick=e=>{const b=e.target.closest("button");if(b)show(+b.dataset.p)};
 document.addEventListener("keydown",e=>{if(e.target.closest("input,textarea"))return;if(e.key==="ArrowRight")show(cur+1);if(e.key==="ArrowLeft")show(cur-1)});
 show(0);</script>'''
