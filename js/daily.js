@@ -232,7 +232,7 @@
       + '<div class="btns">' + (practice ? "" : '<button type="button" class="btn solid" id="dtsh">Share my result</button>') + '<a class="btn' + (practice ? " solid" : "") + '" href="/traps/" data-ev="daily-puzzle-traps">Step through the traps</a></div>'
       + '<p class="small" id="dtshm" role="status" aria-live="polite"></p>'
       + (practice ? '<p><a class="go" href="/today/">Play today\'s Daily &rarr;</a></p>' : '<p class="dtnext">A new one every day. <span id="dtcd"></span></p>')
-      + '<div class="card" style="margin-top:18px"><span class="label">Your own games</span><h3>Where do your games go wrong?</h3><p>Enter your Chess.com or Lichess name and see your biggest leaks. Free, runs in your browser.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=daily" data-ev="daily-analyze">Analyze my games free &rarr;</a></div>';
+      + '<div class="card" style="margin-top:18px"><span class="label">Your own games</span><h3>Where do your games go wrong?</h3><p>Enter your Chess.com or Lichess name and see your biggest mistakes. Free, runs in your browser.</p><a class="go" href="/analyze/?utm_source=site&amp;utm_campaign=daily" data-ev="daily-analyze">Analyze my games free &rarr;</a></div>';
     $("dtr").hidden = false;
     var b = $("dtsh"); if (b) b.onclick = function () {
       var t = "ThroiyChess Daily Puzzle #" + N + "\n" + (r.w ? "Solved " + hearts(4 - r.t) : "Not this time " + hearts(0)) + " \u00b7 \uD83D\uDD25 " + (s.streak || 1) + "-day streak\nCan you solve it?", u = "https://throiychess.com/today/";
