@@ -182,9 +182,10 @@
     var cd = $("dtcd"); if (cd) { var n = new Date(), m = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1), mins = Math.round((m - n) / 6e4); cd.textContent = "Next one in " + Math.floor(mins / 60) + " h " + (mins % 60) + " min."; }
     try { $("dtr").scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
   }
-  function runPuzzle(pid) {
-    Promise.all([fetch("/js/daily-puzzles.json").then(function (r) { return r.json(); }), import("/js/chess.js")]).then(function (a) {
-      var all = a[0], p = all.filter(function (x) { return x.id === pid; })[0]; if (!p) throw 0;
+  function runPuzzle(spec) {
+    var Z = C.pz, cs = Z.c, need = spec.id ? fetch("/js/dp/index.json").then(function (r) { return r.json(); }).then(function (ix) { if (ix[spec.id] === undefined) throw 0; return ix[spec.id]; }) : Promise.resolve(Math.floor(spec.idx / cs));
+    Promise.all([need.then(function (k) { return fetch("/js/dp/" + k + ".json").then(function (r) { return r.json(); }).then(function (arr) { return spec.id ? arr.filter(function (x) { return x.id === spec.id; })[0] : arr[spec.idx % cs]; }); }), import("/js/chess.js")]).then(function (a) {
+      var p = a[0]; if (!p) throw 0;
       startPuzzle(p, a[1].Chess); $("dta").onclick = null;
       var s = load();
       if (!practice && s.res && s.res[N] && s.res[N].k === "p") { done = true; tries = s.res[N].t; lost = s.res[N].w ? tries - 1 : 3; pips(); pzResult(!!s.res[N].w, s); if (s.res[N].w) msg("good", "You already solved today's puzzle.", "Come back tomorrow for the next one."); }
@@ -193,8 +194,8 @@
   }
   (function () {
     var pp = q.get("p"), tq = q.get("t"), today = iso(new Date());
-    if (pp && /^[A-Za-z0-9]{3,8}$/.test(pp)) { practice = true; runPuzzle(pp); window.__pz = 1; return; }
-    if (!tq && C.pz && !C.schedule[today]) { var d = daysBetween(C.pz.frm, today); if (d >= 0 && d % 2 === 0) { var o = C.pz.order; window.__pz = 1; runPuzzle(o[(d / 2) % o.length]); } }
+    if (pp && /^[A-Za-z0-9]{3,8}$/.test(pp)) { practice = true; runPuzzle({ id: pp }); window.__pz = 1; return; }
+    if (!tq && C.pz && !C.schedule[today]) { var d = daysBetween(C.pz.frm, today); if (d >= 0 && d % 2 === 0) { window.__pz = 1; runPuzzle({ idx: (d / 2) % C.pz.n }); } }
   })();
 
   if (!window.__pz) fetch("/js/daily-data.json").then(function (r) { return r.json(); }).then(function (all) {
