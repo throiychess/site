@@ -204,6 +204,7 @@ nav.links{overflow:visible!important;-webkit-mask-image:none!important;mask-imag
 .burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:9px 12px;font:inherit;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
 nav.links a.cta2{border:2px solid var(--gold);color:var(--gold)!important;border-radius:99px;padding:6px 16px!important;font-weight:800}nav.links a.cta2:hover{background:var(--gold);color:var(--on-gold)!important}
 .dband{display:flex;align-items:center;gap:16px;background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:14px;padding:16px 20px;margin:22px 0;text-decoration:none;color:var(--ink)}.dband:hover{border-color:var(--gold)}.dbi{font-size:34px;line-height:1;color:var(--gold)}.dbt{display:grid;gap:2px;flex:1}.dbt b{font-size:19px}.dbt small{color:var(--mute);font-size:14px}.dbg{font-weight:800;color:var(--on-gold);background:var(--gold);border-radius:99px;padding:9px 18px;white-space:nowrap}
+.headcta{margin:20px 0 0}.btn.big{font-size:18px;padding:16px 30px}@media(max-width:860px){.btn.big{display:block;text-align:center;width:100%}}
 nav.links a.cta{background:var(--gold);color:var(--on-gold);border-radius:99px;padding:8px 18px!important;font-weight:800}nav.links a.cta:hover{filter:brightness(1.08);color:var(--on-gold)}
 .acct{display:flex;align-items:center;margin-left:4px}
 nav.links a.login{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line3);border-radius:99px;padding:6px 14px 6px 10px!important;color:var(--gold)}
@@ -228,8 +229,7 @@ b.addEventListener("click",function(){var o=n.classList.toggle("open");b.setAttr
 h.querySelectorAll(".ddb,.avab").forEach(function(x){x.addEventListener("click",function(e){var d=x.closest(".dd,.acct-in"),o=d.classList.contains("open");h.querySelectorAll(".open").forEach(function(y){if(y!==n)y.classList.remove("open")});if(!o)d.classList.add("open");x.setAttribute("aria-expanded",!o);e.stopPropagation()})});
 document.addEventListener("click",function(){h.querySelectorAll(".dd.open,.acct-in.open").forEach(function(y){y.classList.remove("open")})});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){h.querySelectorAll(".dd.open,.acct-in.open").forEach(function(y){y.classList.remove("open")});n.classList.remove("open")}})})();</script><main class="wrap"><div class="pagehead"><span class="eyebrow">Coming soon · waitlist</span>
-<h1 class="page">The Throiy Chess improvement program</h1>
-<p>The free analyzer finds your biggest mistakes in 5 games. The program goes further: a stronger engine looking deeper, all your games, and training built from your own mistakes.</p></div>
+<h1 class="page">The Throiy Chess improvement program</h1><p>Deeper analysis of all your games, and training built from your own mistakes.</p><p class="headcta"><a class="btn solid big" data-ev="head-improve" href="#wl-email">Join the waitlist &darr;</a></p></div>
 <style>
 .mw{max-width:1120px}
 .mhero{padding:46px 0 10px}.mhero h1{font-size:clamp(36px,6vw,64px);line-height:1.02;margin:10px 0 14px}.mhero p{color:var(--mute);max-width:640px;font-size:19px;margin:0}

@@ -1,178 +1,178 @@
 {
 "/": {
 "d": "2026-11-15",
-"h": "d8fdc0e111eaea18"
+"h": "07ce7bbbb2c44126"
 },
 "/analyze/": {
 "d": "2026-11-15",
-"h": "952d8eb8d0e703fd"
+"h": "757c721a73fa1b28"
 },
 "/contact/": {
 "d": "2026-11-15",
-"h": "f4616862fcdba411"
+"h": "ee820e06256328a3"
 },
 "/free/": {
 "d": "2026-11-15",
-"h": "8010dd14bae643c3"
+"h": "e83fa0fac0ee6d42"
 },
 "/improve/": {
 "d": "2026-11-15",
-"h": "f1a6876531f7000c"
+"h": "43a369fccc4a4a49"
 },
 "/opponent/": {
 "d": "2026-11-15",
-"h": "e5ce0a731fa98109"
+"h": "f745c5239594cf7c"
 },
 "/patterns/": {
 "d": "2026-11-15",
-"h": "5499818739acfe10"
+"h": "79e00d6bfa6d410c"
 },
 "/patterns/anastasias-mate/": {
 "d": "2026-11-15",
-"h": "654143f1aad7ea2e"
+"h": "97a440ad79ed8803"
 },
 "/patterns/bodens-mate/": {
 "d": "2026-11-15",
-"h": "18451ac6f64947df"
+"h": "c40e124419fff85c"
 },
 "/patterns/stalemate-trick/": {
 "d": "2026-11-15",
-"h": "1153c0b18232f6f8"
+"h": "2451ae3556387f3f"
 },
 "/patterns/windmill/": {
 "d": "2026-11-15",
-"h": "e86d6553b743a124"
+"h": "03254da4852f5943"
 },
 "/patterns/zwischenzug/": {
 "d": "2026-11-15",
-"h": "c337ef970fe16a4e"
+"h": "7875ddbd72c0ebdf"
 },
 "/privacy/": {
 "d": "2026-11-15",
-"h": "218fe3ae57c5e27a"
+"h": "87293c5bc5e5086f"
 },
 "/shorts/": {
 "d": "2026-11-15",
-"h": "257cb8da6da82e8d"
+"h": "ffcfa33d37287ac8"
 },
 "/shorts/lessons/": {
 "d": "2026-11-15",
-"h": "12fb7fad86f3a36f"
+"h": "faef2632d2cc7794"
 },
 "/shorts/page/2/": {
 "d": "2026-11-15",
-"h": "cf92fd4dbcfae0fa"
+"h": "b52dbdfeca35a8cf"
 },
 "/shorts/page/3/": {
 "d": "2026-11-15",
-"h": "c625821801f8721e"
+"h": "f00ad06dd8d4eba5"
 },
 "/shorts/top-game/": {
 "d": "2026-11-15",
-"h": "61f035c616317e68"
+"h": "59fa6f9d6d5446ac"
 },
 "/shorts/traps/": {
 "d": "2026-11-15",
-"h": "0f696e08037a3fea"
+"h": "2a17943da6e63ae0"
 },
 "/shorts/traps/page/2/": {
 "d": "2026-11-15",
-"h": "c1ff51ec729c613a"
+"h": "eed1a688d969cd0e"
 },
 "/support/": {
 "d": "2026-11-15",
-"h": "1d289038e6a7c8fe"
+"h": "0e9bbbece773a0a3"
 },
 "/terms/": {
 "d": "2026-11-15",
-"h": "99f151f249fcdac2"
+"h": "a79bf137e98acc97"
 },
 "/today/": {
 "d": "2026-11-15",
-"h": "7c28fe10daca1e30"
+"h": "db43499539aa7545"
 },
 "/top-games/": {
 "d": "2026-11-15",
-"h": "02bb46e67d2d99dc"
+"h": "d4abda1c5d559584"
 },
 "/traps/": {
 "d": "2026-11-15",
-"h": "8a827579e6382650"
+"h": "0f05a8e044d24772"
 },
 "/traps/blackburne-shilling-gambit/": {
 "d": "2026-11-15",
-"h": "d57c0d1c9a2c8eba"
+"h": "293b6fdc03c3fe82"
 },
 "/traps/damiano-defence/": {
 "d": "2026-11-15",
-"h": "3fe039399c8858f4"
+"h": "dd9e93e62af55509"
 },
 "/traps/elephant-trap/": {
 "d": "2026-11-15",
-"h": "148cfe8fa8350bde"
+"h": "260521cff9a982ac"
 },
 "/traps/englund-gambit/": {
 "d": "2026-11-15",
-"h": "037eb2a37117b16a"
+"h": "b1fd6fd3b76f9179"
 },
 "/traps/fishing-pole-trap/": {
 "d": "2026-11-15",
-"h": "b426dc47ba9bb686"
+"h": "f3a8190736cea469"
 },
 "/traps/fried-liver-attack/": {
 "d": "2026-11-15",
-"h": "f9c5fad412285b33"
+"h": "daccdeb2c9575090"
 },
 "/traps/froms-gambit/": {
 "d": "2026-11-15",
-"h": "dbb18364ae959942"
+"h": "a583410586174471"
 },
 "/traps/halloween-gambit/": {
 "d": "2026-11-15",
-"h": "853897e4f37501f4"
+"h": "1b59af004ad87c22"
 },
 "/traps/kieninger-trap/": {
 "d": "2026-11-15",
-"h": "fcf3a993ab0091ae"
+"h": "e40205050a95ad18"
 },
 "/traps/lasker-trap/": {
 "d": "2026-11-15",
-"h": "e7b25b89c6222212"
+"h": "6da7d81b4ddd8a1c"
 },
 "/traps/legals-mate/": {
 "d": "2026-11-15",
-"h": "785173fd2911a32b"
+"h": "0c85980ea1433308"
 },
 "/traps/london-system-trap/": {
 "d": "2026-11-15",
-"h": "1768aa8c81b30871"
+"h": "6b279c018a7e3fa4"
 },
 "/traps/mortimer-trap/": {
 "d": "2026-11-15",
-"h": "3fb44bb8a791e1eb"
+"h": "968623bd1497b0cf"
 },
 "/traps/noahs-ark-trap/": {
 "d": "2026-11-15",
-"h": "304b572bfe6dec7c"
+"h": "ca9287e395736340"
 },
 "/traps/petrov-trap/": {
 "d": "2026-11-15",
-"h": "35461a04767e31e8"
+"h": "64a1022ef3c8a2f7"
 },
 "/traps/scholars-mate/": {
 "d": "2026-11-15",
-"h": "a37ffc05be4806ad"
+"h": "a7d9ca4b0330ced9"
 },
 "/traps/siberian-trap/": {
 "d": "2026-11-15",
-"h": "39e67b2e0f40e894"
+"h": "2382900cb4864aed"
 },
 "/traps/stafford-gambit/": {
 "d": "2026-11-15",
-"h": "99b6babd48a8398d"
+"h": "b7dcf83b59de2e4a"
 },
 "/videos/": {
 "d": "2026-11-15",
-"h": "7941eeb8e7aaa74e"
+"h": "a477d6212257c4fd"
 }
 }
