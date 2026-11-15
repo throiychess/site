@@ -232,7 +232,7 @@ document.addEventListener("click", (e0) => { const bt = e0.target.closest(".az-r
   const step = () => { if (i >= seq.length) { setTimeout(() => { svg().outerHTML = orig; box.querySelector(".az-rp").textContent = ""; bt.disabled = false; }, 1600); return; }
     const u = seq[i]; let mv = null; try { mv = c.move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] || "q" }); } catch (e) {}
     if (!mv) { svg().outerHTML = orig; bt.disabled = false; return; }
-    svg().outerHTML = boardSVG(c.fen(), mv.from, mv.to, m.r.side === "b"); box.querySelector(".az-rp").textContent = ` ${lab(i)}: ${mv.san}`; i++; setTimeout(step, 1300); };
+    svg().outerHTML = boardSVG(c.fen(), mv.from, mv.to, mSide(m) === "b"); box.querySelector(".az-rp").textContent = ` ${lab(i)}: ${mv.san}`; i++; setTimeout(step, 1300); };
   step(); });
 function openingName(pgn) {
   const h = (k) => { const m = pgn.match(new RegExp('\\[' + k + ' "([^"]*)"\\]')); return m ? m[1] : ""; };
@@ -264,59 +264,73 @@ function ratingsLine(cur, latest) {
 }
 const SAY = (cp) => cp >= 700 ? "winning" : cp >= 300 ? "clearly better" : cp >= 120 ? "a bit better" : cp > -120 ? "about equal" : cp > -300 ? "a bit worse" : cp > -700 ? "clearly worse" : "close to lost";
 const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
-function momentHtml(m, mi) {
-  const opp = m.r.side === "w" ? m.r.g.black : m.r.g.white, a = SAY(m.before), b = SAY(m.after);
-  const change = OPP ? (a === b ? "Their position got a lot weaker." : `Before this move they were ${a}. After it they were ${b}.`) : a === b ? "Your position got a lot weaker." : `Before this move you were ${a}. After it you were ${b}.`;
-  return `<div class="az-m">${boardSVG(m.fen, m.from, m.to, m.r.side === "b", m.bFrom, m.bTo)}<div><span class="eyebrow">${OPP ? AIM[m.cat].t : P[m.cat].t}</span>
-    <h3>Move ${m.moveNo}${m.color === "w" ? "." : "…"}${esc(m.san)} <span class="small">vs ${esc(opp)}</span></h3>
-    <p>${m.detail ? esc(OPP ? third(m.detail) : m.detail) + " " : ""}${m.best ? `Better was <b>${esc(m.best)}</b>.` : ""}</p>
-    <p class="small">${change}${m.clock !== null ? ` ${OPP ? "They" : "You"} had ${Math.round(m.clock)} seconds left.` : ""}</p>
-    <p>${m.pv && m.pv.length ? `<button class="btn az-replay" type="button" data-i="${mi}">&#9654; Show what happens</button>` : ""}<a class="small" href="${esc(safeUrl(m.r.g.url))}" target="_blank" rel="noopener">Open the game</a></p></div></div>`;
+const ICON = { mate: "👑", threat: "⚠️", hang: "🎁", tactic: "⚡", queen: "👸", king: "🏰", twice: "🔁", endgame: "🏁", other: "💤" };
+const mSide = (m) => m.side || m.r.side, mOpp = (m) => m.opp || (m.r.side === "w" ? m.r.g.black : m.r.g.white), mUrl = (m) => m.url || m.r.g.url;
+function momentHtml(m, mi) { // one card: board on top, what was played vs what was better, one line why, one button
+  const a = SAY(m.before), b = SAY(m.after), who = OPP ? "They" : "You";
+  const change = a === b ? "" : `From ${a} to ${b}.`;
+  return `<div class="az-m"><span class="dk-chip c-${m.cat}">${ICON[m.cat]} ${(OPP ? AIM : P)[m.cat].t}</span>${boardSVG(m.fen, m.from, m.to, mSide(m) === "b", m.bFrom, m.bTo)}
+    <div class="dk-mv"><span class="bad">✕ ${who} played <b>${esc(m.san)}</b></span>${m.best ? `<span class="good">✓ Better: <b>${esc(m.best)}</b></span>` : ""}</div>
+    <p class="dk-1">${m.detail ? esc(OPP ? third(m.detail) : m.detail) + " " : ""}${change}${m.clock !== null && m.clock !== undefined && m.clock < 60 ? ` ⏱ ${Math.round(m.clock)} seconds left.` : ""}</p>
+    <p class="dk-act">${m.pv && m.pv.length ? `<button class="btn solid az-replay" type="button" data-i="${mi}">▶ Play it</button>` : ""}<a class="small" href="${esc(safeUrl(mUrl(m)))}" target="_blank" rel="noopener">Move ${m.moveNo} vs ${esc(mOpp(m))} ↗</a></p></div>`;
 }
-function oppReport(results) {
+function deck(slides) { const S = slides.filter(Boolean);
+  return `<div class="dk" id="az-deck"><div class="dk-bar"><i style="width:${100 / S.length}%"></i></div><div class="dk-n"><button class="dk-p" type="button" aria-label="Previous" disabled>‹</button><span class="dk-d">${S.map((x, i) => `<i class="${i ? "" : "on"}"></i>`).join("")}</span><button class="dk-x btn solid" type="button">Next ›</button></div>
+    <div class="dk-t" tabindex="0">${S.map((x, i) => `<section class="dk-s ${x.c || ""}" data-n="${i}">${x.h}</section>`).join("")}</div><p class="dk-hint small">Swipe, or tap Next</p></div>`; }
+function deckInit() { const dk = $("#az-deck"); if (!dk || !dk.querySelector) return; const t = dk.querySelector(".dk-t"), ss = [...t.children], dots = [...dk.querySelectorAll(".dk-d i")], nx = dk.querySelector(".dk-x"), pv = dk.querySelector(".dk-p"), bar = dk.querySelector(".dk-bar i"); let cur = 0;
+  const go = (k) => { k = Math.max(0, Math.min(ss.length - 1, k)); t.scrollTo({ left: ss[k].offsetLeft - t.offsetLeft, behavior: "smooth" }); };
+  const upd = () => { let k = 0, best = 1e9; ss.forEach((x, i) => { const d = Math.abs(x.offsetLeft - t.offsetLeft - t.scrollLeft); if (d < best) { best = d; k = i; } }); if (k === cur && dots[k].className) return; cur = k; dots.forEach((d, i) => { d.className = i === k ? "on" : ""; }); pv.disabled = k === 0; nx.style.visibility = k === ss.length - 1 ? "hidden" : ""; bar.style.width = (100 * (k + 1)) / ss.length + "%"; if (k) dk.classList.add("moved"); if (k === ss.length - 1) ev((OPP ? "opponent" : "analyze") + "-deck-end"); };
+  t.addEventListener("scroll", () => requestAnimationFrame(upd), { passive: true }); nx.addEventListener("click", () => go(cur + 1)); pv.addEventListener("click", () => go(cur - 1));
+  dk.addEventListener("click", (e) => { const g = e.target.closest("[data-go]"); if (g) go(+g.dataset.go); }); }
+const phaseBar = (phs, worst) => `<div class="dk-ph">` + Object.keys(PHN).map((k) => `<div class="${k === worst ? "worst" : ""}"><b>${phs[k].big}</b><span>${PHN[k]}</span></div>`).join("") + `</div>`;
+const numbersHtml = (V, you) => { const T = you ? "your" : "their"; let d = `<p class="small"><b>Big mistake:</b> a move that loses a piece or more. <b>Mistake:</b> loses a pawn or two. <b>Small slip:</b> a smaller loss. <b>Accuracy:</b> how close ${T} moves were to the best ones. It is our own estimate, so do not compare it with Chess.com or Lichess.</p>`;
+  d += `<div class="az-score"><div><b>${V.acc.toFixed(0)}%</b><span>Accuracy</span></div><div><b>${V.nB}</b><span>Big mistakes</span></div><div><b>${V.nM}</b><span>Mistakes</span></div><div><b>${V.nI}</b><span>Small slips</span></div><div><b>${V.w}-${V.d}-${V.l}</b><span>Won-drawn-lost</span></div></div>`;
+  d += `<p>In these games ${you ? "you" : "they"} played like players rated about <b>${bandName(V.band)}</b> (our own sample of 270 Chess.com rapid games). A guide, not an official rating.</p>`;
+  d += `<h4>Game by game</h4><div class="az-gm">` + V.games.map((g) => `<a href="${esc(safeUrl(g.url))}" target="_blank" rel="noopener"><span class="res ${g.res.toLowerCase()}">${g.res}</span><span>${g.side === "w" ? "White" : "Black"} vs <b>${esc(g.opp)}</b></span><span class="small">${g.acc.toFixed(0)}% accuracy${g.tp ? ` · costliest move: ${esc(g.tp)}` : " · no big mistakes"}</span></a>`).join("") + `</div>`;
+  const max = Math.max(1, ...Object.values(V.cnt)); if (V.order.length) d += `<h4>All weak points</h4><div class="az-bars">` + V.order.map((c) => `<div class="az-bar"><span>${ICON[c]} ${(you ? P : AIM)[c].t}</span><i style="width:${(100 * V.cnt[c]) / max}%"></i><b>${V.cnt[c]}</b></div>`).join("") + `</div>`;
+  return d; };
+const followHtml = `<div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div>`;
+function viewModel(results) { // everything a report needs, small enough to save
   const all = results.flatMap((r, ri) => r.moments.map((m) => ({ ...m, r, ri }))); const cnt = {}; for (const m of all) cnt[m.cat] = (cnt[m.cat] || 0) + 1;
-  const order = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]); const max = Math.max(1, ...Object.values(cnt)), top = order[0], n = results.length;
-  const late = all.filter((m) => m.clock !== null && m.clock < 30).length;
-  const sum = (f) => results.reduce((a, r) => a + f(r), 0); const nm = sum((r) => r.nMoves) || 1;
-  const acc = sum((r) => r.acc * r.nMoves) / nm, nB = sum((r) => r.nBlund), nM = sum((r) => r.nMist), nI = sum((r) => r.nInacc), lossNow = sum((r) => r.avgLoss * r.nMoves) / nm, bNow = bandOf(lossNow / 100);
-  const outc = (r) => fmtRes(r.g, state.user); const wins = results.filter((r) => outc(r) === "Won").length, losses = results.filter((r) => outc(r) === "Lost").length, draws = n - wins - losses;
-  const latest = results.slice().sort((x, y) => y.g.date - x.g.date)[0]; const cur = latest && latest.side ? (latest.side === "w" ? latest.g.wrat : latest.g.brat) : null;
-  const phs = {}; for (const k of Object.keys(PHN)) { phs[k] = { n: 0, loss: 0, big: 0 }; for (const r of results) { phs[k].n += r.ph[k].n; phs[k].loss += r.ph[k].loss; phs[k].big += r.ph[k].big; } }
-  const worst = Object.keys(PHN).filter((k) => phs[k].n >= 5 && phs[k].big > 0).sort((a, b) => phs[b].loss / phs[b].n - phs[a].loss / phs[a].n)[0];
-  SHOWN = all.slice().sort((a, b) => b.loss - a.loss).slice(0, 12).sort((a, b) => a.ri - b.ri || a.ply - b.ply);
-  const rank = SHOWN.map((m, i) => i).sort((x, y) => SHOWN[y].loss - SHOWN[x].loss), first3 = rank.slice(0, 3), rest = rank.slice(3);
-  const who = esc(state.user), based = `Based on ${plural(n, "game")}`;
-  let h = `<h2>Where to aim</h2><p class="az-lead">${based} by <b>${who}</b>. ${all.length ? `We found <b>${all.length}</b> ${all.length === 1 ? "move that made their position" : "moves that made their position"} clearly worse.` : "We found no big mistakes."}</p>`;
-  if (top) {
-    h += `<div class="az-top"><span class="eyebrow">Their biggest weak point</span><h3>${AIM[top].t}</h3><p class="small">Seen ${plural(cnt[top], "time")} in ${plural(n, "game")}.</p><p><b>How to use it:</b> ${AIM[top].tip}</p><p class="small"><a href="#az-board">See their moves below →</a></p></div>`;
-    const more = order.slice(1, 3);
-    if (more.length) h += `<h3>${more.length === 1 ? "One more weak point" : "Two more weak points"}</h3><div class="az-plan">` + more.map((c) => `<p><b>${AIM[c].t}</b> <span class="small">(${plural(cnt[c], "time")})</span><br>${AIM[c].tip}</p>`).join("") + `</div>`;
-    if (worst) h += `<p class="az-what">Most of their costly moves came in the <b>${PHN[worst].toLowerCase()}</b>. ${PHAIM[worst]}</p>`;
-    if (late >= 2) h += `<p>⏱ ${late} of these moves came with less than 30 seconds on their clock. Play at a steady pace: when their time runs low, the mistakes come.</p>`;
-  } else h += `<div class="az-top"><h3>No clear weak point yet</h3><p>These games were clean. Pick a few of their losses: that is where the weak points show.</p></div>`;
-  for (const r of results) if (r.trap) h += `<div class="az-trap">${r.trap.fell ? "🪤 They fell for the" : "🎯 They set the"} <a href="/traps/${r.trap.t.slug}/?utm_source=opponent&amp;utm_campaign=${r.trap.t.slug}">${esc(r.trap.t.name)}</a>${r.trap.fell ? ". Learn it and you can set it too." : ". Learn the fix before you play them."}</div>`;
-  if (first3.length) {
-    h += `<h3 id="az-board">See it on the board</h3><p class="small">Their ${first3.length === 1 ? "costliest move" : first3.length + " costliest moves"}. Gold squares: the move they played. Green: the better move.</p>`;
-    h += first3.map((i) => momentHtml(SHOWN[i], i)).join("");
-    if (rest.length) h += `<details class="az-det"><summary>Show ${rest.length} more moment${rest.length === 1 ? "" : "s"}</summary>${rest.map((i) => momentHtml(SHOWN[i], i)).join("")}</details>`;
-  }
-  if (top) h += `<h3>Before you play them</h3><ol class="az-next"><li>Play your normal game. When the chance comes, you now know what to look for.</li><li>${n} ${n === 1 ? "game shows" : "games show"} a pattern, not a promise. Scout again before your next game against them.</li><li>They can scout you too. <a data-ev="opponent-own-games" href="/analyze/?utm_source=opponent">See your own weak points</a>.</li></ol>`;
-  let d = `<p class="small"><b>Big mistake:</b> a move that loses a piece or more. <b>Mistake:</b> a move that loses a pawn or two. <b>Small slip:</b> a smaller loss. <b>Accuracy:</b> how close their moves were to the best ones (100% would be perfect). It is our own estimate, so do not compare it with Chess.com or Lichess.</p>`;
-  d += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy</span></div><div><b>${nB}</b><span>Big mistakes</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Small slips</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div>`;
-  d += `${ratingsLine(cur, latest)}<p>In these games they played like players rated about <b>${bandName(bNow)}</b>. That comes from our own sample of 270 Chess.com rapid games (30 per rating band). A guide, not an official rating.</p>`;
-  d += `<h4>Where in the game</h4><div class="az-ph">` + Object.keys(PHN).map((k) => `<div class="${k === worst ? "worst" : ""}"><span>${PHN[k]}</span><b>${phs[k].big}</b><small>costly move${phs[k].big === 1 ? "" : "s"}<br>in ${phs[k].n} moves</small></div>`).join("") + `</div>`;
-  d += `<h4>Game by game</h4><div class="az-gm">` + results.map((r) => { const opp = r.side === "w" ? r.g.black : r.g.white; const tp = r.moments.slice().sort((a, b) => b.loss - a.loss)[0];
-    return `<a href="${esc(safeUrl(r.g.url))}" target="_blank" rel="noopener"><span class="res ${outc(r).toLowerCase()}">${outc(r)}</span><span>${r.side === "w" ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${r.acc.toFixed(0)}% accuracy${tp ? ` · costliest move: ${tp.moveNo}${tp.color === "w" ? "." : "…"}${esc(tp.san)}` : " · no big mistakes"}</span></a>`; }).join("") + `</div>`;
-  if (order.length) d += `<h4>All their weak points</h4><div class="az-bars">` + order.map((c) => `<div class="az-bar"><span>${AIM[c].t}</span><i style="width:${(100 * cnt[c]) / max}%"></i><b>${cnt[c]}</b></div>`).join("") + `</div>`;
-  if (DEPTH > 14) d += `<p class="small">Analyzed in extra depth (${DEPTH}). The rating guide was made with the standard setting, so treat that comparison as approximate.</p>`;
-  h += `<div class="az-save" id="az-save"></div>`;
-  h += `<details class="az-det"><summary>All the numbers</summary>${d}</details>`;
-  h += `<div class="az-cta"><h3>Next step</h3><p>Now your own games: find the one habit that costs you the most.</p><a class="btn solid" data-ev="opponent-cta-analyze" href="/analyze/?utm_source=opponent&amp;utm_campaign=opponent">Analyze my games free</a>
-    <div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
-  h += '<div id="az-fb"></div>';
-  window.__azLast = { acc, lossNow, nB, nM, nI, bNow, order, cnt, results, SHOWN };
-  $("#az-report").innerHTML = h; saveReport(); try { if (window.tcFeedback) window.tcFeedback.inline($("#az-fb"), "opponent-report", "Was this report useful?", { games: n, depth: DEPTH, prem: isPrem() }); } catch (e) {} $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("opponent-report");
+  const order = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]), n = results.length; const sum = (f) => results.reduce((a, r) => a + f(r), 0); const nm = sum((r) => r.nMoves) || 1;
+  const outc = (r) => fmtRes(r.g, state.user); const w = results.filter((r) => outc(r) === "Won").length, l = results.filter((r) => outc(r) === "Lost").length;
+  const phs = {}; for (const k of Object.keys(PHN)) { phs[k] = { n: 0, big: 0, loss: 0 }; for (const r of results) { phs[k].n += r.ph[k].n; phs[k].loss += Math.round(r.ph[k].loss); phs[k].big += r.ph[k].big; } }
+  const worst = Object.keys(PHN).filter((k) => phs[k].n >= 5 && phs[k].big > 0).sort((a, b) => phs[b].loss / phs[b].n - phs[a].loss / phs[a].n)[0] || null;
+  const top12 = all.slice().sort((a, b) => b.loss - a.loss).slice(0, 12);
+  const moments = top12.map((m) => ({ fen: m.fen, from: m.from, to: m.to, bFrom: m.bFrom, bTo: m.bTo, san: m.san, best: m.best, cat: m.cat, moveNo: m.moveNo, color: m.color, detail: m.detail, before: Math.round(m.before), after: Math.round(m.after), clock: m.clock, pv: m.pv, loss: Math.round(m.loss), side: m.r.side, opp: m.r.side === "w" ? m.r.g.black : m.r.g.white, url: m.r.g.url }));
+  const lossNow = sum((r) => r.avgLoss * r.nMoves) / nm;
+  return { user: state.user, n, total: all.length, cnt, order, late: all.filter((m) => m.clock !== null && m.clock < 30).length, phs, worst, acc: sum((r) => r.acc * r.nMoves) / nm, nB: sum((r) => r.nBlund), nM: sum((r) => r.nMist), nI: sum((r) => r.nInacc), w, d: n - w - l, l, band: bandOf(lossNow / 100), lossNow,
+    traps: results.filter((r) => r.trap).map((r) => ({ slug: r.trap.t.slug, name: r.trap.t.name, fell: r.trap.fell })),
+    games: results.map((r) => { const tp = r.moments.slice().sort((a, b) => b.loss - a.loss)[0]; return { res: outc(r), side: r.side, opp: r.side === "w" ? r.g.black : r.g.white, acc: r.acc, url: r.g.url, tp: tp ? `${tp.moveNo}${tp.color === "w" ? "." : "…"}${tp.san}` : null }; }), moments };
 }
+function oppView(V, savedAt) {
+  const top = V.order[0], n = V.n, who = esc(V.user), based = `Based on ${plural(n, "game")}`; SHOWN = V.moments; const first3 = SHOWN.slice(0, 3).map((m, i) => i), rest = SHOWN.slice(3).map((m, i) => i + 3);
+  const S = [];
+  if (top) S.push({ c: "hero", h: `<span class="dk-k">🎯 Scouting <b>${who}</b> · ${based.toLowerCase()}</span><p class="dk-q">Their biggest weak point</p><div class="dk-big c-${top}"><span>${ICON[top]}</span>${AIM[top].t}</div><span class="dk-pill">Seen ${V.cnt[top]}× in ${plural(n, "game")}</span><div class="dk-tip"><b>How to use it</b>${AIM[top].tip}</div>${first3.length ? `<button class="btn solid" type="button" data-go="1">See it on the board ›</button>` : ""}` });
+  else S.push({ c: "hero", h: `<span class="dk-k">🎯 Scouting <b>${who}</b> · ${based.toLowerCase()}</span><div class="dk-big"><span>🧼</span>No clear weak point yet</div><div class="dk-tip"><b>Try this</b>Pick a few of their losses. That is where the weak points show.</div>` });
+  first3.forEach((i) => S.push({ h: momentHtml(SHOWN[i], i) }));
+  const more = V.order.slice(1, 3);
+  if (more.length) S.push({ h: `<p class="dk-q">${more.length === 1 ? "One more weak point" : "Two more weak points"}</p>` + more.map((c) => `<div class="dk-tile c-${c}"><span class="ti">${ICON[c]}</span><div><b>${AIM[c].t}</b> <i>${V.cnt[c]}×</i><p>${AIM[c].tip}</p></div></div>`).join("") });
+  if (top && (V.worst || V.late >= 2 || V.traps.length)) S.push({ h: `<p class="dk-q">When they slip</p>${phaseBar(V.phs, V.worst)}${V.worst ? `<p class="dk-1">Most costly moves: the <b>${PHN[V.worst].toLowerCase()}</b>. ${PHAIM[V.worst]}</p>` : ""}${V.late >= 2 ? `<div class="dk-tile"><span class="ti">⏱</span><div><b>Weak under time pressure</b> <i>${V.late}×</i><p>Play at a steady pace. When their clock runs low, the mistakes come.</p></div></div>` : ""}` +
+    V.traps.map((t) => `<div class="dk-tile"><span class="ti">${t.fell ? "🪤" : "🎯"}</span><div><b>${t.fell ? "Fell for the" : "Sets the"} ${esc(t.name)}</b><p><a href="/traps/${t.slug}/?utm_source=opponent&amp;utm_campaign=${t.slug}">${t.fell ? "Learn it and set it yourself ›" : "Learn the fix before you play them ›"}</a></p></div></div>`).join("") });
+  S.push({ c: "end", h: `<div class="dk-ic">♟️</div><p class="dk-q">You are ready</p><ul class="dk-ck">${top ? `<li>Watch for: <b>${AIM[top].t.toLowerCase()}</b></li>` : ""}<li>Play your normal game</li><li>${plural(n, "game")} ${n === 1 ? "shows" : "show"} a pattern, not a promise</li></ul><a class="btn solid" data-ev="opponent-cta-analyze" href="/analyze/?utm_source=opponent&amp;utm_campaign=opponent">Now check my own games</a><div class="az-save" id="az-save">${savedAt ? `<p class="small">Saved report from ${new Date(savedAt).toLocaleDateString()}. <a href="/opponent/">Scout again ›</a></p>` : ""}</div>` });
+  let h = `<h2 class="sr">Scouting report</h2>` + deck(S);
+  if (rest.length) h += `<details class="az-det"><summary>${rest.length} more moment${rest.length === 1 ? "" : "s"}</summary><div class="dk-more">${rest.map((i) => momentHtml(SHOWN[i], i)).join("")}</div></details>`;
+  h += `<details class="az-det"><summary>All the numbers</summary>${numbersHtml(V, false)}</details>${followHtml}<div id="az-fb"></div>`;
+  $("#az-report").innerHTML = h; deckInit();
+}
+function getSb() { return window.supabase ? (window.__sb = window.__sb || window.supabase.createClient("https://ytxrrmvszifvtdyilezn.supabase.co", "sb_publishable_nARSIxN5aKJghUK745Frdw_QbXhdf29", { auth: { persistSession: true, detectSessionInUrl: false } })) : null; }
+async function saveOpp(V) { const box = $("#az-save"), sbc = getSb(); if (!box || !sbc) return; const { data } = await sbc.auth.getSession();
+  if (!data.session) { box.innerHTML = `<p class="small">💾 <a href="/members/?utm_source=opponent">Log in</a> (free) to keep this report and open it again before your game.</p>`; return; }
+  const { error } = await sbc.from("analyses").insert({ site: state.site, username: String(V.user).slice(0, 40), games: V.n, accuracy: +V.acc.toFixed(1), avg_loss: +(V.lossNow / 100).toFixed(3), blunders: V.nB, mistakes: V.nM, inaccuracies: V.nI, band: bandName(V.band), top_leak: V.order[0] ? AIM[V.order[0]].t : null, report: { kind: "opponent", depth: DEPTH, cats: V.cnt, v: V } });
+  box.innerHTML = error ? `<p class="small">${/limit/i.test(error.message || "") ? "You reached the limit of saved reports. Delete older ones on your members page." : "Could not save this report."}</p>` : `<p class="small">✓ Saved. Open it any time under <a href="/members/#reports">Scouted opponents</a>.</p>`; if (!error) { ev("opponent-report-saved"); window.dispatchEvent(new Event("az-saved")); } }
+async function openSaved() { const id = new URLSearchParams(location.search || "").get("r"); if (!OPP || !id || !/^[0-9a-f-]{36}$/i.test(id)) return; const box = $("#az-report"), sbc = getSb(); if (!sbc) return; box.innerHTML = `<p class="small">Opening your saved report…</p>`;
+  const { data: s } = await sbc.auth.getSession(); if (!s.session) { box.innerHTML = `<p>Log in to open your saved report.</p><p><a class="btn solid" href="/members/">Log in</a></p>`; return; }
+  const { data, error } = await sbc.from("analyses").select("created_at,username,site,report").eq("id", id).maybeSingle();
+  if (error || !data || !data.report || !data.report.v) { box.innerHTML = `<p>This saved report could not be opened. <a href="/opponent/">Scout again ›</a></p>`; return; }
+  state.user = data.username; state.site = data.site; oppView(data.report.v, data.created_at); box.scrollIntoView({ behavior: "smooth" }); ev("opponent-report-opened"); }
+function oppReport(results) { const V = viewModel(results); oppView(V); saveOpp(V);
+  try { if (window.tcFeedback) window.tcFeedback.inline($("#az-fb"), "opponent-report", "Was this report useful?", { games: V.n, depth: DEPTH, prem: isPrem() }); } catch (e) {} $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("opponent-report"); }
 function report(results) {
   if (OPP) return oppReport(results); // saved with report.kind = "opponent", so it never mixes with your own progress
   const all = results.flatMap((r, ri) => r.moments.map((m) => ({ ...m, r, ri }))); const cnt = {}; for (const m of all) cnt[m.cat] = (cnt[m.cat] || 0) + 1;
@@ -335,20 +349,15 @@ function report(results) {
   const top = order[0];
   SHOWN = all.slice().sort((a, b) => b.loss - a.loss).slice(0, 12).sort((a, b) => a.ri - b.ri || a.ply - b.ply);
   const rank = SHOWN.map((m, i) => i).sort((x, y) => SHOWN[y].loss - SHOWN[x].loss), first3 = rank.slice(0, 3), rest = rank.slice(3);
-  let h = `<h2>Your report</h2><p class="az-lead">We looked at ${plural(n, "game")} by <b>${esc(state.user)}</b>. ${all.length ? `We found <b>${all.length}</b> moves that made your position clearly worse. Here is what to fix first.` : "No big mistakes found."}</p>`;
-  if (top) {
-    h += `<div class="az-top"><span class="eyebrow">Fix this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p><p class="small">This happened ${plural(cnt[top], "time")} in ${plural(n, "game")}.</p><p><b>Do this:</b> ${DRILL[top][0]}</p><p class="small"><a href="#az-board">See the moves below →</a></p></div>`;
-    if (nTop) h += `<p class="az-what">Avoiding just ${nTop === 1 ? "your biggest mistake" : "your biggest mistake in each game"} would lift your accuracy from <b>${acc.toFixed(0)}%</b> to <b>${accFix.toFixed(0)}%</b>${bFix > bNow ? `, and you would play like a player rated about <b>${bandName(bFix)}</b> (today: ${bandName(bNow)})` : ""}.</p>`;
-    if (worst) h += `<p>Most of your costly moves came in the <b>${PHN[worst].toLowerCase()}</b>.</p>`;
-  } else h += `<div class="az-top"><h3>Clean games!</h3><p>Try a few of your losses to find what to train.</p></div>`;
-  for (const r of results) if (r.trap) h += `<div class="az-trap">${r.trap.fell ? "🪤 You fell for the" : "🎯 You set the"} <a href="/traps/${r.trap.t.slug}/?utm_source=analyze&amp;utm_campaign=${r.trap.t.slug}">${esc(r.trap.t.name)}</a>${r.trap.fell ? ". Here's how to avoid it next time." : ". Nice!"}</div>`;
-  if (first3.length) {
-    h += `<h3 id="az-board">See it on the board</h3><p class="small">Your ${first3.length === 1 ? "costliest move" : first3.length + " costliest moves"}. Gold squares: the move you played. Green: the better move.</p>`;
-    h += first3.map((i) => momentHtml(SHOWN[i], i)).join("");
-    if (rest.length) h += `<details class="az-det"><summary>Show ${rest.length} more moment${rest.length === 1 ? "" : "s"}</summary>${rest.map((i) => momentHtml(SHOWN[i], i)).join("")}</details>`;
-  }
-  if (top) { const nx = order[1] && cnt[order[1]] ? order[1] : null; h += `<h3>What next?</h3><ol class="az-next"><li>${DRILL[top][1]}</li><li>Come back and analyze 5 new games here. We show you what changed.</li>${nx ? `<li>Then work on your next habit: <b>${P[nx].t}</b>.</li>` : ""}</ol>`; }
-  h += `<div class="az-save" id="az-save"></div>`;
+  const V = viewModel(results); const S = [], nx = order[1] && cnt[order[1]] ? order[1] : null;
+  if (top) S.push({ c: "hero", h: `<span class="dk-k">🔍 <b>${esc(state.user)}</b> · ${plural(n, "game")} · ${all.length} costly move${all.length === 1 ? "" : "s"}</span><p class="dk-q">Fix this first</p><div class="dk-big c-${top}"><span>${ICON[top]}</span>${P[top].t}</div><span class="dk-pill">${cnt[top]}× in ${plural(n, "game")}</span><div class="dk-tip"><b>Do this</b>${DRILL[top][0]}</div>${first3.length ? `<button class="btn solid" type="button" data-go="1">See it on the board ›</button>` : ""}` });
+  else S.push({ c: "hero", h: `<span class="dk-k">🔍 <b>${esc(state.user)}</b> · ${plural(n, "game")}</span><div class="dk-big"><span>🧼</span>Clean games!</div><div class="dk-tip"><b>Try this</b>Pick a few of your losses to find what to train.</div>` });
+  first3.forEach((i) => S.push({ h: momentHtml(SHOWN[i], i) }));
+  if (top && nTop) S.push({ h: `<p class="dk-q">What it is worth</p><div class="dk-gain"><div><b>${acc.toFixed(0)}%</b><span>accuracy now</span></div><i>→</i><div class="up"><b>${accFix.toFixed(0)}%</b><span>without ${nTop === 1 ? "your biggest mistake" : "the biggest mistake per game"}</span></div></div>${bFix > bNow ? `<p class="dk-1">That is the level of players rated about <b>${bandName(bFix)}</b>. Today: ${bandName(bNow)}.</p>` : ""}${phaseBar(V.phs, V.worst)}${V.worst ? `<p class="dk-1">Most costly moves: the <b>${PHN[V.worst].toLowerCase()}</b>.</p>` : ""}` });
+  if (top) S.push({ c: "end", h: `<div class="dk-ic">✅</div><p class="dk-q">What next?</p><ul class="dk-ck"><li>${DRILL[top][1]}</li><li>Come back with 5 new games. We show you what changed.</li>${nx ? `<li>Next habit: <b>${P[nx].t.toLowerCase()}</b></li>` : ""}</ul>` + results.filter((r) => r.trap).map((r) => `<div class="dk-tile"><span class="ti">${r.trap.fell ? "🪤" : "🎯"}</span><div><b>${r.trap.fell ? "You fell for the" : "You set the"} ${esc(r.trap.t.name)}</b><p><a href="/traps/${r.trap.t.slug}/?utm_source=analyze&amp;utm_campaign=${r.trap.t.slug}">${r.trap.fell ? "See how to avoid it ›" : "See the full trap ›"}</a></p></div></div>`).join("") + `<a class="btn solid" data-ev="analyze-cta-free" href="/free/?utm_source=analyze&amp;utm_campaign=analyze">Get the free trap cheat sheet</a><div class="az-save" id="az-save"></div>` });
+  let h = `<h2 class="sr">Your report</h2>` + deck(S);
+  if (rest.length) h += `<details class="az-det"><summary>${rest.length} more moment${rest.length === 1 ? "" : "s"}</summary><div class="dk-more">${rest.map((i) => momentHtml(SHOWN[i], i)).join("")}</div></details>`;
+  if (!top) h += `<div class="az-save" id="az-save"></div>`;
   let d = `<p class="small"><b>Big mistake:</b> a move that loses a piece or more. <b>Mistake:</b> a move that loses a pawn or two. <b>Small slip:</b> a smaller loss. <b>Accuracy:</b> how close your moves were to the best ones (100% would be perfect). It is our own estimate, so compare moves, not percentages with Chess.com or Lichess.</p>`;
   d += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy</span></div><div><b>${nB}</b><span>Big mistakes</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Small slips</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div>`;
   d += `${ratingsLine(cur, latest)}<p>Your play looks like players rated about <b>${bandName(bNow)}</b>. That comes from our own sample of 270 Chess.com rapid games (30 per rating band). A guide, not an official rating${n < 3 ? ". Analyze 3 to 5 games for a steadier estimate" : ""}.</p>`;
@@ -361,14 +370,13 @@ function report(results) {
   if (late) d += `<p class="small">⏱ ${late} of these moves came with less than 30 seconds on your clock. Part of the fix may be using your time earlier in the game.</p>`;
   if (DEPTH > 14) d += `<p class="small">Analyzed in extra depth (${DEPTH}). The rating guide was made with the standard setting, so treat that comparison as approximate.</p>`;
   h += `<details class="az-det"><summary>All the numbers</summary>${d}</details>`;
-  h += `<div class="az-cta"><h3>Next step</h3><p>Get the free cheat sheet: the 10 opening traps every beginner meets, plus one trap a week in your inbox.</p><a class="btn solid" data-ev="analyze-cta-free" href="/free/?utm_source=analyze&amp;utm_campaign=analyze">Get the free cheat sheet</a>
-    <p class="small" style="margin-top:14px">Want a deeper look at more games? <a data-ev="analyze-cta-improve" href="/improve/?utm_source=analyze&amp;utm_campaign=improve">Join the waitlist</a>.</p>
-    <div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
+  h += followHtml;
   h += '<div id="az-fb"></div>';
   window.__azLast = { acc, lossNow, nB, nM, nI, bNow, order, cnt, results, SHOWN };
-  $("#az-report").innerHTML = h; saveReport(); try { if (window.tcFeedback) window.tcFeedback.inline($("#az-fb"), "analysis-report", "Was this report useful?", { games: results.length, depth: DEPTH, prem: isPrem() }); } catch (e) {} $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
+  $("#az-report").innerHTML = h; deckInit(); saveReport(); try { if (window.tcFeedback) window.tcFeedback.inline($("#az-fb"), "analysis-report", "Was this report useful?", { games: results.length, depth: DEPTH, prem: isPrem() }); } catch (e) {} $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
 }
 
 window.__azP = { P, DRILL }; window.__azBoard = boardSVG;
 if (/[?&]bench=1/.test(location.search)) window.__az = { analyseGame };
+openSaved();
 window.__azReady = true; window.dispatchEvent(new Event("az-ready"));
