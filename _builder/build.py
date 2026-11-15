@@ -776,7 +776,7 @@ DT_CSS = (".dt [hidden]{display:none!important}.dt{display:grid;grid-template-co
           ".dt .sq.tg:has(img)::after{width:86%;height:86%;margin:-43% 0 0 -43%;background:none;border:4px solid rgba(20,18,15,.45);box-sizing:border-box}"
           ".dtmsg{background:var(--panel);border-top:4px solid var(--gold);padding:18px 20px;display:grid;gap:6px;font-size:17px}.dtmsg b{font-size:20px}.dtmsg span{color:var(--mute)}"
           ".dtmsg.good{border-color:#2e9c4a}.dtmsg.bad{border-color:var(--red)}.dttry{display:flex;align-items:center;gap:8px;margin:14px 0;color:var(--mute);font-size:14px;font-weight:600}"
-          ".dttry i{width:26px;height:6px;border-radius:3px;background:var(--line)}.dttry i.u{background:var(--gold)}.dttry span{margin-left:6px}"
+          ".dttry b{font-size:30px;line-height:1;color:var(--red);font-weight:400}.dttry b.u{color:var(--line)}.dttry span{margin-left:6px}"
           ".dtstat{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:22px 0 6px;text-align:center}.dtstat div{background:var(--panel);padding:14px 4px}.dtstat b{display:block;font-size:26px;color:var(--gold)}"
           ".dtstat span{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}.dt .btns{margin:18px 0 6px}.dtnext{color:var(--mute)}.dt h2{margin:22px 0 10px;font-size:24px}"
           "@media(max-width:860px){.dt{grid-template-columns:1fr;gap:18px}.dthead{padding-block:22px 14px!important}.dthead h1{font-size:30px}.dthead p{font-size:17px}}")
@@ -787,7 +787,7 @@ def today_page():
 <div class="dt" id="dt"><div><div class="board" id="dtb" role="application" aria-label="Chess board: tap a piece, then tap a square"></div><div class="dttry" id="dtt"></div></div>
 <div><div class="dtmsg" id="dtm" aria-live="polite"><b>Loading the board…</b></div><p style="margin:14px 0 0"><button type="button" class="btn solid" id="dta" hidden>Try again</button></p><div id="dtr" hidden></div>
 <noscript><p>The Daily Trap needs JavaScript. You can also <a href="/traps/">step through every trap</a>.</p></noscript></div></div>
-<section class="prose" style="max-width:720px;margin-bottom:56px"><h2>How the Daily Trap works</h2><p>Every day you get one position from a real opening trap. You play the side that is about to fall for it. Make a move on the board: if it is safe, you survive. If you take the bait, you see how the trap plays out, and you can try again. Three tries a day.</p>
+<section class="prose" style="max-width:720px;margin-bottom:56px"><h2>How the Daily Trap works</h2><p>Every day you get one position from a real opening trap. You play the side that is about to fall for it. Make a move on the board: if it is safe, you survive. If you take the bait, you see how the trap plays out, and you can try again. You have three hearts: every wrong move costs one, and you start again with three hearts every day.</p>
 <p>Play every day to build your streak. Your streak is saved in this browser. Every move on this page is checked with a chess engine.</p><p>Want more? <a href="/traps/">Step through every trap in the library</a> or <a href="/analyze/">analyze your own games for free</a>.</p></section>
 </main>''' + footer() + f'<script>window.DT={cfg}</script><script src="/js/daily.js" defer></script>'
     ld = {"@context": "https://schema.org", "@type": "WebApplication", "name": "Daily Trap", "url": SITE + path, "applicationCategory": "GameApplication", "operatingSystem": "Any",
