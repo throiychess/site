@@ -22,7 +22,7 @@ const P = {
   king:   { t: "King safety in the opening", tip: "Castle early and don't move your king by hand in the opening. A king in the middle is a target." },
   twice:  { t: "Same piece moved twice in the opening", tip: "Each opening move should bring a new piece into play. Moving one piece again gives your opponent time." },
   endgame:{ t: "Endgame technique", tip: "In the endgame, activate your king, push passed pawns and trade pieces (not pawns) when you're ahead." },
-  other:  { t: "Strategic error", tip: "Compare your move with the better one: which pieces does it improve? Ask what your worst piece is and improve it." },
+  other:  { t: "A quiet move that made things worse", tip: "Compare your move with the better one: which pieces does it improve? Ask which of your pieces does the least, and improve that one." },
 };
 
 const RULE = { hang: "Loose pieces drop off.", threat: "Answer the threat before you start your plan.", tactic: "Look at checks, captures and threats, for both sides, every move.", mate: "Look at your king first.", queen: "Develop knights and bishops before the queen.", king: "Castle early, keep the king at home.", twice: "Every opening move should bring a new piece into play.", endgame: "In the endgame the king is a fighting piece.", other: "Improve your worst piece." };
@@ -140,8 +140,8 @@ async function analyseGame(g, user, progress) {
         if (t && (t.captured || t.san.includes("+"))) { const r2 = await E.analyse(nm.fen()); existed = before - clip(pov(r2.score, white)) >= 100; } } catch (e) {}
       if (existed && h.to !== rm.to) { cat = "threat"; detail = `${rm.san} was already a threat before your move, and your move did not stop it.`; }
       else if (rm.captured && VAL[rm.captured] >= 3) { cat = "hang"; detail = rm.to === h.to ? `Your ${NAMES[h.piece]} on ${h.to} can be taken: ${rm.san}.` : `After your move, ${rm.san} wins your ${NAMES[rm.captured]}.`; }
-      else if (bm && (bm.captured || bm.san.includes("+"))) { cat = "tactic"; detail = "You had a forcing move."; }
-    } else if (bm && (bm.captured || bm.san.includes("+")) && loss >= 200) { cat = "tactic"; detail = "You had a forcing move."; }
+      else if (bm && (bm.captured || bm.san.includes("+"))) { cat = "tactic"; detail = "You had a stronger move: a check or a capture."; }
+    } else if (bm && (bm.captured || bm.san.includes("+")) && loss >= 200) { cat = "tactic"; detail = "You had a stronger move: a check or a capture."; }
     const ply = i + 1, moveNo = Math.floor(i / 2) + 1;
     if (cat === "other" && ply <= 20) {
       if (h.piece === "q" && moveNo <= 8) { cat = "queen"; detail = "The queen came out before your knights and bishops."; }
@@ -182,7 +182,7 @@ $("#az-form").addEventListener("submit", async (e) => {
   state = { games: [], user, site }; const out = $("#az-games"); out.innerHTML = '<p class="small">Fetching games…</p>'; $("#az-report").innerHTML = "";
   try { const games = site === "lichess" ? await fetchLichess(user) : await fetchChesscom(user); state.games = games; state.ratings = {}; fetchRatings(site, user).then((r) => { state.ratings = r; }); ev("analyze-fetch-" + site);
     if (!games.length) { out.innerHTML = '<p class="small">No standard games found in the last months.</p>'; return; }
-    out.innerHTML = `<p>Pick up to <strong>${maxGames()} games</strong> to analyze. Tip: your losses teach the most.</p>${isPrem() ? '<p class="small"><label>Depth: <select id="az-depth"><option value="14">Standard (depth 14, fast)</option><option value="18">Deep (depth 18, about 4x slower, finds more)</option><option value="full">Pro engine (full Stockfish, depth 16, desktop only, 79 MB download once)</option></select></label></p>' : '<p class="small">&#128274; Want up to 25 games and deeper engine analysis? <a href="/members/#plan">See Premium</a>.</p>'}<div class="az-chips" id="az-chips"><button type="button" class="on" data-f="all">All</button><button type="button" data-f="lost">Lost</button><button type="button" data-f="won">Won</button><button type="button" data-f="draw">Draw</button></div><div class="az-list">` +
+    out.innerHTML = `<p>Pick up to <strong>${maxGames()} games</strong> to analyze. Tip: your losses teach the most.</p>${isPrem() ? '<p class="small"><label>Detail: <select id="az-depth"><option value="14">Standard (fast)</option><option value="18">Deeper (about 4x slower, finds more)</option><option value="full">Strongest (desktop only, 79 MB download once)</option></select></label></p>' : '<p class="small">&#128274; Want up to 25 games and deeper analysis? <a href="/members/#plan">See Premium</a>.</p>'}<div class="az-chips" id="az-chips"><button type="button" class="on" data-f="all">All</button><button type="button" data-f="lost">Lost</button><button type="button" data-f="won">Won</button><button type="button" data-f="draw">Draw</button></div><div class="az-list">` +
       games.map((g, i) => { const w = g.white.toLowerCase() === user.toLowerCase(); const opp = w ? g.black : g.white;
         return `<label class="az-g" data-r="${fmtRes(g, user).toLowerCase()}"><input type="checkbox" value="${i}"><span class="res ${fmtRes(g, user).toLowerCase()}">${fmtRes(g, user)}</span>
           <span>${w ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${esc(g.tc || "")} · ${g.date.toLocaleDateString()}</span></label>`; }).join("") +
@@ -201,11 +201,11 @@ $("#az-form").addEventListener("submit", async (e) => {
 async function run() {
   const idx = [...document.querySelectorAll("#az-games input:checked")].map((x) => +x.value); if (!idx.length) return;
   { const dsel = $("#az-depth"); const dv = isPrem() && dsel ? dsel.value : "14"; FULL = dv === "full"; DEPTH = FULL ? 16 : +dv || 14; }
-  $("#az-go").disabled = true; const prog = $("#az-prog"); prog.textContent = "Loading the engine ("+(FULL ? "79 MB, once; this can take a minute" : "7 MB, once")+")…"; ev("analyze-run");
+  $("#az-go").disabled = true; const prog = $("#az-prog"); prog.textContent = "Loading the analysis tool ("+(FULL ? "79 MB, once; this can take a minute" : "7 MB, once")+")…"; ev("analyze-run");
   const results = [];
   for (let k = 0; k < idx.length; k++) {
     const g = state.games[idx[k]];
-    results.push(await analyseGame(g, state.user, (a, b) => { prog.textContent = `Game ${k + 1} of ${idx.length}: position ${a} of ${b}…`; }));
+    results.push(await analyseGame(g, state.user, (a, b) => { prog.textContent = `Game ${k + 1} of ${idx.length}: checking move ${a} of ${b}…`; }));
   }
   prog.textContent = "Done."; $("#az-go").disabled = false; report(results);
 }
@@ -247,6 +247,17 @@ function ratingsLine(cur, latest) {
   if (parts.length) return `<p>Your ratings: ${parts.map(([n, v]) => `${esc(n)} <b>${Number(v) || 0}</b>`).join(" &middot; ")}</p>`;
   return cur ? `<p>Your current rating: <b>${Number(cur) || 0}</b> (${esc(latest.g.tc || "")}).</p>` : "";
 }
+const SAY = (cp) => cp >= 700 ? "winning" : cp >= 300 ? "clearly better" : cp >= 120 ? "a bit better" : cp > -120 ? "about equal" : cp > -300 ? "a bit worse" : cp > -700 ? "clearly worse" : "close to lost";
+const plural = (n, w) => `${n} ${w}${n === 1 ? "" : "s"}`;
+function momentHtml(m, mi) {
+  const opp = m.r.side === "w" ? m.r.g.black : m.r.g.white, a = SAY(m.before), b = SAY(m.after);
+  const change = a === b ? "Your position got a lot weaker." : `Before this move you were ${a}. After it you were ${b}.`;
+  return `<div class="az-m">${boardSVG(m.fen, m.from, m.to, m.r.side === "b", m.bFrom, m.bTo)}<div><span class="eyebrow">${P[m.cat].t}</span>
+    <h3>Move ${m.moveNo}${m.color === "w" ? "." : "…"}${esc(m.san)} <span class="small">vs ${esc(opp)}</span></h3>
+    <p>${m.detail ? esc(m.detail) + " " : ""}${m.best ? `Better was <b>${esc(m.best)}</b>.` : ""}</p>
+    <p class="small">${change}${m.clock !== null ? ` You had ${Math.round(m.clock)} seconds left.` : ""}</p>
+    <p>${m.pv && m.pv.length ? `<button class="btn az-replay" type="button" data-i="${mi}">&#9654; Show what happens</button>` : ""}<a class="small" href="${esc(safeUrl(m.r.g.url))}" target="_blank" rel="noopener">Open the game</a></p></div></div>`;
+}
 function report(results) {
   const all = results.flatMap((r, ri) => r.moments.map((m) => ({ ...m, r, ri }))); const cnt = {}; for (const m of all) cnt[m.cat] = (cnt[m.cat] || 0) + 1;
   const order = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a]); const max = Math.max(1, ...Object.values(cnt));
@@ -258,49 +269,42 @@ function report(results) {
   const accFix = (sum((r) => r.acc * r.nMoves) + top3.reduce((a, m) => a + (100 - m.a), 0)) / nm, lossNow = sum((r) => r.avgLoss * r.nMoves) / nm, lossFix = (sum((r) => r.avgLoss * r.nMoves) - top3.reduce((a, m) => a + Math.min(m.loss, 1000), 0)) / nm;
   const bNow = bandOf(lossNow / 100), bFix = bandOf(lossFix / 100), bNext = Math.min(BANDS.length - 1, bNow + 1), blPer = nB / results.length;
   const latest = results.slice().sort((x, y) => y.g.date - x.g.date)[0]; const cur = latest && latest.side ? (latest.side === "w" ? latest.g.wrat : latest.g.brat) : null;
-  const nTop = top3.length, mWord = nTop === 1 ? "your biggest mistake" : `your ${nTop} biggest mistakes (one per game)`;
-  const whatIf = nTop ? `<div class="az-what"><p><b>Without ${mWord}:</b></p><ul>
-    <li>Your accuracy would go up from ${acc.toFixed(0)}% to <b>${accFix.toFixed(0)}%</b>.</li>
-    <li>You would lose <b>${(lossFix / 100).toFixed(2)}</b> instead of ${(lossNow / 100).toFixed(2)} pawns per move.</li>
-    <li>${bFix > bNow ? `Your play would look like players rated about <b>${bandName(bFix)}</b> (today: ${bandName(bNow)}).` : `You would stay in the ${bandName(bNow)} band, a step closer to ${bandName(bNext)}.`}</li></ul>
-    ${ratingsLine(cur, latest)}<p>Your play today looks like players rated about <b>${bandName(bNow)}</b>.</p>
-    <p class="small">Based on our own sample of 270 Chess.com rapid games (30 per rating band), analyzed with the same engine. A guide, not an official rating${results.length < 3 ? ". Analyze 3 to 5 games for a steadier estimate" : ""}.</p></div>` : "";
-  const tip3 = bNow < BANDS.length - 1 ? `Players rated about ${bandName(bNext)} make about ${BANDS[bNext].bl.toFixed(1)} blunders per game (moves that lose 3+ pawns). You made ${blPer.toFixed(1)}. Blunders are the fastest way up: before every move, check their checks, captures and threats.` : `Players in your band make about ${BANDS[bNow].bl.toFixed(1)} blunders per game and you made ${blPer.toFixed(1)}. Keep the 3-second check (checks, captures, threats) before every move.`;
-  let h = `<h2>Your report</h2><p>${results.length} game${results.length > 1 ? "s" : ""} analyzed for <b>${esc(state.user)}</b>. We found <b>${all.length}</b> moment${all.length === 1 ? "" : "s"} where the evaluation dropped by more than a pawn.</p>`;
-  h += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy (our estimate)</span></div><div><b>${(sum((r) => r.avgLoss * r.nMoves) / nm / 100).toFixed(2)}</b><span>Pawns lost per move</span></div><div><b>${nB}</b><span>Blunders</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Inaccuracies</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div>${whatIf}<p class="small">Accuracy here is our own estimate at a light engine depth. It is not on the same scale as the Chess.com or Lichess accuracy, so compare moves, not percentages.</p>`;
-  // phases
+  const nTop = top3.length, n = results.length;
   const phs = {}; for (const k of Object.keys(PHN)) { phs[k] = { n: 0, loss: 0, big: 0 }; for (const r of results) { phs[k].n += r.ph[k].n; phs[k].loss += r.ph[k].loss; phs[k].big += r.ph[k].big; } }
   const worst = Object.keys(PHN).filter((k) => phs[k].n >= 5).sort((a, b) => phs[b].loss / phs[b].n - phs[a].loss / phs[a].n)[0];
-  h += `<h3>Where you lose points</h3><div class="az-ph">` + Object.keys(PHN).map((k) => `<div class="${k === worst ? "worst" : ""}"><span>${PHN[k]}</span><b>${phs[k].n ? (phs[k].loss / phs[k].n / 100).toFixed(2) : "–"}</b><small>pawns lost per move<br>${phs[k].big} big drop${phs[k].big === 1 ? "" : "s"} in ${phs[k].n} moves</small></div>`).join("") + `</div>`;
-  if (worst) h += `<p class="small">Your biggest leak: the <b>${PHN[worst].toLowerCase()}</b>. That is where your moves cost the most on average.</p>`;
-  // per game
-  h += `<h3>Game by game</h3><div class="az-gm">` + results.map((r) => { const opp = r.side === "w" ? r.g.black : r.g.white; const top = r.moments.slice().sort((a, b) => b.loss - a.loss)[0];
-    return `<a href="${esc(safeUrl(r.g.url))}" target="_blank" rel="noopener"><span class="res ${outc(r).toLowerCase()}">${outc(r)}</span><span>${r.side === "w" ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${r.acc.toFixed(0)}% accuracy${top ? ` · biggest drop: move ${top.moveNo}${top.color === "w" ? "." : "…"}${esc(top.san)}` : " · no big drops"}</span></a>`; }).join("") + `</div>`;
-  if (order.length) {
-    const top = order[0];
-    h += `<div class="az-top"><span class="eyebrow">Train this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p><p class="small">${ruleLink(top)}</p></div>`;
-    h += `<div class="az-bars">` + order.map((c) => `<div class="az-bar"><span>${P[c].t}</span><i style="width:${(100 * cnt[c]) / max}%"></i><b>${cnt[c]}</b></div>`).join("") + `</div>`;
-  } else h += `<div class="az-top"><h3>Clean games!</h3><p>No big drops in these games. Try a few losses to find what to train.</p></div>`;
-  if (order.length) { h += `<h3>Your 5-game training plan</h3><div class="az-plan">` + order.slice(0, 2).map((c, i) => `<div><span class="eyebrow">Focus ${i + 1}: ${P[c].t}</span><p><b>Habit:</b> ${DRILL[c][0]}</p><p><b>Practice:</b> ${DRILL[c][1]}</p></div>`).join("") + `<p class="small">Play your next 5 games with only these two focuses, then analyze them again here and compare. The free cheat sheet has a 3-second check and a quiz that train exactly this.</p></div>`; }
-  if (late) h += `<p class="small">⏱ ${late} of these moments came with less than 30 seconds on your clock. Part of the fix may be using your time earlier in the game.</p>`;
-  for (const r of results) if (r.trap) h += `<div class="az-trap">${r.trap.fell ? "🪤 You fell for the" : "🎯 You set the"} <a href="/traps/${r.trap.t.slug}/?utm_source=analyze&amp;utm_campaign=${r.trap.t.slug}">${esc(r.trap.t.name)}</a>${r.trap.fell ? ". Here's how to avoid it next time." : ". Nice!"}</div>`;
-  h += `<h2>Key moments</h2><p class="small">On the boards: gold = the move you played, green = the better move.</p>`;
+  const top = order[0];
   SHOWN = all.slice().sort((a, b) => b.loss - a.loss).slice(0, 12).sort((a, b) => a.ri - b.ri || a.ply - b.ply);
-  for (const [mi, m] of SHOWN.entries()) {
-    const opp = m.r.side === "w" ? m.r.g.black : m.r.g.white;
-    h += `<div class="az-m">${boardSVG(m.fen, m.from, m.to, m.r.side === "b", m.bFrom, m.bTo)}<div><span class="eyebrow">${P[m.cat].t}</span>${m.pv && m.pv.length ? `<button class="btn az-replay" type="button" data-i="${mi}">&#9654; Replay what happens</button>` : ""}
-      <h3>Move ${m.moveNo}${m.color === "w" ? "." : "…"}${esc(m.san)} <span class="small">vs ${esc(opp)}</span></h3>
-      <p>${m.detail ? esc(m.detail) + " " : ""}${m.best ? `Better was <b>${esc(m.best)}</b>.` : ""}</p>
-      <p class="small">Evaluation for you: ${(m.before / 100).toFixed(1)} → ${(m.after / 100).toFixed(1)}${m.clock !== null ? ` · ${Math.round(m.clock)} s on your clock` : ""} · <a href="${esc(safeUrl(m.r.g.url))}" target="_blank" rel="noopener">open game</a></p>
-      <p class="small"><b>Principle:</b> ${P[m.cat].tip}<br>${ruleLink(m.cat)}</p></div></div>`;
+  const rank = SHOWN.map((m, i) => i).sort((x, y) => SHOWN[y].loss - SHOWN[x].loss), first3 = rank.slice(0, 3), rest = rank.slice(3);
+  let h = `<h2>Your report</h2><p class="az-lead">We looked at ${plural(n, "game")} by <b>${esc(state.user)}</b>. ${all.length ? `We found <b>${all.length}</b> moves that made your position clearly worse. Here is what to fix first.` : "No big mistakes found."}</p>`;
+  if (top) {
+    h += `<div class="az-top"><span class="eyebrow">Fix this first</span><h3>${P[top].t}</h3><p>${P[top].tip}</p><p class="small">This happened ${plural(cnt[top], "time")} in ${plural(n, "game")}.</p></div>`;
+    if (nTop) h += `<p class="az-what">Avoiding just ${nTop === 1 ? "your biggest mistake" : "your biggest mistake in each game"} would lift your accuracy from <b>${acc.toFixed(0)}%</b> to <b>${accFix.toFixed(0)}%</b>${bFix > bNow ? `, and you would play like a player rated about <b>${bandName(bFix)}</b> (today: ${bandName(bNow)})` : ""}.</p>`;
+    if (worst) h += `<p>Most of your costly moves came in the <b>${PHN[worst].toLowerCase()}</b>.</p>`;
+  } else h += `<div class="az-top"><h3>Clean games!</h3><p>Try a few of your losses to find what to train.</p></div>`;
+  for (const r of results) if (r.trap) h += `<div class="az-trap">${r.trap.fell ? "🪤 You fell for the" : "🎯 You set the"} <a href="/traps/${r.trap.t.slug}/?utm_source=analyze&amp;utm_campaign=${r.trap.t.slug}">${esc(r.trap.t.name)}</a>${r.trap.fell ? ". Here's how to avoid it next time." : ". Nice!"}</div>`;
+  if (first3.length) {
+    h += `<h3>See it on the board</h3><p class="small">Your ${first3.length === 1 ? "costliest move" : first3.length + " costliest moves"}. Gold squares: the move you played. Green: the better move.</p>`;
+    h += first3.map((i) => momentHtml(SHOWN[i], i)).join("");
+    if (rest.length) h += `<details class="az-det"><summary>Show ${rest.length} more moment${rest.length === 1 ? "" : "s"}</summary>${rest.map((i) => momentHtml(SHOWN[i], i)).join("")}</details>`;
   }
-  { const t1 = order.length ? `Your most common leak: <b>${P[order[0]].t.toLowerCase()}</b> (${cnt[order[0]]} time${cnt[order[0]] > 1 ? "s" : ""} in ${results.length} game${results.length > 1 ? "s" : ""}). ${P[order[0]].tip}` : "No big leaks found. Keep doing what you do and analyze a few losses.";
-    const tips = { opening: "Your opening costs you the most. Play the same opening for a month, know its first 8 moves, and develop knights and bishops before the queen.", middlegame: "Your middlegame costs you the most. When the position gets busy, slow down: list your opponent's forcing moves (checks, captures, threats) before you choose.", endgame: "Your endgame costs you the most. Practice king and pawn endings 10 minutes a day: activate the king, push passed pawns." };
-    h += `<h3>3 top tips for you</h3><ol class="az-tips"><li>${t1}</li><li>${worst ? tips[worst] : "Analyze more games to see which phase costs you most."}</li><li>${tip3}</li></ol>`; }
-  h += `<div class="az-pro"><span class="eyebrow">Go deeper</span><h3>Want a more in-depth analysis?</h3><p>This report uses a light engine and 5 games. Join the improvement program: a stronger engine looking deeper, all your games, puzzles built from the patterns you miss (pattern recognition is what makes you faster), and your progress over time.</p><a class="btn solid" data-ev="analyze-cta-improve" href="/improve/?utm_source=analyze&amp;utm_campaign=improve">Join the waitlist</a></div>`;
-  h += `<div class="az-cta"><h3>Keep improving</h3><p>This report is advice based on your own games. Next step: learn the 10 opening traps every beginner meets. Get the free cheat sheet, plus one trap a week in your inbox.</p><a class="btn solid" data-ev="analyze-cta-free" href="/free/?utm_source=analyze&amp;utm_campaign=analyze">Get the free cheat sheet</a><hr><h3>Learn one trap a day</h3><p>Under-a-minute lessons on traps, patterns and the mistakes we all make. Follow Throiy Chess:</p><div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
-  { const sv = `<div class="az-save" id="az-save"></div>`; h = h.replace('<h2>Key moments</h2>', sv + '<h2>Key moments</h2>'); }
-  h += '<div id="az-fb"></div>'; if (DEPTH > 14) h += '<p class="small">Analyzed at depth ' + DEPTH + '. The rating-band guide is calibrated at depth 14, so treat that comparison as approximate.</p>';
+  if (top) h += `<h3>Your plan for the next 5 games</h3><div class="az-plan"><p><b>Habit:</b> ${DRILL[top][0]}</p><p><b>Practice:</b> ${DRILL[top][1]}</p></div><p class="small">Then analyze 5 new games here and see what changed.</p>`;
+  h += `<div class="az-save" id="az-save"></div>`;
+  let d = `<p class="small"><b>Big mistake:</b> a move that loses a piece or more. <b>Mistake:</b> a move that loses a pawn or two. <b>Small slip:</b> a smaller loss. <b>Accuracy:</b> how close your moves were to the best ones (100% would be perfect). It is our own estimate, so compare moves, not percentages with Chess.com or Lichess.</p>`;
+  d += `<div class="az-score"><div><b>${acc.toFixed(0)}%</b><span>Accuracy</span></div><div><b>${nB}</b><span>Big mistakes</span></div><div><b>${nM}</b><span>Mistakes</span></div><div><b>${nI}</b><span>Small slips</span></div><div><b>${wins}-${draws}-${losses}</b><span>Won-drawn-lost</span></div></div>`;
+  d += `${ratingsLine(cur, latest)}<p>Your play looks like players rated about <b>${bandName(bNow)}</b>. That comes from our own sample of 270 Chess.com rapid games (30 per rating band). A guide, not an official rating${n < 3 ? ". Analyze 3 to 5 games for a steadier estimate" : ""}.</p>`;
+  d += bNow < BANDS.length - 1 ? `<p>Players rated about ${bandName(bNext)} make about ${BANDS[bNext].bl.toFixed(1)} big mistakes per game. You made ${blPer.toFixed(1)}. Big mistakes are the fastest way up: before every move, check their checks, captures and threats.</p>` : `<p>Players in your band make about ${BANDS[bNow].bl.toFixed(1)} big mistakes per game and you made ${blPer.toFixed(1)}. Keep the 3-second check (checks, captures, threats) before every move.</p>`;
+  d += `<h4>Where in the game</h4><div class="az-ph">` + Object.keys(PHN).map((k) => `<div class="${k === worst ? "worst" : ""}"><span>${PHN[k]}</span><b>${phs[k].big}</b><small>costly move${phs[k].big === 1 ? "" : "s"}<br>in ${phs[k].n} moves</small></div>`).join("") + `</div>`;
+  d += `<h4>Game by game</h4><div class="az-gm">` + results.map((r) => { const opp = r.side === "w" ? r.g.black : r.g.white; const tp = r.moments.slice().sort((a, b) => b.loss - a.loss)[0];
+    return `<a href="${esc(safeUrl(r.g.url))}" target="_blank" rel="noopener"><span class="res ${outc(r).toLowerCase()}">${outc(r)}</span><span>${r.side === "w" ? "White" : "Black"} vs <b>${esc(opp)}</b></span><span class="small">${r.acc.toFixed(0)}% accuracy${tp ? ` · costliest move: ${tp.moveNo}${tp.color === "w" ? "." : "…"}${esc(tp.san)}` : " · no big mistakes"}</span></a>`; }).join("") + `</div>`;
+  if (order.length) d += `<h4>What kind of mistakes</h4><div class="az-bars">` + order.map((c) => `<div class="az-bar"><span>${P[c].t}</span><i style="width:${(100 * cnt[c]) / max}%"></i><b>${cnt[c]}</b></div>`).join("") + `</div>`;
+  if (order[1]) d += `<h4>A second habit, for later</h4><div class="az-plan"><p><b>${P[order[1]].t}:</b> ${DRILL[order[1]][0]}</p></div>`;
+  if (late) d += `<p class="small">⏱ ${late} of these moves came with less than 30 seconds on your clock. Part of the fix may be using your time earlier in the game.</p>`;
+  if (DEPTH > 14) d += `<p class="small">Analyzed in extra depth (${DEPTH}). The rating guide was made with the standard setting, so treat that comparison as approximate.</p>`;
+  h += `<details class="az-det"><summary>All the numbers</summary>${d}</details>`;
+  h += `<div class="az-cta"><h3>Next step</h3><p>Get the free cheat sheet: the 10 opening traps every beginner meets, plus one trap a week in your inbox.</p><a class="btn solid" data-ev="analyze-cta-free" href="/free/?utm_source=analyze&amp;utm_campaign=analyze">Get the free cheat sheet</a>
+    <p class="small" style="margin-top:14px">Want a deeper look at more games? <a data-ev="analyze-cta-improve" href="/improve/?utm_source=analyze&amp;utm_campaign=improve">Join the waitlist</a>.</p>
+    <div class="az-follow"><a class="btn" data-ev="analyze-follow-youtube" href="https://www.youtube.com/@ThroiyChess?sub_confirmation=1" target="_blank" rel="noopener">YouTube</a><a class="btn" data-ev="analyze-follow-instagram" href="https://www.instagram.com/throiychess" target="_blank" rel="noopener">Instagram</a><a class="btn" data-ev="analyze-follow-tiktok" href="https://www.tiktok.com/@throiychess" target="_blank" rel="noopener">TikTok</a></div></div>`;
+  h += '<div id="az-fb"></div>';
   window.__azLast = { acc, lossNow, nB, nM, nI, bNow, order, cnt, results, SHOWN };
   $("#az-report").innerHTML = h; saveReport(); try { if (window.tcFeedback) window.tcFeedback.inline($("#az-fb"), "analysis-report", "Was this report useful?", { games: results.length, depth: DEPTH, prem: isPrem() }); } catch (e) {} $("#az-report").scrollIntoView({ behavior: "smooth" }); ev("analyze-report");
 }
