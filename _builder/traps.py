@@ -643,7 +643,7 @@ GUIDES = {
                 "Bishop f5 gets you a few more moves, but Bb5+ and dxc5 break your position. Queen takes a1 loses the queen for a rook, and Qb4+ loses it to the knight."]),
         ],
         qa=[("How do I avoid the London System trap?", "Don't take the pawn on b2 with your queen. Play 4...Nf6 and develop."),
-            ("Why is it called the London System?", "It became famous at the London 1922 tournament, where it appeared seven times (Capablanca, Alekhine and Rubinstein all played it)."),
+            ("Why is it called the London System?", "It became famous at the London 1922 tournament, where it appeared in several games (Capablanca, Alekhine and Rubinstein all played it)."),
             ("What is the lesson?", "Before your queen takes a pawn, ask where she goes when the pieces come at her.")]),
 }
 for _t in TRAPS:
