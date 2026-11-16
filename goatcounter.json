@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-15T04:20:26Z",
- "start": "2026-08-18",
- "end": "2026-11-15",
+ "generated": "2026-11-16T04:58:05Z",
+ "start": "2026-08-19",
+ "end": "2026-11-16",
  "hits": {
   "error": 404
  },
@@ -9,13 +9,13 @@
   "stats": [
    {
     "name": "",
-    "count": 92,
+    "count": 97,
     "ref_scheme": "o"
    },
    {
     "id": "YouTube",
     "name": "YouTube",
-    "count": 30,
+    "count": 34,
     "ref_scheme": "c"
    },
    {
@@ -39,7 +39,7 @@
    {
     "id": "www.facebook.com",
     "name": "www.facebook.com",
-    "count": 2,
+    "count": 3,
     "ref_scheme": "h"
    },
    {
@@ -53,6 +53,12 @@
     "name": "smartlink",
     "count": 2,
     "ref_scheme": "c"
+   },
+   {
+    "id": "opponent",
+    "name": "opponent",
+    "count": 1,
+    "ref_scheme": "c"
    }
   ],
   "more": false
@@ -62,12 +68,12 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 164
+    "count": 177
    },
    {
     "id": "Safari",
     "name": "Safari",
-    "count": 28
+    "count": 42
    },
    {
     "id": "Firefox",
@@ -82,12 +88,12 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 152
+    "count": 164
    },
    {
     "id": "iOS",
     "name": "iOS",
-    "count": 28
+    "count": 42
    },
    {
     "id": "Linux",
@@ -102,7 +108,7 @@
    {
     "id": "Android",
     "name": "Android",
-    "count": 1
+    "count": 2
    }
   ],
   "more": false
@@ -112,7 +118,7 @@
    {
     "id": "phone",
     "name": "",
-    "count": 29
+    "count": 44
    },
    {
     "id": "tablet",
@@ -122,7 +128,7 @@
    {
     "id": "desktop",
     "name": "",
-    "count": 146
+    "count": 158
    },
    {
     "id": "desktophd",
@@ -142,7 +148,7 @@
    {
     "id": "NL",
     "name": "Netherlands",
-    "count": 67
+    "count": 89
    },
    {
     "id": "BG",
@@ -152,7 +158,7 @@
    {
     "id": "US",
     "name": "United States",
-    "count": 36
+    "count": 37
    },
    {
     "id": "CA",
@@ -162,7 +168,7 @@
    {
     "id": "BR",
     "name": "Brazil",
-    "count": 9
+    "count": 11
    },
    {
     "id": "GB",
@@ -180,6 +186,11 @@
     "count": 5
    },
    {
+    "id": "FR",
+    "name": "France",
+    "count": 4
+   },
+   {
     "id": "RU",
     "name": "Russia",
     "count": 4
@@ -192,11 +203,6 @@
    {
     "id": "ES",
     "name": "Spain",
-    "count": 3
-   },
-   {
-    "id": "FR",
-    "name": "France",
     "count": 3
    },
    {
@@ -240,6 +246,11 @@
     "count": 1
    },
    {
+    "id": "VN",
+    "name": "Vietnam",
+    "count": 1
+   },
+   {
     "id": "ZW",
     "name": "Zimbabwe",
     "count": 1
@@ -257,6 +268,11 @@
    {
     "id": "79205",
     "name": "damiano-defence",
+    "count": 4
+   },
+   {
+    "id": "79597",
+    "name": "kieninger-trap",
     "count": 4
    },
    {
@@ -342,6 +358,11 @@
    {
     "id": "76794",
     "name": "stop-greek-gift",
+    "count": 1
+   },
+   {
+    "id": "79655",
+    "name": "opponent",
     "count": 1
    }
   ],
