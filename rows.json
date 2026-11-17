@@ -1,8 +1,372 @@
 {
-"generated": "2026-11-16T04:58:05Z",
-"start": "2026-08-19",
-"end": "2026-11-16",
+"generated": "2026-11-17T04:20:49Z",
+"start": "2026-08-20",
+"end": "2026-11-17",
 "rows": [
+{
+"kind": "daily",
+"key": "2026-10-26",
+"label": "2026-10-26",
+"value": 2,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-27",
+"label": "2026-10-27",
+"value": 44,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-28",
+"label": "2026-10-28",
+"value": 24,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-29",
+"label": "2026-10-29",
+"value": 5,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-30",
+"label": "2026-10-30",
+"value": 8,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-10-31",
+"label": "2026-10-31",
+"value": 7,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-01",
+"label": "2026-11-01",
+"value": 15,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-02",
+"label": "2026-11-02",
+"value": 8,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-03",
+"label": "2026-11-03",
+"value": 7,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-04",
+"label": "2026-11-04",
+"value": 3,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-05",
+"label": "2026-11-05",
+"value": 5,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-06",
+"label": "2026-11-06",
+"value": 1,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-07",
+"label": "2026-11-07",
+"value": 8,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-08",
+"label": "2026-11-08",
+"value": 4,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-09",
+"label": "2026-11-09",
+"value": 5,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-10",
+"label": "2026-11-10",
+"value": 6,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-11",
+"label": "2026-11-11",
+"value": 21,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-12",
+"label": "2026-11-12",
+"value": 6,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-13",
+"label": "2026-11-13",
+"value": 4,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-14",
+"label": "2026-11-14",
+"value": 9,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-15",
+"label": "2026-11-15",
+"value": 13,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-16",
+"label": "2026-11-16",
+"value": 5,
+"group": ""
+},
+{
+"kind": "daily",
+"key": "2026-11-17",
+"label": "2026-11-17",
+"value": 0,
+"group": ""
+},
+{
+"kind": "page",
+"key": "/",
+"label": "Throiy Chess",
+"value": 72,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/free",
+"label": "Free: 10 Opening Traps Cheat Sheet",
+"value": 30,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/today",
+"label": "Daily Trap: can you survive today's chess trap?",
+"value": 11,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/analyze",
+"label": "Free chess game analyzer: find your biggest mistakes",
+"value": 9,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/traps/scholars-mate",
+"label": "Scholar's Mate: moves, mate and how to avoid it",
+"value": 8,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/support",
+"label": "Support",
+"value": 8,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/shorts",
+"label": "All Shorts",
+"value": 8,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/contact",
+"label": "Contact",
+"value": 8,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/videos",
+"label": "Videos",
+"value": 6,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/traps",
+"label": "Trap library",
+"value": 5,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/traps/blackburne-shilling-gambit",
+"label": "Blackburne Shilling Gambit: moves, mate and how to avoid it",
+"value": 4,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/lasker-trap",
+"label": "Lasker Trap: moves, mate and how to avoid it",
+"value": 4,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/legals-mate",
+"label": "Légal's Mate: moves, mate and how to avoid it",
+"value": 4,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/fishing-pole-trap",
+"label": "Fishing Pole Trap: moves, mate and how to avoid it",
+"value": 4,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/damiano-defence",
+"label": "Damiano Defence: why 2...f6 loses and what to play instead",
+"value": 3,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/siberian-trap",
+"label": "Siberian Trap: the Smith-Morra trap and how to avoid it",
+"value": 3,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/fried-liver-attack",
+"label": "Fried Liver Attack: moves, mate and how to avoid it",
+"value": 3,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/mortimer-trap",
+"label": "Mortimer Trap: the Ruy Lopez knight trap and how to avoid it",
+"value": 2,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/kieninger-trap",
+"label": "Kieninger Trap: the Budapest Gambit mate and how to avoid it",
+"value": 2,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/patterns/bodens-mate",
+"label": "Boden's Mate: how it works, step by step on the board",
+"value": 2,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/traps/noahs-ark-trap",
+"label": "Noah's Ark Trap: the Ruy Lopez bishop trap and how to avoid it",
+"value": 2,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/opponent",
+"label": "Analyze your chess opponent: find their weak points",
+"value": 2,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/traps/elephant-trap",
+"label": "Elephant Trap: moves, mate and how to avoid it",
+"value": 2,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/traps/halloween-gambit",
+"label": "Halloween Gambit: moves, mate and how to avoid it",
+"value": 2,
+"group": "Trap-pagina"
+},
+{
+"kind": "page",
+"key": "/404.html",
+"label": "Page not found",
+"value": 2,
+"group": "Fout (404)"
+},
+{
+"kind": "page",
+"key": "/patterns",
+"label": "Chess mating patterns and tactics: step by step",
+"value": 1,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/top-games",
+"label": "Top games",
+"value": 1,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/improve",
+"label": "Improve your chess: deeper analysis, puzzles and courses",
+"value": 1,
+"group": "Overige pagina"
+},
+{
+"kind": "page",
+"key": "/traps/stafford-gambit",
+"label": "Stafford Gambit: moves, mate and how to avoid it",
+"value": 1,
+"group": "Trap-pagina"
+},
 {
 "kind": "source",
 "key": "(direct)",
@@ -14,7 +378,7 @@
 "kind": "source",
 "key": "YouTube",
 "label": "YouTube",
-"value": 34,
+"value": 38,
 "group": "Website"
 },
 {
@@ -63,14 +427,14 @@
 "kind": "source",
 "key": "opponent",
 "label": "opponent",
-"value": 1,
+"value": 2,
 "group": "Website"
 },
 {
 "kind": "country",
 "key": "NL",
 "label": "Netherlands",
-"value": 89,
+"value": 94,
 "group": ""
 },
 {
@@ -84,7 +448,7 @@
 "kind": "country",
 "key": "US",
 "label": "United States",
-"value": 37,
+"value": 38,
 "group": ""
 },
 {
@@ -98,7 +462,7 @@
 "kind": "country",
 "key": "BR",
 "label": "Brazil",
-"value": 11,
+"value": 12,
 "group": ""
 },
 {
@@ -180,6 +544,20 @@
 },
 {
 "kind": "country",
+"key": "GR",
+"label": "Greece",
+"value": 1,
+"group": ""
+},
+{
+"kind": "country",
+"key": "ID",
+"label": "Indonesia",
+"value": 1,
+"group": ""
+},
+{
+"kind": "country",
 "key": "IE",
 "label": "Ireland",
 "value": 1,
@@ -224,7 +602,7 @@
 "kind": "device",
 "key": "phone",
 "label": "Telefoon",
-"value": 44,
+"value": 49,
 "group": ""
 },
 {
@@ -238,7 +616,7 @@
 "kind": "device",
 "key": "desktop",
 "label": "Computer",
-"value": 158,
+"value": 162,
 "group": ""
 },
 {
@@ -252,14 +630,14 @@
 "kind": "browser",
 "key": "Chrome",
 "label": "Chrome",
-"value": 177,
+"value": 181,
 "group": ""
 },
 {
 "kind": "browser",
 "key": "Safari",
 "label": "Safari",
-"value": 42,
+"value": 47,
 "group": ""
 },
 {
@@ -273,14 +651,14 @@
 "kind": "system",
 "key": "Windows",
 "label": "Windows",
-"value": 164,
+"value": 168,
 "group": ""
 },
 {
 "kind": "system",
 "key": "iOS",
 "label": "iOS",
-"value": 42,
+"value": 47,
 "group": ""
 },
 {
@@ -322,6 +700,13 @@
 "kind": "campaign",
 "key": "79597",
 "label": "kieninger-trap",
+"value": 4,
+"group": ""
+},
+{
+"kind": "campaign",
+"key": "79961",
+"label": "mortimer-trap",
 "value": 4,
 "group": ""
 },
@@ -404,6 +789,13 @@
 },
 {
 "kind": "campaign",
+"key": "79655",
+"label": "opponent",
+"value": 2,
+"group": ""
+},
+{
+"kind": "campaign",
 "key": "60576",
 "label": "bio",
 "value": 1,
@@ -445,23 +837,16 @@
 "group": ""
 },
 {
-"kind": "campaign",
-"key": "79655",
-"label": "opponent",
-"value": 1,
-"group": ""
-},
-{
 "kind": "meta",
 "key": "generated",
-"label": "2026-11-16T04:58:05Z",
+"label": "2026-11-17T04:20:49Z",
 "value": 0,
 "group": ""
 },
 {
 "kind": "meta",
 "key": "start",
-"label": "2026-08-19",
+"label": "2026-08-20",
 "value": 0,
 "group": ""
 }
