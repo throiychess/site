@@ -32,6 +32,7 @@
 
 ## Videos
 - [All Shorts](https://throiychess.com/shorts/)
+- [Two free pawns? Mate on move 6! From's Gambit](https://www.youtube.com/shorts/gGM7aL1WWd8): Two free pawns? It's bait. Mate on move six. This is From's Gambit against the Bird's Opening (1.f4 e5).
 - [Free pawn? You lose a knight! Mortimer Trap](https://www.youtube.com/shorts/JyCrqLMQe3k): Free pawn? It's bait. Take it, and you lose your knight on move seven. This is the Mortimer Trap in the Ruy Lopez (1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7).
 - [Free bishop? It's mate. The Kieninger Trap](https://www.youtube.com/shorts/ECXaYL0a6FY): This is the Kieninger Trap, from the Budapest Gambit. Black's bishop checks on b4 and the queen comes to e7. White kicks the bishop with a3, Black ignores it and takes on e5. Pawn takes the bishop? Knight to d3 is checkm
 - [Free knight? Don't take it! Damiano Defence](https://www.youtube.com/shorts/EvhcLKVqBUM): A free knight on move three? Don't take it. This is the Damiano Defence: Black protects e5 with the f-pawn, it looks safe, and White takes on e5 anyway.
