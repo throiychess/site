@@ -444,7 +444,7 @@ document.addEventListener("click",function(ev){var d=ev.target.closest("[data-ev
 window.addEventListener("blur",function(){var f=document.activeElement;if(f&&f.tagName==="IFRAME"&&f.src.indexOf("ko-fi.com")>-1&&!window.kfC){window.kfC=1;gcEv("kofi-panel-click")}});
 document.addEventListener("click",function(ev){var b=ev.target.closest("button[data-yt]");if(!b)return;var f=document.createElement("iframe");
 f.src="https://www.youtube-nocookie.com/embed/"+b.dataset.yt+"?autoplay=1&rel=0&playsinline=1";f.title=b.dataset.title||"YouTube Short";
-f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";b.replaceWith(f)});
+f.allow="autoplay; encrypted-media; picture-in-picture";f.allowFullscreen=true;f.referrerPolicy="strict-origin-when-cross-origin";if(b.closest(".vid")){b.replaceWith(f)}else{var w=document.createElement("div");w.className="vid";w.style.cssText="max-width:360px;margin:20px auto 0;border-radius:12px";w.appendChild(f);(b.closest(".btns")||b).after(w);b.hidden=true;try{w.scrollIntoView({behavior:"smooth",block:"nearest"})}catch(e){}}});
 document.addEventListener("click",function(ev){var b=ev.target.closest(".share button");if(!b)return;var w=b.closest(".share"),u=w.dataset.url,t=w.dataset.text;
 var app=b.dataset.app,m=w.querySelector(".sh-msg");
 if((b.classList.contains("sh-native")||app)&&navigator.share&&matchMedia("(pointer:coarse)").matches){navigator.share({title:t,url:u}).catch(function(){});return}
