@@ -21,6 +21,7 @@
 - [Damiano Defence](https://throiychess.com/traps/damiano-defence/): A free knight on move three. Take it and your king gets dragged into the open. Opening: Damiano Defence. Moves: e4 e5 Nf3 f6 Nxe5 fxe5 Qh5+ Ke7 Qxe5+ Kf7 Bc4+ d5 Bxd5+ Kg6
 - [Mortimer Trap](https://throiychess.com/traps/mortimer-trap/): The e5 pawn looks free. Grab it and a queen check wins your knight. Opening: Ruy Lopez. Moves: e4 e5 Nf3 Nc6 Bb5 Nf6 d3 Ne7 Nxe5 c6 Bc4 Qa5+ Nc3 Qxe5
 - [London System Trap](https://throiychess.com/traps/london-system-trap/): The b2 pawn looks free. Grab it and White's knight takes on d5 with a double threat. Opening: London System. Moves: d4 d5 Bf4 c5 e3 Qb6 Nc3 Qxb2 Nxd5 Bf5 Rb1 Qxa2 Bb5+ Kd8 dxc5
+- [Magnus Smith Trap](https://throiychess.com/traps/magnus-smith-trap/): The pawn on e5 looks free. Take it and White wins your queen. Opening: Sicilian Defence. Moves: e4 c5 Nf3 Nc6 d4 cxd4 Nxd4 Nf6 Nc3 d6 Bc4 g6 Nxc6 bxc6 e5 dxe5 Bxf7+ Kxf7 Qxd8
 
 ## Pattern lessons
 - [The Windmill](https://throiychess.com/patterns/windmill/): One rook gives check six times, then takes the queen.
