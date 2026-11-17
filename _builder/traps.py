@@ -352,6 +352,22 @@ TRAPS = [
                 15: ("CRUSHED", "8.dxc5", "White is far ahead.", ["c5"])},
          fix=["Don't take on b2. Play 4…Nf6 and keep developing.",
               "Before your queen takes a pawn, ask where she goes when the pieces come at her."]),
+    dict(slug="magnus-smith-trap", name="Magnus Smith Trap", opening="Sicilian Defence", side="White sets it", mate=False,
+         hook="The pawn on e5 looks free. Take it and White wins your queen.",
+         simple="In this Sicilian the white bishop on c4 already eyes f7. After the knights trade, White plays e5, attacking a knight and the pawn on d6. If Black takes the pawn, the d-file opens between the queens: bishop takes f7 with check, the king has to take, and queen takes queen. No black rook can take back, because both are blocked by their own bishops. Don't take: play knight to g4 or knight to d7.",
+         intro="After 1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 d6 6.Bc4 g6 7.Nxc6 bxc6 8.e5! dxe5? 9.Bxf7+! Kxf7 10.Qxd8 wins the queen. "
+               "8…Ng4 or 8…Nd7 keeps Black in the game. The trap is named after Magnus Smith, a three-time Canadian champion, although the same trap was in print almost thirty years before his 1911 article.",
+         moves="e4 c5 Nf3 Nc6 d4 cxd4 Nxd4 Nf6 Nc3 d6 Bc4 g6 Nxc6 bxc6 e5 dxe5 Bxf7+ Kxf7 Qxd8",
+         notes={0: ("START", "", "A trap in the Sicilian Dragon. Step through the moves."),
+                11: ("THE BISHOP", "6.Bc4", "The bishop already eyes the pawn on f7.", ["c4", "!f7"]),
+                13: ("THE TRADE", "7.Nxc6", "The knights trade.", ["c6"]),
+                15: ("THE PAWN", "8.e5", "It attacks the knight and the pawn on d6.", ["e5", "!f6", "!d6"]),
+                16: ("THE GREED", "8…dxe5?", "Black takes the pawn. It looks natural.", ["e5"]),
+                17: ("THE BLOW", "9.Bxf7+!", "Check. The d-file is open between the queens.", ["f7", "!e8", "!d8"]),
+                18: ("FORCED", "9…Kxf7", "The king has to take.", ["f7"]),
+                19: ("QUEEN LOST", "10.Qxd8", "No rook can take back: both are blocked by their own bishops.", ["d8"])},
+         fix=["Don't take on e5. Play 8…Ng4 or 8…Nd7.",
+              "Before you push or take a pawn, ask: what does it open?"]),
 ]
 
 # ---------------------------------------------------------------------------------------------
@@ -645,6 +661,22 @@ GUIDES = {
         qa=[("How do I avoid the London System trap?", "Don't take the pawn on b2 with your queen. Play 4...Nf6 and develop."),
             ("Why is it called the London System?", "It became famous at the London 1922 tournament, where it appeared in several games (Capablanca, Alekhine and Rubinstein all played it)."),
             ("What is the lesson?", "Before your queen takes a pawn, ask where she goes when the pieces come at her.")]),
+    "magnus-smith-trap": dict(
+        title="Magnus Smith Trap: why the pawn on e5 costs you your queen",
+        desc="How the Magnus Smith Trap works in the Sicilian, step by step on the board: the free pawn on e5, the bishop check on f7 and the moves Black should play instead.",
+        guide=[
+            dict(h="The pawn on e5 looks free", board=dict(moves="e4 c5 Nf3 Nc6 d4 cxd4 Nxd4 Nf6 Nc3 d6 Bc4 g6 Nxc6 bxc6 e5", rings=["!e5"], arrows=["r:e5f6", "r:e5d6"]), p=[
+                "After the knights trade, White plays e5. It attacks your knight on f6 and the pawn on d6. Taking the pawn looks natural."]),
+            dict(h="The fix: don't take", board=dict(moves="e4 c5 Nf3 Nc6 d4 cxd4 Nxd4 Nf6 Nc3 d6 Bc4 g6 Nxc6 bxc6 e5", arrows=["g:f6g4", "g:f6d7"]), p=[
+                "Move the knight instead: knight to g4 or knight to d7. You stay in the game."]),
+            dict(h="The mistake: pawn takes e5", board=dict(moves="e4 c5 Nf3 Nc6 d4 cxd4 Nxd4 Nf6 Nc3 d6 Bc4 g6 Nxc6 bxc6 e5 dxe5 Bxf7+", arrows=["r:c4f7", "r:d1d8"]), p=[
+                "Now the d-file is open between the two queens, and the bishop on c4 takes f7 with check."]),
+            dict(h="Why no rook takes back", board=dict(moves="e4 c5 Nf3 Nc6 d4 cxd4 Nxd4 Nf6 Nc3 d6 Bc4 g6 Nxc6 bxc6 e5 dxe5 Bxf7+ Kxf7 Qxd8", rings=["!d8", "!c8", "!f8"]), p=[
+                "The king has to take, and then queen takes queen. Both black rooks are blocked by their own bishops, so nothing can take back."]),
+        ],
+        qa=[("How do I avoid the Magnus Smith Trap?", "Don't take the pawn on e5. Play 8...Ng4 or 8...Nd7."),
+            ("Who was Magnus Smith?", "A three-time Canadian champion. The trap carries his name, although the same trap was in print almost thirty years before his 1911 article."),
+            ("What is the lesson?", "Before you push or take a pawn, ask what it opens.")]),
 }
 for _t in TRAPS:
     if _t["slug"] in GUIDES: _t.update(GUIDES[_t["slug"]])
