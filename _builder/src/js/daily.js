@@ -151,7 +151,9 @@
     var sub = win ? (mv && mv.s !== P.best ? (mv.v === "ok" ? "Your move " + esc(mv.s) + " holds, but " + esc(P.best) + " is stronger." : "Your move " + esc(mv.s) + " works. A better move is " + esc(P.best) + ".") : "You found the best move: " + esc(P.best) + ".")
       : "A safe move was " + esc(P.best) + ".";
     msg(win ? "good" : "bad", head, sub);
-    var fx = P.fix.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
+    var PCN = { Q: "queen", R: "rook", B: "bishop", N: "knight", K: "king" };
+    var dgr = ""; if (P.line && P.line[1] && P.line[1].s) { var rs = P.line[1].s, pn = PCN[rs.charAt(0)] || "pawn"; dgr = "<li><b>Danger: " + (P.victim === "w" ? "Black" : "White") + "'s " + pn + " on " + esc(P.line[1].u.slice(0, 2)) + ".</b> After " + esc(P.line[0].s) + " it plays " + esc(rs) + ".</li>"; }
+    var fx = dgr + P.fix.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
     var st = practice ? "" : '<div class="dtstat"><div><b>#' + N + '</b><span>Daily Trap</span></div><div><b>' + (r.w ? (4 - r.t) + "/3" : "0/3") + '</b><span>hearts left</span></div><div><b>' + (s.streak || 1) + '</b><span>day streak</span></div><div><b>' + (s.best || 1) + '</b><span>best streak</span></div></div>';
     var sh = P.short ? '<button type="button" class="btn" data-yt="' + esc(P.short) + '" data-title="' + esc(P.name) + '">Watch the 1-minute lesson</button>' : "";
     $("dtr").innerHTML = st + '<h2>How not to fall for it</h2><ol class="fix">' + fx.replace(/<li>/g, "<li><span>").replace(/<\/li>/g, "</span></li>") + "</ol>"
@@ -228,7 +230,7 @@
     var line = p.sans.join(", ");
     msg(win ? "good" : "bad", win ? "Solved!" : "Not this time.", (win ? "The main line is " : "The solution was ") + esc(line) + ".");
     var st = practice ? "" : '<div class="dtstat"><div><b>#' + N + '</b><span>Daily Puzzle</span></div><div><b>' + (r.w ? (4 - r.t) + "/3" : "0/3") + '</b><span>hearts left</span></div><div><b>' + (s.streak || 1) + '</b><span>day streak</span></div><div><b>' + (s.best || 1) + '</b><span>best streak</span></div></div>';
-    $("dtr").innerHTML = st + '<h2>What to remember</h2><ol class="fix"><li><span>' + esc(LESSON[p.theme] || LESSON.opening) + '</span></li></ol>'
+    $("dtr").innerHTML = st + '<h2>What to remember</h2><ol class="fix"><li><span><b>Key move: ' + esc(p.sans[0]) + '</b> (' + (({ O: "your king", Q: "your queen", R: "your rook", B: "your bishop", N: "your knight", K: "your king" })[p.sans[0].charAt(0)] || "a pawn") + ').</span></li><li><span>' + esc(LESSON[p.theme] || LESSON.opening) + '</span></li></ol>'
       + '<div class="btns">' + (practice ? "" : '<button type="button" class="btn solid" id="dtsh">Share my result</button>') + '<a class="btn' + (practice ? " solid" : "") + '" href="/traps/" data-ev="daily-puzzle-traps">Step through the traps</a></div>'
       + '<p class="small" id="dtshm" role="status" aria-live="polite"></p>'
       + (practice ? '<p><a class="go" href="/today/">Play today\'s Daily &rarr;</a></p>' : '<p class="dtnext">A new one every day. <span id="dtcd"></span></p>')
