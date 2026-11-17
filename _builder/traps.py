@@ -268,7 +268,7 @@ TRAPS = [
                 11: ("FORCED", "6.hxg3", "The pawn has to take the queen."),
                 12: ("CHECKMATE", "6…Bxg3#", "Bishop takes g3. Checkmate on move six.", ["g3", "!e1"])},
          fix=["Play 4.Nf3 first. The knight guards h4 and White keeps a good game.",
-              "After you push your f-pawn, watch the road from h4 to your king."]),
+              "Before every move, ask where the enemy queen can check. Cover h4 first."]),
     dict(slug="kieninger-trap", name="Kieninger Trap", opening="Budapest Gambit", side="Black sets it",
          hook="Kick the bishop and grab it? Knight d3 is checkmate.",
          simple="Black gives a bishop check and puts the queen on the same line as White's king. If White kicks the bishop and then takes it, a knight jumps to d3 with checkmate. White's e-pawn can't take the knight, because the queen pins it to the king. Take the knight on e5 or play e3 first, and don't grab the bishop.",
@@ -579,7 +579,7 @@ GUIDES = {
         ],
         qa=[("How do I avoid the From's Gambit trap?", "Play your knight to f3 on move four. It guards h4."),
             ("Who was Martin From?", "A Danish chess player (1828-1895). He played this gambit in Copenhagen in 1862, and it is named after him."),
-            ("What is the lesson?", "After you push your f-pawn, watch the road from h4 to your king.")]),
+            ("What is the lesson?", "Before every move, ask where the enemy queen can check. Cover h4 first.")]),
     "kieninger-trap": dict(
         title="Kieninger Trap: the Budapest Gambit mate and how to avoid it",
         desc="How the Kieninger Trap works in the Budapest Gambit, step by step on the board: the free bishop, the knight mate on d3 and the moves that keep you safe.",
