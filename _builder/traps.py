@@ -669,7 +669,7 @@ GUIDES = {
                 "After the knights trade, White plays e5. It attacks your knight on f6 and the pawn on d6. Taking the pawn looks natural."]),
             dict(h="The fix: don't take", board=dict(moves="e4 c5 Nf3 Nc6 d4 cxd4 Nxd4 Nf6 Nc3 d6 Bc4 g6 Nxc6 bxc6 e5", arrows=["g:f6g4", "g:f6d7"]), p=[
                 "Move the knight instead: knight to g4 or knight to d7. You stay in the game."]),
-            dict(h="The mistake: pawn takes e5", board=dict(moves="e4 c5 Nf3 Nc6 d4 cxd4 Nxd4 Nf6 Nc3 d6 Bc4 g6 Nxc6 bxc6 e5 dxe5 Bxf7+", arrows=["r:c4f7", "r:d1d8"]), p=[
+            dict(h="The mistake: pawn takes e5", board=dict(moves="e4 c5 Nf3 Nc6 d4 cxd4 Nxd4 Nf6 Nc3 d6 Bc4 g6 Nxc6 bxc6 e5 dxe5 Bxf7+", arrows=["r:f7e8", "r:d1d8"]), p=[
                 "Now the d-file is open between the two queens, and the bishop on c4 takes f7 with check."]),
             dict(h="Why no rook takes back", board=dict(moves="e4 c5 Nf3 Nc6 d4 cxd4 Nxd4 Nf6 Nc3 d6 Bc4 g6 Nxc6 bxc6 e5 dxe5 Bxf7+ Kxf7 Qxd8", rings=["!d8", "!c8", "!f8"]), p=[
                 "The king has to take, and then queen takes queen. Both black rooks are blocked by their own bishops, so nothing can take back."]),
