@@ -558,7 +558,7 @@ def traps_extras():
     return (f'''<div class="sechead" style="margin-top:44px"><div><span class="eyebrow">Also in the library</span><h2>Mating patterns and tactics.</h2></div><a class="btn" href="/patterns/">All patterns →</a></div>
 <p>Windmill, Anastasia's Mate, Boden's Mate and more: the patterns behind the traps, each explained move by move.</p>
 <div class="sechead" style="margin-top:36px"><div><span class="eyebrow">Coming next</span><h2>More traps are on the way.</h2></div></div>
-<p>Rubinstein, Cambridge Springs and Magnus Smith are next. Join the weekly e-mail below to get each new trap as it goes live.</p>
+<p>Rubinstein and Cambridge Springs are next. Join the weekly e-mail below to get each new trap as it goes live.</p>
 <div class="btns" style="margin-top:18px"><a class="btn solid" href="{lv_url}" target="_blank" rel="noopener">Watch: 10 Opening Traps</a><a class="btn" href="/shorts/">All Shorts</a><a class="btn" href="/analyze/">Analyze my games free</a></div>''')
 
 def traps_index():
