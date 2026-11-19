@@ -368,6 +368,22 @@ TRAPS = [
                 19: ("QUEEN LOST", "10.Qxd8", "No rook can take back: both are blocked by their own bishops.", ["d8"])},
          fix=["Don't take on e5. Play 8…Ng4 or 8…Nd7.",
               "Before you push or take a pawn, ask: what does it open?"]),
+    dict(slug="caro-kann-smothered-mate", name="Caro-Kann Smothered Mate", opening="Caro-Kann Defence", side="White sets it", mate=True,
+         hook="You're Black in the Caro-Kann and White plays queen e2. One natural move walks into mate in six.",
+         simple="In the Caro-Kann Black trades a pawn and develops a knight to d7. If White then plays the quiet queen e2, the natural knight to f6 is a blunder: White's knight jumps to d6 and it's checkmate. Black's own pieces block every square around the king, and the e-pawn can't take the knight because the queen on e2 pins it. Play the other knight to f6, queen to c7 or knight to b6 instead.",
+         intro="After 1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nd7 5.Qe2 the natural 5…Ngf6?? loses at once to 6.Nd6#. "
+               "The knight leaves e4, which opens the e-file, so the pawn on e7 is pinned to the king by the queen. The king has no free square. "
+               "5…Ndf6 keeps Black in the game.",
+         moves="e4 c6 d4 d5 Nc3 dxe4 Nxe4 Nd7 Qe2 Ngf6 Nd6#",
+         notes={0: ("START", "", "A smothered mate in the Caro-Kann. Step through the moves."),
+                2: ("OPENING", "1…c6", "The Caro-Kann Defence.", ["c6"]),
+                7: ("THE TRADE", "4.Nxe4", "White's knight takes the pawn on e4.", ["e4"]),
+                8: ("THE KNIGHT", "4…Nd7", "Black develops the knight to d7. It blocks Black's own queen and bishop.", ["d7"]),
+                9: ("THE QUIET MOVE", "5.Qe2", "Looks harmless. The queen lines up behind the knight on e4.", ["e2", "e4", "!e7"]),
+                10: ("THE BLUNDER", "5…Ngf6??", "The natural move. But the knight on e4 is attacked, and when it leaves, the e-file opens.", ["!f6"]),
+                11: ("CHECKMATE", "6.Nd6#", "Check, and the e-pawn can't take: the queen on e2 pins it. Black's own pieces block every other square.", ["d6", "e2", "!e8"])},
+         fix=["Play 5…Ndf6, 5…Qc7 or 5…Nb6 instead. The knight on e4 gets challenged and the king has air.",
+              "Before the natural move, ask what it takes away from your own king."]),
 ]
 
 # ---------------------------------------------------------------------------------------------
@@ -677,6 +693,23 @@ GUIDES = {
         qa=[("How do I avoid the Magnus Smith Trap?", "Don't take the pawn on e5. Play 8...Ng4 or 8...Nd7."),
             ("Who was Magnus Smith?", "A three-time Canadian champion. The trap carries his name, although the same trap was in print almost thirty years before his 1911 article."),
             ("What is the lesson?", "Before you push or take a pawn, ask what it opens.")]),
+    "caro-kann-smothered-mate": dict(
+        title="Caro-Kann Smothered Mate: how to avoid Nd6# after 5.Qe2",
+        desc="How the Caro-Kann smothered mate works, step by step on the board: the quiet queen e2, the natural knight f6 and the checkmate on d6, plus the moves Black should play instead.",
+        guide=[
+            dict(h="The quiet move: queen e2", board=dict(moves="e4 c6 d4 d5 Nc3 dxe4 Nxe4 Nd7 Qe2", rings=["e2", "!e7"]), p=[
+                "White's queen steps behind the knight on e4. Nothing is attacked yet, but the e-file now matters."]),
+            dict(h="The fix: the other knight", board=dict(moves="e4 c6 d4 d5 Nc3 dxe4 Nxe4 Nd7 Qe2", arrows=["g:d7f6"]), p=[
+                "Play knight d7 to f6 instead. You can also play queen c7 or knight b6. Each of them keeps your king safe."]),
+            dict(h="The mistake: the natural knight to f6", board=dict(moves="e4 c6 d4 d5 Nc3 dxe4 Nxe4 Nd7 Qe2 Ngf6", rings=["!f6"], arrows=["r:e4d6"]), p=[
+                "The knight from g8 attacks the knight on e4. It looks natural, but now the knight on e4 can jump to d6 with check."]),
+            dict(h="Why it is mate", board=dict(moves="e4 c6 d4 d5 Nc3 dxe4 Nxe4 Nd7 Qe2 Ngf6 Nd6", rings=["!e8", "!d8", "!f8", "!d7", "!f7", "!e7"], arrows=["r:e2e7"]), p=[
+                "Knight d6 gives check. The e-pawn can't take it, because the queen on e2 would then check your king along the open file. Every other square around the king is blocked by your own pieces."]),
+        ],
+        qa=[("How do I avoid the Caro-Kann smothered mate?", "After 1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nd7 5.Qe2, don't play 5...Ngf6. Play 5...Ndf6, 5...Qc7 or 5...Nb6."),
+            ("Why can't the e-pawn take the knight on d6?", "Because the queen on e2 pins it against the king along the e-file, once the knight has left e4."),
+            ("Where does the name Caro-Kann come from?", "From Marcus Kann, who played 1...c6 in the 1880s, and Horatio Caro, who published analysis of it in 1886. Where exactly the joint name comes from isn't clear, according to chess historian Edward Winter."),
+            ("What is the lesson?", "Before the natural move, ask what it takes away from your own king.")]),
 }
 for _t in TRAPS:
     if _t["slug"] in GUIDES: _t.update(GUIDES[_t["slug"]])
