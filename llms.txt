@@ -32,6 +32,7 @@
 
 ## Videos
 - [All Shorts](https://throiychess.com/shorts/)
+- [The in-between move: Morphy's Zwischenzug](https://www.youtube.com/shorts/jt9mkPGvVgw): The normal move was to take back. Morphy played queen h4 first. That is a Zwischenzug, German for in-between move. This is Paul Morphy against Lichtenhein, New York 1857.
 - [Stalemate trick](https://www.youtube.com/shorts/sTxIYbPCjoQ): You have a queen. Your opponent has one pawn. And it's still a draw. A rook pawn on the seventh with the king in the corner: one careless queen move and it's stalemate.
 - [Two free pawns? Mate on move 6! From's Gambit](https://www.youtube.com/shorts/gGM7aL1WWd8): Two free pawns? It's bait. Mate on move six. This is From's Gambit against the Bird's Opening (1.f4 e5).
 - [Free pawn? You lose a knight! Mortimer Trap](https://www.youtube.com/shorts/JyCrqLMQe3k): Free pawn? It's bait. Take it, and you lose your knight on move seven. This is the Mortimer Trap in the Ruy Lopez (1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7).
