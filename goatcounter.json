@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-18T04:22:46Z",
- "start": "2026-08-21",
- "end": "2026-11-18",
+ "generated": "2026-11-19T04:26:24Z",
+ "start": "2026-08-22",
+ "end": "2026-11-19",
  "hits": {
   "error": 404
  },
@@ -9,13 +9,13 @@
   "stats": [
    {
     "name": "",
-    "count": 99,
+    "count": 100,
     "ref_scheme": "o"
    },
    {
     "id": "YouTube",
     "name": "YouTube",
-    "count": 42,
+    "count": 44,
     "ref_scheme": "c"
    },
    {
@@ -68,7 +68,7 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 188
+    "count": 191
    },
    {
     "id": "Safari",
@@ -88,7 +88,7 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 175
+    "count": 177
    },
    {
     "id": "iOS",
@@ -98,7 +98,7 @@
    {
     "id": "Linux",
     "name": "Linux",
-    "count": 18
+    "count": 19
    },
    {
     "id": "macOS",
@@ -128,7 +128,7 @@
    {
     "id": "desktop",
     "name": "",
-    "count": 166
+    "count": 169
    },
    {
     "id": "desktophd",
@@ -153,7 +153,7 @@
    {
     "id": "US",
     "name": "United States",
-    "count": 41
+    "count": 43
    },
    {
     "id": "BG",
@@ -168,7 +168,7 @@
    {
     "id": "BR",
     "name": "Brazil",
-    "count": 12
+    "count": 13
    },
    {
     "id": "GB",
@@ -368,6 +368,11 @@
    {
     "id": "79655",
     "name": "opponent",
+    "count": 2
+   },
+   {
+    "id": "80606",
+    "name": "stalemate-trick",
     "count": 2
    },
    {

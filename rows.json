@@ -1,20 +1,20 @@
 {
-"generated": "2026-11-18T04:22:46Z",
-"start": "2026-08-21",
-"end": "2026-11-18",
+"generated": "2026-11-19T04:26:24Z",
+"start": "2026-08-22",
+"end": "2026-11-19",
 "rows": [
 {
 "kind": "source",
 "key": "(direct)",
 "label": "Direct of onbekend",
-"value": 99,
+"value": 100,
 "group": "Direct"
 },
 {
 "kind": "source",
 "key": "YouTube",
 "label": "YouTube",
-"value": 42,
+"value": 44,
 "group": "Website"
 },
 {
@@ -77,7 +77,7 @@
 "kind": "country",
 "key": "US",
 "label": "United States",
-"value": 41,
+"value": 43,
 "group": ""
 },
 {
@@ -98,7 +98,7 @@
 "kind": "country",
 "key": "BR",
 "label": "Brazil",
-"value": 12,
+"value": 13,
 "group": ""
 },
 {
@@ -273,7 +273,7 @@
 "kind": "device",
 "key": "desktop",
 "label": "Computer",
-"value": 166,
+"value": 169,
 "group": ""
 },
 {
@@ -287,7 +287,7 @@
 "kind": "browser",
 "key": "Chrome",
 "label": "Chrome",
-"value": 188,
+"value": 191,
 "group": ""
 },
 {
@@ -308,7 +308,7 @@
 "kind": "system",
 "key": "Windows",
 "label": "Windows",
-"value": 175,
+"value": 177,
 "group": ""
 },
 {
@@ -322,7 +322,7 @@
 "kind": "system",
 "key": "Linux",
 "label": "Linux",
-"value": 18,
+"value": 19,
 "group": ""
 },
 {
@@ -460,6 +460,13 @@
 },
 {
 "kind": "campaign",
+"key": "80606",
+"label": "stalemate-trick",
+"value": 2,
+"group": ""
+},
+{
+"kind": "campaign",
 "key": "60576",
 "label": "bio",
 "value": 1,
@@ -503,14 +510,14 @@
 {
 "kind": "meta",
 "key": "generated",
-"label": "2026-11-18T04:22:46Z",
+"label": "2026-11-19T04:26:24Z",
 "value": 0,
 "group": ""
 },
 {
 "kind": "meta",
 "key": "start",
-"label": "2026-08-21",
+"label": "2026-08-22",
 "value": 0,
 "group": ""
 }
