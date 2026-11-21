@@ -12,7 +12,8 @@
     for (var r = 0; r < 8; r++) for (var f = 0; f < 8; f++) {
       var rr = flip ? 7 - r : r, ff = flip ? 7 - f : f, sq = FILES[ff] + (8 - rr), c = grid[rr][ff];
       var cls = "al-sq " + ((rr + ff) % 2 ? "d" : "l") + (last && (last.from === sq || last.to === sq) ? " lm" : "") + (sel === sq ? " sel" : "") + (hint && hint.indexOf(sq) >= 0 ? " hint" : "");
-      h += '<div class="' + cls + '" data-sq="' + sq + '">' + (c ? '<img alt="" draggable="false" src="/img/pieces/' + (c === c.toUpperCase() ? "w" : "b") + c.toLowerCase() + '.png">' : "") + "</div>";
+      var co = (f === 0 ? '<span class="co rk">' + (8 - rr) + "</span>" : "") + (r === 7 ? '<span class="co fl">' + FILES[ff] + "</span>" : "");
+      h += '<div class="' + cls + '" data-sq="' + sq + '">' + co + (c ? '<img alt="" draggable="false" src="/img/pieces/' + (c === c.toUpperCase() ? "w" : "b") + c.toLowerCase() + '.png">' : "") + "</div>";
     }
     return h + "</div>";
   }
@@ -88,17 +89,17 @@
     var order = pool.map(function (_, k) { return k; });
     for (var k = order.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = order[k]; order[k] = order[j]; order[j] = t; }
     var idx = 0;
-    var bd = $("#al-pq-board"), msg = $("#al-pq-msg"), hr = $("#al-hearts"), sc = $("#al-score"), nx = $("#al-pq-next"), ttl = $("#al-pq-title");
+    var bd = $("#al-pq-board"), msg = $("#al-pq-msg"), hr = $("#al-hearts"), sc = $("#al-score"), nx = $("#al-pq-next"), ttl = $("#al-pq-title"), ln = $("#al-pq-line");
     function hearts_() { hr.textContent = "♥ ".repeat(hearts).trim() + (hearts < 3 ? " " + "♡ ".repeat(3 - hearts).trim() : ""); }
     function load() {
       if (hearts <= 0 || idx >= order.length) return end();
       cur = pool[order[idx]]; done = false; sel = null; chess = new Chess(cur.fen);
-      ttl.textContent = cur.title; msg.className = "al-msg"; msg.textContent = "Your move. Tap a piece, then a square."; nx.hidden = true;
-      sc.textContent = score + " / " + asked; hearts_(); draw();
+      ttl.textContent = cur.title; ln.textContent = cur.line; msg.className = "al-msg"; msg.textContent = "Your move."; nx.hidden = true;
+      sc.textContent = "Position " + (idx + 1) + " of " + order.length + " \u00b7 solved " + score; hearts_(); draw();
     }
     function draw() { bd.innerHTML = boardHTML(chess.fen(), false, cur.last, sel); }
     function end() {
-      bd.innerHTML = ""; ttl.textContent = hearts <= 0 ? "Out of hearts" : "All done!";
+      bd.innerHTML = ""; ln.textContent = ""; ttl.textContent = hearts <= 0 ? "Out of hearts" : "All done!";
       msg.className = "al-msg"; msg.innerHTML = "You solved <b>" + score + "</b> of " + asked + ". " + (score >= asked - 1 ? "Strong. Time to try it in a real game." : "Go back to Learn and try again, it gets easier.");
       nx.hidden = false; nx.textContent = "Play again"; nx.onclick = function () { location.hash = "practice"; location.reload(); };
     }
@@ -117,10 +118,10 @@
       done = true; asked++;
       var best = cur.moves[0].cp, mine = null; cur.moves.forEach(function (x) { if (x.san === san) mine = x; });
       var ok = mine && mine.cp >= best - 60;
-      try { chess.move(san); } catch (e) {} sel = null; bd.innerHTML = boardHTML(chess.fen(), false, null, null);
+      var mv = null; try { mv = chess.move(san); } catch (e) {} sel = null; bd.innerHTML = boardHTML(chess.fen(), false, mv ? { from: mv.from, to: mv.to } : null, null);
       if (ok) { score++; msg.className = "al-msg ok"; msg.innerHTML = "<b>Yes, " + san + "!</b> " + cur.why; }
       else { hearts--; msg.className = "al-msg bad"; msg.innerHTML = "<b>" + san + " is not it.</b> The best move was <b>" + cur.moves[0].san + "</b>. " + cur.why; }
-      sc.textContent = score + " / " + asked; hearts_(); idx++;
+      sc.textContent = "Position " + (idx + 1) + " of " + order.length + " \u00b7 solved " + score; hearts_(); idx++;
       nx.hidden = false; nx.textContent = hearts <= 0 || idx >= order.length ? "See result" : "Next position"; nx.onclick = load;
     }
     load();
