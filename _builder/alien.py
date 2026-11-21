@@ -50,10 +50,10 @@ CH = [
   "The natural developing move is a blunder. The bishop takes on f7, the knight on g5 protects it, and the king has nowhere to go. <b>Checkmate in 7 moves.</b>"),
  (BASE5 + " Bf5 Bc4 e6", "Black's best: 6...e6", "safe", "Good defence",
   "If Black finds this, calm down and just develop (for example 7.Ne2). The computer prefers Black by about a quarter of a pawn. You still have the better practical chances."),
- (BASE5 + " Be6 Nxe6", "Trap: 5...Be6? 6.Nxe6", "trap", "Wins material",
-  "Black blocks the f-file with the bishop and your knight simply takes it. Stockfish says about +3 for you."),
+ (BASE5 + " Be6 Nxe6", "Trap: 5...Be6? 6.Nxe6", "trap", "Big edge",
+  "Black blocks the f-file with the bishop. You trade it off with Nxe6; Stockfish says this gives you about +3.5."),
  (BASE5 + " Nh5 Bc4", "Trap: 5...Nh5? 6.Bc4", "trap", "Wins big",
-  "The knight run to h5 leaves f7 too weak. After 6.Bc4 Stockfish says about +5 for you."),
+  "The knight run to h5 leaves it loose and f7 weak. After 6.Bc4 Stockfish says about +5 for you."),
  (BASE5 + " h6 N5f3", "Careful: 5...h6 6.N5f3", "warn", "Do not sacrifice",
   "Do not play 6.Nxf7?. Black just takes with the king (Kxf7) and you are in trouble (about −2). Without the bishop on c4 the sacrifice does not work. Play the calm 6.N5f3 instead."),
 ]
@@ -76,16 +76,17 @@ LINES = [
    11: ("6.Bc4!", "Key position", "Bishop and knight both aim at f7. Black has only two safe moves here: 6...e6 and 6...Bg6.", ["f7"]),
    12: ("6...Nbd7??", "Mistake", "A natural developing move, and a blunder. It blocks the king's escape square.", ["d7"]),
    13: ("7.Bxf7#", "Checkmate", "The bishop takes on f7, the knight on g5 protects it, and the king has nowhere to go.", ["!e8"])}),
- ("be6", "Trap: 5...Be6? 6.Nxe6", BASE5 + " Be6 Nxe6", {
+ ("be6", "Trap: 5...Be6? 6.Nxe6", BASE5 + " Be6 Nxe6 fxe6", {
    0: ("Start", "", "Same opening. We join the game after 4...Nf6."),
    9: ("5.Ng5!?", "The alien move", "The knight attacks f7.", ["f7"]),
    10: ("5...Be6?", "Mistake", "Black blocks the f-file with the bishop.", ["e6"]),
-   11: ("6.Nxe6", "Wins material", "The knight simply takes the bishop. Stockfish says about +3 for you.", ["e6"])}),
+   11: ("6.Nxe6", "Trade", "Your knight takes the bishop. This is not a gambit idea any more: the pressure on f7 is gone.", ["e6"]),
+   12: ("6...fxe6", "Big edge", "Black recaptures and has doubled pawns. It is a knight for a bishop, so material is equal, but Stockfish still gives you about +3.5.", [])}),
  ("nh5", "Trap: 5...Nh5? 6.Bc4", BASE5 + " Nh5 Bc4", {
    0: ("Start", "", "Same opening. We join the game after 4...Nf6."),
    9: ("5.Ng5!?", "The alien move", "The knight attacks f7.", ["f7"]),
    10: ("5...Nh5?", "Mistake", "The knight run to h5 leaves f7 too weak.", ["h5"]),
-   11: ("6.Bc4", "Wins big", "Now f7 cannot be held. Stockfish says about +5 for you.", ["f7"])}),
+   11: ("6.Bc4", "Wins big", "The knight on h5 is loose and f7 is under attack at the same time. Stockfish says about +5 for you.", ["f7"])}),
  ("e6", "Black's best: 6...e6", BASE5 + " Bf5 Bc4 e6 Ne2", {
    0: ("Start", "", "Same opening. We join the game after 4...Nf6."),
    9: ("5.Ng5!?", "The alien move", "The knight attacks f7.", ["f7"]),
@@ -117,7 +118,7 @@ PR = [  # (key in quiz/b1/b2, why)
  ("quiz.q2", "<b>Bxf7</b> is checkmate."),
  ("quiz.q3", "<b>Bxf7+</b> drags the king out and Black's position falls apart."),
  ("quiz.q4", "<b>Nxf7</b> is clearly the best. Slow moves give Black time to breathe."),
- ("quiz.q5", "<b>Nxe6</b> wins the bishop that blocked the way."),
+ ("quiz.q5", "<b>Nxe6</b> trades your knight for the bishop. After ...fxe6 Black's pawns are doubled and Stockfish gives you about +3.5. The pressure on f7 is gone, but you no longer need it."),
  ("quiz.q6", "<b>Qxg4</b> takes the bishop for free."),
  ("b1.Kd7", "The king walked into the open. Attack with <b>Nxf7</b> or <b>Bc4</b>."),
  ("b1.Nh5", "<b>Bc4</b> piles up on f7 and Black cannot hold it together."),
@@ -133,7 +134,7 @@ def practice():
         b, last = _board(it["line"])
         assert b.fen() == it["fen"] or b.fen().split(" ")[0] == it["fen"].split(" ")[0], key
         ms = [{"san": m["san"], "cp": m["cp"]} for m in it["moves"]]
-        out.append({"title": "After " + _fmt_from(it["line"], 8) + ". Your move.", "fen": b.fen(), "last": last, "moves": ms, "why": why})
+        out.append({"title": "Black just played " + _fmt_from(it["line"], len(it["line"].split()) - 1) + ".", "line": _fmt(it["line"]), "fen": b.fen(), "last": last, "moves": ms, "why": why})
     return out
 
 def replies():
@@ -191,7 +192,7 @@ ALIEN_CSS = """
 .al-hud{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px;font-weight:800}#al-hearts{color:#e2442f;letter-spacing:.1em}
 .al-msg{min-height:3em;margin:12px 0;font-size:16px}.al-msg.ok{color:#6fd08f}.al-msg.bad{color:#ff8f7d}
 .al-faq details{border:1px solid var(--line2);border-radius:12px;padding:12px 16px;margin:0 0 10px;background:var(--panel)}.al-faq summary{cursor:pointer;font-weight:700}.al-faq p{margin:10px 0 0}
-.al-note{font-size:13px;color:var(--mute)}
+.al-note{font-size:13px;color:var(--mute)}.al-sq .co{position:absolute;font-size:11px;font-weight:700;z-index:3;line-height:1;pointer-events:none}.al-sq .rk{left:3px;top:3px}.al-sq .fl{right:3px;bottom:2px}.al-sq.l .co{color:var(--sq-d)}.al-sq.d .co{color:var(--sq-l)}
 """
 
 def alien_page(page, header, footer):
@@ -228,7 +229,7 @@ def alien_page(page, header, footer):
 <section class="al-panel" id="replies" hidden><div class="al-card"><h2>What can Black play on move 5?</h2><p class="al-note">Bar = how good it is for you. On the right: your best answer. Stockfish 17.1, depth 16.</p><ul class="al-rep" data-r="r5"></ul></div>
 <div class="al-card"><h2>After 5...Bf5 6.Bc4: Black's options</h2><ul class="al-rep" data-r="r6"></ul></div></section>
 <section class="al-panel" id="practice" hidden><div class="al-card"><div class="al-grid"><div><div class="al-hud"><span id="al-hearts"></span><span id="al-score"></span></div><div id="al-pq-board"></div></div>
-<div class="al-txt" id="al-prac"><h3 id="al-pq-title">Loading</h3><p class="al-msg" id="al-pq-msg"></p><button class="btn solid" id="al-pq-next" type="button" hidden>Next position</button><p class="al-note">You play White. 3 hearts. Find the strongest move.</p></div></div></div></section>
+<div class="al-txt" id="al-prac"><span class="al-tag t-trap">Alien Gambit &middot; practice</span><h3 id="al-pq-title">Loading</h3><div class="al-mvs" id="al-pq-line"></div><p class="al-note"><b>You are White.</b> Find the strongest move.</p><p class="al-msg" id="al-pq-msg"></p><button class="btn solid" id="al-pq-next" type="button" hidden>Next position</button><p class="al-note">3 hearts. Tap a piece, then the square.</p></div></div></div></section>
 <section class="al-panel al-faq" id="faq" hidden>
 <details open><summary>Is the Alien Gambit sound?</summary><p>No. With best play Black is slightly better. It works because many natural replies lose quickly, and because Black has to know the exact defence.</p></details>
 <details><summary>Why bring the bishop to c4 first?</summary><p>The bishop and the knight together hit f7. Without the bishop, Nxf7 simply loses a piece to Kxf7.</p></details>
