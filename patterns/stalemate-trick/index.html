@@ -193,6 +193,23 @@ form.contact{display:grid;gap:18px;max-width:620px}
 @media (max-width:860px){.hero,.player,.twocol{grid-template-columns:1fr}.hero{padding-block:32px}.breaking{grid-template-columns:1fr;gap:14px}.about{grid-template-columns:1fr}.about img{width:150px}}
 @media (max-width:560px){.grid{grid-template-columns:1fr}.brand img{height:46px}.brand{font-size:19px}nav.links{gap:0 18px;flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch;mask-image:linear-gradient(90deg,#000 88%,transparent);-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent)}nav.links::-webkit-scrollbar{display:none}nav.links a{white-space:nowrap;padding-block:8px}html{scroll-padding-top:120px}}
 @media (prefers-reduced-motion:no-preference){.btn,.card{transition:background .15s,filter .15s}}
+
+/* site-wide layout (Total-Chess style): hero band, pill labels, rounded cards, pill buttons */
+body{overflow-x:clip}
+.pagehead{margin-inline:calc(50% - 50vw);padding:34px calc(50vw - 50%) 30px;background:linear-gradient(160deg,var(--tint),var(--panel2));border-bottom:1px solid var(--line3);margin-bottom:28px}
+.pagehead .eyebrow{justify-self:start;font-size:12px;font-weight:800;letter-spacing:.08em;padding:5px 12px;border-radius:999px;border:1px solid var(--line3);background:var(--panel)}
+h1.page{font-weight:900;line-height:1.05}
+.crumb{padding-bottom:6px}
+.card,.simple,.note,.player{border:1px solid var(--line2);border-radius:18px}
+.player{background:var(--panel);padding:20px}
+.note{background:var(--panel2)}
+.board{border-radius:12px;overflow:hidden}
+.ctrl button,.btn{border-radius:999px}
+.ctrl button{border-radius:12px}
+.moves{background:var(--panel2);border-radius:12px;padding:10px 12px}
+.moves button{border-radius:8px}
+.twocol .prose h2{font-size:24px}
+header.top{border-bottom-color:var(--line3)}
 </style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "The Stalemate Trick: how it works and how to avoid it", "description": "A queen down, and still a draw. The corner and the rook pawn do the work.", "about": ["Endgame · saving a lost game", "chess tactics"], "author": {"@type": "Organization", "name": "Throiy Chess", "url": "https://throiychess.com"}, "publisher": {"@type": "Organization", "name": "Throiy Chess", "logo": {"@type": "ImageObject", "url": "https://throiychess.com/img/logo.png"}}, "mainEntityOfPage": "https://throiychess.com/patterns/stalemate-trick/", "image": "https://throiychess.com/img/og.jpg", "inLanguage": "en"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pattern library", "item": "https://throiychess.com/patterns/"}, {"@type": "ListItem", "position": 2, "name": "The Stalemate Trick", "item": "https://throiychess.com/patterns/stalemate-trick/"}]}</script><script data-goatcounter="https://throiychess.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><script>function loadScript(a){var b=document.getElementsByTagName("head")[0],c=document.createElement("script");c.type="text/javascript",c.src="https://tracker.metricool.com/resources/be.js",c.onreadystatechange=a,c.onload=a,b.appendChild(c)}loadScript(function(){beTracker.t({hash:"c6c03fb1179a18aed535c6088bf06fe6"})});</script></head><body><div class="promo"><div class="wrap"><span>New every day: a Daily Trap or Puzzle. 3 hearts. Can you solve it?</span><a data-ev="promo-bar-click" href="/today/?utm_source=site&amp;utm_campaign=promo-bar">Play today &rarr;</a><button class="promo-x" type="button" aria-label="Close" onclick="try{sessionStorage.setItem('promo',1)}catch(e){}this.closest('.promo').remove()">&times;</button></div></div><script>try{if(sessionStorage.getItem("promo"))document.querySelector(".promo").remove()}catch(e){}</script><style>
 nav.links{overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;width:auto!important;flex-wrap:nowrap!important;gap:0 22px!important;align-items:center}
 .ddb{font:inherit;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);background:none;border:0;cursor:pointer;padding:8px 0}
