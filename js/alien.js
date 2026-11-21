@@ -45,6 +45,13 @@
     }
     $("#al-prev").onclick = function () { show(i - 1); }; $("#al-next").onclick = function () { show(i + 1); };
     show(0);
+    document.addEventListener("keydown", function (e) {
+      if (e.altKey || e.ctrlKey || e.metaKey || /INPUT|TEXTAREA|SELECT/.test((e.target.tagName || ""))) return;
+      var p = $("#learn");
+      if (p && !p.hidden) { if (e.key === "ArrowRight") { e.preventDefault(); show(i + 1); } else if (e.key === "ArrowLeft") { e.preventDefault(); show(i - 1); } }
+      var q = $("#practice"), nb = $("#al-pq-next");
+      if (q && !q.hidden && nb && !nb.hidden && (e.key === "ArrowRight" || e.key === "Enter")) { e.preventDefault(); nb.click(); }
+    });
   }
 
   /* ---------- replies ---------- */
