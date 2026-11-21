@@ -32,26 +32,41 @@
     sa.forEach(function (b) { b.addEventListener("click", function () { var m = b.getAttribute("data-m"); sa.forEach(function (x) { x.classList.toggle("on", x === b); }); $$("[data-lv]").forEach(function (el) { el.hidden = el.getAttribute("data-lv") !== m; }); }); });
   }
 
-  /* ---------- learn: chapter stepper ---------- */
+  /* ---------- learn: same player as the trap pages ---------- */
   function learn() {
-    var i = 0, ch = D.chapters, box = $("#al-learn-board"), lt = $("#al-learn-title"), tx = $("#al-learn-text"), mv = $("#al-learn-moves"), cnt = $("#al-count"), tag = $("#al-learn-tag");
-    function show(n) {
-      i = Math.max(0, Math.min(ch.length - 1, n)); var c = ch[i];
-      box.innerHTML = boardHTML(c.fen, false, c.last);
-      lt.textContent = c.title; tx.innerHTML = c.text; cnt.textContent = (i + 1) + " / " + ch.length;
-      tag.textContent = c.tag; tag.className = "al-tag t-" + c.kind; mv.innerHTML = c.sanline;
-      $("#al-prev").disabled = i === 0; $("#al-next").disabled = i === ch.length - 1;
-      $("#al-dots").innerHTML = ch.map(function (_, k) { return '<i class="' + (k === i ? "on" : "") + '"></i>'; }).join("");
+    var L = D.lines, cur = 0, ln = L[0], B = $("#board"), sqs = [], P = "/img/pieces/";
+    for (var r = 7; r >= 0; r--) for (var f = 0; f < 8; f++) {
+      var d = document.createElement("div"); d.className = "sq " + ((r + f) % 2 ? "l" : "d"); d.dataset.n = FILES[f] + (r + 1);
+      if (f === 0) { var c = document.createElement("span"); c.className = "co rk"; c.textContent = r + 1; d.appendChild(c); }
+      if (r === 0) { var c2 = document.createElement("span"); c2.className = "co fl"; c2.textContent = FILES[f]; d.appendChild(c2); }
+      B.appendChild(d); sqs.push(d);
     }
-    $("#al-prev").onclick = function () { show(i - 1); }; $("#al-next").onclick = function () { show(i + 1); };
-    show(0);
+    function parse(fen) { var m = {}; fen.split("/").forEach(function (row, i) { var f = 0; row.split("").forEach(function (ch) { if (/\d/.test(ch)) f += +ch; else { m[FILES[f] + (8 - i)] = ch; f++; } }); }); return m; }
+    function note(i) { var k = i; while (k >= 0 && !ln.notes[k]) k--; return ln.notes[k] || { label: "", tag: "", text: "", marks: [] }; }
+    function movesHTML() { var h = ""; ln.plies.forEach(function (p, i) { if (!i) return; if (i % 2) h += "<span>" + ((i + 1) / 2 | 0) + ".</span>"; h += '<button type="button" data-p="' + i + '">' + p.san + "</button>"; }); $("#moves").innerHTML = h; }
+    function show(i) {
+      cur = Math.max(0, Math.min(ln.plies.length - 1, i)); var p = ln.plies[cur], m = parse(p.fen), n = note(cur), mk = (ln.notes[cur] && ln.notes[cur].marks) || [];
+      sqs.forEach(function (d) {
+        var s = d.dataset.n; d.classList.toggle("hl", s === p.fr || s === p.to); d.classList.toggle("mk", mk.indexOf(s) >= 0 || mk.indexOf("!" + s) >= 0); d.classList.toggle("red", mk.indexOf("!" + s) >= 0);
+        var old = d.querySelector("img"); if (old) old.remove(); var c = m[s];
+        if (c) { var im = document.createElement("img"); im.alt = ""; im.src = P + (c === c.toUpperCase() ? "w" : "b") + c.toLowerCase() + ".png"; d.appendChild(im); }
+      });
+      $("#nl").textContent = n.label; var t = $("#nt"); t.textContent = n.tag; t.hidden = !n.tag; $("#nx").textContent = n.text;
+      $$("#moves button").forEach(function (b) { b.classList.toggle("on", +b.dataset.p === cur); });
+    }
+    function pick(k) { ln = L[k]; $$("#al-chips button").forEach(function (b, x) { b.classList.toggle("on", x === k); }); movesHTML(); show(0); }
+    $("#al-chips").innerHTML = L.map(function (l) { return '<button type="button">' + l.title + "</button>"; }).join("");
+    $$("#al-chips button").forEach(function (b, k) { b.onclick = function () { pick(k); }; });
+    $("#first").onclick = function () { show(0); }; $("#prev").onclick = function () { show(cur - 1); };
+    $("#next").onclick = function () { show(cur + 1); }; $("#last").onclick = function () { show(ln.plies.length - 1); };
+    $("#moves").onclick = function (e) { var b = e.target.closest("button"); if (b) show(+b.dataset.p); };
     document.addEventListener("keydown", function (e) {
-      if (e.altKey || e.ctrlKey || e.metaKey || /INPUT|TEXTAREA|SELECT/.test((e.target.tagName || ""))) return;
-      var p = $("#learn");
-      if (p && !p.hidden) { if (e.key === "ArrowRight") { e.preventDefault(); show(i + 1); } else if (e.key === "ArrowLeft") { e.preventDefault(); show(i - 1); } }
-      var q = $("#practice"), nb = $("#al-pq-next");
+      if (e.altKey || e.ctrlKey || e.metaKey || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName || "")) return;
+      var p = $("#learn"), q = $("#practice"), nb = $("#al-pq-next");
+      if (p && !p.hidden) { if (e.key === "ArrowRight") { e.preventDefault(); show(cur + 1); } else if (e.key === "ArrowLeft") { e.preventDefault(); show(cur - 1); } }
       if (q && !q.hidden && nb && !nb.hidden && (e.key === "ArrowRight" || e.key === "Enter")) { e.preventDefault(); nb.click(); }
     });
+    pick(0);
   }
 
   /* ---------- replies ---------- */
