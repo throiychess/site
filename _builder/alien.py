@@ -65,6 +65,53 @@ def chapters():
         out.append({"title": title, "kind": kind, "tag": tag, "text": text, "fen": b.fen(), "last": last, "sanline": _fmt(line)})
     return out
 
+
+LINES = [
+ ("mate", "Trap: 6...Nbd7?? 7.Bxf7#", BASE5 + " Bf5 Bc4 Nbd7 Bxf7", {
+   0: ("Start", "", "A normal start. White plays 1.e4 and Black answers with the Caro-Kann, 1...c6."),
+   7: ("4.Nxe4", "", "Black took a pawn on e4 and you took it back. Black now chases the knight."),
+   8: ("4...Nf6", "", "Most players retreat the knight here. You will not."),
+   9: ("5.Ng5!?", "The alien move", "The knight jumps again, straight at f7. It looks odd, hence the name. Black must now find accurate moves.", ["f7"]),
+   10: ("5...Bf5", "Natural", "A normal developing move. Now bring your bishop out.", []),
+   11: ("6.Bc4!", "Key position", "Bishop and knight both aim at f7. Black has only two safe moves here: 6...e6 and 6...Bg6.", ["f7"]),
+   12: ("6...Nbd7??", "Mistake", "A natural developing move, and a blunder. It blocks the king's escape square.", ["d7"]),
+   13: ("7.Bxf7#", "Checkmate", "The bishop takes on f7, the knight on g5 protects it, and the king has nowhere to go.", ["!e8"])}),
+ ("be6", "Trap: 5...Be6? 6.Nxe6", BASE5 + " Be6 Nxe6", {
+   0: ("Start", "", "Same opening. We join the game after 4...Nf6."),
+   9: ("5.Ng5!?", "The alien move", "The knight attacks f7.", ["f7"]),
+   10: ("5...Be6?", "Mistake", "Black blocks the f-file with the bishop.", ["e6"]),
+   11: ("6.Nxe6", "Wins material", "The knight simply takes the bishop. Stockfish says about +3 for you.", ["e6"])}),
+ ("nh5", "Trap: 5...Nh5? 6.Bc4", BASE5 + " Nh5 Bc4", {
+   0: ("Start", "", "Same opening. We join the game after 4...Nf6."),
+   9: ("5.Ng5!?", "The alien move", "The knight attacks f7.", ["f7"]),
+   10: ("5...Nh5?", "Mistake", "The knight run to h5 leaves f7 too weak.", ["h5"]),
+   11: ("6.Bc4", "Wins big", "Now f7 cannot be held. Stockfish says about +5 for you.", ["f7"])}),
+ ("e6", "Black's best: 6...e6", BASE5 + " Bf5 Bc4 e6 Ne2", {
+   0: ("Start", "", "Same opening. We join the game after 4...Nf6."),
+   9: ("5.Ng5!?", "The alien move", "The knight attacks f7.", ["f7"]),
+   10: ("5...Bf5", "Natural", "A normal developing move.", []),
+   11: ("6.Bc4", "Key position", "Bishop and knight both aim at f7.", ["f7"]),
+   12: ("6...e6", "Good defence", "Black finds the safe move and closes the bishop's path.", ["e6"]),
+   13: ("7.Ne2", "Keep calm", "Just develop. Black is slightly better (about a quarter of a pawn) but you keep practical chances.", [])}),
+ ("h6", "Careful: 5...h6 6.N5f3", BASE5 + " h6 N5f3", {
+   0: ("Start", "", "Same opening. We join the game after 4...Nf6."),
+   9: ("5.Ng5!?", "The alien move", "The knight attacks f7.", ["f7"]),
+   10: ("5...h6", "Good defence", "Black kicks the knight.", ["g5"]),
+   11: ("6.N5f3", "Do not sacrifice", "Do not play 6.Nxf7?. Black takes with the king and you are in trouble (about \u22122). Retreat calmly.", [])}),
+]
+
+def lines():
+    out = []
+    for lid, title, line, notes in LINES:
+        b = chess.Board(); plies = [dict(fen=b.board_fen(), san="", fr=None, to=None)]
+        for san in line.split():
+            m = b.parse_san(san); b.push(m)
+            plies.append(dict(fen=b.board_fen(), san=san, fr=chess.square_name(m.from_square), to=chess.square_name(m.to_square)))
+        if lid == "mate": assert b.is_checkmate()
+        nn = {str(k): dict(label=v[0], tag=v[1], text=v[2], marks=(v[3] if len(v) > 3 else [])) for k, v in notes.items()}
+        out.append(dict(id=lid, title=title, plies=plies, notes=nn))
+    return out
+
 PR = [  # (key in quiz/b1/b2, why)
  ("quiz.q1", "<b>Nxf7</b> forks the queen and the rook, and the king cannot take because the bishop guards f7."),
  ("quiz.q2", "<b>Bxf7</b> is checkmate."),
@@ -113,7 +160,7 @@ def verify():
 
 def data():
     verify()
-    return {"chapters": chapters(), "practice": practice(), "replies": replies()}
+    return {"lines": lines(), "chapters": chapters(), "practice": practice(), "replies": replies()}
 
 def stats():
     r = DATA["replies"]["r5"]
@@ -131,6 +178,7 @@ ALIEN_CSS = """
 .al-card{border:1px solid var(--line2);border-radius:18px;background:var(--panel);padding:20px;margin:0 0 22px}
 .al-card h2{margin:0 0 12px;font-size:22px}.al-seg{display:inline-flex;border:1px solid var(--line3);border-radius:999px;overflow:hidden;margin:0 0 14px}.al-seg button{padding:7px 16px;border:0;background:none;color:var(--mute);font:inherit;font-weight:700;font-size:14px;cursor:pointer}.al-seg button.on{background:var(--gold);color:var(--on-gold)}
 .al-pts{list-style:none;padding:0;margin:0;display:grid;gap:12px}.al-pts li{display:flex;gap:12px;align-items:flex-start;line-height:1.45}.al-pts i{font-style:normal;font-size:24px;line-height:1.2;flex:none;width:30px;text-align:center}
+.al-chips{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}.al-chips button{padding:9px 16px;border-radius:999px;border:1px solid var(--line3);background:var(--panel);color:var(--mute);font:inherit;font-weight:700;font-size:14px;cursor:pointer}.al-chips button.on{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
 .al-grid{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:28px;align-items:start}@media(max-width:820px){.al-grid{grid-template-columns:1fr}}
 .al-pl{display:flex;align-items:center;gap:10px;padding:6px 2px;font-weight:700;font-size:15px}.al-pl i{width:14px;height:14px;border-radius:50%;border:2px solid var(--gold);flex:none}.al-pl i.w{background:var(--ink)}.al-pl i.b{background:#222}.al-pl small{font-weight:500;color:var(--mute)}
 .al-bd{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr));width:100%;aspect-ratio:1;border-radius:10px;overflow:hidden;touch-action:manipulation;user-select:none}
@@ -171,11 +219,12 @@ def alien_page(page, header, footer):
 <div class="al-card"><h2>The opening in short</h2><div class="al-seg"><button class="on" data-m="s">Simple</button><button data-m="a">Advanced</button></div>
 <div data-lv="s">{short_simple}</div><div data-lv="a" hidden>{short_adv}</div></div>
 <p><a class="btn solid" href="#learn" data-go="learn">Start learning &rarr;</a></p></section>
-<section class="al-panel" id="learn" hidden><div class="al-card"><div class="al-grid"><div>
-<div class="al-pl"><i class="b"></i>Black <small>Caro-Kann player</small></div><div id="al-learn-board"></div><div class="al-pl"><i class="w"></i>White <small>You</small></div></div>
-<div class="al-txt"><span id="al-learn-tag" class="al-tag"></span><h3 id="al-learn-title"></h3><p id="al-learn-text"></p><div class="al-mvs" id="al-learn-moves"></div>
-<div class="al-nav"><button class="btn" id="al-prev" type="button">&larr; Back</button><span id="al-count"></span><button class="btn solid" id="al-next" type="button">Next &rarr;</button></div><div class="al-dots" id="al-dots"></div></div></div></div>
-<p><a class="btn solid" href="#practice" data-go="practice">Now practice &rarr;</a></p></section>
+<section class="al-panel" id="learn" hidden><div class="al-chips" id="al-chips"></div>
+<div class="player"><div><div class="board" id="board" role="img" aria-label="Chess board"></div>
+<div class="ctrl"><button type="button" id="first" aria-label="Start position">\u23EE</button><button type="button" id="prev" aria-label="Previous move">\u25C0</button><button type="button" id="next" aria-label="Next move">\u25B6</button><button type="button" id="last" aria-label="Final position">\u23ED</button></div>
+<p class="hint">Tip: use the arrow keys.</p></div>
+<div><div class="note" aria-live="polite"><div class="meta"><span class="label" id="nl"></span><span class="tag" id="nt"></span></div><p id="nx"></p></div><div class="moves" id="moves"></div></div></div>
+<p style="margin-top:26px"><a class="btn solid" href="#practice" data-go="practice">Now practice &rarr;</a></p></section>
 <section class="al-panel" id="replies" hidden><div class="al-card"><h2>What can Black play on move 5?</h2><p class="al-note">Bar = how good it is for you. On the right: your best answer. Stockfish 17.1, depth 16.</p><ul class="al-rep" data-r="r5"></ul></div>
 <div class="al-card"><h2>After 5...Bf5 6.Bc4: Black's options</h2><ul class="al-rep" data-r="r6"></ul></div></section>
 <section class="al-panel" id="practice" hidden><div class="al-card"><div class="al-grid"><div><div class="al-hud"><span id="al-hearts"></span><span id="al-score"></span></div><div id="al-pq-board"></div></div>
