@@ -308,6 +308,26 @@ def _headcta(path, body):
     p_html = f"<p>{intro}</p>" if intro else (m.group(2) or "")
     cta = (f'<p class="headcta"><a class="btn solid big" data-ev="{btn[2]}" href="{btn[1]}"{" target=_blank rel=noopener" if btn[1].startswith("http") else ""}>{btn[0]} &darr;</a></p>' if btn else "")
     return body[:m.start()] + m.group(1) + p_html + cta + m.group(3) + body[m.end():]
+LAYOUT_CSS = """
+/* site-wide layout (Total-Chess style): hero band, pill labels, rounded cards, pill buttons */
+body{overflow-x:clip}
+.pagehead{margin-inline:calc(50% - 50vw);padding:34px calc(50vw - 50%) 30px;background:linear-gradient(160deg,var(--tint),var(--panel2));border-bottom:1px solid var(--line3);margin-bottom:28px}
+.pagehead .eyebrow{justify-self:start;font-size:12px;font-weight:800;letter-spacing:.08em;padding:5px 12px;border-radius:999px;border:1px solid var(--line3);background:var(--panel)}
+h1.page{font-weight:900;line-height:1.05}
+.crumb{padding-bottom:6px}
+.card,.simple,.note,.player{border:1px solid var(--line2);border-radius:18px}
+.player{background:var(--panel);padding:20px}
+.note{background:var(--panel2)}
+.board{border-radius:12px;overflow:hidden}
+.ctrl button,.btn{border-radius:999px}
+.ctrl button{border-radius:12px}
+.moves{background:var(--panel2);border-radius:12px;padding:10px 12px}
+.moves button{border-radius:8px}
+.twocol .prose h2{font-size:24px}
+header.top{border-bottom-color:var(--line3)}
+"""
+CSS += LAYOUT_CSS
+
 def page(path, title, desc, body, jsonld=None, og_image="/img/og.jpg", ogtype="website", noindex=False):
     body = _headcta(path, body)
     if path not in ("/today/", "/members/", "/admin/", "/privacy/", "/terms/", "/404.html") and 'class="dband"' not in body and "<footer>" in body:
