@@ -1367,10 +1367,13 @@ def build():
     shutil.copytree(os.path.join(ROOT, "src"), d, dirs_exist_ok=True)
     try: os.remove(os.path.join(d, "data", "principles.json"))  # member-only: served from Supabase (site_content) behind login
     except OSError: pass
-    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index(), patterns_index()] + [trap_page(t) for t in TRAPS] + [trap_page(t, "patterns") for t in PATTERNS] + [today_page(), admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), opponent_page(), members_page(), improve_page(), terms()]
+    import alien
+    _ap = alien.alien_page(page, header, footer)
+    pages = [("/", home())] + shorts_pages() + [videos_page(), top_games_page()] + [traps_index(), patterns_index()] + [trap_page(t) for t in TRAPS] + [trap_page(t, "patterns") for t in PATTERNS] + [today_page(), admin_page(), support_page(), contact(), privacy(), free_page(), analyze_page(), opponent_page(), members_page(), improve_page(), terms()] + [_ap]
     for path, htm in pages:
         p = os.path.join(d, path.strip("/"), "index.html") if path != "/" else os.path.join(d, "index.html")
         os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "w").write(htm)
+    json.dump(alien.data(), open(os.path.join(d, "js", "alien-data.json"), "w", encoding="utf8"), ensure_ascii=False, separators=(",", ":"))
     json.dump(DAILY, open(os.path.join(d, "js", "daily-data.json"), "w", encoding="utf8"), ensure_ascii=False, separators=(",", ":"))
     os.makedirs(os.path.join(d, "js", "dp"), exist_ok=True); pz_idx = {}
     for k in range(0, len(DAILY_PUZZLES), PZ_CHUNK):
