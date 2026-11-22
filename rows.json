@@ -1,20 +1,20 @@
 {
-"generated": "2026-11-21T04:18:59Z",
-"start": "2026-08-24",
-"end": "2026-11-21",
+"generated": "2026-11-22T04:22:11Z",
+"start": "2026-08-25",
+"end": "2026-11-22",
 "rows": [
 {
 "kind": "source",
 "key": "(direct)",
 "label": "Direct of onbekend",
-"value": 100,
+"value": 101,
 "group": "Direct"
 },
 {
 "kind": "source",
 "key": "YouTube",
 "label": "YouTube",
-"value": 52,
+"value": 53,
 "group": "Website"
 },
 {
@@ -70,14 +70,14 @@
 "kind": "country",
 "key": "NL",
 "label": "Netherlands",
-"value": 94,
+"value": 95,
 "group": ""
 },
 {
 "kind": "country",
 "key": "US",
 "label": "United States",
-"value": 47,
+"value": 48,
 "group": ""
 },
 {
@@ -103,15 +103,15 @@
 },
 {
 "kind": "country",
-"key": "GB",
-"label": "United Kingdom",
-"value": 6,
+"key": "IN",
+"label": "India",
+"value": 7,
 "group": ""
 },
 {
 "kind": "country",
-"key": "IN",
-"label": "India",
+"key": "GB",
+"label": "United Kingdom",
 "value": 6,
 "group": ""
 },
@@ -294,7 +294,7 @@
 "kind": "device",
 "key": "desktop",
 "label": "Computer",
-"value": 177,
+"value": 180,
 "group": ""
 },
 {
@@ -308,7 +308,7 @@
 "kind": "browser",
 "key": "Chrome",
 "label": "Chrome",
-"value": 200,
+"value": 203,
 "group": ""
 },
 {
@@ -329,7 +329,7 @@
 "kind": "system",
 "key": "Windows",
 "label": "Windows",
-"value": 186,
+"value": 189,
 "group": ""
 },
 {
@@ -543,16 +543,23 @@
 "group": ""
 },
 {
+"kind": "campaign",
+"key": "81631",
+"label": "puzzle-3",
+"value": 1,
+"group": ""
+},
+{
 "kind": "meta",
 "key": "generated",
-"label": "2026-11-21T04:18:59Z",
+"label": "2026-11-22T04:22:11Z",
 "value": 0,
 "group": ""
 },
 {
 "kind": "meta",
 "key": "start",
-"label": "2026-08-24",
+"label": "2026-08-25",
 "value": 0,
 "group": ""
 }

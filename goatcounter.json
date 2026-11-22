@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-21T04:18:59Z",
- "start": "2026-08-24",
- "end": "2026-11-21",
+ "generated": "2026-11-22T04:22:11Z",
+ "start": "2026-08-25",
+ "end": "2026-11-22",
  "hits": {
   "error": 404
  },
@@ -9,13 +9,13 @@
   "stats": [
    {
     "name": "",
-    "count": 100,
+    "count": 101,
     "ref_scheme": "o"
    },
    {
     "id": "YouTube",
     "name": "YouTube",
-    "count": 52,
+    "count": 53,
     "ref_scheme": "c"
    },
    {
@@ -68,7 +68,7 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 200
+    "count": 203
    },
    {
     "id": "Safari",
@@ -88,7 +88,7 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 186
+    "count": 189
    },
    {
     "id": "iOS",
@@ -128,7 +128,7 @@
    {
     "id": "desktop",
     "name": "",
-    "count": 177
+    "count": 180
    },
    {
     "id": "desktophd",
@@ -148,12 +148,12 @@
    {
     "id": "NL",
     "name": "Netherlands",
-    "count": 94
+    "count": 95
    },
    {
     "id": "US",
     "name": "United States",
-    "count": 47
+    "count": 48
    },
    {
     "id": "BG",
@@ -171,13 +171,13 @@
     "count": 15
    },
    {
-    "id": "GB",
-    "name": "United Kingdom",
-    "count": 6
-   },
-   {
     "id": "IN",
     "name": "India",
+    "count": 7
+   },
+   {
+    "id": "GB",
+    "name": "United Kingdom",
     "count": 6
    },
    {
@@ -428,6 +428,11 @@
    {
     "id": "76794",
     "name": "stop-greek-gift",
+    "count": 1
+   },
+   {
+    "id": "81631",
+    "name": "puzzle-3",
     "count": 1
    }
   ],
