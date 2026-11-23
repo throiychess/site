@@ -1,7 +1,7 @@
 {
-"generated": "2026-11-22T04:22:11Z",
-"start": "2026-08-25",
-"end": "2026-11-22",
+"generated": "2026-11-23T04:38:19Z",
+"start": "2026-08-26",
+"end": "2026-11-23",
 "rows": [
 {
 "kind": "source",
@@ -14,7 +14,7 @@
 "kind": "source",
 "key": "YouTube",
 "label": "YouTube",
-"value": 53,
+"value": 55,
 "group": "Website"
 },
 {
@@ -33,6 +33,13 @@
 },
 {
 "kind": "source",
+"key": "Google",
+"label": "Google",
+"value": 7,
+"group": "Website"
+},
+{
+"kind": "source",
 "key": "www.facebook.com",
 "label": "www.facebook.com",
 "value": 5,
@@ -40,16 +47,9 @@
 },
 {
 "kind": "source",
-"key": "Google",
-"label": "Google",
-"value": 3,
-"group": "Website"
-},
-{
-"kind": "source",
 "key": "www.youtube.com",
 "label": "www.youtube.com",
-"value": 2,
+"value": 4,
 "group": "Video"
 },
 {
@@ -105,7 +105,7 @@
 "kind": "country",
 "key": "IN",
 "label": "India",
-"value": 7,
+"value": 12,
 "group": ""
 },
 {
@@ -141,6 +141,13 @@
 "key": "SA",
 "label": "Saudi Arabia",
 "value": 4,
+"group": ""
+},
+{
+"kind": "country",
+"key": "AZ",
+"label": "Azerbaijan",
+"value": 3,
 "group": ""
 },
 {
@@ -294,7 +301,7 @@
 "kind": "device",
 "key": "desktop",
 "label": "Computer",
-"value": 180,
+"value": 188,
 "group": ""
 },
 {
@@ -308,7 +315,7 @@
 "kind": "browser",
 "key": "Chrome",
 "label": "Chrome",
-"value": 203,
+"value": 211,
 "group": ""
 },
 {
@@ -329,7 +336,7 @@
 "kind": "system",
 "key": "Windows",
 "label": "Windows",
-"value": 189,
+"value": 194,
 "group": ""
 },
 {
@@ -350,7 +357,7 @@
 "kind": "system",
 "key": "macOS",
 "label": "macOS",
-"value": 13,
+"value": 16,
 "group": ""
 },
 {
@@ -502,6 +509,13 @@
 },
 {
 "kind": "campaign",
+"key": "81930",
+"label": "h2-opera-game-long",
+"value": 2,
+"group": ""
+},
+{
+"kind": "campaign",
 "key": "60576",
 "label": "bio",
 "value": 1,
@@ -552,14 +566,14 @@
 {
 "kind": "meta",
 "key": "generated",
-"label": "2026-11-22T04:22:11Z",
+"label": "2026-11-23T04:38:19Z",
 "value": 0,
 "group": ""
 },
 {
 "kind": "meta",
 "key": "start",
-"label": "2026-08-25",
+"label": "2026-08-26",
 "value": 0,
 "group": ""
 }

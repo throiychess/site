@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-22T04:22:11Z",
- "start": "2026-08-25",
- "end": "2026-11-22",
+ "generated": "2026-11-23T04:38:19Z",
+ "start": "2026-08-26",
+ "end": "2026-11-23",
  "hits": {
   "error": 404
  },
@@ -15,7 +15,7 @@
    {
     "id": "YouTube",
     "name": "YouTube",
-    "count": 53,
+    "count": 55,
     "ref_scheme": "c"
    },
    {
@@ -31,21 +31,21 @@
     "ref_scheme": "h"
    },
    {
+    "id": "Google",
+    "name": "Google",
+    "count": 7,
+    "ref_scheme": "g"
+   },
+   {
     "id": "www.facebook.com",
     "name": "www.facebook.com",
     "count": 5,
     "ref_scheme": "h"
    },
    {
-    "id": "Google",
-    "name": "Google",
-    "count": 3,
-    "ref_scheme": "g"
-   },
-   {
     "id": "www.youtube.com",
     "name": "www.youtube.com",
-    "count": 2,
+    "count": 4,
     "ref_scheme": "h"
    },
    {
@@ -68,7 +68,7 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 203
+    "count": 211
    },
    {
     "id": "Safari",
@@ -88,7 +88,7 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 189
+    "count": 194
    },
    {
     "id": "iOS",
@@ -103,7 +103,7 @@
    {
     "id": "macOS",
     "name": "macOS",
-    "count": 13
+    "count": 16
    },
    {
     "id": "Android",
@@ -128,7 +128,7 @@
    {
     "id": "desktop",
     "name": "",
-    "count": 180
+    "count": 188
    },
    {
     "id": "desktophd",
@@ -173,7 +173,7 @@
    {
     "id": "IN",
     "name": "India",
-    "count": 7
+    "count": 12
    },
    {
     "id": "GB",
@@ -199,6 +199,11 @@
     "id": "SA",
     "name": "Saudi Arabia",
     "count": 4
+   },
+   {
+    "id": "AZ",
+    "name": "Azerbaijan",
+    "count": 3
    },
    {
     "id": "ES",
@@ -398,6 +403,11 @@
    {
     "id": "80606",
     "name": "stalemate-trick",
+    "count": 2
+   },
+   {
+    "id": "81930",
+    "name": "h2-opera-game-long",
     "count": 2
    },
    {
