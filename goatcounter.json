@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-25T04:34:22Z",
- "start": "2026-08-28",
- "end": "2026-11-25",
+ "generated": "2026-11-26T12:56:06Z",
+ "start": "2026-08-29",
+ "end": "2026-11-26",
  "hits": {
   "error": 404
  },
@@ -9,13 +9,13 @@
   "stats": [
    {
     "name": "",
-    "count": 102,
+    "count": 104,
     "ref_scheme": "o"
    },
    {
     "id": "YouTube",
     "name": "YouTube",
-    "count": 61,
+    "count": 63,
     "ref_scheme": "c"
    },
    {
@@ -68,12 +68,12 @@
    {
     "id": "Chrome",
     "name": "Chrome",
-    "count": 219
+    "count": 222
    },
    {
     "id": "Safari",
     "name": "Safari",
-    "count": 48
+    "count": 50
    },
    {
     "id": "Firefox",
@@ -88,17 +88,17 @@
    {
     "id": "Windows",
     "name": "Windows",
-    "count": 202
+    "count": 204
    },
    {
     "id": "iOS",
     "name": "iOS",
-    "count": 48
+    "count": 50
    },
    {
     "id": "Linux",
     "name": "Linux",
-    "count": 19
+    "count": 20
    },
    {
     "id": "macOS",
@@ -118,7 +118,7 @@
    {
     "id": "phone",
     "name": "",
-    "count": 50
+    "count": 52
    },
    {
     "id": "tablet",
@@ -128,7 +128,7 @@
    {
     "id": "desktop",
     "name": "",
-    "count": 195
+    "count": 198
    },
    {
     "id": "desktophd",
@@ -153,7 +153,7 @@
    {
     "id": "US",
     "name": "United States",
-    "count": 50
+    "count": 53
    },
    {
     "id": "BG",
@@ -163,7 +163,7 @@
    {
     "id": "IN",
     "name": "India",
-    "count": 18
+    "count": 20
    },
    {
     "id": "CA",
@@ -418,6 +418,11 @@
    {
     "id": "82286",
     "name": "world-championship-explained",
+    "count": 2
+   },
+   {
+    "id": "82981",
+    "name": "5-traps-in-60-seconds",
     "count": 2
    },
    {
